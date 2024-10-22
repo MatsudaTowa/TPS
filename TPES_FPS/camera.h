@@ -32,6 +32,11 @@ public:
 	void Update();
 	void SetCamera();
 	void ResetCamera();
+	D3DXVECTOR3 GetRot();
+	void SetRot(D3DXVECTOR3 rot)
+	{
+		m_rot = rot;
+	}
 	void DebugCameraDraw(); //ガメラのデバック表示
 
 	static CANERA_TYPE GetType();

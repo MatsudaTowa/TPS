@@ -375,8 +375,8 @@ void CCharacter::Motion(int NumParts)
 
 		m_apModel[nMotionCnt]->m_pos += MovePos[nMotionCnt];
 		m_apModel[nMotionCnt]->m_rot += MoveRot[nMotionCnt];
-		Pos.x += MovePos[nMotionCnt].x;
-		SetPos(Pos);
+		//Pos.x += MovePos[nMotionCnt].x;
+		//SetPos(Pos);
 	}
 
 	m_nMotionFrameCnt++;

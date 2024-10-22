@@ -39,7 +39,7 @@ const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
 const float CCamera::THIRDVIEW_LENGTH = 120.0f;
 
 //サードビュー時の補正値
-const float CCamera::THIRDVIEW_CORRECT_X = 15.0f;
+const float CCamera::THIRDVIEW_CORRECT_X = 0;
 const float CCamera::THIRDVIEW_CORRECT_Y = 50.0f;
 
 //サードパーソンビュー時のXの最大可動域
@@ -133,6 +133,7 @@ void CCamera::Update()
 		break;
 	case TYPE_THIRDVIEW:
 		ThirdViewCamera();
+		CameraTurn();
 		break;
 	case TYPE_DEBUG:
 		CameraTurn();
@@ -440,7 +441,9 @@ void CCamera::ThirdViewCamera()
 				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				m_posR.z = pPlayer->GetPos().z;
 
-				m_posV = m_posR + D3DXVECTOR3(THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), THIRDVIEW_LENGTH * sinf(m_rot.x), -THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
+				m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
+				THIRDVIEW_LENGTH * sinf(m_rot.x), 
+				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//m_posV.x = m_posR.x + THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y);
 				//m_posV.y = m_posR.y + THIRDVIEW_LENGTH_Y * sinf(m_rot.x);
@@ -459,15 +462,23 @@ void CCamera::ThirdViewCamera()
 				}
 				if (pKeyboard->GetPress(DIK_RIGHT))
 				{
-					m_rot.y += 0.01f;
+					m_rot.y -= 0.01f;
 				}
 				if (pKeyboard->GetPress(DIK_LEFT))
 				{
-					m_rot.y -= 0.01f;
+					m_rot.y += 0.01f;
 				}
 			}
 		}
 	}
+}
+
+//=============================================
+//カメラの方向取得
+//=============================================
+D3DXVECTOR3 CCamera::GetRot()
+{
+	return m_rot;
 }
 
 //=============================================
@@ -482,5 +493,5 @@ void CCamera::DebugCameraDraw()
 	sprintf(&aStr[0], "\n\n\n\n\n\n[camera]\nposR:%.1f,%.1f,%.1f\nposV:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f"
 		, m_posR.x, m_posR.y, m_posR.z, m_posV.x, m_posV.y, m_posV.z,m_rot.x,m_rot.y,m_rot.z);
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }

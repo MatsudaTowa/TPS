@@ -141,7 +141,9 @@ void CPlayer_test::Update()
 		D3DXVECTOR3 move = GetMove();
 
 		//移動量を更新(減速）
-		move *= 1.0f - DAMPING_COEFFICIENT;
+		move.x += (0.0f - move.x) * DAMPING_COEFFICIENT;
+		move.y += (0.0f - move.y) * DAMPING_COEFFICIENT;
+		move.z += (0.0f - move.z) * DAMPING_COEFFICIENT;
 
 		//移動量代入
 		SetMove(move);
@@ -341,8 +343,8 @@ void CPlayer_test::PlayerMove()
 		SetMotion(MOTION_NEUTRAL,NUM_PARTS); //現在のモーションを設定
 	}
 	else
-	{
-		float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
+	{	
+		float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
 		//オブジェクト2Dからrotを取得
 		D3DXVECTOR3 rot = GetRot();
@@ -386,8 +388,8 @@ void CPlayer_test::DebugPos()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f"
-		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z);
+	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f"
+		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z,GetMove().x,GetMove().y,GetMove().z);
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }
