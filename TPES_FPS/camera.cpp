@@ -462,11 +462,11 @@ void CCamera::ThirdViewCamera()
 				}
 				if (pKeyboard->GetPress(DIK_RIGHT))
 				{
-					m_rot.y -= 0.01f;
+					m_rot.y += 0.01f;
 				}
 				if (pKeyboard->GetPress(DIK_LEFT))
 				{
-					m_rot.y += 0.01f;
+					m_rot.y -= 0.01f;
 				}
 			}
 		}

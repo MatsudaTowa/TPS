@@ -13,6 +13,7 @@ const std::string CBlock::MODEL_NAME = "data\\MODEL\\box.x";
 const std::string CBlock::WOOD_MODEL_NAME = "data\\MODEL\\wood.x";
 const std::string CBlock::AZUMAYA_MODEL_NAME = "data\\MODEL\\azumaya.x";
 const std::string CBlock::DANGOYA_MODEL_NAME = "data\\MODEL\\dangoya.x";
+const std::string CBlock::MESH_MODEL_NAME = "data\\MODEL\\mesh.x";
 
 //テクスチャ初期化
 LPDIRECT3DTEXTURE9 CBlock::m_pTextureTemp = nullptr;
@@ -118,6 +119,12 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(&DANGOYA_MODEL_NAME)).pBuffMat,
 			pModel->GetModelInfo(pModel->Regist(&DANGOYA_MODEL_NAME)).dwNumMat,
 			pModel->GetModelInfo(pModel->Regist(&DANGOYA_MODEL_NAME)).pMesh);
+		break;
+	case CBlock::BLOCKTYPE::BLOCKTYPE_MESH:
+		//Xファイル読み込み
+		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).pBuffMat,
+			pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).dwNumMat,
+			pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).pMesh);
 		break;
 	default:
 		break;

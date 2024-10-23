@@ -60,13 +60,14 @@ void CCharacter::Uninit()
 void CCharacter::Update()
 {
 	D3DXVECTOR3 CharacterPos = GetPos();
-	if (GetLaunding())
-	{//着地してるなら
-		//ジャンプ数リセット
-		CharacterPos.y = m_oldpos.y;
-		m_move.y = 0.0f;
-	}
-	SetPos(CharacterPos);
+
+	//if (GetLaunding())
+	//{//着地してるなら
+	//	//ジャンプ数リセット
+	//	CharacterPos.y = m_oldpos.y;
+	//	m_move.y = 0.0f;
+	//}
+	//SetPos(CharacterPos);
 }
 
 //=============================================
@@ -449,6 +450,8 @@ void CCharacter::HitBlock()
 	//サイズ取得
 	D3DXVECTOR3 CharacterMin = GetMinPos();
 	D3DXVECTOR3 CharacterMax = GetMaxPos();
+	BOOL hit;
+	FLOAT distance;
 
 	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 	{
@@ -463,6 +466,11 @@ void CCharacter::HitBlock()
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
 			{
 				CBlock* pBlock = (CBlock*)pObj;
+
+
+				//D3DXVECTOR3 dir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
+				//D3DXIntersect(pBlock->GetpMesh(), &CharacterPos, &dir, &hit, NULL, NULL, NULL, &distance, NULL, NULL);
 
 				//当たり判定チェック
 				CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos,CharacterMin,CharacterMax,pBlock->GetPos(),pBlock->GetMinPos(),pBlock->GetMaxPos());
@@ -495,6 +503,8 @@ void CCharacter::HitBlock()
 			}
 		}
 	}
+	//SetPos(D3DXVECTOR3(CharacterPos.x, CharacterPos.y - distance, CharacterPos.z));
+
 	SetPos(CharacterPos);
 }
 

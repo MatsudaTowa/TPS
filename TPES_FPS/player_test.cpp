@@ -105,6 +105,8 @@ void CPlayer_test::Update()
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
+	CCharacter::Update();
+
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
 		//状態を取得
@@ -256,13 +258,13 @@ void CPlayer_test::Damage(int nDamage)
 //=============================================
 void CPlayer_test::ReSpawn()
 {
-	//自分自身のpos取得
-	D3DXVECTOR3 PlayerPos = GetPos();
+	////自分自身のpos取得
+	//D3DXVECTOR3 PlayerPos = GetPos();
 
-	PlayerPos = D3DXVECTOR3(-450.0f, 0.5f, 0.0f);
+	//PlayerPos = D3DXVECTOR3(-450.0f, 0.5f, 0.0f);
 
-	//pos代入
-	SetPos(PlayerPos);
+	////pos代入
+	//SetPos(PlayerPos);
 }
 
 //=============================================

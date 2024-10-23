@@ -17,6 +17,7 @@ public:
 	static const std::string WOOD_MODEL_NAME;	//モデルの名前
 	static const std::string AZUMAYA_MODEL_NAME;	//モデルの名前
 	static const std::string DANGOYA_MODEL_NAME;	//モデルの名前
+	static const std::string MESH_MODEL_NAME;	//モデルの名前
 
 	static const int BLOCK_PRIORITY = 3; //描画順
 	typedef enum
@@ -26,6 +27,7 @@ public:
 		BLOCKTYPE_WOOD,
 		BLOCKTYPE_AZUMAYA,
 		BLOCKTYPE_DANGOYA,
+		BLOCKTYPE_MESH,
 		BLOCKTYPE_MAX,
 	}BLOCKTYPE;
 
