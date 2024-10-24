@@ -202,20 +202,20 @@ CEnemy_test* CEnemy_test::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 {
 	CModel* pModel = CManager::GetModel();
 
-	CEnemy_test* pPlayer = new CEnemy_test;
+	CEnemy_test* pEnemy = new CEnemy_test;
 
 	// nullならnullを返す
-	if (pPlayer == nullptr) { return nullptr; }
+	if (pEnemy == nullptr) { return nullptr; }
 
-	pPlayer->SetPos(pos); //pos設定
-	pPlayer->SetRot(rot); //rot設定
-	pPlayer->SetLife(nLife); //体力代入
+	pEnemy->SetPos(pos); //pos設定
+	pEnemy->SetRot(rot); //rot設定
+	pEnemy->SetLife(nLife); //体力代入
 
-	pPlayer->Init(); //初期化処理
+	pEnemy->Init(); //初期化処理
 
-	pPlayer->SetType(OBJECT_TYPE_NONE); //タイプ設定
+	pEnemy->SetType(OBJECT_TYPE_ENEMY); //タイプ設定
 
-	return pPlayer;
+	return pEnemy;
 }
 
 //=============================================

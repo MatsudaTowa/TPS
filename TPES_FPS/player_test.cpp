@@ -190,6 +190,12 @@ void CPlayer_test::Update()
 		CInputMouse* pMouse = CManager::GetMouse();
 		CInputPad* pPad = CManager::GetPad();
 
+		if (pMouse->GetTrigger(0))
+		{
+			//’e”­ŽË
+			ShotBullet(D3DXVECTOR3(pos.x,pos.y + 20.0f,pos.z), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+		}
+
 		//‚Ç‚Á‚¿Œü‚¢‚Ä‚é‚©Žæ“¾
 		bool bWay = GetWay();
 
@@ -321,7 +327,7 @@ void CPlayer_test::PlayerMove()
 			vecDirection.x -= 1.0f;
 			bWay = false;
 		}
-		else if (pKeyboard->GetPress(DIK_D))
+		if (pKeyboard->GetPress(DIK_D))
 		{
 			vecDirection.x += 1.0f;
 			bWay = true;

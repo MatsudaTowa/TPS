@@ -36,7 +36,7 @@ const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
 const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
 
 //サードビュー時の距離
-const float CCamera::THIRDVIEW_LENGTH = 120.0f;
+const float CCamera::THIRDVIEW_LENGTH = 170.0f;
 
 //サードビュー時の補正値
 const float CCamera::THIRDVIEW_CORRECT_X = 0;

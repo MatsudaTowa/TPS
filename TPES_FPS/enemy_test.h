@@ -17,10 +17,10 @@ public:
 	static const int NUM_PARTS = 10; //パーツ数
 	static const int MAX_KEY = 20; //キー最大数
 	static const int NUM_MOTION = 3;
-	static const int PLAYER_PRIORITY = 8; //描画順
+	static const int ENEMY_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
-	CEnemy_test(int nPriority = PLAYER_PRIORITY);
+	CEnemy_test(int nPriority = ENEMY_PRIORITY);
 	~CEnemy_test();
 	HRESULT Init();
 	void Uninit();

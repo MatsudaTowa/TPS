@@ -10,6 +10,7 @@
 #include "main.h"
 #include "objectX.h"
 #include "model_parts.h"
+#include "bullet.h"
 
 //プレイヤークラス
 class CCharacter : public CObjectX
@@ -42,6 +43,7 @@ public:
 	void Gravity(); //重力処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
+	void ShotBullet(D3DXVECTOR3 pos, float move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type); //弾発射処理
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)
@@ -121,6 +123,8 @@ public:
 	//ステートカウント取得
 	int& GetStateCnt();
 
+	//パーツ
+	CModel_Parts* m_apModel[MAX_PARTS];
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
@@ -136,7 +140,6 @@ private:
 	int m_nMotionFrameCnt; //切り替えフレームカウント
 	int m_nKeySetCnt; //キー切り替えカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
-	CModel_Parts* m_apModel[MAX_PARTS];
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
 
