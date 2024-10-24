@@ -47,7 +47,7 @@ const float CCamera::MAX_TURN_X = 0.5f;
 //サードパーソンビュー時のXの最小可動域
 const float CCamera::MIN_TURN_X = 0.0f;
 
-CCamera::CANERA_TYPE CCamera::m_type = TYPE_SIDEVIEW;
+CCamera::CANERA_TYPE CCamera::m_type = TYPE_THIRDVIEW;
 
 //=============================================
 //コンストラクタ
