@@ -7,6 +7,7 @@
 #include "scene.h"
 #include "title.h"
 #include "game.h"
+#include "test.h"
 #include "result.h"
 #include "manager.h"
 
@@ -69,6 +70,11 @@ CScene* CScene::Create(MODE mode)
 
         delete pScene;
         pScene = new CTitle;
+        break;
+    
+    case MODE_TEST: //テスト
+        delete pScene;
+        pScene = new CTest;
         break;
 
     case MODE_GAME: // ゲーム

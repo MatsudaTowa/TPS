@@ -20,6 +20,7 @@ public:
 	typedef enum
 	{
 		MODE_TITLE = 0,
+		MODE_TEST,
 		MODE_GAME,
 		MODE_RESULT,
 		MODE_MAX,

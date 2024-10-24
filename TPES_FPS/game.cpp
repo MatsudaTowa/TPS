@@ -103,6 +103,13 @@ void CGame::Update()
 		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
 	}
 
+#ifdef _DEBUG
+	if (pKeyboard->GetTrigger(DIK_F7))
+	{
+		CManager::m_pFade->SetFade(CScene::MODE::MODE_TEST);
+	}
+#endif // _DEBUG
+
 }
 
 //=============================================
