@@ -85,6 +85,7 @@ void CGame::Uninit()
 void CGame::Update()
 {
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputMouse* pMouse = CManager::GetMouse();
 	
 	if (pKeyboard->GetTrigger(DIK_F5))
 	{

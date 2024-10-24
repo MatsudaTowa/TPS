@@ -143,24 +143,24 @@ void CCamera::Update()
 		break;
 	}
 
-	if (m_rot.y > D3DX_PI * 2.0f)
+	if (m_rot.y > D3DX_PI)
 	{
 		m_rot.y = -D3DX_PI;
 		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
-	if (m_rot.y < -D3DX_PI * 2.0f)
+	if (m_rot.y < -D3DX_PI)
 	{
 		m_rot.y = D3DX_PI;
 	}
 
-	if (m_rot.x > D3DX_PI * 2.0f)
+	if (m_rot.x > D3DX_PI)
 	{
 		m_rot.x = -D3DX_PI;
 		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
-	if (m_rot.x < -D3DX_PI * 2.0f)
+	if (m_rot.x < -D3DX_PI)
 	{
 		m_rot.x = D3DX_PI;
 	}
@@ -425,8 +425,6 @@ void CCamera::ThirdViewCamera()
 {
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
-		//キーボード情報取得
-		CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
@@ -451,6 +449,12 @@ void CCamera::ThirdViewCamera()
 
 				//g_Camera.posR.y = g_Camera.posV.y + sinf(g_Camera.rot.x) * g_Camera.fLength;
 				//g_Camera.posR.z = g_Camera.posV.z + cosf(g_Camera.rot.x) * g_Camera.fLength;
+
+				//マウス情報取得
+				CInputMouse* pMouse = CManager::GetMouse();
+				m_rot.y += pMouse->GetMouseMove().x * 0.001f;
+				//キーボード情報取得
+				CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 				
 				if (pKeyboard->GetPress(DIK_UP) && m_rot.x <= MAX_TURN_X)
 				{

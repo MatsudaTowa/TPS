@@ -55,6 +55,7 @@ public:
 	bool GetTrigger(int nKey);
 	bool GetRelease(int nKey);
 	D3DXVECTOR3 GetMouseMove(void);
+	void Debug();
 private:
 	DIMOUSESTATE m_KeyStateTrigger; //マウスのトリガー情報
 	DIMOUSESTATE m_KeyStateRelease; //マウスのリリース情報

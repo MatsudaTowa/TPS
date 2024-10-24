@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "input.h"
+#include "manager.h"
 
 //静的メンバ初期化
 LPDIRECTINPUT8 CInput::m_pInput = nullptr;
@@ -225,39 +226,40 @@ void CInputMouse::Uninit()
 //=============================================
 void CInputMouse::Update()
 {
-BYTE aMouseState[NUM_MOUSE_MAX]; //入力情報
+
 	DIMOUSESTATE zdiMouseState;
 	int nCntMouse;
-	for (nCntMouse = 0; nCntMouse < NUM_MOUSE_MAX; nCntMouse++)
+	
+	//入力デバイスからデータを取得
+	if (SUCCEEDED(m_pDevice->GetDeviceState(sizeof(zdiMouseState), &zdiMouseState)))
 	{
-		//入力デバイスからデータを取得
-		if (SUCCEEDED(m_pDevice->GetDeviceState(sizeof(zdiMouseState), &zdiMouseState)))
+		for (nCntMouse = 0; nCntMouse < NUM_MOUSE_MAX; nCntMouse++)
 		{
-
 			m_KeyStateRelease.rgbButtons[nCntMouse] = (m_KeyState.rgbButtons[nCntMouse] ^ zdiMouseState.rgbButtons[nCntMouse]) & ~zdiMouseState.rgbButtons[nCntMouse];
 			m_KeyStateTrigger.rgbButtons[nCntMouse] = (m_KeyState.rgbButtons[nCntMouse] ^ zdiMouseState.rgbButtons[nCntMouse]) & zdiMouseState.rgbButtons[nCntMouse];
 			m_KeyState.rgbButtons[nCntMouse] = zdiMouseState.rgbButtons[nCntMouse]; //キーボードのプレス情報を保存
 		}
-		else
-		{
-			m_pDevice->Acquire(); //キーボードのアクセス権を獲得
-		}
+		
+		m_MouseMove.x = (float)zdiMouseState.lX;
+		m_MouseMove.y = (float)zdiMouseState.lY;
+	}
+	else
+	{
+		m_pDevice->Acquire(); //キーボードのアクセス権を獲得
 	}
 
 	//ZeroMemory(&pMouseMove, sizeof(POINT));
 
-	D3DXVECTOR3 OldMousePos = m_MousePos;
+	/*D3DXVECTOR3 OldMousePos = m_MousePos;
 
 	POINT pMouseMove;
 
-	GetCursorPos(&pMouseMove);
+	GetCursorPos(&pMouseMove);*/
 
-	m_MousePos.x = (float)pMouseMove.x;
-	m_MousePos.y = (float)pMouseMove.y;
+	/*m_MousePos.x = (float)zdiMouseState.lX;
+	m_MousePos.y = (float)zdiMouseState.lY;*/
 
-	m_MouseMove.x = m_MousePos.x - OldMousePos.x;
-	m_MouseMove.y = m_MousePos.y - OldMousePos.y;
-	m_MouseMove.z = m_MousePos.z - OldMousePos.z;
+	//m_MouseMove.z = m_MousePos.z - OldMousePos.z;
 }
 
 //=============================================
@@ -267,17 +269,41 @@ bool CInputMouse::GetPress(int nKey)
 {
 	return(m_KeyState.rgbButtons[nKey] & 0x80) != 0;
 }
+//=============================================
+//マウスのトリガー取得
+//=============================================
 bool CInputMouse::GetTrigger(int nKey)
 {
 	return(m_KeyStateTrigger.rgbButtons[nKey] & 0x80) != 0;
 }
+//=============================================
+//マウスのリリース取得
+//=============================================
 bool CInputMouse::GetRelease(int nKey)
 {
 	return(m_KeyStateRelease.rgbButtons[nKey] & 0x80) != 0;
 }
+//=============================================
+//マウスのムーブ値取得
+//=============================================
 D3DXVECTOR3 CInputMouse::GetMouseMove(void)
 {
 	return(m_MouseMove);
+}
+
+//=============================================
+//マウスのデバッグ表示
+//=============================================
+void CInputMouse::Debug()
+{
+	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n\n\n\n\n\n\n\n\n[mouse]\nmove:%.1f,%.1f,%.1f"
+		,m_MouseMove.x, m_MouseMove.y, m_MouseMove.z);
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }
 
 //↓からpad

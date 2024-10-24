@@ -208,6 +208,8 @@ void CPlayer_test::Update()
 //=============================================
 void CPlayer_test::Draw()
 {
+	CInputMouse* pMouse = CManager::GetMouse();
+	pMouse->Debug();
 	//親クラスのモーション用の描画を呼ぶ
 	MotionDraw(NUM_PARTS);
 	//プレイヤーのデバッグ表示
