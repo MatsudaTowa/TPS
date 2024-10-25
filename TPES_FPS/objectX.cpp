@@ -205,9 +205,9 @@ void CObjectX::Draw(D3DXCOLOR col)
 //=============================================
 void CObjectX::BindTexture(LPDIRECT3DTEXTURE9 pTex)
 {
-	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
+	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
 	{
-		m_pTexture[nCnt] = pTex;
+		m_pTexture[nCntMat] = pTex;
 	}
 }
 

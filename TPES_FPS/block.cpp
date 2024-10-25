@@ -86,6 +86,7 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	if (pBlock == nullptr) {return nullptr;}
 	
 	CModel* pModel = CManager::GetModel();
+	CTexture* pTex = CManager::GetTexture();
 
 	pBlock->m_type = type;
 	pBlock->SetPos(pos); //pos設定
@@ -125,6 +126,9 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).pBuffMat,
 			pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).dwNumMat,
 			pModel->GetModelInfo(pModel->Regist(&MESH_MODEL_NAME)).pMesh);
+		D3DXMATERIAL* pMat; //マテリアル
+		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+		//pBlock->BindTexture((pTex->GetAddress(pTex->Regist(&pMat->pTextureFilename()))); //テクスチャ設定
 		break;
 	default:
 		break;

@@ -29,6 +29,14 @@ public:
 		CHARACTER_STATE_MAX,
 	}CHARACTER_STATE;
 
+	//戦闘状態の列挙
+	typedef enum
+	{
+		STATE_NORMAL = 0,
+		STATE_ATTACK,
+		STATE_MAX,
+	}COMBAT_STATE;
+
 	CCharacter(int nPriority = CHARACTER_PRIORITY);
 	~CCharacter()override;
 	HRESULT Init()override;
@@ -41,9 +49,17 @@ public:
 	void Motion(int NumParts); //モーション処理
 	void SetMotion(int Motion, int NumParts); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
+	void Move(D3DXVECTOR3 vecDirection,float fRotMoveY,int Motion); //移動処理
+	void Jump(); //ジャンプ処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
 	void ShotBullet(D3DXVECTOR3 pos, float move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type); //弾発射処理
+
+	//戦闘列挙代入
+	void SetCombat_State(COMBAT_STATE combat_state)
+	{
+		m_Combat_State = combat_state;
+	}
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)
@@ -87,17 +103,14 @@ public:
 		m_nStateCnt = nStateCnt;
 	}
 
-	//パーツ数代入
-	void SetNumParts(int nNumParts)
-	{
-		m_PartsCnt = nNumParts;
-	}
-
 	//終わった判定に
 	void SetFinish(bool bFinish)
 	{
 		m_bLoopFinish = bFinish;
 	}
+
+	//戦闘状態の列挙の取得
+	COMBAT_STATE& GetCombat_State();
 
 	//移動量取得
 	D3DXVECTOR3& GetMove();
@@ -140,6 +153,8 @@ private:
 	int m_nMotionFrameCnt; //切り替えフレームカウント
 	int m_nKeySetCnt; //キー切り替えカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
+	float m_Speed; //スピード
+	float m_Jump; //スピード
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
 
@@ -168,5 +183,6 @@ private:
 	}MotionSet;
 
 	MotionSet m_MotionSet[MAX_MOTION]; //モーション設定
+	COMBAT_STATE m_Combat_State; //戦闘状態
 };
 #endif

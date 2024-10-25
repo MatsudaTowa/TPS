@@ -13,12 +13,7 @@
 #include "game.h"
 
 //通常の移動速度
-const float CPlayer_test::DEFAULT_MOVE = 1.0f;
-//通常の移動速度
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
-
-//通常のジャンプ力
-const float CPlayer_test::DEFAULT_JUMP = 25.0f;
 
 //ジャンプ回数
 const int CPlayer_test::MAX_JUMPCNT = 2;
@@ -39,7 +34,6 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //コンストラクタ
 //=============================================
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
-, m_Motion()
 {//イニシャライザーでメンバ変数初期化
 
 }
@@ -71,16 +65,11 @@ HRESULT CPlayer_test::Init()
 		CModel* pModel = CManager::GetModel();
 	}
 
-	//パーツ数設定
-	SetNumParts(NUM_PARTS);
-
 	//ムーブ値代入
 	SetMove(move);
 
 	//パーツ読み込み
 	Load_Parts("data\\Motion.txt",NUM_PARTS);
-
-	m_Motion = CPlayer_test::Motion_Type::MOTION_MAX; //ニュートラルに設定
 
 	SetMotion(MOTION_NEUTRAL, NUM_PARTS);
 
@@ -129,8 +118,8 @@ void CPlayer_test::Update()
 
 		if (GetFinish())
 		{
-			//移動処理
-			PlayerMove();
+			//入力処理
+			Input();
 		}
 
 		//位置取得
@@ -186,15 +175,6 @@ void CPlayer_test::Update()
 			ReSpawn();
 		}
 
-		//マウスの情報取得
-		CInputMouse* pMouse = CManager::GetMouse();
-		CInputPad* pPad = CManager::GetPad();
-
-		if (pMouse->GetTrigger(0))
-		{
-			//弾発射
-			ShotBullet(D3DXVECTOR3(pos.x,pos.y + 20.0f,pos.z), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
-		}
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
@@ -278,9 +258,10 @@ void CPlayer_test::ReSpawn()
 //=============================================
 //移動処理
 //=============================================
-void CPlayer_test::PlayerMove()
+void CPlayer_test::Input()
 {
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputMouse* pMouse = CManager::GetMouse();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
 	//カメラタイプ取得
@@ -337,55 +318,57 @@ void CPlayer_test::PlayerMove()
 		break;
 	}
 
-	//どっち向いてるか代入
-	SetWay(bWay);
+	float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
-	//移動量取得
-	D3DXVECTOR3 move = GetMove();
-
-	//着地してるか取得
-	bool bLanding = GetLaunding();
+	Motion_Type Motion;
 
 	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
 	{ // 動いてない。
-		move.x = 0.0f;
-		move.z = 0.0f;
-		SetMotion(MOTION_NEUTRAL,NUM_PARTS); //現在のモーションを設定
+		Motion = MOTION_NEUTRAL;
 	}
 	else
 	{	
-		float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
-
-		//オブジェクト2Dからrotを取得
-		D3DXVECTOR3 rot = GetRot();
-
-		move.x += sinf(rotMoveY) * DEFAULT_MOVE;
-		move.z += cosf(rotMoveY) * DEFAULT_MOVE;
-		rot.y = rotMoveY + D3DX_PI;
-		//rotを代入
-		SetRot(rot);
-		SetMotion(MOTION_MOVE,NUM_PARTS); //現在のモーションを設定
+		Motion = MOTION_MOVE;
 	}
+
+	//親クラスの移動
+	CCharacter::Move(D3DXVECTOR3(vecDirection.x,0.0f, vecDirection.z), rotMoveY, Motion);
+
 	if (m_nJumpCnt < MAX_JUMPCNT)
 	{//ジャンプ数以下だったら
 		if (pKeyboard->GetTrigger(DIK_SPACE))
 		{
-			move.y = DEFAULT_JUMP;
-			bLanding = false; //空中
+			//親クラスのジャンプ処理
+			CCharacter::Jump();
 			m_nJumpCnt++; //ジャンプ数加算
 		}
 	}
 
-	//移動量代入
-	SetMove(move);
-
-	//着地してるか代入
-	SetLanding(bLanding);
-
-	if (pKeyboard->GetTrigger(DIK_LCONTROL))
-	{
-		SetMotion(MOTION_ATTACK, NUM_PARTS); //現在のモーションを設定
+	CCharacter::COMBAT_STATE combat_state = GetCombat_State();
+	////移動量代入
+	//SetMove(move);
+	if (combat_state != CCharacter::COMBAT_STATE::STATE_ATTACK &&pMouse->GetPress(1))
+	{//アタック状態じゃなくマウスが押されてる間は
+		//ステートをアタック状態に
+		combat_state = CCharacter::COMBAT_STATE::STATE_ATTACK;
 	}
+
+	if (combat_state == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetRelease(1))
+	{//アタック状態じゃなくマウスが離されたら
+		//ステートをノーマル状態に
+		combat_state = CCharacter::COMBAT_STATE::STATE_NORMAL;
+	}
+
+	SetCombat_State(combat_state);
+
+	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetTrigger(0))
+	{//アタック状態だったら
+		//位置取得
+		D3DXVECTOR3 pos = GetPos();
+		//弾発射
+		ShotBullet(D3DXVECTOR3(pos.x, pos.y + 20.0f, pos.z), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+	}
+
 
 }
 

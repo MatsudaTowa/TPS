@@ -35,15 +35,13 @@ public:
 private:
 
 	//プレイヤーの移動関連
-	static const float DEFAULT_MOVE; //通常時の移動
 	static const float DAMPING_COEFFICIENT; //移動抵抗
-	static const float DEFAULT_JUMP; //通常時のジャンプ力
 	static const int MAX_JUMPCNT; //ジャンプ回数
 	static const int NUM_MOTION; //モーションの数
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン
-	void PlayerMove(); //プレイヤー移動処理
+	void Input(); //プレイヤー入力処理
 
 	int m_nJumpCnt; //ジャンプカウント
 
@@ -61,8 +59,6 @@ private:
 		MOTION_ATTACK,
 		MOTION_MAX,
 	}Motion_Type;
-
-	Motion_Type m_Motion; //モーションの種類
 
 	void DebugPos();
 
