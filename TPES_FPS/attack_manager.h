@@ -17,9 +17,7 @@
 class CAttack_Manager : public CBillboard
 {
 public:
-	static const int ATTACK_PRIORITY = 4; //ï`âÊèá
-
-	CAttack_Manager(int nPriority = ATTACK_PRIORITY);
+	CAttack_Manager(int nPriority);
 	~CAttack_Manager()override;
 	HRESULT Init()override;
 	void Uninit()override;

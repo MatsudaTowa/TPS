@@ -18,7 +18,6 @@ class CCharacter : public CObjectX
 public:
 	static const int MAX_KEY = 20; //キー最大数
 	static const int MAX_MOTION = 5;
-	static const int CHARACTER_PRIORITY = 8; //描画順
 	static const int MAX_PARTS = 12; //最大パーツ数
 	static const float  BOSS_FIELD_X; //ボス戦のX座標
 
@@ -37,7 +36,7 @@ public:
 		STATE_MAX,
 	}COMBAT_STATE;
 
-	CCharacter(int nPriority = CHARACTER_PRIORITY);
+	CCharacter(int nPriority);
 	~CCharacter()override;
 	HRESULT Init()override;
 	void Uninit()override;

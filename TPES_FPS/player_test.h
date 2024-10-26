@@ -10,6 +10,7 @@
 #include "main.h"
 #include "model_parts.h"
 #include "character.h"
+#include "reticle.h"
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -59,6 +60,8 @@ private:
 		MOTION_ATTACK,
 		MOTION_MAX,
 	}Motion_Type;
+
+	CReticle* m_Raticle;
 
 	void DebugPos();
 

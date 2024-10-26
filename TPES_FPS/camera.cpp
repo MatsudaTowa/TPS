@@ -36,11 +36,12 @@ const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
 const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
 
 //サードビュー時の距離
-const float CCamera::THIRDVIEW_LENGTH = 100.0f;
+const float CCamera::THIRDVIEW_LENGTH = 110.0f;
 
 //サードビュー時の補正値
 const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
-const float CCamera::THIRDVIEW_CORRECT_Y = 60.0f;
+const float CCamera::THIRDVIEW_CORRECT_Y = 80.0f;
+const float CCamera::THIRDVIEW_CORRECT_Z = 20.0f;
 
 //サードパーソンビュー時のXの最大可動域
 const float CCamera::MAX_TURN_X = 0.5f;
@@ -435,7 +436,8 @@ void CCamera::ThirdViewCamera()
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
 				CPlayer_test* pPlayer = (CPlayer_test*)pObj;
-				m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
+
+				m_posR.x = pPlayer->GetPos().x;
 				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				m_posR.z = pPlayer->GetPos().z;
 
@@ -443,12 +445,14 @@ void CCamera::ThirdViewCamera()
 				THIRDVIEW_LENGTH * sinf(m_rot.x), 
 				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
-				//m_posV.x = m_posR.x + THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y);
-				//m_posV.y = m_posR.y + THIRDVIEW_LENGTH_Y * sinf(m_rot.x);
-				//m_posV.z = m_posR.z - THIRDVIEW_LENGTH_Z * cosf(m_rot.x) * cosf(m_rot.y);
+				// カメラをプレイヤーの右にする処理※絶対やれ
+				//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
+				//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
+				//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
 
-				//g_Camera.posR.y = g_Camera.posV.y + sinf(g_Camera.rot.x) * g_Camera.fLength;
-				//g_Camera.posR.z = g_Camera.posV.z + cosf(g_Camera.rot.x) * g_Camera.fLength;
+				//m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
+				//THIRDVIEW_LENGTH * sinf(m_rot.x), 
+				//-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetMouse();
@@ -483,6 +487,22 @@ void CCamera::ThirdViewCamera()
 D3DXVECTOR3 CCamera::GetRot()
 {
 	return m_rot;
+}
+
+//=============================================
+//カメラの視点取得
+//=============================================
+D3DXVECTOR3 CCamera::GetPosV()
+{
+	return m_posV;
+}
+
+//=============================================
+//カメラの注視点取得
+//=============================================
+D3DXVECTOR3 CCamera::GetPosR()
+{
+	return m_posR;
 }
 
 //=============================================

@@ -32,13 +32,34 @@ public:
 	void Update();
 	void SetCamera();
 	void ResetCamera();
-	D3DXVECTOR3 GetRot();
+
+	//方向取得
 	void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
-	void DebugCameraDraw(); //ガメラのデバック表示
+	//視点取得
+	void SetPosV(D3DXVECTOR3 posV)
+	{
+		m_posV = posV;
+	}
+	//注視点取得
+	void SetPosR(D3DXVECTOR3 posR)
+	{
+		m_posR = posR;
+	}
 
+	//方向取得
+	D3DXVECTOR3 GetRot();
+	//視点取得
+	D3DXVECTOR3 GetPosV();
+	//注視点取得
+	D3DXVECTOR3 GetPosR();
+
+	//カメラのデバック表示
+	void DebugCameraDraw(); 
+
+	//現在のカメラのタイプ取得
 	static CANERA_TYPE GetType();
 private:
 	static const float DEFAULT_MOVE; //通常時の移動
@@ -55,6 +76,7 @@ private:
 
 	static const float THIRDVIEW_CORRECT_X; //サードパーソンビュー時の補正値X
 	static const float THIRDVIEW_CORRECT_Y; //サードパーソンビュー時の補正値Y
+	static const float THIRDVIEW_CORRECT_Z; //サードパーソンビュー時の補正値Z
 
 	static const float THIRDVIEW_LENGTH; //サードパーソンビュー時の距離
 

@@ -19,7 +19,7 @@ class CReticle : public CBillboard
 public:
 	static const std::string RETICLE_TEXTURE_NAME;	//テクスチャの名前
 
-	static const int RETICLE_PRIORITY = 24; //描画順
+	static const int RETICLE_PRIORITY = 30; //描画順
 
 	CReticle(int nPriority = RETICLE_PRIORITY);
 	~CReticle()override;

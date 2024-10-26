@@ -33,7 +33,7 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle()
 {//イニシャライザーでメンバ変数初期化
 
 }
@@ -64,6 +64,11 @@ HRESULT CPlayer_test::Init()
 	{
 		CModel* pModel = CManager::GetModel();
 	}
+
+	//カメラ情報取得
+	CCamera* pCamera = CManager::GetCamera();
+
+	m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(10.0f,10.0f,0.0f));
 
 	//ムーブ値代入
 	SetMove(move);
@@ -175,6 +180,11 @@ void CPlayer_test::Update()
 			ReSpawn();
 		}
 
+
+		//カメラ情報取得
+		CCamera* pCamera = CManager::GetCamera();
+
+		m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
@@ -366,7 +376,7 @@ void CPlayer_test::Input()
 		//位置取得
 		D3DXVECTOR3 pos = GetPos();
 		//弾発射
-		ShotBullet(D3DXVECTOR3(pos.x, pos.y + 20.0f, pos.z), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+		ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
 	}
 
 

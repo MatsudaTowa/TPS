@@ -66,7 +66,7 @@ void CAttack_Manager::Update()
 void CAttack_Manager::Draw()
 {
 	//eƒNƒ‰ƒX‚Ì•`‰æˆ—
-	CObject3D::Draw();
+	CBillboard::Draw();
 }
 
 //=============================================

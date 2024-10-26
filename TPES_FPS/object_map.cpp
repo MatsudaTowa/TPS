@@ -9,7 +9,7 @@
 //==============================================
 // コンストラクタ
 //==============================================
-CObjectMap::CObjectMap(int nPriority)
+CObjectMap::CObjectMap(int nPriority):CObjectX(nPriority)
 {
 }
 

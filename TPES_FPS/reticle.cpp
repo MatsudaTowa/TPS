@@ -7,10 +7,14 @@
 #include "reticle.h"
 #include "manager.h"
 
+//テクスチャ初期化
+LPDIRECT3DTEXTURE9 CReticle::m_pTextureTemp = nullptr;
+const std::string CReticle::RETICLE_TEXTURE_NAME = "data\\TEXTURE\\lockon.png";
+
 //=============================================
 //コンストラクタ
 //=============================================
-CReticle::CReticle(int nPriority)
+CReticle::CReticle(int nPriority):CBillboard(nPriority)
 {
 }
 
@@ -28,6 +32,8 @@ HRESULT CReticle::Init()
 {
 	//親クラスの初期化
 	CObject3D::Init();
+	//頂点座標
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	return S_OK;
 }
 
@@ -47,6 +53,8 @@ void CReticle::Update()
 {
 	//親クラスの更新
 	CObject3D::Update();
+	//頂点座標
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 //=============================================
@@ -63,7 +71,7 @@ void CReticle::Draw()
 //=============================================
 CReticle* CReticle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 {
-	CReticle* pRaticle = nullptr;
+	CReticle* pRaticle = new CReticle;
 
 	if (pRaticle == nullptr) 
 	{
@@ -75,6 +83,7 @@ CReticle* CReticle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 	pRaticle->SetPos(pos); //pos設定
 	pRaticle->SetSize(size); //サイズ設定
 	pRaticle->SetRot(rot);
+	pRaticle->BindTexture(pTexture->GetAddress(pTexture->Regist(&RETICLE_TEXTURE_NAME)));
 
 	pRaticle->SetType(OBJECT_TYPE_RETICLE); //タイプ設定
 	pRaticle->Init();
@@ -87,6 +96,5 @@ CReticle* CReticle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 //=============================================
 void CReticle::Move()
 {
-	//マウスの情報取得
-	CInputMouse* pMouse = CManager::GetMouse();
+
 }

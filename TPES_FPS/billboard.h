@@ -13,8 +13,7 @@
 class CBillboard : public CObject3D
 {
 public:
-	static const int BILLBOARD_PRIORITY = 3; //ï`âÊèá
-	CBillboard(int nPriority = BILLBOARD_PRIORITY);
+	CBillboard(int nPriority);
 	~CBillboard()override;
 	void Draw()override;
 };
