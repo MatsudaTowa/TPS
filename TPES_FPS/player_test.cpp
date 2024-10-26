@@ -280,52 +280,56 @@ void CPlayer_test::Input()
 	//どっち向いてるか取得
 	bool bWay = GetWay();
 
-	switch (pCameraType)
-	{//サイドビューの時は横にしか動かないように設定
-	case CCamera::CANERA_TYPE::TYPE_SIDEVIEW:
-		if (pKeyboard->GetPress(DIK_A))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
+	COMBAT_STATE state = CCharacter::GetCombat_State();
+	if (state != COMBAT_STATE::STATE_ATTACK)
+	{
+		switch (pCameraType)
+		{//サイドビューの時は横にしか動かないように設定
+		case CCamera::CANERA_TYPE::TYPE_SIDEVIEW:
+			if (pKeyboard->GetPress(DIK_A))
+			{
+				vecDirection.x -= 1.0f;
+				bWay = false;
+			}
+			else if (pKeyboard->GetPress(DIK_D))
+			{
+				vecDirection.x += 1.0f;
+				bWay = true;
+			}
+			break;
+		case CCamera::CANERA_TYPE::TYPE_PARALLEL_SIDEVIEW:
+			if (pKeyboard->GetPress(DIK_A))
+			{
+				vecDirection.x -= 1.0f;
+				bWay = false;
+			}
+			else if (pKeyboard->GetPress(DIK_D))
+			{
+				vecDirection.x += 1.0f;
+				bWay = true;
+			}
+			break;
+		default:
+			if (pKeyboard->GetPress(DIK_W))
+			{
+				vecDirection.z += 1.0f;
+			}
+			if (pKeyboard->GetPress(DIK_S))
+			{
+				vecDirection.z -= 1.0f;
+			}
+			if (pKeyboard->GetPress(DIK_A))
+			{
+				vecDirection.x -= 1.0f;
+				bWay = false;
+			}
+			if (pKeyboard->GetPress(DIK_D))
+			{
+				vecDirection.x += 1.0f;
+				bWay = true;
+			}
+			break;
 		}
-		else if (pKeyboard->GetPress(DIK_D))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
-	case CCamera::CANERA_TYPE::TYPE_PARALLEL_SIDEVIEW:
-		if (pKeyboard->GetPress(DIK_A))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
-		}
-		else if (pKeyboard->GetPress(DIK_D))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
-	default:
-		if (pKeyboard->GetPress(DIK_W))
-		{
-			vecDirection.z += 1.0f;
-		}
-		if (pKeyboard->GetPress(DIK_S))
-		{
-			vecDirection.z -= 1.0f;
-		}
-		if (pKeyboard->GetPress(DIK_A))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
-		}
-		if (pKeyboard->GetPress(DIK_D))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
 	}
 
 	float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);

@@ -62,14 +62,6 @@ void CCharacter::Uninit()
 void CCharacter::Update()
 {
 	D3DXVECTOR3 CharacterPos = GetPos();
-
-	//if (GetLaunding())
-	//{//着地してるなら
-	//	//ジャンプ数リセット
-	//	CharacterPos.y = m_oldpos.y;
-	//	m_move.y = 0.0f;
-	//}
-	//SetPos(CharacterPos);
 }
 
 //=============================================
