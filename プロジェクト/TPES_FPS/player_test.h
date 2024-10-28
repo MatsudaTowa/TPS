@@ -65,5 +65,6 @@ private:
 
 	void DebugPos();
 	int m_nRateCnt;//レートカウント
+	bool m_bRelorad; //リロードするかどうか
 };
 #endif

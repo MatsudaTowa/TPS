@@ -55,7 +55,7 @@ int& CGun::GetFireRate()
 //=============================================
 //コンストラクタ
 //=============================================
-CAssultRifle::CAssultRifle()
+CAssultRifle::CAssultRifle(): m_nReloadCnt()
 {
 }
 
@@ -95,6 +95,8 @@ HRESULT CAssultRifle::Init()
 	SetReloadFrame(nReloadFrame);
 	SetFireRate(nFireRate);
 
+	m_nReloadCnt = 0;
+
 	return S_OK;
 }
 
@@ -124,12 +126,19 @@ void CAssultRifle::ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 siz
 //=============================================
 //リロード処理
 //=============================================
-void CAssultRifle::Reload()
+bool CAssultRifle::Reload()
 {
-	//現在の弾数取得
-	int nAmmo = GetAmmo();
-	//デフォルトのマガジン弾数代入
-	nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
-	SetAmmo(nAmmo);
-
+	bool bReload = true; //リロード中かどうか
+	m_nReloadCnt++;
+	if (m_nReloadCnt >= CAssultRifle::DEFAULT_AR_RELOAD_FRAME)
+	{
+		m_nReloadCnt = 0;
+		//現在の弾数取得
+		int nAmmo = GetAmmo();
+		//デフォルトのマガジン弾数代入
+		nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
+		SetAmmo(nAmmo);
+		bReload = false;
+	}
+	return bReload;
 }

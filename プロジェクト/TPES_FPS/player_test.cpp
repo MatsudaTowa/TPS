@@ -56,6 +56,8 @@ HRESULT CPlayer_test::Init()
 
 	m_pGun->Init();
 
+	m_bRelorad = false;
+
 	m_nRateCnt = 0;
 
 	CRenderer* pRender = CManager::GetRenderer();
@@ -105,6 +107,11 @@ void CPlayer_test::Update()
 	CScene::MODE pScene = CScene::GetSceneMode();
 
 	CCharacter::Update();
+
+	if (m_bRelorad == true)
+	{//リロード中だったら
+		m_bRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
+	}
 
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
@@ -401,7 +408,7 @@ void CPlayer_test::Input()
 		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
 			//リロード
-			m_pGun->Reload();
+			m_bRelorad = true;
 		}
 	}
 }

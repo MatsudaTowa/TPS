@@ -25,7 +25,7 @@ public:
 	virtual HRESULT Init() = 0;
 	virtual void Uninit() = 0;
 	virtual void ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type) = 0; //弾発射処理
-	virtual void Reload() = 0;
+	virtual bool Reload() = 0;
 
 	//弾数設定
 	void SetAmmo(int Ammo)
@@ -66,7 +66,7 @@ private:
 class CAssultRifle :public CGun
 {
 public:
-	static const int DEFAULT_AR_MAG_SIZE = 40; //デフォルトのアサルトのマガジンサイズ
+	static const int DEFAULT_AR_MAG_SIZE = 28; //デフォルトのアサルトのマガジンサイズ
 	static const int DEFAULT_AR_RELOAD_FRAME = 60; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_FIRE_RATE = 15; //デフォルトのアサルトの発射レート
 
@@ -75,6 +75,8 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type) override; //弾発射処理
-	void Reload() override;
+	bool Reload() override;
+private:
+	int m_nReloadCnt;
 };
 #endif

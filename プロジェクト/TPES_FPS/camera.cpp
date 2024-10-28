@@ -46,7 +46,7 @@ const float CCamera::THIRDVIEW_CORRECT_Z = 20.0f;
 //サードパーソンビュー時のXの最大可動域
 const float CCamera::MAX_TURN_X = 0.5f;
 //サードパーソンビュー時のXの最小可動域
-const float CCamera::MIN_TURN_X = 0.0f;
+const float CCamera::MIN_TURN_X = -0.3f;
 
 CCamera::CANERA_TYPE CCamera::m_type = TYPE_THIRDVIEW;
 
@@ -457,25 +457,20 @@ void CCamera::ThirdViewCamera()
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetMouse();
 				m_rot.y += pMouse->GetMouseMove().x * 0.001f;
+				m_rot.x += pMouse->GetMouseMove().y * 0.001f;
+
 				//キーボード情報取得
 				CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 				
-				if (pKeyboard->GetPress(DIK_UP) && m_rot.x <= MAX_TURN_X)
+				if (m_rot.x <= MIN_TURN_X)
 				{
-					m_rot.x += 0.01f;
+					m_rot.x = MIN_TURN_X;
 				}
-				if (pKeyboard->GetPress(DIK_DOWN) && m_rot.x >= MIN_TURN_X)
+				if (m_rot.x >= MAX_TURN_X)
 				{
-					m_rot.x -= 0.01f;
+					m_rot.x = MAX_TURN_X;
 				}
-				if (pKeyboard->GetPress(DIK_RIGHT))
-				{
-					m_rot.y += 0.01f;
-				}
-				if (pKeyboard->GetPress(DIK_LEFT))
-				{
-					m_rot.y -= 0.01f;
-				}
+			
 			}
 		}
 	}
