@@ -64,6 +64,6 @@ private:
 	CReticle* m_Raticle;
 
 	void DebugPos();
-
+	int m_nRateCnt;//レートカウント
 };
 #endif

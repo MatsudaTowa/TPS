@@ -11,6 +11,7 @@
 #include "objectX.h"
 #include "model_parts.h"
 #include "bullet.h"
+#include "gun.h"
 
 //プレイヤークラス
 class CCharacter : public CObjectX
@@ -52,7 +53,6 @@ public:
 	void Jump(); //ジャンプ処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
-	void ShotBullet(D3DXVECTOR3 pos, float move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type); //弾発射処理
 
 	//戦闘列挙代入
 	void SetCombat_State(COMBAT_STATE combat_state)
@@ -137,6 +137,9 @@ public:
 
 	//パーツ
 	CModel_Parts* m_apModel[MAX_PARTS];
+
+	//銃
+	CGun* m_pGun;
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
@@ -147,13 +150,14 @@ private:
 	bool m_bWay; //どっち向いてるか(true:右false:左)
 	bool m_bLoopFinish; //ループモーションが終わったか
 	int m_nLife; //体力
+	int m_nShotBullet; //撃った弾数
 	int m_nStateCnt; //ステート切り替え計測カウント
 	int m_PartsCnt; //パーツ数
 	int m_nMotionFrameCnt; //切り替えフレームカウント
 	int m_nKeySetCnt; //キー切り替えカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
 	float m_Speed; //スピード
-	float m_Jump; //スピード
+	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
 

@@ -33,7 +33,7 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle(),m_nRateCnt()
 {//イニシャライザーでメンバ変数初期化
 
 }
@@ -50,8 +50,13 @@ CPlayer_test::~CPlayer_test()
 //=============================================
 HRESULT CPlayer_test::Init()
 {
-
 	CCharacter::Init();
+
+	m_pGun = new CAssultRifle;
+
+	m_pGun->Init();
+
+	m_nRateCnt = 0;
 
 	CRenderer* pRender = CManager::GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
@@ -179,7 +184,6 @@ void CPlayer_test::Update()
 		{//リスポーン処理
 			ReSpawn();
 		}
-
 
 		//カメラ情報取得
 		CCamera* pCamera = CManager::GetCamera();
@@ -375,15 +379,31 @@ void CPlayer_test::Input()
 
 	SetCombat_State(combat_state);
 
-	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetTrigger(0))
+	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetPress(0))
 	{//アタック状態だったら
-		//位置取得
-		D3DXVECTOR3 pos = GetPos();
-		//弾発射
-		ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), 4.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+		m_nRateCnt++;
+		if (m_nRateCnt >= CAssultRifle::DEFAULT_AR_FIRE_RATE)
+		{
+			m_nRateCnt = 0;
+			//位置取得
+			D3DXVECTOR3 pos = GetPos();
+			//弾発射
+			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * 4.0f, sinf(GetRot().x + D3DX_PI) * 4.0f, cosf(GetRot().y + D3DX_PI) * 4.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+		}
+	}
+	if (pMouse->GetRelease(0))
+	{
+		m_nRateCnt = 0;
 	}
 
-
+	if (pKeyboard->GetTrigger(DIK_R))
+	{
+		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
+		{
+			//リロード
+			m_pGun->Reload();
+		}
+	}
 }
 
 //=============================================
@@ -395,8 +415,8 @@ void CPlayer_test::DebugPos()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f"
-		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z,GetMove().x,GetMove().y,GetMove().z);
+	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f\n弾数:%d"
+		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z,GetMove().x,GetMove().y,GetMove().z,m_pGun->GetAmmo());
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 }

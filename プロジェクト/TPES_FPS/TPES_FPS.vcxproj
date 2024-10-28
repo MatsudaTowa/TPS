@@ -161,6 +161,7 @@
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gun.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />

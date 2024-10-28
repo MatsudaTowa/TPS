@@ -22,7 +22,7 @@ const float CCharacter::GRAVITY_MAX = 20.0f;
 //=============================================
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),m_bLanding(false),m_bWay(false),m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_nLife(0)
 ,m_nStateCnt(0),m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
-m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), m_Jump()
+m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), m_Jump(), m_pGun(),m_MotionSet()
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 }
 
@@ -44,6 +44,9 @@ HRESULT CCharacter::Init()
 	m_Motion = -1;
 	//ループモーション終わってる判定に
 	m_bLoopFinish = true;
+	//銃クラス作成
+	//m_pGun = new CGun;
+	//親クラスの初期化
 	CObjectX::Init();
     return S_OK;
 }
@@ -53,6 +56,11 @@ HRESULT CCharacter::Init()
 //=============================================
 void CCharacter::Uninit()
 {
+	if (m_pGun != nullptr)
+	{
+		delete m_pGun;
+		m_pGun = nullptr;
+	}
     CObjectX::Uninit();
 }
 
@@ -359,7 +367,6 @@ void CCharacter::Motion(int NumParts)
 {
 	D3DXVECTOR3 MovePos[MAX_PARTS];
 	D3DXVECTOR3 MoveRot[MAX_PARTS];
-	D3DXVECTOR3 Pos = GetPos();
 
 	int nNextKey = (m_nKeySetCnt + 1) % m_MotionSet[m_Motion].nNumKey;
 
@@ -589,15 +596,6 @@ void CCharacter::HitField()
 		}
 	}
 	SetPos(CharacterPos);
-}
-
-//=============================================
-//弾発射処理
-//=============================================
-void CCharacter::ShotBullet(D3DXVECTOR3 pos, float move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type)
-{
-	CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * move, 0.0f, cosf(GetRot().y + D3DX_PI) * move),
-		D3DXVECTOR3(0.0f, 0.0f, GetRot().y * 2.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 60, nDamage, Allegiance, type);
 }
 
 //=============================================
