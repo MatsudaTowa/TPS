@@ -186,6 +186,8 @@ void CRenderer::Draw()
 //=============================================
 void CRenderer::DrawFPS(int nCntFPS)
 {
+#ifdef _DEBUG
+
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 	//EditInfo* pEdit = GetEditinfo();
@@ -198,6 +200,9 @@ void CRenderer::DrawFPS(int nCntFPS)
 
 	//テキストの描画
 	m_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
+#endif // _DEBUG
+
+
 }
 
 //=============================================

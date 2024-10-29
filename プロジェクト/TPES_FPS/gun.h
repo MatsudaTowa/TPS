@@ -67,7 +67,7 @@ class CAssultRifle :public CGun
 {
 public:
 	static const int DEFAULT_AR_MAG_SIZE = 28; //デフォルトのアサルトのマガジンサイズ
-	static const int DEFAULT_AR_RELOAD_FRAME = 60; //デフォルトのアサルトのリロードフレーム数
+	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_FIRE_RATE = 15; //デフォルトのアサルトの発射レート
 
 	CAssultRifle();

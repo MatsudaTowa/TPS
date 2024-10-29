@@ -394,8 +394,10 @@ void CPlayer_test::Input()
 			m_nRateCnt = 0;
 			//ˆÊ’uŽæ“¾
 			D3DXVECTOR3 pos = GetPos();
+			//ƒJƒƒ‰î•ñŽæ“¾
+			CCamera* pCamera = CManager::GetCamera();
 			//’e”­ŽË
-			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * 4.0f, sinf(GetRot().x + D3DX_PI) * 4.0f, cosf(GetRot().y + D3DX_PI) * 4.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -4.0f, sinf(pCamera->GetRot().x + D3DX_PI) * 4.0f, cosf(pCamera-> GetRot().y + D3DX_PI) * -4.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
 		}
 	}
 	if (pMouse->GetRelease(0))
@@ -403,7 +405,7 @@ void CPlayer_test::Input()
 		m_nRateCnt = 0;
 	}
 
-	if (pKeyboard->GetTrigger(DIK_R))
+	if (pKeyboard->GetTrigger(DIK_R) && GetCombat_State() != CCharacter::COMBAT_STATE::STATE_ATTACK)
 	{
 		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
@@ -418,12 +420,14 @@ void CPlayer_test::Input()
 //=============================================
 void CPlayer_test::DebugPos()
 {
+#ifdef _DEBUG
 	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
 	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f\n’e”:%d"
-		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z,GetMove().x,GetMove().y,GetMove().z,m_pGun->GetAmmo());
+		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z, GetMove().x, GetMove().y, GetMove().z, m_pGun->GetAmmo());
 	//ƒeƒLƒXƒg‚Ì•`‰æ
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }
