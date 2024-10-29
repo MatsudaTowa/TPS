@@ -110,7 +110,7 @@ bool CAttack_Manager::HitEnemy()
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 //=============================================

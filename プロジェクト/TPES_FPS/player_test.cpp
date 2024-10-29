@@ -21,6 +21,8 @@ const int CPlayer_test::MAX_JUMPCNT = 2;
 //プレイヤーをリスポーンされる座標
 const float CPlayer_test::DEADZONE_Y = -100.0f;
 
+CAmmo_UI* CPlayer_test::m_pAmmoUI = nullptr;
+
 //テクスチャ初期化
 LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 
@@ -52,9 +54,21 @@ HRESULT CPlayer_test::Init()
 {
 	CCharacter::Init();
 
-	m_pGun = new CAssultRifle;
+	//銃初期化
+	if (m_pGun == nullptr)
+	{
+		m_pGun = new CAssultRifle;
 
-	m_pGun->Init();
+		m_pGun->Init();
+	}
+
+	//残弾数初期化
+	if (m_pAmmoUI == nullptr)
+	{
+		m_pAmmoUI = new CAmmo_UI;
+
+		m_pAmmoUI->Init();
+	}
 
 	m_Raticle = nullptr;
 
@@ -93,6 +107,12 @@ HRESULT CPlayer_test::Init()
 //=============================================
 void CPlayer_test::Uninit()
 {
+	if (m_pAmmoUI != nullptr)
+	{
+		m_pAmmoUI->Uninit();
+		m_pAmmoUI = nullptr;
+	}
+
 	//親クラスの終了処理を呼ぶ
 	CObjectX::Uninit();
 
@@ -111,6 +131,11 @@ void CPlayer_test::Update()
 	if (m_bRelorad == true)
 	{//リロード中だったら
 		m_bRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
+	}
+
+	if (m_pAmmoUI != nullptr)
+	{
+		m_pAmmoUI->SetAmmo_UI(m_pGun->GetAmmo());
 	}
 
 	if (pScene != CScene::MODE::MODE_TITLE)

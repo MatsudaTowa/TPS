@@ -94,7 +94,7 @@ void CBullet::OnActive()
 			bHitCheck = HitEnemy();
 			if (bHitCheck == true)
 			{
-				//Uninit();
+				Uninit();
 			}
 			break;
 

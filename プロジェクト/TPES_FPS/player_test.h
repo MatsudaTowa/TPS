@@ -11,6 +11,7 @@
 #include "model_parts.h"
 #include "character.h"
 #include "reticle.h"
+#include"ammo_UI.h"
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -44,6 +45,7 @@ private:
 	void ReSpawn(); //リスポーン
 	void Input(); //プレイヤー入力処理
 
+	static CAmmo_UI*m_pAmmoUI;
 	int m_nJumpCnt; //ジャンプカウント
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
