@@ -56,6 +56,8 @@ HRESULT CPlayer_test::Init()
 
 	m_pGun->Init();
 
+	m_Raticle = nullptr;
+
 	m_bRelorad = false;
 
 	m_nRateCnt = 0;
@@ -74,8 +76,6 @@ HRESULT CPlayer_test::Init()
 
 	//カメラ情報取得
 	CCamera* pCamera = CManager::GetCamera();
-
-	m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3(10.0f,10.0f,0.0f));
 
 	//ムーブ値代入
 	SetMove(move);
@@ -195,7 +195,10 @@ void CPlayer_test::Update()
 		//カメラ情報取得
 		CCamera* pCamera = CManager::GetCamera();
 
-		m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+		if(m_Raticle != nullptr)
+		{
+			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+		}
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
@@ -370,18 +373,30 @@ void CPlayer_test::Input()
 	}
 
 	CCharacter::COMBAT_STATE combat_state = GetCombat_State();
+	CCamera* pCamera = CManager::GetCamera();
 	////移動量代入
 	//SetMove(move);
 	if (combat_state != CCharacter::COMBAT_STATE::STATE_ATTACK &&pMouse->GetPress(1))
 	{//アタック状態じゃなくマウスが押されてる間は
 		//ステートをアタック状態に
 		combat_state = CCharacter::COMBAT_STATE::STATE_ATTACK;
+
+		if (m_Raticle == nullptr)
+		{//使われていなかったら
+			m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f));
+		}
 	}
 
 	if (combat_state == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetRelease(1))
 	{//アタック状態じゃなくマウスが離されたら
 		//ステートをノーマル状態に
 		combat_state = CCharacter::COMBAT_STATE::STATE_NORMAL;
+
+		if(m_Raticle != nullptr)
+		{//使われていたら
+			m_Raticle->Uninit();
+			m_Raticle = nullptr;
+		}
 	}
 
 	SetCombat_State(combat_state);
@@ -395,7 +410,6 @@ void CPlayer_test::Input()
 			//位置取得
 			D3DXVECTOR3 pos = GetPos();
 			//カメラ情報取得
-			CCamera* pCamera = CManager::GetCamera();
 			//弾発射
 			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -4.0f, sinf(pCamera->GetRot().x + D3DX_PI) * 4.0f, cosf(pCamera-> GetRot().y + D3DX_PI) * -4.0f), D3DXVECTOR3(5.0f, 5.0f, 0.0f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
 		}
@@ -405,7 +419,7 @@ void CPlayer_test::Input()
 		m_nRateCnt = 0;
 	}
 
-	if (pKeyboard->GetTrigger(DIK_R) && GetCombat_State() != CCharacter::COMBAT_STATE::STATE_ATTACK)
+	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))
 	{
 		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
