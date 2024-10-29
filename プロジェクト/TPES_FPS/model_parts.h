@@ -39,9 +39,19 @@ public:
 		m_mtxWorld = mtxWorld;
 	}
 
+	void SetPos(D3DXVECTOR3 pos)
+	{
+		m_pos = pos;
+	};
+
 	void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
+	};
+
+	D3DXVECTOR3 GetPos()
+	{
+		return m_pos;
 	};
 
 	D3DXVECTOR3 GetRot()
@@ -49,6 +59,7 @@ public:
 		return m_rot;
 	};
 	void SetParent(CModel_Parts*pParent);
+
 
 	//ワールドマトリックス取得
 	D3DXMATRIX& GetMtxWorld();

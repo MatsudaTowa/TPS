@@ -394,37 +394,51 @@ CColision::COLISION CColision::CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 //=============================================
 //ポリゴンとモデル当たり判定チェック関数
 //=============================================
-CColision::COLISION CColision::CheckItemColision(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
+CColision::COLISION CColision::CheckPolygonModelColision(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
 {
-	if (Apos.x + ASize.x > Bpos.x
-		&& Apos.x - ASize.x < Bpos.x)
+	//距離を求める
+	D3DXVECTOR3 Length = Apos - Bpos;
+
+	float CenterDistance = sqrtf((Length.x*Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
+
+	D3DXVECTOR3 size = (BMaxpos - BMinpos) * 0.5f;
+
+	float Radius = (ASize.x + size.x) + (ASize.y + size.y) + (ASize.z + size.z) * 0.5f;
+
+	if (CenterDistance <= Radius)
 	{
-		if (Apos.y - ASize.y < Bpos.y
-			&& Apos.y + ASize.y > Bpos.y)
-		{//当たり判定(X)
-			return CColision::COLISION::COLISON_X;
-		}
-		else
-		{
-			return CColision::COLISION::COLISON_NONE;
-		}
+		return COLISION_CIRCLE;
 	}
-	if (Apos.z + ASize.z > Bpos.z + BMinpos.z
-		&& Apos.z - ASize.z < Bpos.z + BMaxpos.z)
-	{
-		if (Apos.x - ASize.x < Bpos.x + BMaxpos.x
-			&& Apos.x + ASize.x > Bpos.x + BMinpos.x
-			&& Apos.y - ASize.y < Bpos.y + BMaxpos.y
-			&& Apos.y + ASize.y > Bpos.y + BMinpos.y
-			)
-		{//当たり判定(Z)
-			return CColision::COLISION::COLISON_Z;
-		}
-		else
-		{
-			return CColision::COLISION::COLISON_NONE;
-		}
-	}
+
+	//if (Apos.x + ASize.x > Bpos.x + BMinpos.x
+	//	&& Apos.x - ASize.x < Bpos.x + BMaxpos.x)
+	//{
+	//	if (Apos.y - ASize.y < Bpos.y + BMaxpos.y
+	//		&& Apos.y + ASize.y > Bpos.y + BMinpos.y)
+	//	{//当たり判定(X)
+	//		return CColision::COLISION::COLISON_X;
+	//	}
+	//	else
+	//	{
+	//		return CColision::COLISION::COLISON_NONE;
+	//	}
+	//}
+	//if (Apos.z + ASize.z > Bpos.z + BMinpos.z
+	//	&& Apos.z - ASize.z < Bpos.z + BMaxpos.z)
+	//{
+	//	if (Apos.x - ASize.x < Bpos.x + BMaxpos.x
+	//		&& Apos.x + ASize.x > Bpos.x + BMinpos.x
+	//		&& Apos.y - ASize.y < Bpos.y + BMaxpos.y
+	//		&& Apos.y + ASize.y > Bpos.y + BMinpos.y
+	//		)
+	//	{//当たり判定(Z)
+	//		return CColision::COLISION::COLISON_Z;
+	//	}
+	//	else
+	//	{
+	//		return CColision::COLISION::COLISON_NONE;
+	//	}
+	//}
 	else
 	{
 		return CColision::COLISION::COLISON_NONE;

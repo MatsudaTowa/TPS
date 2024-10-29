@@ -27,7 +27,7 @@ public:
 	void Update();
 	void Draw();
 
-	//プレイヤー作成
+	//エネミー作成
 	static CEnemy_test* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife);
 
 	void Damage(int nDamage); //当たり判定
@@ -46,8 +46,6 @@ private:
 	void Move(); //プレイヤー移動処理
 
 	int m_nJumpCnt; //ジャンプカウント
-
-	CModel_Parts* m_apModel[NUM_PARTS];
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 

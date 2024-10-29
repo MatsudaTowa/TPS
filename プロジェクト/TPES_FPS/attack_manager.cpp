@@ -8,6 +8,7 @@
 #include "colision.h"
 #include "player.h"
 #include "enemy_test.h"
+#include "model_parts.h"
 #include "block.h"
 #include "field.h"
 #include"game.h"
@@ -93,20 +94,25 @@ bool CAttack_Manager::HitEnemy()
 			{
 				CEnemy_test* pEnemy = (CEnemy_test*)pObj;
 
-				CColision::COLISION ColisionCheck = CColision::CheckItemColision(Attackpos, Attacksize, pEnemy->GetPos(),pEnemy->GetMinPos(),pEnemy->GetMaxPos());
+				CColision::COLISION ColisionCheck;
+				for (int nCnt = 0; nCnt < pEnemy->NUM_PARTS; nCnt++)
+				{
+					//パーツのオフセットpos
+					D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCnt]->GetMtxWorld()._41
+					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._42
+					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-				if (ColisionCheck != CColision::COLISION::COLISON_NONE)
-				{//当たってたら
-					pEnemy->Damage(m_nDamage);
-					int nCurrentLife = pEnemy->GetLife();
-					if (nCurrentLife <= 0)
-					{
-						m_nNumkill++;
+					ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->m_minpos, pEnemy->m_apModel[nCnt]->m_maxpos);
 
-						pEnemy->Uninit();
+					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+					{//当たってたら
+						pEnemy->Damage(m_nDamage);
+						int nCurrentLife = pEnemy->GetLife();
+						return true;
 					}
-					return true;
 				}
+
+
 			}
 		}
 	}
@@ -137,7 +143,7 @@ bool CAttack_Manager::HitPlayer()
 			{
 				CPlayer* pPlayer = (CPlayer*)pObj;
 
-				CColision::COLISION ColisionCheck = CColision::CheckItemColision(Attackpos, Attacksize, pPlayer->GetPos(), pPlayer->GetMinPos(), pPlayer->GetMaxPos());
+				CColision::COLISION ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, pPlayer->GetPos(), pPlayer->GetMinPos(), pPlayer->GetMaxPos());
 
 				if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 				{//当たってたら
@@ -177,7 +183,7 @@ bool CAttack_Manager::HitBlock()
 			{
 				CBlock* pBlock = (CBlock*)pObj;
 
-				CColision::COLISION ColisionCheck = CColision::CheckItemColision(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
 				if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 				{//当たってたら

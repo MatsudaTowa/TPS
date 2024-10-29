@@ -38,7 +38,7 @@ DWORD CEnemy_test::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy_test::CEnemy_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0), m_apModel()
+CEnemy_test::CEnemy_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
 , m_Motion()
 {//イニシャライザーでメンバ変数初期化
 
@@ -64,12 +64,6 @@ HRESULT CEnemy_test::Init()
 
 	//移動量初期化
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-
-	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
-	{
-		CModel* pModel = CManager::GetModel();
-	}
 
 	//ムーブ値代入
 	SetMove(move);
@@ -200,8 +194,6 @@ void CEnemy_test::Draw()
 //=============================================
 CEnemy_test* CEnemy_test::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 {
-	CModel* pModel = CManager::GetModel();
-
 	CEnemy_test* pEnemy = new CEnemy_test;
 
 	// nullならnullを返す

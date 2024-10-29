@@ -263,7 +263,9 @@ void CCharacter::Load_Parts(const char* FileName,int NumParts)
 								&m_apModel[nCnt]->m_pos.y,
 								&m_apModel[nCnt]->m_pos.z);
 
-								m_apModel[nCnt]->m_Tpos = m_apModel[nCnt]->m_pos;
+							m_apModel[nCnt]->SetPos(m_apModel[nCnt]->m_pos);
+
+							m_apModel[nCnt]->m_Tpos = m_apModel[nCnt]->m_pos;
 						}
 						else if (!strcmp(aDataSearch, "ROT"))
 						{
@@ -272,6 +274,9 @@ void CCharacter::Load_Parts(const char* FileName,int NumParts)
 								&m_apModel[nCnt]->m_rot.x,
 								&m_apModel[nCnt]->m_rot.y,
 								&m_apModel[nCnt]->m_rot.z);
+
+							m_apModel[nCnt]->SetRot(m_apModel[nCnt]->m_rot);
+
 							m_apModel[nCnt]->m_Trot = m_apModel[nCnt]->m_rot;
 
 						}
