@@ -133,7 +133,7 @@ void CCharacter::MotionDraw(int NumParts)
 //=============================================
 //パーツのロード
 //=============================================
-void CCharacter::Load_Parts(const char* FileName,int NumParts)
+void CCharacter::Load_Parts(const char* FileName)
 {
 	int nCnt = 0;
 	int nCntName = 0;
@@ -396,7 +396,7 @@ void CCharacter::Motion(int NumParts)
 		if (m_nKeySetCnt == 0 && m_MotionSet[m_Motion].nLoop == 0)
 		{//キーが終わりループモーションじゃなければ
 			//モーションをニュートラルに
-			SetMotion(0,m_PartsCnt);
+			SetMotion(0);
 			//終わった判定
 			m_bLoopFinish = true;
 		}
@@ -407,7 +407,7 @@ void CCharacter::Motion(int NumParts)
 //=====================================
 //引数で指定したモーションに切り替える
 //=====================================
-void CCharacter::SetMotion(int Motion, int NumParts)
+void CCharacter::SetMotion(int Motion)
 {
 	if (m_Motion != Motion)
 	{
@@ -425,7 +425,7 @@ void CCharacter::SetMotion(int Motion, int NumParts)
 			m_bLoopFinish = false;
 		}
 
-		for (int nCntParts = 0; nCntParts < NumParts; nCntParts++)
+		for (int nCntParts = 0; nCntParts < m_PartsCnt; nCntParts++)
 		{
 			m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
 			m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
@@ -467,7 +467,7 @@ void CCharacter::Move(D3DXVECTOR3 vecDirection, float fRotMoveY,int Motion)
 	rot.y = fRotMoveY + D3DX_PI;
 	//rotを代入
 	SetRot(rot);
-	SetMotion(Motion, m_PartsCnt); //現在のモーションを設定
+	SetMotion(Motion); //現在のモーションを設定
 }
 
 //=============================================
@@ -504,8 +504,8 @@ void CCharacter::HitBlock()
 			//ブロックとの当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
 			{
-				CBlock* pBlock = (CBlock*)pObj;
-
+				//安全にダウンキャスト
+				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 				//D3DXVECTOR3 dir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
 
@@ -572,7 +572,7 @@ void CCharacter::HitField()
 			//床との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
 			{
-				CField* pField = (CField*)pObj;
+				CField* pField = dynamic_cast<CField*>(pObj);
 
 				//当たり判定チェック
 				CColision::COLISION Checkcolision_Y = CColision::CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());

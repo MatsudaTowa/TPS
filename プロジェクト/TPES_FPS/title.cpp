@@ -13,6 +13,7 @@
 #include "player.h"
 #include "colision.h"
 #include "block.h"
+#include"player_test.h"
 #include "field.h"
 #include "manager.h"
 #include "sound.h"
@@ -45,9 +46,8 @@ HRESULT CTitle::Init()
 	//ブロック生成
 	LoadBlock(&CTitle::BLOCK_FILE);
 
-    //プレイヤー生成
-    m_pPlayer = new CPlayer;  
-    m_pPlayer->Init(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 5);
+	//プレイヤー生成
+	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
     
     m_pTitleScreen[0] = CTitle_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f,150.0f,0.0f),D3DXVECTOR2(400.0f,200.0f),CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
 

@@ -9,9 +9,9 @@
 #include "object.h"
 
 //texパス
-const std::string CTitle_Screen::ROGO_TEXTURE_NAME = "data\\TEXTURE\\title.png";
-const std::string CTitle_Screen::BUTTON_A_TEXTURE_NAME = "data\\TEXTURE\\title_press_A.png";
-const std::string CTitle_Screen::BUTTON_ENTER_TEXTURE_NAME = "data\\TEXTURE\\title_press_Trigger.png";
+const std::string CTitle_Screen::ROGO_TEXTURE_NAME = "data\\TEXTURE\\title_test.png";
+const std::string CTitle_Screen::BUTTON_A_TEXTURE_NAME = "data\\TEXTURE\\title_test.png";
+const std::string CTitle_Screen::BUTTON_ENTER_TEXTURE_NAME = "data\\TEXTURE\\title_test.png";
 
 //=============================================
 //コンストラクタ

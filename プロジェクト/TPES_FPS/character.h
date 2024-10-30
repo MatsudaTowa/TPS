@@ -45,9 +45,9 @@ public:
 	void Draw()override;
 	void MotionDraw(int NumParts);
 
-	void Load_Parts(const char* FileName, int NumParts);
+	void Load_Parts(const char* FileName);
 	void Motion(int NumParts); //モーション処理
-	void SetMotion(int Motion, int NumParts); //引数で指定したモーションに切り替える
+	void SetMotion(int Motion); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
 	void Move(D3DXVECTOR3 vecDirection,float fRotMoveY,int Motion); //移動処理
 	void Jump(); //ジャンプ処理

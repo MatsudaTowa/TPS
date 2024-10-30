@@ -92,7 +92,7 @@ bool CAttack_Manager::HitEnemy()
 			//“G‚Æ‚Ì“–‚½‚è”»’è
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
 			{
-				CEnemy_test* pEnemy = (CEnemy_test*)pObj;
+				CEnemy_test* pEnemy = dynamic_cast<CEnemy_test*>(pObj);
 
 				CColision::COLISION ColisionCheck;
 				for (int nCnt = 0; nCnt < pEnemy->NUM_PARTS; nCnt++)
@@ -111,8 +111,7 @@ bool CAttack_Manager::HitEnemy()
 						return true;
 					}
 				}
-
-
+				break;
 			}
 		}
 	}
@@ -141,7 +140,7 @@ bool CAttack_Manager::HitPlayer()
 			//“G‚Æ‚Ì“–‚½‚è”»’è
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer* pPlayer = (CPlayer*)pObj;
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				CColision::COLISION ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, pPlayer->GetPos(), pPlayer->GetMinPos(), pPlayer->GetMaxPos());
 
@@ -154,6 +153,7 @@ bool CAttack_Manager::HitPlayer()
 					pPlayer->Damage(m_nDamage);
 					return true;
 				}
+				break;
 			}
 		}
 	}
@@ -181,7 +181,7 @@ bool CAttack_Manager::HitBlock()
 			//“G‚Æ‚Ì“–‚½‚è”»’è
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
 			{
-				CBlock* pBlock = (CBlock*)pObj;
+				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 				CColision::COLISION ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
@@ -194,6 +194,7 @@ bool CAttack_Manager::HitBlock()
 				{
 					return false;
 				}
+				break;
 			}
 		}
 	}
@@ -222,7 +223,7 @@ bool CAttack_Manager::HitGround()
 			//“G‚Æ‚Ì“–‚½‚è”»’è
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
 			{
-				CField* pField = (CField*)pObj;
+				CField* pField = dynamic_cast<CField*>(pObj);
 
 				CColision::COLISION ColisionCheck = CColision::CheckItemFillColision(Attackpos, Attacksize, pField->GetPos(),
 				D3DXVECTOR3(-pField->GetSize().x, -pField->GetSize().y, -pField->GetSize().z), 
@@ -241,6 +242,7 @@ bool CAttack_Manager::HitGround()
 				{
 					return false;
 				}
+				break;
 			}
 		}
 	}

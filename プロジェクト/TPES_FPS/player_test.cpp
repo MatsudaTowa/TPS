@@ -95,9 +95,9 @@ HRESULT CPlayer_test::Init()
 	SetMove(move);
 
 	//ÉpÅ[Écì«Ç›çûÇ›
-	Load_Parts("data\\Motion.txt",NUM_PARTS);
+	Load_Parts("data\\Motion.txt");
 
-	SetMotion(MOTION_NEUTRAL, NUM_PARTS);
+	SetMotion(MOTION_NEUTRAL);
 
 	return S_OK;
 }

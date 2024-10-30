@@ -18,7 +18,6 @@ class CPlayer_test:public CCharacter
 public:
 	static const int NUM_PARTS = 10; //パーツ数
 	static const int MAX_KEY = 20; //キー最大数
-	static const int NUM_MOTION	= 3;
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
@@ -39,7 +38,6 @@ private:
 	//プレイヤーの移動関連
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const int MAX_JUMPCNT; //ジャンプ回数
-	static const int NUM_MOTION; //モーションの数
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン

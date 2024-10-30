@@ -68,11 +68,11 @@ HRESULT CEnemy_test::Init()
 	//ムーブ値代入
 	SetMove(move);
 
-	Load_Parts("data\\Motion.txt", NUM_PARTS);
+	Load_Parts("data\\Motion.txt");
 
 	m_Motion = CEnemy_test::Motion_Type::MOTION_MAX; //ニュートラルに設定
 
-	SetMotion(MOTION_NEUTRAL, NUM_PARTS);
+	SetMotion(MOTION_NEUTRAL);
 
 	return S_OK;
 }
@@ -273,7 +273,7 @@ void CEnemy_test::Move()
 	{ // 動いてない。
 		move.x = 0.0f;
 		move.z = 0.0f;
-		SetMotion(MOTION_NEUTRAL, NUM_PARTS); //現在のモーションを設定
+		SetMotion(MOTION_NEUTRAL); //現在のモーションを設定
 	}
 	else
 	{
@@ -287,7 +287,7 @@ void CEnemy_test::Move()
 		rot.y = rotMoveY + D3DX_PI;
 		//rotを代入
 		SetRot(rot);
-		SetMotion(MOTION_MOVE, NUM_PARTS); //現在のモーションを設定
+		SetMotion(MOTION_MOVE); //現在のモーションを設定
 	}
 	if (m_nJumpCnt < MAX_JUMPCNT)
 	{//ジャンプ数以下だったら
@@ -296,7 +296,7 @@ void CEnemy_test::Move()
 			move.y = DEFAULT_JUMP;
 			bLanding = false; //空中
 			m_nJumpCnt++; //ジャンプ数加算
-			SetMotion(MOTION_ATTACK, NUM_PARTS); //現在のモーションを設定
+			SetMotion(MOTION_ATTACK); //現在のモーションを設定
 
 		}
 	}

@@ -374,11 +374,12 @@ void CCamera::BirdViewCamera()
 			CObject::OBJECT_TYPE type = pObj->GetType();
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer* pPlayer = (CPlayer*)pObj;
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 				m_posR =pPlayer->GetPos();
 				m_posV.x = m_posR.x - sinf(m_rot.y);
 				m_posV.y = BIRDVIEW_LENGTH_Y;
 				m_posV.z = m_posR.z - cosf(m_rot.y);
+				break;
 			}
 		}
 	}
@@ -407,13 +408,14 @@ void CCamera::SideViewCamera()
 			CObject::OBJECT_TYPE type = pObj->GetType();
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer* pPlayer = (CPlayer*)pObj;
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 				m_posR.x = pPlayer->GetPos().x;
 				m_posR.y = 20.0f;
 				m_posR.z = pPlayer->GetPos().z;
 				m_posV.x = m_posR.x - sinf(m_rot.y)* SIDEVIEW_LENGTH_X;
 				m_posV.y = SIDEVIEW_LENGTH_Y;
 				m_posV.z = m_posR.z - cosf(m_rot.y) * SIDEVIEW_LENGTH_Z;
+				break;
 			}
 		}
 	}
@@ -435,7 +437,7 @@ void CCamera::ThirdViewCamera()
 			CObject::OBJECT_TYPE type = pObj->GetType();
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer = (CPlayer_test*)pObj;
+				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
 
 				m_posR.x = pPlayer->GetPos().x;
 				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
@@ -470,7 +472,6 @@ void CCamera::ThirdViewCamera()
 				{
 					m_rot.x = MAX_TURN_X;
 				}
-			
 			}
 		}
 	}
