@@ -401,9 +401,10 @@ CColision::COLISION CColision::CheckPolygonModelColision(D3DXVECTOR3 Apos, D3DXV
 
 	float CenterDistance = sqrtf((Length.x*Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
 
-	D3DXVECTOR3 size = (BMaxpos - BMinpos) * 0.5f;
+	//パーツの中心を求める
+	D3DXVECTOR3 origin = (BMaxpos - BMinpos) * 0.5f;
 
-	float Radius = (ASize.x + size.x) + (ASize.y + size.y) + (ASize.z + size.z) * 0.5f;
+	float Radius = (ASize.x + origin.x) + (ASize.y + origin.y) + (ASize.z + origin.z) * 0.5f;
 
 	if (CenterDistance <= Radius)
 	{
