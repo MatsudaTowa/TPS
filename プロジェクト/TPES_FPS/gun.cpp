@@ -52,6 +52,9 @@ int& CGun::GetFireRate()
 	return m_FireRate;
 }
 
+//弾のスピード
+const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 15.0f;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -117,7 +120,7 @@ void CAssultRifle::ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 siz
 	if (nAmmo > 0)
 	{
 		CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), move,
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 300, nDamage, Allegiance, type);
+			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 180, nDamage, Allegiance, type);
 		nAmmo--;
 	}
 	SetAmmo(nAmmo);

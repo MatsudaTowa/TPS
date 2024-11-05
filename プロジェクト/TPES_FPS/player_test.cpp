@@ -435,7 +435,10 @@ void CPlayer_test::Input()
 			D3DXVECTOR3 pos = GetPos();
 			//ƒJƒƒ‰î•ñŽæ“¾
 			//’e”­ŽË
-			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -4.0f, sinf(pCamera->GetRot().x + D3DX_PI) * 4.0f, cosf(pCamera-> GetRot().y + D3DX_PI) * -4.0f), D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED, 
+			sinf(pCamera->GetRot().x + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED,
+			cosf(pCamera-> GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED),
+			D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
 		}
 	}
 	if (pMouse->GetRelease(0))
