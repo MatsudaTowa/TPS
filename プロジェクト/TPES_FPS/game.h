@@ -12,6 +12,7 @@
 #include "player.h"
 #include"block.h"
 #include "wave.h"
+#include "score.h"
 
 class CGame:public CScene
 {
@@ -49,6 +50,7 @@ public:
 
 	static CPlayer*GetPlayer();
 	static CWave*GetWave();
+	static CScore* GetScore();
 private:
 	int m_nResultDelay; //リザルトへのディレイ
 	bool m_bEdit; //エディットしてるかどうか
@@ -57,6 +59,7 @@ private:
 
 	static CPlayer*m_pPlayer;
 	static CWave* m_pWave;
+	static CScore* m_pScore;
 
 	void LoadBlock(const std::string* pFileName);
 };

@@ -24,6 +24,9 @@ CPlayer*CGame::m_pPlayer = nullptr;
 //ウェーブ
 CWave*CGame::m_pWave = nullptr;
 
+//スコア
+CScore*CGame::m_pScore = nullptr;
+
 CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 
 //=============================================
@@ -57,6 +60,14 @@ HRESULT CGame::Init()
 		m_pWave->Init();
 	}
 
+	//スコア初期化
+	if (m_pScore == nullptr)
+	{
+		m_pScore = new CScore;
+
+		m_pScore->Init();
+	}
+
 	//地面生成
 	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
 
@@ -81,6 +92,12 @@ void CGame::Uninit()
 		m_pPlayer = nullptr;
 	}
 
+	if (m_pScore != nullptr)
+	{
+		m_pScore->Uninit();
+		m_pScore = nullptr;
+	}
+
 	if (m_pWave != nullptr)
 	{
 		m_pWave = nullptr;
@@ -100,6 +117,11 @@ void CGame::Update()
 	if (m_pWave != nullptr)
 	{
 		m_pWave->Update();
+	}
+
+	if (m_pScore != nullptr)
+	{
+		m_pScore->Update();
 	}
 	
 	if (pKeyboard->GetTrigger(DIK_F5))
@@ -143,11 +165,25 @@ CPlayer* CGame::GetPlayer()
 	return m_pPlayer;
 }
 
+//=============================================
+//ウェーブ取得
+//=============================================
 CWave* CGame::GetWave()
 {
 	return m_pWave;
 }
 
+//=============================================
+//スコア取得
+//=============================================
+CScore* CGame::GetScore()
+{
+	return m_pScore;
+}
+
+//=============================================
+//ゲームの状態取得
+//=============================================
 CGame::GAME_STATE& CGame::GetState()
 {
 	return m_GameState;

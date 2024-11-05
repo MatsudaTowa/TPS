@@ -36,6 +36,7 @@ public:
 		TWO,
 		THREE,
 		BOSS,
+		RESULT,
 		MAX,
 	};
 

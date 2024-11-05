@@ -233,6 +233,19 @@ void CEnemy::Damage(int nDamage)
 	}
 	if (nLife <= 0)
 	{//HPÇ™0à»â∫ÇæÇ¡ÇΩÇÁ
+		CScore* pScore = CGame::GetScore();
+
+		int nAddScore = 0;
+		switch (m_Type)
+		{
+		case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:
+			nAddScore = 300;
+			break;
+		default:
+			assert(false);
+			break;
+		}
+		pScore->AddScore(nAddScore);
 		//èIóπ
 		Uninit();
 	}

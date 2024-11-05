@@ -189,6 +189,7 @@
     <ClCompile Include="result_screen.cpp" />
     <ClCompile Include="reticle.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="result_screen.h" />
     <ClInclude Include="reticle.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="texture.h" />
