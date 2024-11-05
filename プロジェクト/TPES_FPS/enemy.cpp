@@ -1,10 +1,10 @@
 //=============================================
 //
-//3DTemplate[enemy_test.cpp]
+//3DTemplate[enemy.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "enemy_test.h"
+#include "enemy.h"
 #include "manager.h"
 #include "input.h"
 #include "block.h"
@@ -13,36 +13,36 @@
 #include "game.h"
 
 //エネミー総数
-int CEnemy_test::m_NumEnemy = 0;
+int CEnemy::m_NumEnemy = 0;
 
 //通常の移動速度
-const float CEnemy_test::DEFAULT_MOVE = 1.0f;
+const float CEnemy::DEFAULT_MOVE = 1.0f;
 //通常の移動速度
-const float CEnemy_test::DAMPING_COEFFICIENT = 0.3f;
+const float CEnemy::DAMPING_COEFFICIENT = 0.3f;
 
 //通常のジャンプ力
-const float CEnemy_test::DEFAULT_JUMP = 25.0f;
+const float CEnemy::DEFAULT_JUMP = 25.0f;
 
 //ジャンプ回数
-const int CEnemy_test::MAX_JUMPCNT = 2;
+const int CEnemy::MAX_JUMPCNT = 2;
 
-//プレイヤーをリスポーンされる座標
-const float CEnemy_test::DEADZONE_Y = -100.0f;
+//これより下に行ったら死ぬ座標
+const float CEnemy::DEADZONE_Y = -100.0f;
 
 //テクスチャ初期化
-LPDIRECT3DTEXTURE9 CEnemy_test::m_pTextureTemp = nullptr;
+LPDIRECT3DTEXTURE9 CEnemy::m_pTextureTemp = nullptr;
 
-LPD3DXBUFFER CEnemy_test::m_pBuffMat = nullptr;
+LPD3DXBUFFER CEnemy::m_pBuffMat = nullptr;
 
-LPD3DXMESH CEnemy_test::m_pMesh = nullptr;
+LPD3DXMESH CEnemy::m_pMesh = nullptr;
 
-DWORD CEnemy_test::m_dwNumMat = 0;
+DWORD CEnemy::m_dwNumMat = 0;
 
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy_test::CEnemy_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
-, m_Motion()
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
+, m_Motion(),m_Type()
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
@@ -51,7 +51,7 @@ CEnemy_test::CEnemy_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
 //=============================================
 //デストラクタ
 //=============================================
-CEnemy_test::~CEnemy_test()
+CEnemy::~CEnemy()
 {
 	//総数減少
 	m_NumEnemy--;
@@ -60,9 +60,8 @@ CEnemy_test::~CEnemy_test()
 //=============================================
 //初期化
 //=============================================
-HRESULT CEnemy_test::Init()
+HRESULT CEnemy::Init()
 {
-
 	CCharacter::Init();
 
 	CRenderer* pRender = CManager::GetRenderer();
@@ -76,7 +75,7 @@ HRESULT CEnemy_test::Init()
 
 	Load_Parts("data\\Motion.txt");
 
-	m_Motion = CEnemy_test::Motion_Type::MOTION_MAX; //ニュートラルに設定
+	m_Motion = CEnemy::Motion_Type::MOTION_MAX; //ニュートラルに設定
 
 	SetMotion(MOTION_NEUTRAL);
 
@@ -86,7 +85,7 @@ HRESULT CEnemy_test::Init()
 //=============================================
 //終了
 //=============================================
-void CEnemy_test::Uninit()
+void CEnemy::Uninit()
 {
 	//親クラスの終了処理を呼ぶ
 	CObjectX::Uninit();
@@ -96,7 +95,7 @@ void CEnemy_test::Uninit()
 //=============================================
 //更新
 //=============================================
-void CEnemy_test::Update()
+void CEnemy::Update()
 {
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
@@ -189,7 +188,7 @@ void CEnemy_test::Update()
 //=============================================
 //描画
 //=============================================
-void CEnemy_test::Draw()
+void CEnemy::Draw()
 {
 	//親クラスのモーション用の描画を呼ぶ
 	MotionDraw(NUM_PARTS);
@@ -198,16 +197,17 @@ void CEnemy_test::Draw()
 //=============================================
 //生成
 //=============================================
-CEnemy_test* CEnemy_test::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
+CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type)
 {
-	CEnemy_test* pEnemy = new CEnemy_test;
+	CEnemy* pEnemy = new CEnemy;
 
 	// nullならnullを返す
 	if (pEnemy == nullptr) { return nullptr; }
 
+	pEnemy->m_Type = type;
 	pEnemy->SetPos(pos); //pos設定
 	pEnemy->SetRot(rot); //rot設定
-	pEnemy->SetLife(nLife); //体力代入
+	pEnemy->SetLife(DEFAULT_LIFE); //体力代入
 
 	pEnemy->Init(); //初期化処理
 
@@ -219,7 +219,7 @@ CEnemy_test* CEnemy_test::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 //=============================================
 //ダメージを受けたとき
 //=============================================
-void CEnemy_test::Damage(int nDamage)
+void CEnemy::Damage(int nDamage)
 {
 	//体力取得
 	int nLife = GetLife();
@@ -241,7 +241,7 @@ void CEnemy_test::Damage(int nDamage)
 //=============================================
 //リスポーン
 //=============================================
-void CEnemy_test::ReSpawn()
+void CEnemy::ReSpawn()
 {
 	//自分自身のpos取得
 	D3DXVECTOR3 PlayerPos = GetPos();
@@ -255,7 +255,7 @@ void CEnemy_test::ReSpawn()
 //=============================================
 //移動処理
 //=============================================
-void CEnemy_test::Move()
+void CEnemy::Move()
 {
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
@@ -312,4 +312,5 @@ void CEnemy_test::Move()
 
 	//着地してるか代入
 	SetLanding(bLanding);
+
 }

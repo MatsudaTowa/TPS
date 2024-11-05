@@ -21,6 +21,9 @@ const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";
 //プレイヤー
 CPlayer*CGame::m_pPlayer = nullptr;
 
+//ウェーブ
+CWave*CGame::m_pWave = nullptr;
+
 CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 
 //=============================================
@@ -48,8 +51,11 @@ HRESULT CGame::Init()
 {
 	m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 
-	//ブロック生成
-	LoadBlock(&CGame::BLOCK_FILE);
+	if (m_pWave == nullptr)
+	{
+		m_pWave = new CWave;
+		m_pWave->Init();
+	}
 
 	//地面生成
 	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
@@ -59,7 +65,6 @@ HRESULT CGame::Init()
 
 	//プレイヤー生成
 	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
-	CEnemy_test* pEnemy_test = CEnemy_test::Create(D3DXVECTOR3(-850.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 5);
 
 	return S_OK;
 }
@@ -76,6 +81,11 @@ void CGame::Uninit()
 		m_pPlayer = nullptr;
 	}
 
+	if (m_pWave != nullptr)
+	{
+		m_pWave = nullptr;
+	}
+
 	CObject::ReleaseAll();
 }
 
@@ -86,6 +96,11 @@ void CGame::Update()
 {
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 	CInputMouse* pMouse = CManager::GetMouse();
+
+	if (m_pWave != nullptr)
+	{
+		m_pWave->Update();
+	}
 	
 	if (pKeyboard->GetTrigger(DIK_F5))
 	{
@@ -126,6 +141,11 @@ void CGame::Draw()
 CPlayer* CGame::GetPlayer()
 {
 	return m_pPlayer;
+}
+
+CWave* CGame::GetWave()
+{
+	return m_pWave;
 }
 
 CGame::GAME_STATE& CGame::GetState()

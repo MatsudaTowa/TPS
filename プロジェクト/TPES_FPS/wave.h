@@ -1,0 +1,79 @@
+//=============================================
+//
+//ウェーブ処理[wave.h]
+//Auther Matsuda Towa
+//
+//=============================================
+#ifndef _WAVE_H_ //これが定義されてないとき
+
+#define _WAVE_H_
+#include "main.h"
+#include "block.h"
+#include "enemy.h"
+
+//=============================================
+//  ウェーブクラス定義
+//=============================================
+class CWave
+{
+public:
+	static const std::string WAVE_1_ENEMY_FILE;	//ウェーブ1のエネミーのファイル
+	static const std::string WAVE_2_ENEMY_FILE;	//ウェーブ2のエネミーのファイル
+	static const std::string WAVE_3_ENEMY_FILE;	//ウェーブ3のエネミーのファイル
+	static const std::string WAVE_BOSS_ENEMY_FILE;	//ウェーブBossのエネミーのファイル
+
+	static const std::string WAVE_1_BLOCK_FILE;	//ウェーブ1のブロックのファイル
+	static const std::string WAVE_2_BLOCK_FILE;	//ウェーブ2のブロックのファイル
+	static const std::string WAVE_3_BLOCK_FILE;	//ウェーブ3のブロックのファイル
+	static const std::string WAVE_BOSS_BLOCK_FILE;	//ウェーブBossのブロックのファイル
+
+	static const int TXT_MAX = 1024; //敵を読み込む際の読み込める最大文字数
+	//ウェーブ列挙
+	enum class WAVE
+	{
+		NONE = 0,
+		ONE,
+		TWO,
+		THREE,
+		BOSS,
+		MAX,
+	};
+
+	//読み込むときに必要なエネミーの構造体
+	typedef struct
+	{
+		D3DXVECTOR3 pos;
+		D3DXVECTOR3 rot;
+		CEnemy::ENEMY_TYPE type;
+	}LOAD_ENEMY;
+
+	//読み込むときに必要なブロックの構造体
+	typedef struct
+	{
+		D3DXVECTOR3 pos;
+		D3DXVECTOR3 rot;
+		CBlock::BLOCKTYPE type;
+	}LOAD_BLOCK;
+
+	// メンバ関数
+	CWave();
+	~CWave();
+
+	HRESULT Init();
+	void Uninit();
+	void Update();
+	void Draw();
+
+	void SetWave();
+	WAVE GetWave();
+private:
+
+	void LoadBlock(const std::string* pFileName);
+	void LoadEnemy(const std::string* pFileName);
+	// メンバ変数
+	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
+	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
+
+	WAVE m_CurrentWave; //現在のウェーブ
+};
+#endif

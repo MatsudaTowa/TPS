@@ -1,17 +1,17 @@
 //=============================================
 //
-//3DTemplate[enemy_test.h]
+//敵の処理[enemy.h]
 //Auther Matsuda Towa
 //
 //=============================================
-#ifndef _ENEMY_TEST_H_ //これが定義されてないとき
+#ifndef _ENEMY_H_ //これが定義されてないとき
 
-#define _ENEMY_TEST_H_
+#define _ENEMY_H_
 #include "main.h"
 #include "model_parts.h"
 #include "character.h"
 //エネミークラス
-class CEnemy_test :public CCharacter
+class CEnemy :public CCharacter
 {
 public:
 	static const int NUM_PARTS = 10; //パーツ数
@@ -19,20 +19,29 @@ public:
 	static const int NUM_MOTION = 3;
 	static const int ENEMY_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
+	static const int DEFAULT_LIFE = 3; //ライフ
 
-	CEnemy_test(int nPriority = ENEMY_PRIORITY);
-	~CEnemy_test();
+		//エネミーの列挙定義
+	typedef enum
+	{
+		ENEMY_TYPE_NORMAL = 0,
+		ENEMY_TYPE_MAX,
+	}ENEMY_TYPE;
+
+	CEnemy(int nPriority = ENEMY_PRIORITY);
+	~CEnemy();
 	HRESULT Init();
 	void Uninit();
 	void Update();
 	void Draw();
 
 	//エネミー作成
-	static CEnemy_test* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife);
+	static CEnemy* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type);
 
 	void Damage(int nDamage); //当たり判定
 
 	static int m_NumEnemy; //エネミーの総数
+	ENEMY_TYPE m_Type; //エネミーの種類
 
 private:
 
@@ -43,6 +52,7 @@ private:
 	static const int MAX_JUMPCNT; //ジャンプ回数
 	static const int NUM_MOTION; //モーションの数
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
+
 
 	void ReSpawn(); //リスポーン
 	void Move(); //プレイヤー移動処理

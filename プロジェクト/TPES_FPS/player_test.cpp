@@ -82,7 +82,6 @@ HRESULT CPlayer_test::Init()
 	//ˆÚ“®—Ê‰Šú‰»
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-
 	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
 	{
 		CModel* pModel = CManager::GetModel();

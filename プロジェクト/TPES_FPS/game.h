@@ -11,6 +11,7 @@
 #include "scene.h"
 #include "player.h"
 #include"block.h"
+#include "wave.h"
 
 class CGame:public CScene
 {
@@ -47,6 +48,7 @@ public:
 	static GAME_STATE&GetState();
 
 	static CPlayer*GetPlayer();
+	static CWave*GetWave();
 private:
 	int m_nResultDelay; //リザルトへのディレイ
 	bool m_bEdit; //エディットしてるかどうか
@@ -54,6 +56,7 @@ private:
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 
 	static CPlayer*m_pPlayer;
+	static CWave* m_pWave;
 
 	void LoadBlock(const std::string* pFileName);
 };

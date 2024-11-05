@@ -358,3 +358,4 @@ CFade* CManager::GetFade()
 {
 	return m_pFade;
 }
+

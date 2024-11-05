@@ -52,6 +52,7 @@ public:
 	static CSound* GetSound();
 	//フェード取得
 	static CFade* GetFade();
+
 	static CFade* m_pFade;
 
 private:

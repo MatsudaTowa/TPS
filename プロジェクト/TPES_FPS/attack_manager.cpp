@@ -83,7 +83,7 @@ bool CAttack_Manager::HitEnemy()
 	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CEnemy_test::ENEMY_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 			//タイプ取得
@@ -92,7 +92,7 @@ bool CAttack_Manager::HitEnemy()
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
 			{
-				CEnemy_test* pEnemy = dynamic_cast<CEnemy_test*>(pObj);
+				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
 
 				CColision::COLISION ColisionCheck;
 				for (int nCnt = 0; nCnt < pEnemy->NUM_PARTS; nCnt++)
@@ -111,7 +111,6 @@ bool CAttack_Manager::HitEnemy()
 						return true;
 					}
 				}
-				break;
 			}
 		}
 	}
