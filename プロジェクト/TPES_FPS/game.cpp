@@ -77,6 +77,8 @@ HRESULT CGame::Init()
 	//プレイヤー生成
 	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
 
+	SetWave(CWave::WAVE::ONE);
+
 	return S_OK;
 }
 
@@ -113,6 +115,27 @@ void CGame::Update()
 {
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 	CInputMouse* pMouse = CManager::GetMouse();
+
+	if (CEnemy::m_NumEnemy <= 0)
+	{
+		switch (CWave::GetCurrentWave())
+		{
+		case CWave::WAVE::ONE:
+			SetWave(CWave::WAVE::TWO);
+			break;
+		case CWave::WAVE::TWO:
+			SetWave(CWave::WAVE::THREE);
+			break;
+		case CWave::WAVE::THREE:
+			SetWave(CWave::WAVE::BOSS);
+			break;
+		case CWave::WAVE::BOSS:
+			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+			break;
+		default:
+			break;
+		}
+	}
 
 	if (m_pWave != nullptr)
 	{
@@ -179,6 +202,26 @@ CWave* CGame::GetWave()
 CScore* CGame::GetScore()
 {
 	return m_pScore;
+}
+
+//=============================================
+//ウェーブ設定
+//=============================================
+void CGame::SetWave(CWave::WAVE wave)
+{
+	//ウェーブ終了
+	if (m_pWave != nullptr)
+	{
+		m_pWave->Uninit();
+		delete m_pWave;
+		m_pWave = nullptr;
+	}
+
+	//ウェーブ切り替え
+	if (m_pWave == nullptr)
+	{
+		m_pWave = CWave::Create(wave);
+	}
 }
 
 //=============================================

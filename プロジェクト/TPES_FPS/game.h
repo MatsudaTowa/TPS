@@ -51,6 +51,8 @@ public:
 	static CPlayer*GetPlayer();
 	static CWave*GetWave();
 	static CScore* GetScore();
+	//ウェーブ設定
+	static void SetWave(CWave::WAVE wave);
 private:
 	int m_nResultDelay; //リザルトへのディレイ
 	bool m_bEdit; //エディットしてるかどうか

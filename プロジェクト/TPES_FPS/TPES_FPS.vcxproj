@@ -196,6 +196,10 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="wave.cpp" />
+    <ClCompile Include="wave_boss.cpp" />
+    <ClCompile Include="wave_one.cpp" />
+    <ClCompile Include="wave_three.cpp" />
+    <ClCompile Include="wave_two.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ammo_UI.h" />
@@ -239,6 +243,10 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="wave.h" />
+    <ClInclude Include="wave_boss.h" />
+    <ClInclude Include="wave_one.h" />
+    <ClInclude Include="wave_three.h" />
+    <ClInclude Include="wave_two.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

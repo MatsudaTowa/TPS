@@ -17,16 +17,6 @@
 class CWave
 {
 public:
-	static const std::string WAVE_1_ENEMY_FILE;	//ウェーブ1のエネミーのファイル
-	static const std::string WAVE_2_ENEMY_FILE;	//ウェーブ2のエネミーのファイル
-	static const std::string WAVE_3_ENEMY_FILE;	//ウェーブ3のエネミーのファイル
-	static const std::string WAVE_BOSS_ENEMY_FILE;	//ウェーブBossのエネミーのファイル
-
-	static const std::string WAVE_1_BLOCK_FILE;	//ウェーブ1のブロックのファイル
-	static const std::string WAVE_2_BLOCK_FILE;	//ウェーブ2のブロックのファイル
-	static const std::string WAVE_3_BLOCK_FILE;	//ウェーブ3のブロックのファイル
-	static const std::string WAVE_BOSS_BLOCK_FILE;	//ウェーブBossのブロックのファイル
-
 	static const int TXT_MAX = 1024; //敵を読み込む際の読み込める最大文字数
 	//ウェーブ列挙
 	enum class WAVE
@@ -58,23 +48,29 @@ public:
 
 	// メンバ関数
 	CWave();
-	~CWave();
+	virtual ~CWave();
 
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	virtual HRESULT Init();
+	virtual void Uninit();
+	virtual void Update();
 
-	void SetWave();
-	WAVE GetWave();
-private:
+	static CWave* Create(WAVE wave);
+	static WAVE GetCurrentWave();
 
 	void LoadBlock(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
+
+	void SetWaveScore(int nScore);
+	int GetWaveScore()
+	{
+		return m_nScore;
+	}
+protected:
 	// メンバ変数
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
-
-	WAVE m_CurrentWave; //現在のウェーブ
+	int m_nScore; //スコア格納変数
+	static WAVE m_CurrentWave; //現在のウェーブ
 };
+
 #endif

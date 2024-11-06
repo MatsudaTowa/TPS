@@ -7,19 +7,17 @@
 #include "wave.h"
 #include "enemy_test.h"
 #include "manager.h"
-const std::string CWave::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
-const std::string CWave::WAVE_2_ENEMY_FILE = "data\\FILE\\enemy_001.txt";
-const std::string CWave::WAVE_3_ENEMY_FILE = "data\\FILE\\enemy_002.txt";
-const std::string CWave::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
+#include "wave_one.h"
+#include "wave_two.h"
+#include "wave_three.h"
+#include "wave_boss.h"
 
-const std::string CWave::WAVE_1_BLOCK_FILE = "data\\FILE\\block_000.txt";
-const std::string CWave::WAVE_2_BLOCK_FILE = "data\\FILE\\block_001.txt";
-const std::string CWave::WAVE_3_BLOCK_FILE = "data\\FILE\\block_002.txt";
-const std::string CWave::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_003.txt";
+CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
+
 //=============================================
 //コンストラクタ
 //=============================================
-CWave::CWave():m_CurrentWave()
+CWave::CWave()
 {
 }
 
@@ -35,9 +33,6 @@ CWave::~CWave()
 //=============================================
 HRESULT CWave::Init()
 {
-	m_CurrentWave = WAVE::NONE;
-	//ウェーブ設定
-	SetWave();
 	return S_OK;
 }
 
@@ -53,58 +48,58 @@ void CWave::Uninit()
 //=============================================
 void CWave::Update()
 {
-	if (CEnemy::m_NumEnemy <= 0)
-	{
-		SetWave();
-	}
-}
-
-//=============================================
-//描画
-//=============================================
-void CWave::Draw()
-{
 }
 
 //=============================================
 //ウェーブ設定
 //=============================================
-void CWave::SetWave()
+CWave* CWave::Create(WAVE wave)
 {
-	switch (m_CurrentWave)
-	{//次のウェーブに切り替える
-	case WAVE::NONE:
-		m_CurrentWave = WAVE::ONE;
-		LoadBlock(&WAVE_1_BLOCK_FILE);
-		LoadEnemy(&WAVE_1_ENEMY_FILE);
+	// インスタンス生成
+	CWave* pWave = new CWave;
+
+	// 条件分岐
+	switch (wave)
+	{
+	case WAVE::ONE: // ウェーブ1
+
+		delete pWave;
+		pWave = new CWave_One;
 		break;
-	case WAVE::ONE:
-		m_CurrentWave = WAVE::TWO;
-		LoadBlock(&WAVE_2_BLOCK_FILE);
-		LoadEnemy(&WAVE_2_ENEMY_FILE);
+
+	case WAVE::TWO: //テスト
+		delete pWave;
+		pWave = new CWave_Two;
 		break;
-	case WAVE::TWO:
-		m_CurrentWave = WAVE::THREE;
-		LoadBlock(&WAVE_3_BLOCK_FILE);
-		LoadEnemy(&WAVE_3_ENEMY_FILE);
+
+	case WAVE::THREE: // ゲーム
+
+		delete pWave;
+		pWave = new CWave_Three;
 		break;
-	case WAVE::THREE:
-		m_CurrentWave = WAVE::BOSS;
-		LoadBlock(&WAVE_BOSS_BLOCK_FILE);
-		LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
-		break;
-	case WAVE::BOSS:
-		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+	case WAVE::BOSS: //リザルト
+
+		delete pWave;
+		pWave = new CWave_Boss;
 		break;
 	default:
 		break;
 	}
+
+	if (pWave != nullptr)
+	{
+		pWave->m_CurrentWave = wave;
+	}
+	//今のシーンの初期化
+	pWave->Init();
+
+	return pWave;
 }
 
 //=============================================
 //現在のウェーブを取得
 //=============================================
-CWave::WAVE CWave::GetWave()
+CWave::WAVE CWave::GetCurrentWave()
 {
 	return m_CurrentWave;
 }
@@ -260,3 +255,9 @@ void CWave::LoadEnemy(const std::string* pFileName)
 		}
 	}
 }
+
+void CWave::SetWaveScore(int nScore)
+{
+	m_nScore = nScore;
+}
+
