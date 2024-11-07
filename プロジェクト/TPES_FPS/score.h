@@ -27,6 +27,8 @@ public:
 	void Update();
 	void AddScore(int nValue);
 	int m_nScore; //スコアの値
+	void ExportScore(std::string* pFileName); //スコア書き出し
+	void Reset();
 	void SaveScore(int nScore)
 	{
 		m_nSaveScore = nScore;

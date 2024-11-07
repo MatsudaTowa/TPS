@@ -11,8 +11,11 @@
 #include "wave_two.h"
 #include "wave_three.h"
 #include "wave_boss.h"
+#include "wave_result.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
+CWave::WAVE CWave::m_next = WAVE::NONE;
+const char* CWave::m_ResultFile = nullptr;
 
 //=============================================
 //コンストラクタ
@@ -62,25 +65,83 @@ CWave* CWave::Create(WAVE wave)
 	switch (wave)
 	{
 	case WAVE::ONE: // ウェーブ1
-
 		delete pWave;
 		pWave = new CWave_One;
 		break;
 
-	case WAVE::TWO: //テスト
+	case WAVE::TWO: //ウェーブ2
 		delete pWave;
 		pWave = new CWave_Two;
 		break;
 
-	case WAVE::THREE: // ゲーム
+	case WAVE::THREE: // ウェーブ3
 
 		delete pWave;
 		pWave = new CWave_Three;
 		break;
-	case WAVE::BOSS: //リザルト
+	case WAVE::BOSS: //ウェーブboss
 
 		delete pWave;
 		pWave = new CWave_Boss;
+		break;
+	case WAVE::RESULT: //ウェーブリザルト
+
+		delete pWave;
+		pWave = new CWave_Boss;
+		break;
+	default:
+		break;
+	}
+
+	if (pWave != nullptr)
+	{
+		pWave->m_CurrentWave = wave;
+	}
+	//今のシーンの初期化
+	pWave->Init();
+
+	return pWave;
+}
+
+//=============================================
+//ウェーブ設定
+//=============================================
+CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
+{
+	// インスタンス生成
+	CWave* pWave = new CWave;
+
+	m_next = next_wave;
+
+	m_ResultFile = ResultFile;
+
+	// 条件分岐
+	switch (wave)
+	{
+	case WAVE::ONE: // ウェーブ1
+		delete pWave;
+		pWave = new CWave_One;
+		break;
+
+	case WAVE::TWO: //ウェーブ2
+		delete pWave;
+		pWave = new CWave_Two;
+		break;
+
+	case WAVE::THREE: // ウェーブ3
+
+		delete pWave;
+		pWave = new CWave_Three;
+		break;
+	case WAVE::BOSS: //ウェーブboss
+
+		delete pWave;
+		pWave = new CWave_Boss;
+		break;
+	case WAVE::RESULT: //ウェーブリザルト
+
+		delete pWave;
+		pWave = new CWave_Result;
 		break;
 	default:
 		break;

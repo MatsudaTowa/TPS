@@ -55,6 +55,7 @@ public:
 	virtual void Update();
 
 	static CWave* Create(WAVE wave);
+	static CWave* Create(WAVE wave,WAVE next_wave,const char* ResultFile);
 	static WAVE GetCurrentWave();
 
 	void LoadBlock(const std::string* pFileName);
@@ -70,6 +71,8 @@ protected:
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	int m_nScore; //スコア格納変数
+	static WAVE m_next; //次のウェーブ
+	static const char* m_ResultFile; //リザルトファイル
 	static WAVE m_CurrentWave; //現在のウェーブ
 };
 

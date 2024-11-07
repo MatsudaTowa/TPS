@@ -107,6 +107,32 @@ void CScore::AddScore(int nValue)
 	m_nScore += nValue;
 }
 
+//=============================================
+//スコア書き出し
+//=============================================
+void CScore::ExportScore(std::string* pFileName)
+{
+	//ファイルの読み込み
+	FILE* pFile = fopen(pFileName->c_str(), "wb");
+
+	if (pFile != NULL)
+	{
+		fwrite(&m_nScore, sizeof(int), 1, pFile);
+		fclose(pFile);
+	}
+}
+
+//=============================================
+//スコアリセット
+//=============================================
+void CScore::Reset()
+{
+	m_nScore = 0;
+}
+
+//=============================================
+//スコア取得
+//=============================================
 int CScore::GetScore()
 {
 	return m_nSaveScore;

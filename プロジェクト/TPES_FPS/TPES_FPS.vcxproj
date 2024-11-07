@@ -198,6 +198,8 @@
     <ClCompile Include="wave.cpp" />
     <ClCompile Include="wave_boss.cpp" />
     <ClCompile Include="wave_one.cpp" />
+    <ClCompile Include="wave_result.cpp" />
+    <ClCompile Include="wave_result_screen.cpp" />
     <ClCompile Include="wave_three.cpp" />
     <ClCompile Include="wave_two.cpp" />
   </ItemGroup>
@@ -245,6 +247,8 @@
     <ClInclude Include="wave.h" />
     <ClInclude Include="wave_boss.h" />
     <ClInclude Include="wave_one.h" />
+    <ClInclude Include="wave_result.h" />
+    <ClInclude Include="wave_result_screen.h" />
     <ClInclude Include="wave_three.h" />
     <ClInclude Include="wave_two.h" />
   </ItemGroup>

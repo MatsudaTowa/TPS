@@ -32,7 +32,7 @@ CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame():m_nResultDelay(0),m_bEdit(false)
+CGame::CGame():m_nResultDelay(0),m_bEdit(false), m_next_wave(), m_FileName()
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 	//読み込むブロックの情報初期化
 	m_LoadBlock.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -64,7 +64,6 @@ HRESULT CGame::Init()
 	if (m_pScore == nullptr)
 	{
 		m_pScore = new CScore;
-
 		m_pScore->Init();
 	}
 
@@ -88,7 +87,7 @@ HRESULT CGame::Init()
 void CGame::Uninit()
 {
 	m_GameState = GAME_STATE_NORMAL;
-	
+
 	if (m_pPlayer != nullptr)
 	{
 		m_pPlayer = nullptr;
@@ -118,23 +117,43 @@ void CGame::Update()
 
 	if (CEnemy::m_NumEnemy <= 0)
 	{
+
 		switch (CWave::GetCurrentWave())
 		{
 		case CWave::WAVE::ONE:
-			SetWave(CWave::WAVE::TWO);
+			m_next_wave = CWave::WAVE::TWO;
+			m_FileName = "data\\FILE\\score\\wave_one_score.bin";
 			break;
 		case CWave::WAVE::TWO:
-			SetWave(CWave::WAVE::THREE);
+			m_next_wave = CWave::WAVE::THREE;
+			m_FileName = "data\\FILE\\score\\wave_two_score.bin";
 			break;
 		case CWave::WAVE::THREE:
-			SetWave(CWave::WAVE::BOSS);
+			m_next_wave = CWave::WAVE::BOSS;
+			m_FileName = "data\\FILE\\score\\wave_three_score.bin";
 			break;
 		case CWave::WAVE::BOSS:
-			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+			m_FileName = "data\\FILE\\score\\wave_boss_score.bin";
 			break;
 		default:
 			break;
 		}
+
+		if (CWave::GetCurrentWave() != CWave::WAVE::RESULT)
+		{
+			WaveResult(&m_FileName);
+
+		}
+
+		if (CWave::GetCurrentWave() != CWave::WAVE::BOSS)
+		{
+			SetWave(CWave:: WAVE::RESULT, m_next_wave, m_FileName.c_str());
+		}
+		else
+		{
+			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+		}
+
 	}
 
 	if (m_pWave != nullptr)
@@ -159,10 +178,6 @@ void CGame::Update()
 	//{
 	CObject::UpdateAll();
 
-	if (pKeyboard->GetTrigger(DIK_RETURN))
-	{
-		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
-	}
 
 #ifdef _DEBUG
 	if (pKeyboard->GetTrigger(DIK_F7))
@@ -221,6 +236,26 @@ void CGame::SetWave(CWave::WAVE wave)
 	if (m_pWave == nullptr)
 	{
 		m_pWave = CWave::Create(wave);
+	}
+}
+
+//=============================================
+//ウェーブ設定
+//=============================================
+void CGame::SetWave(CWave::WAVE wave, CWave::WAVE next_wave,const char* ResultFile)
+{
+	//ウェーブ終了
+	if (m_pWave != nullptr)
+	{
+		m_pWave->Uninit();
+		delete m_pWave;
+		m_pWave = nullptr;
+	}
+
+	//ウェーブ切り替え
+	if (m_pWave == nullptr)
+	{
+		m_pWave = CWave::Create(wave,next_wave, ResultFile);
 	}
 }
 
