@@ -40,7 +40,7 @@ HRESULT CWave_Result_Screen::Init()
 	SetSize(size);
 
 	//í∏ì_ê›íË
-	SetVtx(1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.7f));
+	SetVtx(1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.85f));
 	return S_OK;
 }
 
