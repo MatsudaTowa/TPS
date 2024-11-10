@@ -12,10 +12,14 @@
 #include "wave_three.h"
 #include "wave_boss.h"
 #include "wave_result.h"
+#include "game_score.h"
+#include "wave_score.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
 const char* CWave::m_ResultFile = nullptr;
+//スコア
+CScore* CWave::m_pScore = nullptr;
 
 //=============================================
 //コンストラクタ
@@ -44,6 +48,11 @@ HRESULT CWave::Init()
 //=============================================
 void CWave::Uninit()
 {
+	if (m_pScore != nullptr)
+	{
+		m_pScore->Uninit();
+		m_pScore = nullptr;
+	}
 }
 
 //=============================================
@@ -51,6 +60,10 @@ void CWave::Uninit()
 //=============================================
 void CWave::Update()
 {
+	if (m_pScore != nullptr)
+	{
+		m_pScore->Update();
+	}
 }
 
 //=============================================
@@ -91,6 +104,20 @@ CWave* CWave::Create(WAVE wave)
 		break;
 	default:
 		break;
+	}
+
+	//スコア初期化
+	if (m_pScore == nullptr)
+	{
+		if (wave != WAVE::RESULT)
+		{
+			m_pScore = new CGameScore;
+		}
+		else if (wave == WAVE::RESULT)
+		{
+			m_pScore = new CWaveScore;
+		}
+		m_pScore->Init();
 	}
 
 	if (pWave != nullptr)
@@ -147,6 +174,20 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		break;
 	}
 
+	//スコア初期化
+	if (m_pScore == nullptr)
+	{
+		if (wave != WAVE::RESULT)
+		{
+			m_pScore = new CGameScore;
+		}
+		else if (wave == WAVE::RESULT)
+		{
+			m_pScore = new CWaveScore;
+		}
+		m_pScore->Init();
+	}
+
 	if (pWave != nullptr)
 	{
 		pWave->m_CurrentWave = wave;
@@ -163,6 +204,14 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 CWave::WAVE CWave::GetCurrentWave()
 {
 	return m_CurrentWave;
+}
+
+//=============================================
+//スコア取得
+//=============================================
+CScore* CWave::GetScore()
+{
+	return m_pScore;
 }
 
 //=============================================
@@ -320,5 +369,10 @@ void CWave::LoadEnemy(const std::string* pFileName)
 void CWave::SetWaveScore(int nScore)
 {
 	m_nScore = nScore;
+}
+
+int CWave::GetWaveScore()
+{
+	return m_nScore;
 }
 

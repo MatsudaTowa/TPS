@@ -11,6 +11,7 @@
 #include "field.h"
 #include "camera.h"
 #include "game.h"
+#include "wave.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -233,7 +234,7 @@ void CEnemy::Damage(int nDamage)
 	}
 	if (nLife <= 0)
 	{//HPが0以下だったら
-		CScore* pScore = CGame::GetScore();
+		CScore* pScore = CWave::GetScore();
 
 		int nAddScore = 0;
 		switch (m_Type)

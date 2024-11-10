@@ -11,7 +11,7 @@
 #include "block.h"
 #include "enemy.h"
 #include"wave.h"
-#include "score.h"
+#include "wave_score.h"
 #include"wave_result_screen.h"
 
 //=============================================
@@ -35,7 +35,6 @@ public:
 	}
 private:
 	int m_nScore;
-	static CScore* m_pScore;
 	CWave_Result_Screen* m_pScreen;
 };
 

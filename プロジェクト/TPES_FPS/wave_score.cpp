@@ -1,50 +1,50 @@
 //=============================================
 //
-//ボスウェーブ処理[wave_boss.cpp]
-//Auther Matsuda Towa
+//ウェーブスコア処理「wave_scorer.h」
+// Author松田永久
 //
 //=============================================
-#include "wave_boss.h"
+#include "wave_score.h"
 
-const std::string CWave_Boss::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
-const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_003.txt";
-
+const float CWaveScore::DIGIT_SHIFT = 50.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CWave_Boss::CWave_Boss()
+CWaveScore::CWaveScore()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CWave_Boss::~CWave_Boss()
+CWaveScore::~CWaveScore()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CWave_Boss::Init()
+HRESULT CWaveScore::Init()
 {
-	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
-	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
+	D3DXVECTOR3 pos = D3DXVECTOR3(750.0f ,SCREEN_HEIGHT * 0.5f,0.0f);
+	CScore::SetPos(pos);
+	CScore::SetDigitShift(DIGIT_SHIFT);
+	CScore::Init();
 	return S_OK;
 }
 
 //=============================================
 //終了
 //=============================================
-void CWave_Boss::Uninit()
+void CWaveScore::Uninit()
 {
-	CWave::Uninit();
+	CScore::Uninit();
 }
 
 //=============================================
 //更新
 //=============================================
-void CWave_Boss::Update()
+void CWaveScore::Update()
 {
-	CWave::Update();
+	CScore::Update();
 }

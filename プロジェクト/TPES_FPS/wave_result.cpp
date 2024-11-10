@@ -7,8 +7,7 @@
 #include "wave_result.h"
 #include "manager.h"
 #include "game.h"
-//スコア
-CScore* CWave_Result::m_pScore = nullptr;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -28,14 +27,6 @@ CWave_Result::~CWave_Result()
 //=============================================
 HRESULT CWave_Result::Init()
 {
-	//スコア初期化
-	if (m_pScore == nullptr)
-	{
-		m_pScore = new CScore;
-
-		m_pScore->Init();
-	}
-
 	m_pScreen = nullptr;
 
 	if (m_pScreen == nullptr)
@@ -53,16 +44,12 @@ HRESULT CWave_Result::Init()
 //=============================================
 void CWave_Result::Uninit()
 {
-	if (m_pScore != nullptr)
-	{
-		m_pScore->Uninit();
-		m_pScore = nullptr;
-	}
 	if (m_pScreen != nullptr)
 	{
 		m_pScreen->Uninit();
 		m_pScreen = nullptr;
 	}
+	CWave::Uninit();
 }
 
 //=============================================
@@ -70,10 +57,6 @@ void CWave_Result::Uninit()
 //=============================================
 void CWave_Result::Update()
 {
-	if (m_pScore != nullptr)
-	{
-		m_pScore->Update();
-	}
 	if (m_pScreen != nullptr)
 	{
 		m_pScreen->Update();
@@ -82,6 +65,7 @@ void CWave_Result::Update()
 	{
 		CGame::SetWave(m_next);
 	}
+	CWave::Update();
 }
 
 //=============================================

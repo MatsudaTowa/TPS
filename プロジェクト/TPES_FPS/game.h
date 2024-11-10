@@ -51,18 +51,10 @@ public:
 
 	static CPlayer*GetPlayer();
 	static CWave*GetWave();
-	static CScore* GetScore();
 	//ウェーブ設定
 	static void SetWave(CWave::WAVE wave);
 
 	static void SetWave(CWave::WAVE wave,CWave::WAVE next_wave,const char* ResultFile);
-
-	//ウェーブのリザルトテンプレートメソッド
-	void WaveResult(std::string* pFileName)
-	{
-		m_pScore->ExportScore(pFileName);
-		m_pScore->Reset();
-	}
 private:
 	int m_nResultDelay; //リザルトへのディレイ
 	bool m_bEdit; //エディットしてるかどうか
@@ -71,7 +63,6 @@ private:
 
 	static CPlayer*m_pPlayer;
 	static CWave* m_pWave;
-	static CScore* m_pScore;
 
 	CWave::WAVE m_next_wave;
 

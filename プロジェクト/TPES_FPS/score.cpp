@@ -7,36 +7,16 @@
 #include "score.h"
 #include "manager.h"
 
-//桁ごとにずらす
-const float CScore::DIGIT_SHIFT = 50.0f;
-const float CScore::DEBUG_DIGIT_SHIFT = 120.0f;
-
-int CScore::m_nSaveScore = 0; 
-
 //=============================================
 //コンストラクタ
 //=============================================
 CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f))
 {//イニシャライザーでメンバ変数初期化
 
-	//現在のシーンを取得
-	CScene::MODE pScene = CScene::GetSceneMode();
-	if (pScene == CScene::MODE::MODE_GAME)
-	{
-		//初期位置代入
-		m_pos = D3DXVECTOR3(300.0f, 650.0f, 0.0f);
-	}
-	else if (pScene == CScene::MODE::MODE_RESULT)
-	{
-		//初期位置代入
-		m_pos = D3DXVECTOR3(1140.0f, 460.0f, 0.0f);
-	}
-
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		m_pNumber[nCnt] = nullptr;
 	}
-
 }
 
 //=============================================
@@ -53,26 +33,13 @@ HRESULT CScore::Init()
 {
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
-
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			//現在のシーンを取得
-			CScene::MODE pScene = CScene::GetSceneMode();
-			if (pScene == CScene::MODE::MODE_GAME)
-			{
-				m_pNumber[nCnt] = CNumber::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
-				//座標をずらす
-				m_pos.x -= DIGIT_SHIFT;
-			}
-			else if (pScene == CScene::MODE::MODE_RESULT)
-			{
-				m_pNumber[nCnt] = CNumber::Create(m_pos, D3DXVECTOR2(70.0f, 90.0f));
-				//座標をずらす
-				m_pos.x -= DEBUG_DIGIT_SHIFT;
-			}
+			m_pNumber[nCnt] = CNumber::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			//座標をずらす
+			m_pos.x -= m_DigitShift;
 		}
 	}
-
 	return S_OK;
 }
 
@@ -131,14 +98,6 @@ void CScore::Reset()
 }
 
 //=============================================
-//スコア取得
-//=============================================
-int CScore::GetScore()
-{
-	return m_nSaveScore;
-}
-
-//=============================================
 //スコア設定
 //=============================================
 void CScore::SetScore(int nScore)
@@ -168,4 +127,20 @@ void CScore::SetScore(int nScore)
 
 		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
+}
+
+//=============================================
+//表示座標取得
+//=============================================
+D3DXVECTOR3& CScore::GetPos()
+{
+	return m_pos;
+}
+
+//=============================================
+//桁の座標ずらす変数取得
+//=============================================
+float& CScore::GetDigitShift()
+{
+	return m_DigitShift; 
 }

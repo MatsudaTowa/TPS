@@ -32,6 +32,7 @@ HRESULT CWave_One::Init()
 //=============================================
 void CWave_One::Uninit()
 {
+	CWave::Uninit();
 }
 
 //=============================================
@@ -39,4 +40,5 @@ void CWave_One::Uninit()
 //=============================================
 void CWave_One::Update()
 {
+	CWave::Update();
 }

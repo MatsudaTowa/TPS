@@ -165,6 +165,7 @@
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="game_score.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="wave_one.cpp" />
     <ClCompile Include="wave_result.cpp" />
     <ClCompile Include="wave_result_screen.cpp" />
+    <ClCompile Include="wave_score.cpp" />
     <ClCompile Include="wave_three.cpp" />
     <ClCompile Include="wave_two.cpp" />
   </ItemGroup>
@@ -217,6 +219,7 @@
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_score.h" />
     <ClInclude Include="gun.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
@@ -249,6 +252,7 @@
     <ClInclude Include="wave_one.h" />
     <ClInclude Include="wave_result.h" />
     <ClInclude Include="wave_result_screen.h" />
+    <ClInclude Include="wave_score.h" />
     <ClInclude Include="wave_three.h" />
     <ClInclude Include="wave_two.h" />
   </ItemGroup>

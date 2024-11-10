@@ -1,50 +1,51 @@
 //=============================================
 //
-//ボスウェーブ処理[wave_boss.cpp]
-//Auther Matsuda Towa
+//ゲームスコア処理「game_scorer.cpp」
+// Author松田永久
 //
 //=============================================
-#include "wave_boss.h"
+#include "game_score.h"
 
-const std::string CWave_Boss::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
-const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_003.txt";
+const float CGameScore::DIGIT_SHIFT = 50.0f;
 
 //=============================================
 //コンストラクタ
 //=============================================
-CWave_Boss::CWave_Boss()
+CGameScore::CGameScore()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CWave_Boss::~CWave_Boss()
+CGameScore::~CGameScore()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CWave_Boss::Init()
+HRESULT CGameScore::Init()
 {
-	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
-	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
+	D3DXVECTOR3 pos = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
+	CScore::SetPos(pos);
+	CScore::SetDigitShift(DIGIT_SHIFT);
+	CScore::Init();
 	return S_OK;
 }
 
 //=============================================
 //終了
 //=============================================
-void CWave_Boss::Uninit()
+void CGameScore::Uninit()
 {
-	CWave::Uninit();
+	CScore::Uninit();
 }
 
 //=============================================
 //更新
 //=============================================
-void CWave_Boss::Update()
+void CGameScore::Update()
 {
-	CWave::Update();
+	CScore::Update();
 }

@@ -10,6 +10,7 @@
 #include "main.h"
 #include "block.h"
 #include "enemy.h"
+#include "score.h"
 
 //=============================================
 //  ウェーブクラス定義
@@ -57,20 +58,27 @@ public:
 	static CWave* Create(WAVE wave);
 	static CWave* Create(WAVE wave,WAVE next_wave,const char* ResultFile);
 	static WAVE GetCurrentWave();
+	static CScore* GetScore();
 
 	void LoadBlock(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
 
 	void SetWaveScore(int nScore);
-	int GetWaveScore()
+
+	int GetWaveScore();
+
+	//ウェーブのリザルトテンプレートメソッド
+	void WaveResult(std::string* pFileName)
 	{
-		return m_nScore;
+		m_pScore->ExportScore(pFileName);
+		m_pScore->Reset();
 	}
 protected:
 	// メンバ変数
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	int m_nScore; //スコア格納変数
+	static CScore* m_pScore;
 	static WAVE m_next; //次のウェーブ
 	static const char* m_ResultFile; //リザルトファイル
 	static WAVE m_CurrentWave; //現在のウェーブ

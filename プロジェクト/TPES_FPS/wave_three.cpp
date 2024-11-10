@@ -32,6 +32,7 @@ HRESULT CWave_Three::Init()
 //=============================================
 void CWave_Three::Uninit()
 {
+	CWave::Uninit();
 }
 
 //=============================================
@@ -39,4 +40,5 @@ void CWave_Three::Uninit()
 //=============================================
 void CWave_Three::Update()
 {
+	CWave::Update();
 }

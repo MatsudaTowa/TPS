@@ -17,28 +17,35 @@ class CScore
 {
 public:
 	static const int NUM_DIGIT = 6;  //桁数
-	static const float DIGIT_SHIFT;  //桁ごとに座標をずらす
-	static const float DEBUG_DIGIT_SHIFT;  //桁ごとに座標をずらす
 
 	CScore();
-	~CScore();
-	HRESULT Init();
-	void Uninit();
-	void Update();
+	virtual ~CScore();
+	virtual HRESULT Init();
+	virtual void Uninit();
+	virtual void Update();
 	void AddScore(int nValue);
-	int m_nScore; //スコアの値
 	void ExportScore(std::string* pFileName); //スコア書き出し
 	void Reset();
-	void SaveScore(int nScore)
-	{
-		m_nSaveScore = nScore;
-	}
-	static int GetScore();
-private:
+
+	int m_nScore; //スコアの値
 	void SetScore(int nScore);
-	static int m_nSaveScore; //スコアセーブ用
-	D3DXVECTOR3 m_pos;
+
+	void SetPos(D3DXVECTOR3 pos)
+	{
+		m_pos = pos;
+	}
+
+	void SetDigitShift(float shift)
+	{
+		m_DigitShift = shift;
+	}
+
+	D3DXVECTOR3& GetPos();
+	float& GetDigitShift();
 	CNumber* m_pNumber[NUM_DIGIT];
+private:
+	D3DXVECTOR3 m_pos;
+	float m_DigitShift;
 };
 
 #endif // DEBUG
