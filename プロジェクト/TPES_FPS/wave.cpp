@@ -14,6 +14,8 @@
 #include "wave_result.h"
 #include "game_score.h"
 #include "wave_score.h"
+#include"player_test.h"
+#include"field.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
@@ -53,6 +55,8 @@ void CWave::Uninit()
 		m_pScore->Uninit();
 		m_pScore = nullptr;
 	}
+	CObject::ReleaseAll();
+
 }
 
 //=============================================
@@ -112,6 +116,10 @@ CWave* CWave::Create(WAVE wave)
 		if (wave != WAVE::RESULT)
 		{
 			m_pScore = new CGameScore;
+			//プレイヤー生成
+			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
+			//地面生成
+			CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
 		}
 		else if (wave == WAVE::RESULT)
 		{
@@ -136,7 +144,7 @@ CWave* CWave::Create(WAVE wave)
 CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 {
 	// インスタンス生成
-	CWave* pWave = new CWave;
+	CWave* pWave = nullptr;
 
 	m_next = next_wave;
 
@@ -180,6 +188,8 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		if (wave != WAVE::RESULT)
 		{
 			m_pScore = new CGameScore;
+			//プレイヤー生成
+			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
 		}
 		else if (wave == WAVE::RESULT)
 		{

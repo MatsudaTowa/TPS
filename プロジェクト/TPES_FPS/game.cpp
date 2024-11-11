@@ -57,14 +57,8 @@ HRESULT CGame::Init()
 		m_pWave->Init();
 	}
 
-	//地面生成
-	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
-
 	//プレイヤー生成
 	//m_pPlayer = CPlayer::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f),5);
-
-	//プレイヤー生成
-	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
 
 	SetWave(CWave::WAVE::ONE);
 
@@ -85,6 +79,7 @@ void CGame::Uninit()
 
 	if (m_pWave != nullptr)
 	{
+		m_pWave->Uninit();
 		m_pWave = nullptr;
 	}
 
@@ -116,7 +111,11 @@ void CGame::Update()
 			m_FileName = "data\\FILE\\score\\wave_three_score.bin";
 			break;
 		case CWave::WAVE::BOSS:
+			m_next_wave = CWave::WAVE::NONE;
 			m_FileName = "data\\FILE\\score\\wave_boss_score.bin";
+			break;
+		case CWave::WAVE::NONE:
+
 			break;
 		default:
 			break;
@@ -124,18 +123,15 @@ void CGame::Update()
 
 		if (CWave::GetCurrentWave() != CWave::WAVE::RESULT)
 		{
-			m_pWave->WaveResult(&m_FileName);
-		}
+			m_nResultDelay++;
+			if (m_nResultDelay > 60)
+			{
+				m_nResultDelay = 0;
 
-		if (CWave::GetCurrentWave() != CWave::WAVE::BOSS)
-		{
-			SetWave(CWave:: WAVE::RESULT, m_next_wave, m_FileName.c_str());
+				m_pWave->WaveResult(&m_FileName);
+				SetWave(CWave::WAVE::RESULT, m_next_wave, m_FileName.c_str());
+			}
 		}
-		else
-		{
-			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
-		}
-
 	}
 
 	if (m_pWave != nullptr)
@@ -224,7 +220,7 @@ void CGame::SetWave(CWave::WAVE wave, CWave::WAVE next_wave,const char* ResultFi
 	//ウェーブ切り替え
 	if (m_pWave == nullptr)
 	{
-		m_pWave = CWave::Create(wave,next_wave, ResultFile);
+		m_pWave = CWave::Create(wave, next_wave, ResultFile);
 	}
 }
 

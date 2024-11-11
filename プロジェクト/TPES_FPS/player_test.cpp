@@ -35,7 +35,7 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle(),m_nRateCnt()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle()
 {//イニシャライザーでメンバ変数初期化
 
 }
@@ -73,8 +73,6 @@ HRESULT CPlayer_test::Init()
 	m_Raticle = nullptr;
 
 	m_bRelorad = false;
-
-	m_nRateCnt = 0;
 
 	CRenderer* pRender = CManager::GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
@@ -427,10 +425,10 @@ void CPlayer_test::Input()
 
 	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetPress(0))
 	{//アタック状態だったら
-		m_nRateCnt++;
-		if (m_nRateCnt >= CAssultRifle::DEFAULT_AR_FIRE_RATE)
+		m_pGun->m_nRateCnt++;
+		if (m_pGun->m_nRateCnt >= CAssultRifle::DEFAULT_AR_FIRE_RATE)
 		{
-			m_nRateCnt = 0;
+			m_pGun->m_nRateCnt = 0;
 			//位置取得
 			D3DXVECTOR3 pos = GetPos();
 			//カメラ情報取得
@@ -443,7 +441,7 @@ void CPlayer_test::Input()
 	}
 	if (pMouse->GetRelease(0))
 	{
-		m_nRateCnt = 0;
+		m_pGun->m_nRateCnt = 0;
 	}
 
 	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))

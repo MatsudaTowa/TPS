@@ -56,11 +56,15 @@ public:
 	int& GetReloadFrame();
 	//発射レート取得
 	int& GetFireRate();
+
+	int m_nRateCnt;//レートカウント
+
 private:
 	int m_Ammo; //マガジン内の弾数
 	int m_Lv; //銃のレベル
 	int m_ReloadFrame; //リロードフレーム
 	int m_FireRate; //発射レート
+
 };
 
 class CAssultRifle :public CGun

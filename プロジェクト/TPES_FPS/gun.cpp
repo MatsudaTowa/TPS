@@ -9,7 +9,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate()
+CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0)
 {
 }
 

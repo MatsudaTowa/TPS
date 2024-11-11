@@ -63,7 +63,14 @@ void CWave_Result::Update()
 	}
 	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN))
 	{
-		CGame::SetWave(m_next);
+		if (m_next != WAVE::NONE)
+		{
+			CGame::SetWave(m_next);
+		}
+		else
+		{
+			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+		}
 	}
 	CWave::Update();
 }

@@ -56,6 +56,7 @@ private:
 
 	void ReSpawn(); //リスポーン
 	void Move(); //プレイヤー移動処理
+	void Attack(); //エネミーアタック処理
 
 	int m_nJumpCnt; //ジャンプカウント
 
