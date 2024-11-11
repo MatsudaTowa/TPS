@@ -12,6 +12,9 @@
 #include "model_parts.h"
 #include "bullet.h"
 #include "gun.h"
+#include "character_behavior.h"
+
+class CMove;
 
 //プレイヤークラス
 class CCharacter : public CObjectX
@@ -49,7 +52,6 @@ public:
 	void Motion(int NumParts); //モーション処理
 	void SetMotion(int Motion); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
-	void Move(D3DXVECTOR3 vecDirection,float fRotMoveY,int Motion); //移動処理
 	void Jump(); //ジャンプ処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
@@ -129,6 +131,8 @@ public:
 	//体力取得
 	int& GetLife();
 
+	float& GetSpeed();
+
 	//状態取得
 	CHARACTER_STATE& GetState();
 
@@ -140,6 +144,8 @@ public:
 
 	//銃
 	CGun* m_pGun;
+
+	CMove*m_pMove;
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値

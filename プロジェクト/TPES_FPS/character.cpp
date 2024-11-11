@@ -22,8 +22,9 @@ const float CCharacter::GRAVITY_MAX = 20.0f;
 //=============================================
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),m_bLanding(false),m_bWay(false),m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_nLife(0)
 ,m_nStateCnt(0),m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
-m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), m_Jump(), m_pGun(),m_MotionSet()
+m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), m_Jump(), m_pGun(),m_MotionSet(), m_pMove()
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
+	m_pMove = nullptr;
 }
 
 //=============================================
@@ -31,6 +32,10 @@ m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish
 //=============================================
 CCharacter::~CCharacter()
 {
+	if (m_pMove != nullptr)
+	{
+		delete m_pMove;
+	}
 }
 
 //=============================================
@@ -447,30 +452,6 @@ void CCharacter::Gravity()
 }
 
 //=============================================
-//移動処理
-//=============================================
-void CCharacter::Move(D3DXVECTOR3 vecDirection, float fRotMoveY,int Motion)
-{
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		m_move.x = 0.0f;
-		m_move.z = 0.0f;
-	}
-	else
-	{
-		m_move.x += sinf(fRotMoveY) * m_Speed;
-		m_move.z += cosf(fRotMoveY) * m_Speed;
-
-	}
-	//親クラスからrotを取得
-	D3DXVECTOR3 rot = GetRot();
-	rot.y = fRotMoveY + D3DX_PI;
-	//rotを代入
-	SetRot(rot);
-	SetMotion(Motion); //現在のモーションを設定
-}
-
-//=============================================
 //ジャンプ処理
 //=============================================
 void CCharacter::Jump()
@@ -657,6 +638,11 @@ bool& CCharacter::GetFinish()
 int& CCharacter::GetLife()
 {
 	return m_nLife;
+}
+
+float& CCharacter::GetSpeed()
+{
+	return m_Speed;	
 }
 
 

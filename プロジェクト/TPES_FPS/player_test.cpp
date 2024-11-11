@@ -37,7 +37,10 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //=============================================
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle()
 {//イニシャライザーでメンバ変数初期化
-
+	if (m_pMove == nullptr)
+	{
+		m_pMove = new CDush;
+	}
 }
 
 //=============================================
@@ -382,8 +385,8 @@ void CPlayer_test::Input()
 	}
 
 	//親クラスの移動
-	CCharacter::Move(D3DXVECTOR3(vecDirection.x,0.0f, vecDirection.z), rotMoveY, Motion);
-
+	//CCharacter::Move(D3DXVECTOR3(vecDirection.x,0.0f, vecDirection.z), rotMoveY, Motion);
+	m_pMove->Move(GetSpeed(),D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY,this,Motion);
 	if (m_nJumpCnt < MAX_JUMPCNT)
 	{//ジャンプ数以下だったら
 		if (pKeyboard->GetTrigger(DIK_SPACE))
