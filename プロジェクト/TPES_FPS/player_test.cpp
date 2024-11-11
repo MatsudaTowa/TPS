@@ -41,6 +41,10 @@ CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),
 	{
 		m_pMove = new CDush;
 	}
+	if (m_pAttack == nullptr)
+	{
+		m_pAttack = new CPlayerAttack;
+	}
 }
 
 //=============================================
@@ -384,9 +388,9 @@ void CPlayer_test::Input()
 		Motion = MOTION_MOVE;
 	}
 
-	//親クラスの移動
-	//CCharacter::Move(D3DXVECTOR3(vecDirection.x,0.0f, vecDirection.z), rotMoveY, Motion);
-	m_pMove->Move(GetSpeed(),D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY,this,Motion);
+	//移動処理
+	m_pMove->Move(D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY,this,Motion);
+
 	if (m_nJumpCnt < MAX_JUMPCNT)
 	{//ジャンプ数以下だったら
 		if (pKeyboard->GetTrigger(DIK_SPACE))
@@ -428,18 +432,12 @@ void CPlayer_test::Input()
 
 	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetPress(0))
 	{//アタック状態だったら
-		m_pGun->m_nRateCnt++;
-		if (m_pGun->m_nRateCnt >= CAssultRifle::DEFAULT_AR_FIRE_RATE)
+		if (m_pAttack != nullptr)
 		{
-			m_pGun->m_nRateCnt = 0;
-			//位置取得
-			D3DXVECTOR3 pos = GetPos();
-			//カメラ情報取得
-			//弾発射
-			m_pGun->ShotBullet(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED, 
-			sinf(pCamera->GetRot().x + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED,
-			cosf(pCamera-> GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED),
-			D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL);
+			m_pAttack->Attack(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED,
+				sinf(pCamera->GetRot().x + D3DX_PI)* CAssultRifle::DEFAULT_AR_BULLET_SPEED,
+				cosf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED),
+				D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL, m_pGun, this);
 		}
 	}
 	if (pMouse->GetRelease(0))

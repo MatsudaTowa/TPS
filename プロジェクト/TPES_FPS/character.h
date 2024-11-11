@@ -15,6 +15,7 @@
 #include "character_behavior.h"
 
 class CMove;
+class CAttack;
 
 //プレイヤークラス
 class CCharacter : public CObjectX
@@ -146,6 +147,8 @@ public:
 	CGun* m_pGun;
 
 	CMove*m_pMove;
+
+	CAttack*m_pAttack;
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値

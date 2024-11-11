@@ -29,16 +29,18 @@ public:
 	}ENEMY_TYPE;
 
 	CEnemy(int nPriority = ENEMY_PRIORITY);
-	~CEnemy();
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	~CEnemy() override;
+	HRESULT Init() override;
+	void Uninit() override;
+	void Update() override;
+	void Draw() override;
 
 	//エネミー作成
 	static CEnemy* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type);
 
 	void Damage(int nDamage); //当たり判定
+
+	void Attack(); //エネミーアタック処理
 
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
@@ -53,10 +55,8 @@ private:
 	static const int NUM_MOTION; //モーションの数
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
-
 	void ReSpawn(); //リスポーン
 	void Move(); //プレイヤー移動処理
-	void Attack(); //エネミーアタック処理
 
 	int m_nJumpCnt; //ジャンプカウント
 
@@ -78,4 +78,15 @@ private:
 	Motion_Type m_Motion; //モーションの種類
 
 };
+
+//class CNormalEnemy : public CEnemy
+//{
+//public:
+//	CNormalEnemy(int nPriority = ENEMY_PRIORITY);
+//	~CNormalEnemy() override;
+//	HRESULT Init() override;
+//	void Uninit() override;
+//	void Update() override;
+//	void Draw() override;
+//};
 #endif

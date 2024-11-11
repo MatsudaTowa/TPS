@@ -22,9 +22,11 @@ const float CCharacter::GRAVITY_MAX = 20.0f;
 //=============================================
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),m_bLanding(false),m_bWay(false),m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_nLife(0)
 ,m_nStateCnt(0),m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
-m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), m_Jump(), m_pGun(),m_MotionSet(), m_pMove()
+m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), 
+m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pAttack()
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
+	m_pAttack = nullptr;
 }
 
 //=============================================
@@ -35,6 +37,10 @@ CCharacter::~CCharacter()
 	if (m_pMove != nullptr)
 	{
 		delete m_pMove;
+	}
+	if (m_pAttack != nullptr)
+	{
+		delete m_pAttack;
 	}
 }
 
