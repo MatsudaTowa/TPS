@@ -235,6 +235,7 @@ void CPlayer_test::Damage(int nDamage)
 	{//HP‚ª0ˆÈ‰º‚¾‚Á‚½‚ç
 		//I—¹
 		Uninit();
+		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
 	}
 }
 

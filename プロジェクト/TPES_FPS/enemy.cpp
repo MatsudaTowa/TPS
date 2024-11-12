@@ -73,6 +73,14 @@ HRESULT CEnemy::Init()
 {
 	CCharacter::Init();
 
+	//èeèâä˙âª
+	if (m_pGun == nullptr)
+	{
+		m_pGun = new CAssultRifle;
+
+		m_pGun->Init();
+	}
+
 	CRenderer* pRender = CManager::GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
@@ -107,6 +115,10 @@ void CEnemy::Uninit()
 void CEnemy::Update()
 {
 	CCharacter::Update();
+
+	m_pAttack->Attack(D3DXVECTOR3(GetPos().x,GetPos().y + 20.0f,GetPos().z),
+	D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED, 0.0f, cosf(GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED),
+	D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, m_pGun, this);
 
 	//åªç›ÇÃÉVÅ[ÉìÇéÊìæ
 	CScene::MODE pScene = CScene::GetSceneMode();
