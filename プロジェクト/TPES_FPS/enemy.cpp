@@ -47,6 +47,14 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
+	if (m_pMove == nullptr)
+	{
+		m_pMove = new CDush;
+	}
+	if (m_pAttack == nullptr)
+	{
+		m_pAttack = new CEnemyAttack;
+	}
 }
 
 //=============================================
@@ -89,7 +97,7 @@ HRESULT CEnemy::Init()
 void CEnemy::Uninit()
 {
 	//親クラスの終了処理を呼ぶ
-	CObjectX::Uninit();
+	CCharacter::Uninit();
 
 }
 
@@ -98,6 +106,8 @@ void CEnemy::Uninit()
 //=============================================
 void CEnemy::Update()
 {
+	CCharacter::Update();
+
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
@@ -118,48 +128,8 @@ void CEnemy::Update()
 			SetStateCnt(nStateCnt);
 		}
 
-		//重力処理
-		Gravity();
-
 		//移動処理
 		Move();
-
-		//位置取得
-		D3DXVECTOR3 pos = GetPos();
-
-		//過去の位置
-		D3DXVECTOR3 oldpos = GetOldPos();
-
-		//移動量取得
-		D3DXVECTOR3 move = GetMove();
-
-		//移動量を更新(減速）
-		move *= 1.0f - DAMPING_COEFFICIENT;
-
-		//移動量代入
-		SetMove(move);
-
-		//過去の位置に今の位置を代入
-		oldpos = pos;
-
-		//過去の位置代入
-		SetOldPos(oldpos);
-
-		//移動量追加
-		pos += move;
-
-		//座標を更新
-		SetPos(pos);
-
-		//最大最小値取得
-		D3DXVECTOR3 minpos = GetMinPos();
-		D3DXVECTOR3 maxpos = GetMaxPos();
-
-		//ブロックとの接触処理
-		HitBlock();
-
-		//床との接触処理
-		HitField();
 
 		//ゲームの状態取得
 		CGame::GAME_STATE Game_state = CGame::GetState();
@@ -170,14 +140,10 @@ void CEnemy::Update()
 			m_nJumpCnt = 0;
 		}
 
-		if (pos.y < DEADZONE_Y)
+		if (GetPos().y < DEADZONE_Y)
 		{//リスポーン処理
 			ReSpawn();
 		}
-
-		//マウスの情報取得
-		CInputMouse* pMouse = CManager::GetMouse();
-		CInputPad* pPad = CManager::GetPad();
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
@@ -271,60 +237,26 @@ void CEnemy::ReSpawn()
 //=============================================
 void CEnemy::Move()
 {
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
-
-	//カメラタイプ取得
-	CCamera::CANERA_TYPE pCameraType = CCamera::GetType();
-
-	//どっち向いてるか取得
-	bool bWay = GetWay();
-
-	//どっち向いてるか代入
-	SetWay(bWay);
-
-	//移動量取得
-	D3DXVECTOR3 move = GetMove();
 
 	//着地してるか取得
 	bool bLanding = GetLaunding();
 
+	float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
+
+	Motion_Type Motion;
+
 	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
 	{ // 動いてない。
-		move.x = 0.0f;
-		move.z = 0.0f;
-		SetMotion(MOTION_NEUTRAL); //現在のモーションを設定
+		Motion = MOTION_NEUTRAL;
 	}
 	else
 	{
-		float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
-
-		//オブジェクト2Dからrotを取得
-		D3DXVECTOR3 rot = GetRot();
-
-		move.x += sinf(rotMoveY) * DEFAULT_MOVE;
-		move.z += cosf(rotMoveY) * DEFAULT_MOVE;
-		rot.y = rotMoveY + D3DX_PI;
-		//rotを代入
-		SetRot(rot);
-		SetMotion(MOTION_MOVE); //現在のモーションを設定
-	}
-	if (m_nJumpCnt < MAX_JUMPCNT)
-	{//ジャンプ数以下だったら
-		if (pKeyboard->GetTrigger(DIK_SPACE))
-		{
-			move.y = DEFAULT_JUMP;
-			bLanding = false; //空中
-			m_nJumpCnt++; //ジャンプ数加算
-			SetMotion(MOTION_ATTACK); //現在のモーションを設定
-
-		}
+		Motion = MOTION_MOVE;
 	}
 
-	//移動量代入
-	SetMove(move);
+	//移動処理
+	m_pMove->Move(D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY, this, Motion);
 
-	//着地してるか代入
-	SetLanding(bLanding);
 }
 

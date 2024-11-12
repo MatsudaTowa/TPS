@@ -89,7 +89,7 @@ HRESULT CEnemy_test::Init()
 void CEnemy_test::Uninit()
 {
 	//親クラスの終了処理を呼ぶ
-	CObjectX::Uninit();
+	CCharacter::Uninit();
 
 }
 
@@ -118,48 +118,8 @@ void CEnemy_test::Update()
 			SetStateCnt(nStateCnt);
 		}
 
-		//重力処理
-		Gravity();
-
 		//移動処理
 		Move();
-
-		//位置取得
-		D3DXVECTOR3 pos = GetPos();
-
-		//過去の位置
-		D3DXVECTOR3 oldpos = GetOldPos();
-
-		//移動量取得
-		D3DXVECTOR3 move = GetMove();
-
-		//移動量を更新(減速）
-		move *= 1.0f - DAMPING_COEFFICIENT;
-
-		//移動量代入
-		SetMove(move);
-
-		//過去の位置に今の位置を代入
-		oldpos = pos;
-
-		//過去の位置代入
-		SetOldPos(oldpos);
-
-		//移動量追加
-		pos += move;
-
-		//座標を更新
-		SetPos(pos);
-
-		//最大最小値取得
-		D3DXVECTOR3 minpos = GetMinPos();
-		D3DXVECTOR3 maxpos = GetMaxPos();
-
-		//ブロックとの接触処理
-		HitBlock();
-
-		//床との接触処理
-		HitField();
 
 		//ゲームの状態取得
 		CGame::GAME_STATE Game_state = CGame::GetState();
@@ -170,14 +130,10 @@ void CEnemy_test::Update()
 			m_nJumpCnt = 0;
 		}
 
-		if (pos.y < DEADZONE_Y)
+		if (GetPos().y < DEADZONE_Y)
 		{//リスポーン処理
 			ReSpawn();
 		}
-
-		//マウスの情報取得
-		CInputMouse* pMouse = CManager::GetMouse();
-		CInputPad* pPad = CManager::GetPad();
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();

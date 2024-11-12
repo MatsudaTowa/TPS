@@ -5,12 +5,14 @@
 //
 //=============================================
 #include "gun.h"
-
+#include "assault_behavior.h"
 //=============================================
 //コンストラクタ
 //=============================================
 CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0)
 {
+	m_pShot = nullptr;
+	m_pReload = nullptr;
 }
 
 //=============================================
@@ -18,6 +20,14 @@ CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0)
 //=============================================
 CGun::~CGun()
 {
+	if (m_pShot != nullptr)
+	{
+		delete m_pShot;
+	}
+	if (m_pReload != nullptr)
+	{
+		delete m_pReload;
+	}
 }
 
 //=============================================
@@ -58,8 +68,16 @@ const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 15.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CAssultRifle::CAssultRifle(): m_nReloadCnt()
+CAssultRifle::CAssultRifle()
 {
+	if (m_pShot == nullptr)
+	{
+		m_pShot = new CAssaultShot;
+	}
+	if (m_pReload == nullptr)
+	{
+		m_pReload = new CAssaultReload;
+	}
 }
 
 //=============================================
@@ -98,8 +116,6 @@ HRESULT CAssultRifle::Init()
 	SetReloadFrame(nReloadFrame);
 	SetFireRate(nFireRate);
 
-	m_nReloadCnt = 0;
-
 	return S_OK;
 }
 
@@ -115,15 +131,10 @@ void CAssultRifle::Uninit()
 //=============================================
 void CAssultRifle::ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type)
 {
-	//現在の弾数取得
-	int nAmmo = GetAmmo();
-	if (nAmmo > 0)
+	if (m_pShot != nullptr)
 	{
-		CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), move,
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 180, nDamage, Allegiance, type);
-		nAmmo--;
+		m_pShot->Shot(pos, move, size, nDamage, Allegiance, type, this);
 	}
-	SetAmmo(nAmmo);
 }
 
 //=============================================
@@ -132,16 +143,9 @@ void CAssultRifle::ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 siz
 bool CAssultRifle::Reload()
 {
 	bool bReload = true; //リロード中かどうか
-	m_nReloadCnt++;
-	if (m_nReloadCnt >= CAssultRifle::DEFAULT_AR_RELOAD_FRAME)
+	if (m_pReload != nullptr)
 	{
-		m_nReloadCnt = 0;
-		//現在の弾数取得
-		int nAmmo = GetAmmo();
-		//デフォルトのマガジン弾数代入
-		nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
-		SetAmmo(nAmmo);
-		bReload = false;
+		bReload = m_pReload->Reload(this);
 	}
 	return bReload;
 }

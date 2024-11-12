@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ammo_UI.cpp" />
+    <ClCompile Include="assault_behavior.cpp" />
     <ClCompile Include="attack_manager.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="block.cpp" />
@@ -211,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ammo_UI.h" />
+    <ClInclude Include="assault_behavior.h" />
     <ClInclude Include="attack_manager.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="block.h" />

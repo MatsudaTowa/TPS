@@ -6,11 +6,21 @@
 //=============================================
 #include "main.h"
 #include "bullet.h"
+#include "gun_behavior.h"
 
 #ifndef _GUN_H_ //これが定義されてないとき
 
 #define _GUN_H_
 
+//=============================================
+//前方宣言
+//=============================================
+class CShot;
+class CReload;
+
+//=============================================
+//銃の基底クラス
+//=============================================
 class CGun
 {
 public:
@@ -59,6 +69,8 @@ public:
 
 	int m_nRateCnt;//レートカウント
 
+	CShot* m_pShot; //弾発射処理
+	CReload* m_pReload; //リロード処理
 private:
 	int m_Ammo; //マガジン内の弾数
 	int m_Lv; //銃のレベル
@@ -67,6 +79,9 @@ private:
 
 };
 
+//=============================================
+//アサルトライフクラス
+//=============================================
 class CAssultRifle :public CGun
 {
 public:
@@ -82,6 +97,5 @@ public:
 	void ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type) override; //弾発射処理
 	bool Reload() override;
 private:
-	int m_nReloadCnt;
 };
 #endif

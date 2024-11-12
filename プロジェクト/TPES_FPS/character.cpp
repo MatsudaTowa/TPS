@@ -80,7 +80,33 @@ void CCharacter::Uninit()
 //=============================================
 void CCharacter::Update()
 {
-	D3DXVECTOR3 CharacterPos = GetPos();
+	//重力処理
+	Gravity();
+
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	//移動量を更新(減速）
+	m_move *= 1.0f - 0.3f;
+
+	//過去の位置に今の位置を代入
+	m_oldpos = pos;
+
+	//移動量追加
+	pos += m_move;
+
+	//座標を更新
+	SetPos(pos);
+
+	//最大最小値取得
+	D3DXVECTOR3 minpos = GetMinPos();
+	D3DXVECTOR3 maxpos = GetMaxPos();
+
+	//ブロックとの接触処理
+	HitBlock();
+
+	//床との接触処理
+	HitField();
 }
 
 //=============================================
