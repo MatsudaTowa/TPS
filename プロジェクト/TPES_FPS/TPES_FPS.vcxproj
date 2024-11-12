@@ -162,6 +162,7 @@
     <ClCompile Include="character_behavior.cpp" />
     <ClCompile Include="colision.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemy_behavior.cpp" />
     <ClCompile Include="enemy_test.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="objectX.cpp" />
     <ClCompile Include="object_map.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="player_behavior.cpp" />
     <ClCompile Include="player_test.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -218,6 +220,7 @@
     <ClInclude Include="character_behavior.h" />
     <ClInclude Include="colision.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemy_behavior.h" />
     <ClInclude Include="enemy_test.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
@@ -238,6 +241,7 @@
     <ClInclude Include="objectX.h" />
     <ClInclude Include="object_map.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="player_behavior.h" />
     <ClInclude Include="player_test.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />

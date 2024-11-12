@@ -10,6 +10,8 @@
 #include "main.h"
 #include "model_parts.h"
 #include "character.h"
+#include "enemy_behavior.h"
+
 //エネミークラス
 class CEnemy :public CCharacter
 {
@@ -21,7 +23,7 @@ public:
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 	static const int DEFAULT_LIFE = 3; //ライフ
 
-		//エネミーの列挙定義
+	//エネミーの列挙定義
 	typedef enum
 	{
 		ENEMY_TYPE_NORMAL = 0,
@@ -39,8 +41,6 @@ public:
 	static CEnemy* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type);
 
 	void Damage(int nDamage); //当たり判定
-
-	void Attack(); //エネミーアタック処理
 
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
@@ -79,14 +79,4 @@ private:
 
 };
 
-//class CNormalEnemy : public CEnemy
-//{
-//public:
-//	CNormalEnemy(int nPriority = ENEMY_PRIORITY);
-//	~CNormalEnemy() override;
-//	HRESULT Init() override;
-//	void Uninit() override;
-//	void Update() override;
-//	void Draw() override;
-//};
 #endif

@@ -327,3 +327,4 @@ void CEnemy::Move()
 	//’…’n‚µ‚Ä‚é‚©‘ã“ü
 	SetLanding(bLanding);
 }
+

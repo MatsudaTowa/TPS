@@ -12,6 +12,8 @@
 #include "character.h"
 #include "reticle.h"
 #include"ammo_UI.h"
+#include "player_behavior.h"
+
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
