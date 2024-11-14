@@ -41,7 +41,7 @@ HRESULT CTest::Init()
 	LoadBlock(&CTest::BLOCK_FILE);
 
 	//ÉvÉåÉCÉÑÅ[ê∂ê¨
-	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
+	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
 	return S_OK;
 }
 

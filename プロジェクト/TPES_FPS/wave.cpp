@@ -117,7 +117,7 @@ CWave* CWave::Create(WAVE wave)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
+			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-600.0f, 0.5f, -700.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
 			//地面生成
 			CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
 		}
@@ -189,7 +189,7 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 5);
+			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
 		}
 		else if (wave == WAVE::RESULT)
 		{

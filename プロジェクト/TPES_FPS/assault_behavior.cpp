@@ -31,7 +31,7 @@ CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type,CGun* gun)
 	if (nAmmo > 0)
 	{
 		CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), move,
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 30, nDamage, Allegiance, type);
+			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 60, nDamage, Allegiance, type);
 		nAmmo--;
 	}
 	gun->SetAmmo(nAmmo);
