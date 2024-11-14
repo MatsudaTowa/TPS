@@ -25,10 +25,10 @@ private:
 	static const int RIGHT_PARCENT = 50; //右の確立
 	static const int LEFT_PARCENT = 100; //左の確立
 
-	int m_nRight;
-	int m_nLeft;
-	bool m_bRandom;
-	int m_nStateChangeCnt;
+	int m_nRight;//左に行く確率
+	int m_nLeft; //右に行く確率
+	bool m_bRandom; //どっちに行くか決める
+	int m_nStateChangeCnt; //ステート変更カウント
 };
 
 //=============================================
@@ -44,6 +44,6 @@ public:
 private:
 	static const int SHOT_FRAME = 180; //射撃フレーム
 
-	int m_nStateChangeCnt;
+	int m_nStateChangeCnt;//ステート変更カウント
 };
 #endif // !_ENEMY_BEHAVIOR_
