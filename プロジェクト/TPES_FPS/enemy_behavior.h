@@ -37,7 +37,7 @@ public:
 	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 	void GunAction(CGun* pGun, const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const D3DXVECTOR3& size, int nDamage, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
 private:
-	static const int SHOT_FRAME = 60; //射撃フレーム
+	static const int SHOT_FRAME = 180; //射撃フレーム
 
 	int m_nStateChangeCnt;
 };

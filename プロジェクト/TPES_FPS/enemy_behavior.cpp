@@ -9,7 +9,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyMove::CEnemyMove()
+CEnemyMove::CEnemyMove():m_nStateChangeCnt(0)
 {
 }
 
@@ -25,48 +25,59 @@ CEnemyMove::~CEnemyMove()
 //=============================================
 void CEnemyMove::Move(CCharacter* character)
 {
-	//移動の方向の単位ベクトル変数
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
-
-	float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
-
-	CEnemy::Motion_Type Motion;
-
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		Motion = CEnemy::Motion_Type::MOTION_NEUTRAL;
-	}
-	else
+	if (m_nStateChangeCnt < MOVE_FRAME)
 	{
-		Motion = CEnemy::Motion_Type::MOTION_MOVE;
-	}
+		//移動の方向の単位ベクトル変数
+		D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
-	D3DXVECTOR3 move = character->GetMove();
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		move.x = 0.0f;
-		move.z = 0.0f;
+		float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
+
+		CEnemy::Motion_Type Motion;
+
+		if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+		{ // 動いてない。
+			Motion = CEnemy::Motion_Type::MOTION_NEUTRAL;
+		}
+		else
+		{
+			Motion = CEnemy::Motion_Type::MOTION_MOVE;
+		}
+
+		D3DXVECTOR3 move = character->GetMove();
+		if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+		{ // 動いてない。
+			move.x = 0.0f;
+			move.z = 0.0f;
+		}
+		else
+		{
+			move.x += sinf(rotMoveY) * character->GetSpeed();
+			move.z += cosf(rotMoveY) * character->GetSpeed();
+		}
+		//親クラスからrotを取得
+		D3DXVECTOR3 rot = character->GetRot();
+		rot.y = rotMoveY + D3DX_PI;
+		//rotを代入
+		character->SetRot(rot);
+		//移動量代入
+		character->SetMove(move);
+		//モーション代入
+		character->SetMotion(Motion);
+		++m_nStateChangeCnt;
+
 	}
-	else
+	if (m_nStateChangeCnt >= MOVE_FRAME)
 	{
-		move.x += sinf(rotMoveY) * character->GetSpeed();
-		move.z += cosf(rotMoveY) * character->GetSpeed();
+		m_nStateChangeCnt = 0;
+		//射撃状態に切り替え
+		character->ChangeState(new CShotState);
 	}
-	//親クラスからrotを取得
-	D3DXVECTOR3 rot = character->GetRot();
-	rot.y = rotMoveY + D3DX_PI;
-	//rotを代入
-	character->SetRot(rot);
-	//移動量代入
-	character->SetMove(move);
-	//モーション代入
-	character->SetMotion(Motion);
 }
 
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyAttack::CEnemyAttack()
+CEnemyAttack::CEnemyAttack() :m_nStateChangeCnt(0)
 {
 }
 
@@ -102,10 +113,12 @@ void CEnemyAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET
 		{
 			character->m_pGun->m_pReload->Reload(character->m_pGun);
 		}
-		m_nStateChangeCnt++;
+		++m_nStateChangeCnt;
 	}
 	if (m_nStateChangeCnt >= SHOT_FRAME)
 	{
+		m_nStateChangeCnt = 0;
+		//移動状態に切り替え
 		character->ChangeState(new CMoveState);
 	}
 }

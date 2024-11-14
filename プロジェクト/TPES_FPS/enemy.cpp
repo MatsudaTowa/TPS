@@ -117,7 +117,6 @@ void CEnemy::Update()
 
 	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);
 
-
 	//Œ»İ‚ÌƒV[ƒ“‚ğæ“¾
 	CScene::MODE pScene = CScene::GetSceneMode();
 
