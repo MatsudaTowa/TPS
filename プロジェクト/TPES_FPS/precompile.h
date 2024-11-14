@@ -7,6 +7,8 @@
 #include<stdio.h>
 #include <string>
 #include <vector>
+#include <random>
+#include<iostream>
 
 #define DIRECTINPUT_VERSION (0x0800) //Œx‘Îˆ—p
 #include "dinput.h" //“ü—Íˆ—‚É•K—v

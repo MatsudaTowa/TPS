@@ -264,6 +264,8 @@ void CPlayer_test::Input()
 	{//マウスが押されてる間は
 		//射撃状態に変更
 		ChangeState(new CShotState);
+
+		//モーションを変更 TODO:覗きこむモーションに
 		SetMotion(MOTION_NEUTRAL);
 
 		ResetRot(); //レティクルのほうを向きたいので

@@ -9,8 +9,10 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyMove::CEnemyMove():m_nStateChangeCnt(0)
+CEnemyMove::CEnemyMove():m_nStateChangeCnt(0), m_bRandom(),m_nLeft(),m_nRight()
 {
+	m_nLeft = LEFT_PARCENT;
+	m_nRight = RIGHT_PARCENT;
 }
 
 //=============================================
@@ -27,8 +29,17 @@ void CEnemyMove::Move(CCharacter* character)
 {
 	if (m_nStateChangeCnt < MOVE_FRAME)
 	{
+		float move_x = 0.0f;
+		if (m_bRandom)
+		{
+			move_x = 1.0f;
+		}
+		if (!m_bRandom)
+		{
+			move_x = -1.0f;
+		}
 		//移動の方向の単位ベクトル変数
-		D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+		D3DXVECTOR3 vecDirection(move_x, 0.0f, 0.0f);
 
 		float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
 
@@ -68,7 +79,36 @@ void CEnemyMove::Move(CCharacter* character)
 	}
 	if (m_nStateChangeCnt >= MOVE_FRAME)
 	{
+		//次の設定
+		std::random_device seed;
+		std::mt19937 random(seed());
+		std::uniform_int_distribution<int> number(0, 100);
+
+		//どっちに行くかの確率
+		if (number(random) <= m_nRight)
+		{
+			m_bRandom = true;
+			if (m_nRight > 0)
+			{//右に進む確率を下げる
+				m_nRight -= 5;
+			}
+		}
+		else if (number(random) > m_nRight && number(random) <= m_nLeft)
+		{
+			m_bRandom = false;
+			if (m_nRight < 100)
+			{//右に進む確率をあげる
+				m_nRight += 5;
+			}
+		}
+
 		m_nStateChangeCnt = 0;
+
+		character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
+		//TODO:プレイヤーのほうを向かせる
+		D3DXVECTOR3 rot = {0.0f,0.0f,0.0f};
+		//rotを代入
+		character->SetRot(rot);
 		//射撃状態に切り替え
 		character->ChangeState(new CShotState);
 	}

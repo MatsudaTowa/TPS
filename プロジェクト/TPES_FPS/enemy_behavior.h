@@ -21,8 +21,13 @@ public:
 	~CEnemyMove() override;
 	void Move(CCharacter* character)override;
 private:
-	static const int MOVE_FRAME = 120; //移動フレーム
+	static const int MOVE_FRAME = 60; //移動フレーム
+	static const int RIGHT_PARCENT = 50; //右の確立
+	static const int LEFT_PARCENT = 100; //左の確立
 
+	int m_nRight;
+	int m_nLeft;
+	bool m_bRandom;
 	int m_nStateChangeCnt;
 };
 
