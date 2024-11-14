@@ -7,16 +7,29 @@
 #ifndef _PLAYER_BEHAVIOR_
 #define _PLAYER_BEHAVIOR_
 #include "character_behavior.h"
+#include "player_test.h"
 
 //=============================================
-//敵の攻撃のストラテジー
+//プレイヤーの移動のストラテジー
+//=============================================
+class CPlayerMove : public CMove
+{
+public:
+	static const int MAX_JUMPCNT = 2; //ジャンプ回数
+
+	CPlayerMove();
+	~CPlayerMove() override;
+	void Move(CCharacter* character)override;
+};
+
+//=============================================
+//プレイヤーの攻撃のストラテジー
 //=============================================
 class CPlayerAttack : public CAttack
 {
 public:
 	CPlayerAttack();
 	~CPlayerAttack() override;
-	void Attack(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage,
-		CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CGun* pGun, CCharacter* character) override;
+	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 };
 #endif // !_ENEMY_BEHAVIOR_

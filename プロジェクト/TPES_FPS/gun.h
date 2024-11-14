@@ -34,7 +34,6 @@ public:
 	virtual ~CGun();
 	virtual HRESULT Init() = 0;
 	virtual void Uninit() = 0;
-	virtual void ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type) = 0; //弾発射処理
 	virtual bool Reload() = 0;
 
 	//弾数設定
@@ -71,6 +70,9 @@ public:
 
 	CShot* m_pShot; //弾発射処理
 	CReload* m_pReload; //リロード処理
+
+	int m_nDamage; //ダメージ
+	D3DXVECTOR3 m_Size; //サイズ
 private:
 	int m_Ammo; //マガジン内の弾数
 	int m_Lv; //銃のレベル
@@ -88,13 +90,14 @@ public:
 	static const int DEFAULT_AR_MAG_SIZE = 28; //デフォルトのアサルトのマガジンサイズ
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_FIRE_RATE = 25; //デフォルトのアサルトの発射レート
+	static const int DEFAULT_AR_DAMAGE = 1; //デフォルトのアサルトのダメージ
 	static const float DEFAULT_AR_BULLET_SPEED; //デフォルトのアサルトの弾のスピード
+	static const D3DXVECTOR3 DEFAULT_AR_SIZE; //デフォルトのアサルトサイズ
 
 	CAssultRifle();
 	~CAssultRifle() override;
 	HRESULT Init() override;
 	void Uninit() override;
-	void ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type) override; //弾発射処理
 	bool Reload() override;
 private:
 };

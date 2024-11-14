@@ -22,11 +22,12 @@ const float CCharacter::GRAVITY_MAX = 20.0f;
 //=============================================
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),m_bLanding(false),m_bWay(false),m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_nLife(0)
 ,m_nStateCnt(0),m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
-m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Combat_State(), m_Speed(), 
-m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pAttack()
+m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Speed(), 
+m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pAttack(), m_pCharacterState(), m_nJumpCnt(0)
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
 	m_pAttack = nullptr;
+	m_pCharacterState = nullptr;
 }
 
 //=============================================
@@ -42,6 +43,10 @@ CCharacter::~CCharacter()
 	{
 		delete m_pAttack;
 	}
+	if (m_pCharacterState != nullptr)
+	{
+		delete m_pCharacterState;
+	}
 }
 
 //=============================================
@@ -49,8 +54,10 @@ CCharacter::~CCharacter()
 //=============================================
 HRESULT CCharacter::Init()
 {
-	//戦闘状態のステート初期化
-	m_Combat_State = COMBAT_STATE::STATE_NORMAL;
+	if (m_pCharacterState == nullptr)
+	{
+		m_pCharacterState = new CMoveState;
+	}
 	//最初どのモーションでもない値を代入
 	m_Motion = -1;
 	//ループモーション終わってる判定に
@@ -101,6 +108,12 @@ void CCharacter::Update()
 	//最大最小値取得
 	D3DXVECTOR3 minpos = GetMinPos();
 	D3DXVECTOR3 maxpos = GetMaxPos();
+
+	if (m_bLanding)
+	{//着地してるなら
+		//ジャンプ数リセット
+		m_nJumpCnt = 0;
+	}
 
 	//ブロックとの接触処理
 	HitBlock();
@@ -617,14 +630,6 @@ void CCharacter::HitField()
 }
 
 //=============================================
-//戦闘ステートの取得
-//=============================================
-CCharacter::COMBAT_STATE& CCharacter::GetCombat_State()
-{
-	return m_Combat_State;
-}
-
-//=============================================
 //移動量取得
 //=============================================
 D3DXVECTOR3& CCharacter::GetMove()
@@ -692,4 +697,25 @@ CCharacter::CHARACTER_STATE& CCharacter::GetState()
 int& CCharacter::GetStateCnt()
 {
 	return m_nStateCnt;
+}
+
+//=============================================
+//ジャンプ数取得
+//=============================================
+int& CCharacter::GetJumpCnt()
+{
+	return m_nJumpCnt;
+}
+
+//=============================================
+//キャラクターのステート変更
+//=============================================
+void CCharacter::ChangeState(CCharacterState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pCharacterState != nullptr)
+	{
+		delete m_pCharacterState;
+		m_pCharacterState = state;
+	}
 }

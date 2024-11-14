@@ -15,9 +15,6 @@
 //通常の移動速度
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 
-//ジャンプ回数
-const int CPlayer_test::MAX_JUMPCNT = 2;
-
 //プレイヤーをリスポーンされる座標
 const float CPlayer_test::DEADZONE_Y = -100.0f;
 
@@ -35,11 +32,11 @@ DWORD CPlayer_test::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0),m_Raticle()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pMove == nullptr)
 	{
-		m_pMove = new CDush;
+		m_pMove = new CPlayerMove;
 	}
 	if (m_pAttack == nullptr)
 	{
@@ -163,6 +160,7 @@ void CPlayer_test::Update()
 		{
 			//入力処理
 			Input();
+			m_pCharacterState->Move(this);
 		}
 
 		//カメラ情報取得
@@ -258,113 +256,30 @@ void CPlayer_test::ReSpawn()
 //=============================================
 void CPlayer_test::Input()
 {
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 	CInputMouse* pMouse = CManager::GetMouse();
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
-	//カメラタイプ取得
-	CCamera::CANERA_TYPE pCameraType = CCamera::GetType();
-
-	//どっち向いてるか取得
-	bool bWay = GetWay();
-
-	COMBAT_STATE state = CCharacter::GetCombat_State();
-	if (state != COMBAT_STATE::STATE_ATTACK)
-	{
-		switch (pCameraType)
-		{//サイドビューの時は横にしか動かないように設定
-		case CCamera::CANERA_TYPE::TYPE_SIDEVIEW:
-			if (pKeyboard->GetPress(DIK_A))
-			{
-				vecDirection.x -= 1.0f;
-				bWay = false;
-			}
-			else if (pKeyboard->GetPress(DIK_D))
-			{
-				vecDirection.x += 1.0f;
-				bWay = true;
-			}
-			break;
-		case CCamera::CANERA_TYPE::TYPE_PARALLEL_SIDEVIEW:
-			if (pKeyboard->GetPress(DIK_A))
-			{
-				vecDirection.x -= 1.0f;
-				bWay = false;
-			}
-			else if (pKeyboard->GetPress(DIK_D))
-			{
-				vecDirection.x += 1.0f;
-				bWay = true;
-			}
-			break;
-		default:
-			if (pKeyboard->GetPress(DIK_W))
-			{
-				vecDirection.z += 1.0f;
-			}
-			if (pKeyboard->GetPress(DIK_S))
-			{
-				vecDirection.z -= 1.0f;
-			}
-			if (pKeyboard->GetPress(DIK_A))
-			{
-				vecDirection.x -= 1.0f;
-				bWay = false;
-			}
-			if (pKeyboard->GetPress(DIK_D))
-			{
-				vecDirection.x += 1.0f;
-				bWay = true;
-			}
-			break;
-		}
-	}
-
-	float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
-
-	Motion_Type Motion;
-
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		Motion = MOTION_NEUTRAL;
-	}
-	else
-	{	
-		Motion = MOTION_MOVE;
-	}
-
-	//移動処理
-	m_pMove->Move(D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY,this,Motion);
-
-	if (m_nJumpCnt < MAX_JUMPCNT)
-	{//ジャンプ数以下だったら
-		if (pKeyboard->GetTrigger(DIK_SPACE))
-		{
-			//親クラスのジャンプ処理
-			CCharacter::Jump();
-			m_nJumpCnt++; //ジャンプ数加算
-		}
-	}
-
-	CCharacter::COMBAT_STATE combat_state = GetCombat_State();
 	CCamera* pCamera = CManager::GetCamera();
-	////移動量代入
-	//SetMove(move);
-	if (combat_state != CCharacter::COMBAT_STATE::STATE_ATTACK &&pMouse->GetPress(1))
-	{//アタック状態じゃなくマウスが押されてる間は
-		//ステートをアタック状態に
-		combat_state = CCharacter::COMBAT_STATE::STATE_ATTACK;
+
+	if (pMouse->GetPress(1))
+	{//マウスが押されてる間は
+		//射撃状態に変更
+		ChangeState(new CShotState);
+		SetMotion(MOTION_NEUTRAL);
+
+		ResetRot(); //レティクルのほうを向きたいので
 
 		if (m_Raticle == nullptr)
 		{//使われていなかったら
-			m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f));
+			m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),
+			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f));
 		}
+		m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL, this);
 	}
 
-	if (combat_state == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetRelease(1))
-	{//アタック状態じゃなくマウスが離されたら
-		//ステートをノーマル状態に
-		combat_state = CCharacter::COMBAT_STATE::STATE_NORMAL;
+	if (pMouse->GetRelease(1))
+	{//マウスが離されたら
+		//移動状態に変更
+		ChangeState(new CMoveState);
 
 		if(m_Raticle != nullptr)
 		{//使われていたら
@@ -373,22 +288,7 @@ void CPlayer_test::Input()
 		}
 	}
 
-	SetCombat_State(combat_state);
-
-	if (GetCombat_State() == CCharacter::COMBAT_STATE::STATE_ATTACK && pMouse->GetPress(0))
-	{//アタック状態だったら
-		if (m_pAttack != nullptr)
-		{
-			m_pAttack->Attack(D3DXVECTOR3(m_Raticle->GetPos()), D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED,
-				sinf(pCamera->GetRot().x + D3DX_PI)* CAssultRifle::DEFAULT_AR_BULLET_SPEED,
-				cosf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED),
-				D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL, m_pGun, this);
-		}
-	}
-	if (pMouse->GetRelease(0))
-	{
-		m_pGun->m_nRateCnt = 0;
-	}
+	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 
 	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))
 	{
@@ -398,6 +298,21 @@ void CPlayer_test::Input()
 			m_bRelorad = true;
 		}
 	}
+}
+
+//=============================================
+//プレイヤーの方向をカメラのほうへ
+//=============================================
+void CPlayer_test::ResetRot()
+{
+	float rotMoveY = CManager::GetCamera()->GetRot().y;
+
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = GetRot();
+
+	rot.y = rotMoveY + D3DX_PI;
+
+	SetRot(rot);
 }
 
 //=============================================

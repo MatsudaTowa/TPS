@@ -9,7 +9,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0)
+CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0),m_nDamage(0),m_Size()
 {
 	m_pShot = nullptr;
 	m_pReload = nullptr;
@@ -23,10 +23,12 @@ CGun::~CGun()
 	if (m_pShot != nullptr)
 	{
 		delete m_pShot;
+		m_pShot = nullptr;
 	}
 	if (m_pReload != nullptr)
 	{
 		delete m_pReload;
+		m_pReload = nullptr;
 	}
 }
 
@@ -64,6 +66,7 @@ int& CGun::GetFireRate()
 
 //弾のスピード
 const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 15.0f;
+const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {1.5f,1.5f,1.5f};
 
 //=============================================
 //コンストラクタ
@@ -85,6 +88,7 @@ CAssultRifle::CAssultRifle()
 //=============================================
 CAssultRifle::~CAssultRifle()
 {
+
 }
 
 //=============================================
@@ -110,6 +114,15 @@ HRESULT CAssultRifle::Init()
 	//デフォルトの発射レート代入
 	nFireRate = CAssultRifle::DEFAULT_AR_FIRE_RATE;
 
+	//押したらすぐ発射するため
+	m_nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+
+	//ダメージの代入
+	m_nDamage = CAssultRifle::DEFAULT_AR_DAMAGE;
+
+	//サイズの代入
+	m_Size = CAssultRifle::DEFAULT_AR_SIZE;
+
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);
 	SetLv(nLv);
@@ -124,17 +137,6 @@ HRESULT CAssultRifle::Init()
 //=============================================
 void CAssultRifle::Uninit()
 {
-}
-
-//=============================================
-//弾発射処理
-//=============================================
-void CAssultRifle::ShotBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type)
-{
-	if (m_pShot != nullptr)
-	{
-		m_pShot->Shot(pos, move, size, nDamage, Allegiance, type, this);
-	}
 }
 
 //=============================================

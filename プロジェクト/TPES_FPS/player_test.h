@@ -23,6 +23,15 @@ public:
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
+	//モーションの種類の列挙
+	typedef enum
+	{
+		MOTION_NEUTRAL = 0,
+		MOTION_MOVE,
+		MOTION_ATTACK,
+		MOTION_MAX,
+	}Motion_Type;
+
 	CPlayer_test(int nPriority = PLAYER_PRIORITY);
 	~CPlayer_test();
 	HRESULT Init();
@@ -45,23 +54,15 @@ private:
 	void ReSpawn(); //リスポーン
 	void Input(); //プレイヤー入力処理
 
+	void ResetRot(); //方向のリセット
+
 	static CAmmo_UI*m_pAmmoUI;
-	int m_nJumpCnt; //ジャンプカウント
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
 	static LPD3DXMESH m_pMesh;
 	static 	LPD3DXBUFFER m_pBuffMat; //マテリアル情報
 	static	DWORD m_dwNumMat; //マテリアル数
-
-	//モーションの種類の列挙
-	typedef enum
-	{
-		MOTION_NEUTRAL = 0,
-		MOTION_MOVE,
-		MOTION_ATTACK,
-		MOTION_MAX,
-	}Motion_Type;
 
 	CReticle* m_Raticle;
 

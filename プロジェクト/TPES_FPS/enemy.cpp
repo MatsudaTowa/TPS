@@ -24,9 +24,6 @@ const float CEnemy::DAMPING_COEFFICIENT = 0.3f;
 //通常のジャンプ力
 const float CEnemy::DEFAULT_JUMP = 25.0f;
 
-//ジャンプ回数
-const int CEnemy::MAX_JUMPCNT = 2;
-
 //これより下に行ったら死ぬ座標
 const float CEnemy::DEADZONE_Y = -100.0f;
 
@@ -42,14 +39,14 @@ DWORD CEnemy::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority), m_nJumpCnt(0)
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
 , m_Motion(),m_Type()
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
 	if (m_pMove == nullptr)
 	{
-		m_pMove = new CDush;
+		m_pMove = new CEnemyMove;
 	}
 	if (m_pAttack == nullptr)
 	{
@@ -116,41 +113,21 @@ void CEnemy::Update()
 {
 	CCharacter::Update();
 
-	m_pAttack->Attack(D3DXVECTOR3(GetPos().x,GetPos().y + 20.0f,GetPos().z),
-	D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED, 0.0f, cosf(GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED),
-	D3DXVECTOR3(1.5f, 1.5f, 1.5f), 1, CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, m_pGun, this);
+	m_pCharacterState->Move(this);
+
+	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);
+
 
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
-		//状態を取得
-		CCharacter::CHARACTER_STATE state = GetState();
-
-		if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
-		{
-			//状態のカウント数取得
-			int nStateCnt = GetStateCnt();
-
-			//ステート変更カウント進める
-			nStateCnt++;
-
-			//ステートカウント代入
-			SetStateCnt(nStateCnt);
-		}
-
-		//移動処理
-		Move();
+		//ダメージステートの切り替えTODO:これもステートパターンで
+		ChangeDamageState();
 
 		//ゲームの状態取得
 		CGame::GAME_STATE Game_state = CGame::GetState();
-
-		if (GetLaunding())
-		{//着地してるなら
-			//ジャンプ数リセット
-			m_nJumpCnt = 0;
-		}
 
 		if (GetPos().y < DEADZONE_Y)
 		{//リスポーン処理
@@ -245,30 +222,22 @@ void CEnemy::ReSpawn()
 }
 
 //=============================================
-//移動処理
+//ダメージステートの切り替え
 //=============================================
-void CEnemy::Move()
+void CEnemy::ChangeDamageState()
 {
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+	//状態を取得
+	CCharacter::CHARACTER_STATE state = GetState();
 
-	//着地してるか取得
-	bool bLanding = GetLaunding();
-
-	float rotMoveY = atan2f(vecDirection.x, vecDirection.z);
-
-	Motion_Type Motion;
-
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		Motion = MOTION_NEUTRAL;
-	}
-	else
+	if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
 	{
-		Motion = MOTION_MOVE;
+		//状態のカウント数取得
+		int nStateCnt = GetStateCnt();
+
+		//ステート変更カウント進める
+		nStateCnt++;
+
+		//ステートカウント代入
+		SetStateCnt(nStateCnt);
 	}
-
-	//移動処理
-	m_pMove->Move(D3DXVECTOR3(vecDirection.x, 0.0f, vecDirection.z), rotMoveY, this, Motion);
-
 }
-

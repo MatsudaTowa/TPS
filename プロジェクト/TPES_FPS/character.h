@@ -13,9 +13,14 @@
 #include "bullet.h"
 #include "gun.h"
 #include "character_behavior.h"
+#include "character_state.h"
 
+//=============================================
+//前方宣言
+//=============================================
 class CMove;
 class CAttack;
+class CCharacterState;
 
 //プレイヤークラス
 class CCharacter : public CObjectX
@@ -33,14 +38,6 @@ public:
 		CHARACTER_STATE_MAX,
 	}CHARACTER_STATE;
 
-	//戦闘状態の列挙
-	typedef enum
-	{
-		STATE_NORMAL = 0,
-		STATE_ATTACK,
-		STATE_MAX,
-	}COMBAT_STATE;
-
 	CCharacter(int nPriority);
 	~CCharacter()override;
 	HRESULT Init()override;
@@ -56,12 +53,6 @@ public:
 	void Jump(); //ジャンプ処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
-
-	//戦闘列挙代入
-	void SetCombat_State(COMBAT_STATE combat_state)
-	{
-		m_Combat_State = combat_state;
-	}
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)
@@ -105,14 +96,17 @@ public:
 		m_nStateCnt = nStateCnt;
 	}
 
+	//ジャンプ数代入
+	void SetJumpCnt(int nJumpCnt)
+	{
+		m_nJumpCnt = nJumpCnt;
+	}
+
 	//終わった判定に
 	void SetFinish(bool bFinish)
 	{
 		m_bLoopFinish = bFinish;
 	}
-
-	//戦闘状態の列挙の取得
-	COMBAT_STATE& GetCombat_State();
 
 	//移動量取得
 	D3DXVECTOR3& GetMove();
@@ -140,6 +134,11 @@ public:
 	//ステートカウント取得
 	int& GetStateCnt();
 
+	//ジャンプ回数取得
+	int& GetJumpCnt();
+
+	void ChangeState(CCharacterState* state);
+
 	//パーツ
 	CModel_Parts* m_apModel[MAX_PARTS];
 
@@ -149,6 +148,9 @@ public:
 	CMove*m_pMove;
 
 	CAttack*m_pAttack;
+
+	//キャラクターのステートパターン
+	CCharacterState* m_pCharacterState;
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
@@ -164,6 +166,7 @@ private:
 	int m_PartsCnt; //パーツ数
 	int m_nMotionFrameCnt; //切り替えフレームカウント
 	int m_nKeySetCnt; //キー切り替えカウント
+	int m_nJumpCnt; //ジャンプカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
 	float m_Speed; //スピード
 	float m_Jump; //ジャンプ
@@ -195,6 +198,5 @@ private:
 	}MotionSet;
 
 	MotionSet m_MotionSet[MAX_MOTION]; //モーション設定
-	COMBAT_STATE m_Combat_State; //戦闘状態
 };
 #endif

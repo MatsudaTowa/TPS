@@ -30,11 +30,21 @@ public:
 		ENEMY_TYPE_MAX,
 	}ENEMY_TYPE;
 
+	//モーションの種類の列挙
+	typedef enum
+	{
+		MOTION_NEUTRAL = 0,
+		MOTION_MOVE,
+		MOTION_ATTACK,
+		MOTION_MAX,
+	}Motion_Type;
+
 	CEnemy(int nPriority = ENEMY_PRIORITY);
 	~CEnemy() override;
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
+	void ChangeDamageState();
 	void Draw() override;
 
 	//エネミー作成
@@ -44,6 +54,7 @@ public:
 
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
+	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
 
 private:
 
@@ -51,29 +62,17 @@ private:
 	static const float DEFAULT_MOVE; //通常時の移動
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const float DEFAULT_JUMP; //通常時のジャンプ力
-	static const int MAX_JUMPCNT; //ジャンプ回数
 	static const int NUM_MOTION; //モーションの数
+
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン
-	void Move(); //プレイヤー移動処理
-
-	int m_nJumpCnt; //ジャンプカウント
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
 	static LPD3DXMESH m_pMesh;
 	static 	LPD3DXBUFFER m_pBuffMat; //マテリアル情報
 	static	DWORD m_dwNumMat; //マテリアル数
-
-	//モーションの種類の列挙
-	typedef enum
-	{
-		MOTION_NEUTRAL = 0,
-		MOTION_MOVE,
-		MOTION_ATTACK,
-		MOTION_MAX,
-	}Motion_Type;
 
 	Motion_Type m_Motion; //モーションの種類
 
