@@ -8,6 +8,7 @@
 
 const std::string CWave_Boss::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
 const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_003.txt";
+const std::string CWave_Boss::WAVE_BOSS_WALL_FILE = "data\\FILE\\wall_003.txt";
 
 //=============================================
 //コンストラクタ
@@ -30,6 +31,7 @@ HRESULT CWave_Boss::Init()
 {
 	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
+	CWave::LoadWall(&WAVE_BOSS_WALL_FILE);
 	return S_OK;
 }
 

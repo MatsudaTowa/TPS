@@ -20,6 +20,7 @@ class CWave_Three :public CWave
 public:
 	static const std::string WAVE_3_ENEMY_FILE;	//ウェーブ3のエネミーのファイル
 	static const std::string WAVE_3_BLOCK_FILE;	//ウェーブ3のブロックのファイル
+	static const std::string WAVE_3_WALL_FILE;	//ウェーブ3の壁のファイル
 
 	CWave_Three();
 	~CWave_Three()override;

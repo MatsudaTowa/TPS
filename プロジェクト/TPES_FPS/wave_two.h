@@ -20,6 +20,7 @@ class CWave_Two :public CWave
 public:
 	static const std::string WAVE_2_ENEMY_FILE;	//ウェーブ2のエネミーのファイル
 	static const std::string WAVE_2_BLOCK_FILE;	//ウェーブ2のブロックのファイル
+	static const std::string WAVE_2_WALL_FILE;	//ウェーブ2の壁のファイル
 
 	CWave_Two();
 	~CWave_Two()override;

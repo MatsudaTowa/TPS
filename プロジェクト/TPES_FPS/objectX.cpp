@@ -117,8 +117,8 @@ void CObjectX::Draw()
 			m_pMesh->DrawSubset(nCntMat);
 		}
 
-		//// ディフューズカラーを変更
-		//pMat->MatD3D.Diffuse = D3DXCOLOR(pMat->MatD3D.Diffuse.r, pMat->MatD3D.Diffuse.g, pMat->MatD3D.Diffuse.b, pMat->MatD3D.Diffuse.a);
+		// ディフューズカラーを変更
+		pMat->MatD3D.Diffuse = D3DXCOLOR(pMat->MatD3D.Diffuse.r, pMat->MatD3D.Diffuse.g, pMat->MatD3D.Diffuse.b, pMat->MatD3D.Diffuse.a);
 
 		//αテストを無効に
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);

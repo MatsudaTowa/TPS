@@ -8,11 +8,18 @@
 
 const std::string CWave_One::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
 const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_000.txt";
+const std::string CWave_One::WAVE_1_WALL_FILE = "data\\FILE\\wall_000.txt";
 
+//=============================================
+//コンストラクタ
+//=============================================
 CWave_One::CWave_One()
 {
 }
 
+//=============================================
+//デストラクタ
+//=============================================
 CWave_One::~CWave_One()
 {
 }
@@ -24,6 +31,7 @@ HRESULT CWave_One::Init()
 {
 	CWave::LoadBlock(&WAVE_1_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_1_ENEMY_FILE);
+	CWave::LoadWall(&WAVE_1_WALL_FILE);
 	return S_OK;
 }
 

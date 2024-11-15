@@ -207,7 +207,7 @@ void CCamera::SetCamera()
 			D3DXToRadian(45.0f),
 			(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
 			10.0f,
-			1800.0f);
+			2000.0f);
 		break;
 	}
 
@@ -397,7 +397,6 @@ void CCamera::SideViewCamera()
 		if (pKeyboard->GetTrigger(DIK_F4))
 		{
 			m_type = TYPE_PARALLEL_SIDEVIEW;
-
 		}
 
 		//オブジェクト取得

@@ -16,6 +16,7 @@
 #include "wave_score.h"
 #include"player_test.h"
 #include"field.h"
+#include "wall.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
@@ -127,6 +128,7 @@ CWave* CWave::Create(WAVE wave)
 		}
 		m_pScore->Init();
 	}
+
 
 	if (pWave != nullptr)
 	{
@@ -294,6 +296,85 @@ void CWave::LoadBlock(const std::string* pFileName)
 				{
 					fscanf(pFile, "%s", &aEqual[0]);
 					fscanf(pFile, "%d", &m_LoadBlock.type);
+				}
+			}
+		}
+	}
+}
+
+//=============================================
+//壁をロード
+//=============================================
+void CWave::LoadWall(const std::string* pFileName)
+{
+	char aDataSearch[TXT_MAX];
+	char aEqual[TXT_MAX]; //[＝]読み込み用
+	int nNumWall; //壁の数
+
+	//ファイルの読み込み
+	FILE* pFile = fopen(pFileName->c_str(), "r");
+
+	if (pFile == NULL)
+	{//種類の情報のデータファイルが開けなかった場合
+		//処理を終了する
+		return;
+	}
+	//ENDが見つかるまで読み込みを繰り返す
+	while (1)
+	{
+		fscanf(pFile, "%s", aDataSearch); //検索
+
+		if (!strcmp(aDataSearch, "END"))
+		{//読み込みを終了
+			fclose(pFile);
+			break;
+		}
+		if (aDataSearch[0] == '#')
+		{
+			continue;
+		}
+
+		if (!strcmp(aDataSearch, "NUM_WALL"))
+		{//モデル数読み込み
+			fscanf(pFile, "%s", &aEqual[0]);
+			fscanf(pFile, "%d", &nNumWall);
+		}
+		if (!strcmp(aDataSearch, "WALLSET"))
+		{
+			//項目ごとのデータを代入
+			while (1)
+			{
+				fscanf(pFile, "%s", aDataSearch); //検索
+
+				if (!strcmp(aDataSearch, "END_WALLSET"))
+				{
+					//ブロック生成
+					CWall::Create(m_LoadWall.pos, m_LoadWall.rot,m_LoadWall.size);
+					break;
+				}
+				else if (!strcmp(aDataSearch, "POS"))
+				{
+					fscanf(pFile, "%s", &aEqual[0]);
+					fscanf(pFile, "%f %f %f",
+						&m_LoadWall.pos.x,
+						&m_LoadWall.pos.y,
+						&m_LoadWall.pos.z);
+				}
+				else if (!strcmp(aDataSearch, "ROT"))
+				{
+					fscanf(pFile, "%s", &aEqual[0]);
+					fscanf(pFile, "%f %f %f",
+						&m_LoadWall.rot.x,
+						&m_LoadWall.rot.y,
+						&m_LoadWall.rot.z);
+				}
+				else if (!strcmp(aDataSearch, "SIZE"))
+				{
+					fscanf(pFile, "%s", &aEqual[0]);
+					fscanf(pFile, "%f %f %f",
+						&m_LoadWall.size.x,
+						&m_LoadWall.size.y,
+						&m_LoadWall.size.z);
 				}
 			}
 		}

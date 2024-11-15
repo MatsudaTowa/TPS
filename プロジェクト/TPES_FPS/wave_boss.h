@@ -20,6 +20,7 @@ class CWave_Boss :public CWave
 public:
 	static const std::string WAVE_BOSS_ENEMY_FILE;	//ウェーブボスのエネミーのファイル
 	static const std::string WAVE_BOSS_BLOCK_FILE;	//ウェーブボスのブロックのファイル
+	static const std::string WAVE_BOSS_WALL_FILE;	//ウェーブボスの壁のファイル
 
 	CWave_Boss();
 	~CWave_Boss()override;
