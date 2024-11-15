@@ -188,7 +188,6 @@ void CEnemyAttack::LookAtPlayer(CCharacter* character)
 				//プレイヤーに向ける角度を算出
 				float fAngle = atan2f(Distance.x,Distance.z);
 
-
 				//親クラスからrotを取得
 				D3DXVECTOR3 rot = character->GetRot();
 
