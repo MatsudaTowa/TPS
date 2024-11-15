@@ -5,6 +5,9 @@
 //
 //=============================================
 #include "enemy_behavior.h"
+#include "manager.h"
+#include "player_test.h"
+#include "object.h"
 
 //=============================================
 //コンストラクタ
@@ -105,10 +108,6 @@ void CEnemyMove::Move(CCharacter* character)
 		m_nStateChangeCnt = 0;
 
 		character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
-		//TODO:プレイヤーのほうを向かせる
-		D3DXVECTOR3 rot = {0.0f,0.0f,0.0f};
-		//rotを代入
-		character->SetRot(rot);
 		//射撃状態に切り替え
 		character->ChangeState(new CShotState);
 	}
@@ -135,6 +134,7 @@ void CEnemyAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET
 {
 	if (m_nStateChangeCnt < SHOT_FRAME)
 	{
+		LookAtPlayer(character);
 		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z);
 		D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED,
 		0.0f, cosf(character->GetRot().y + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED);
@@ -164,9 +164,38 @@ void CEnemyAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET
 }
 
 //=============================================
-//銃の処理(エネミー)
+//プレイヤーのほうを向かせる
 //=============================================
-void CEnemyAttack::GunAction(CGun* pGun, const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const D3DXVECTOR3& size, int nDamage, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type)
+void CEnemyAttack::LookAtPlayer(CCharacter* character)
 {
-	
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+
+				//プレイヤーとの距離算出
+				D3DXVECTOR3 Distance = pPlayer_test->GetPos() - character->GetPos();
+
+				//プレイヤーに向ける角度を算出
+				float fAngle = atan2f(Distance.x,Distance.z);
+
+
+				//親クラスからrotを取得
+				D3DXVECTOR3 rot = character->GetRot();
+
+				rot.y = fAngle + D3DX_PI;
+
+				character->SetRot(rot);
+			}
+		}
+	}
 }

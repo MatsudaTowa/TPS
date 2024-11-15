@@ -208,38 +208,6 @@ void CEnemy::Damage(int nDamage)
 }
 
 //=============================================
-//方向
-//=============================================
-void CEnemy::ResetRot()
-{
-	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
-
-				float rotMoveY = pPlayer_test->GetRot().y;
-
-				//親クラスからrotを取得
-				D3DXVECTOR3 rot = GetRot();
-
-				rot.y = rotMoveY + D3DX_PI;
-
-				SetRot(rot);
-			}
-		}
-	}
-}
-
-//=============================================
 //リスポーン
 //=============================================
 void CEnemy::ReSpawn()

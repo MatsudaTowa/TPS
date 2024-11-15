@@ -40,7 +40,8 @@ public:
 	CEnemyAttack();
 	~CEnemyAttack() override;
 	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
-	void GunAction(CGun* pGun, const D3DXVECTOR3& pos, const D3DXVECTOR3& move, const D3DXVECTOR3& size, int nDamage, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
+	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
+
 private:
 	static const int SHOT_FRAME = 180; //射撃フレーム
 

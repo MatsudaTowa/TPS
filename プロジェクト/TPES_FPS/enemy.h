@@ -56,8 +56,6 @@ public:
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
 
-	void ResetRot(); //方向のリセット
-
 private:
 
 	//プレイヤーの移動関連

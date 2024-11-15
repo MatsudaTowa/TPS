@@ -447,7 +447,7 @@ void CCamera::ThirdViewCamera()
 				THIRDVIEW_LENGTH * sinf(m_rot.x), 
 				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
-				// カメラをプレイヤーの右にする処理※絶対やれ
+				// カメラをプレイヤーの右にする処理:TODO
 				//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
 				//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;

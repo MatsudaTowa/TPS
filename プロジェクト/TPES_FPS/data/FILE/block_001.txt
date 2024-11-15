@@ -23,6 +23,6 @@ END_BLOCKSET
 BLOCKSET
 	POS = -600.0 0.0 100.0
 	ROT = 0.0 0.0 0.0
-	TYPE = 0
+	TYPE = 1
 END_BLOCKSET
 END		# この行は絶対消さないこと！
