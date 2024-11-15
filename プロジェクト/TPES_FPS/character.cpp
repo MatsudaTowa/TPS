@@ -120,6 +120,9 @@ void CCharacter::Update()
 
 	//床との接触処理
 	HitField();
+
+	//壁との接触処理
+	HitWall();
 }
 
 //=============================================
@@ -610,23 +613,104 @@ void CCharacter::HitField()
 					m_bLanding = true; //着地
 				}
 
-				if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x
-					&& CharacterPos.x < pField->GetPos().x - pField->GetSize().x)
+				//TODO:壁の当たり判定やったらこれを使う必要なくなる
 				{
-					CharacterPos.x = m_oldpos.x;
-					m_move.x = 0.0f;
-				}
+					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x
+						&& CharacterPos.x < pField->GetPos().x - pField->GetSize().x)
+					{
+						CharacterPos.x = m_oldpos.x;
+						m_move.x = 0.0f;
+					}
 
-				if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x
-					&& CharacterPos.x > pField->GetPos().x + pField->GetSize().x)
-				{
-					CharacterPos.x = m_oldpos.x;
-					m_move.x = 0.0f;
+					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x
+						&& CharacterPos.x > pField->GetPos().x + pField->GetSize().x)
+					{
+						CharacterPos.x = m_oldpos.x;
+						m_move.x = 0.0f;
+					}
+
+
+					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z
+						&& CharacterPos.z < pField->GetPos().z - pField->GetSize().z)
+					{
+						CharacterPos.z = m_oldpos.z;
+						m_move.x = 0.0f;
+					}
+
+					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z
+						&& CharacterPos.z > pField->GetPos().z + pField->GetSize().z)
+					{
+						CharacterPos.z = m_oldpos.z;
+						m_move.x = 0.0f;
+					}
 				}
+				
 			}
 		}
 	}
 	SetPos(CharacterPos);
+}
+
+//=============================================
+//壁との接触判定
+//=============================================
+void CCharacter::HitWall()
+{
+	D3DXVECTOR3 CharacterPos = GetPos();
+
+	//サイズ取得
+	D3DXVECTOR3 CharacterMin = GetMinPos();
+	D3DXVECTOR3 CharacterMax = GetMaxPos();
+
+	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CWall::WALL_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//ブロックとの当たり判定
+			//床との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_WALL)
+			{
+				CWall* pWall = dynamic_cast<CWall*>(pObj);
+
+				ColisionWall_X(CharacterPos, CharacterMin, CharacterMax, pWall);
+				ColisionWall_Z(CharacterPos, CharacterMin, CharacterMax, pWall);
+			}
+		}
+	}
+	SetPos(CharacterPos);
+}
+
+//=============================================
+//壁との接触判定_X
+//=============================================
+void CCharacter::ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
+{
+	//当たり判定チェック
+	CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
+	if (Checkcolision_X == CColision::COLISION::COLISON_X)
+	{//x方向に当たってたら
+		CharacterPos.x = m_oldpos.x;
+		m_move.x = 0.0f;
+	}
+}
+
+//=============================================
+//壁との接触判定_Z
+//=============================================
+void CCharacter::ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
+{
+	//当たり判定チェック
+	CColision::COLISION Checkcolision_Z = CColision::CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
+	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
+	{//z方向に当たってたら
+		CharacterPos.z = m_oldpos.z;
+		m_move.z = 0.0f;
+	}
 }
 
 //=============================================

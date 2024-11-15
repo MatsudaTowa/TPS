@@ -285,6 +285,53 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3
 }
 
 //=============================================
+//頂点の設定(pos足元)
+//=============================================
+void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col)
+{
+	CRenderer* pRender = CManager::GetRenderer();
+
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+	if (m_pVtxBuff == nullptr)
+	{
+		pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	}
+
+	VERTEX_3D* pVtx;
+
+	//頂点バッファをロックし頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x - m_size.x
+		, m_pos.y + m_size.y
+		, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + m_size.x
+		, m_pos.y + m_size.y
+		, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x - m_size.x
+		, m_pos.y
+		, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + m_size.x
+		, m_pos.y
+		, 0.0f);
+
+	//rhwの設定
+	pVtx[0].nor =
+		pVtx[1].nor =
+		pVtx[2].nor =
+		pVtx[3].nor = nor;
+
+	//頂点カラーの設定
+	pVtx[0].col =
+		pVtx[1].col =
+		pVtx[2].col =
+		pVtx[3].col = col;
+
+	//アンロック
+	m_pVtxBuff->Unlock();
+}
+
+//=============================================
 //座標取得
 //=============================================
 D3DXVECTOR3& CObject3D::GetPos()

@@ -31,7 +31,6 @@ HRESULT CWave_Three::Init()
 {
 	CWave::LoadBlock(&WAVE_3_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_3_ENEMY_FILE);
-	CWave::LoadWall(&WAVE_3_WALL_FILE);
 	return S_OK;
 }
 

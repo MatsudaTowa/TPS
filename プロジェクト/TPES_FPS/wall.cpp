@@ -80,7 +80,7 @@ CWall* CWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 	CTexture* pTexture = CManager::GetTexture();
 
 	pWall->SetPos(pos); //pos設定
-	pWall->SetRot(rot); //pos設定
+	pWall->SetRot(rot); //rot設定
 	pWall->SetSize(size); //サイズ設定
 	pWall->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME))); //テクスチャ設定
 	pWall->SetType(OBJECT_TYPE_WALL); //タイプ設定

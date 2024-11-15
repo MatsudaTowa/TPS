@@ -82,6 +82,7 @@ public:
 
 	//’¸“_À•W‚Ì‘ã“ü
 	void SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col, D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
+	void SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col);
 
 	//pos‚Ìæ“¾
 	D3DXVECTOR3& GetPos();

@@ -66,33 +66,21 @@ CColision::COLISION CColision::CheckColision_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 //=============================================
 CColision::COLISION CColision::CheckColision_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 Bsize)
 {
-	if (Aoldpos.x + AMaxpos.x <= Bpos.x - Bsize.x
-		&& Apos.x + AMaxpos.x > Bpos.x - Bsize.x)
-	{
-		if (Aoldpos.z + AMinpos.z < Bpos.z + Bsize.z
-			&& Aoldpos.z + AMaxpos.z > Bpos.z - Bsize.z
-			&& Aoldpos.y + AMinpos.y < Bpos.y + Bsize.y
-			&& Aoldpos.y + AMaxpos.y > Bpos.y - Bsize.y)
-		{//“–‚½‚è”»’è(X)
-			return CColision::COLISION::COLISON_X;
-		}
-	}
-	else if (Aoldpos.x + AMinpos.x >= Bpos.x + Bsize.x
-		&& Apos.x + AMinpos.x < Bpos.x + Bsize.x)
-	{
-		if (Aoldpos.z + AMinpos.z < Bpos.z + Bsize.z
-			&& Aoldpos.z + AMaxpos.z > Bpos.z - Bsize.z
-			&& Aoldpos.y + AMinpos.y < Bpos.y + Bsize.y
-			&& Aoldpos.y + AMaxpos.y > Bpos.y - Bsize.y)
-		{//“–‚½‚è”»’è(X)
-			return CColision::COLISION::COLISON_X;
-		}
-		else
-		{
-			return CColision::COLISION::COLISON_NONE;
-		}
-	}
-	else
+	//if (Aoldpos.x + AMaxpos.x <= Bpos.x
+	//	&& Apos.x + AMaxpos.x > Bpos.x
+	//	&& Apos.z + AMinpos.z > Bpos.z - Bsize.z
+	//	&& Apos.z + AMaxpos.z < Bpos.z + Bsize.z)
+	//{
+	//	return CColision::COLISION::COLISON_X;
+	//}
+	//else if (Aoldpos.x + AMaxpos.x >= Bpos.x
+	//	&& Apos.x + AMaxpos.x < Bpos.x
+	//	&& Apos.z + AMinpos.z > Bpos.z - Bsize.z
+	//	&& Apos.z + AMaxpos.z < Bpos.z + Bsize.z)
+	//{
+	//	return CColision::COLISION::COLISON_X;
+	//}
+	//else
 	{
 		return CColision::COLISION::COLISON_NONE;
 	}
@@ -307,38 +295,19 @@ CColision::COLISION CColision::CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 //=============================================
 CColision::COLISION CColision::CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 Bsize)
 {
-	if (Aoldpos.z + AMaxpos.z <= Bpos.z - Bsize.z
-		&& Apos.z + AMaxpos.z > Bpos.z - Bsize.z)
+	if (Aoldpos.z + AMaxpos.z <= Bpos.z
+		&& Apos.z + AMaxpos.z > Bpos.z
+		&&Apos.x + AMinpos.x > Bpos.x - Bsize.x
+		&& Apos.x + AMaxpos.x < Bpos.x + Bsize.x)
 	{
-		if (Aoldpos.x + AMinpos.x < Bpos.x + Bsize.x
-			&& Aoldpos.x + AMaxpos.x > Bpos.x - Bsize.x
-			&& Aoldpos.y + AMinpos.y < Bpos.y + Bsize.y
-			&& Aoldpos.y + AMaxpos.y > Bpos.y - Bsize.y
-			)
-		{//“–‚½‚è”»’è(Z)
-			return CColision::COLISION::COLISON_X;
-
-		}
-		else
-		{
-			return CColision::COLISION::COLISON_NONE;
-		}
+		return CColision::COLISION::COLISON_Z;
 	}
-	else if (Aoldpos.z + AMinpos.z >= Bpos.z + Bsize.z
-		&& Apos.z + AMinpos.z < Bpos.z + Bsize.z)
+	else if (Aoldpos.z + AMaxpos.z >= Bpos.z
+		&& Apos.z + AMaxpos.z < Bpos.z
+		&& Apos.x + AMinpos.x > Bpos.x - Bsize.x
+		&& Apos.x + AMaxpos.x < Bpos.x + Bsize.x)
 	{
-		if (Aoldpos.x + AMinpos.x < Bpos.x + Bsize.x
-			&& Aoldpos.x + AMaxpos.x > Bpos.x - Bsize.x
-			&& Aoldpos.y + AMinpos.y < Bpos.y + Bsize.y
-			&& Aoldpos.y + AMaxpos.y > Bpos.y - Bsize.y
-			)
-		{//“–‚½‚è”»’è(Z)
-			CColision::COLISION::COLISON_Z;
-		}
-		else
-		{
-			return CColision::COLISION::COLISON_NONE;
-		}
+		return CColision::COLISION::COLISON_Z;
 	}
 	else
 	{

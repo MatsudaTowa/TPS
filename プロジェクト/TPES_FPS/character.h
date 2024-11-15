@@ -14,6 +14,8 @@
 #include "gun.h"
 #include "character_behavior.h"
 #include "character_state.h"
+#include "wall.h"
+
 
 //=============================================
 //前方宣言
@@ -53,6 +55,7 @@ public:
 	void Jump(); //ジャンプ処理
 	void HitBlock(); //ブロック当たり判定
 	void HitField(); //床当たり判定
+	void HitWall(); //壁当たり判定
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)
@@ -154,6 +157,10 @@ public:
 private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
+
+	//壁の判定
+	void ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
+	void ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
 
 	D3DXVECTOR3 m_move; //速度
 	D3DXVECTOR3 m_oldpos; //過去の位置
