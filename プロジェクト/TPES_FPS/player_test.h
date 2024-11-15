@@ -44,6 +44,8 @@ public:
 
 	void Damage(int nDamage); //当たり判定
 
+	void ResetRot(); //方向のリセット
+
 private:
 
 	//プレイヤーの移動関連
@@ -53,9 +55,6 @@ private:
 
 	void ReSpawn(); //リスポーン
 	void Input(); //プレイヤー入力処理
-
-	void ResetRot(); //方向のリセット
-
 	static CAmmo_UI*m_pAmmoUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
