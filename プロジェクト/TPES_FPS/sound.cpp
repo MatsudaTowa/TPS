@@ -1,8 +1,16 @@
+//=============================================
+//
+//サウンド[sound.cpp]
+//Auther Matsuda Towa
+//
+//=============================================
 #include "sound.h"
 // サウンドの情報
 const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MAX] =
 {
+	{"data/SOUND/BGM/aaa_aaa.wav", -1,0.7f},         //BGM0
 };
+
 CSound::CSound()
 {
 }
