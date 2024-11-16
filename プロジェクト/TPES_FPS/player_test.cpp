@@ -19,6 +19,7 @@ const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 const float CPlayer_test::DEADZONE_Y = -100.0f;
 
 CAmmo_UI* CPlayer_test::m_pAmmoUI = nullptr;
+CLife_UI* CPlayer_test::m_pLifeUI = nullptr;
 
 //テクスチャ初期化
 LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
@@ -66,12 +67,24 @@ HRESULT CPlayer_test::Init()
 		m_pGun->Init();
 	}
 
-	//残弾数初期化
-	if (m_pAmmoUI == nullptr)
+	//現在のシーンを取得 TODO:シーン参照するな
+	CScene::MODE pScene = CScene::GetSceneMode();
+	if (pScene != CScene::MODE::MODE_TITLE)
 	{
-		m_pAmmoUI = new CAmmo_UI;
+		//残弾数初期化
+		if (m_pAmmoUI == nullptr)
+		{
+			m_pAmmoUI = new CAmmo_UI;
 
-		m_pAmmoUI->Init();
+			m_pAmmoUI->Init();
+		}
+		//体力UI初期化
+		if (m_pLifeUI == nullptr)
+		{
+			m_pLifeUI = new CLife_UI;
+
+			m_pLifeUI->Init();
+		}
 	}
 
 	m_Raticle = nullptr;
@@ -113,6 +126,11 @@ void CPlayer_test::Uninit()
 		m_pAmmoUI->Uninit();
 		m_pAmmoUI = nullptr;
 	}
+	if (m_pLifeUI != nullptr)
+	{
+		m_pLifeUI->Uninit();
+		m_pLifeUI = nullptr;
+	}
 
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
@@ -137,6 +155,11 @@ void CPlayer_test::Update()
 	if (m_pAmmoUI != nullptr)
 	{
 		m_pAmmoUI->SetAmmo_UI(m_pGun->GetAmmo());
+	}
+
+	if (m_pLifeUI != nullptr)
+	{
+		m_pLifeUI->SetLife_UI(GetLife());
 	}
 
 	if (pScene != CScene::MODE::MODE_TITLE)

@@ -12,6 +12,7 @@
 #include "character.h"
 #include "reticle.h"
 #include"ammo_UI.h"
+#include"life_UI.h"
 #include "player_behavior.h"
 
 //プレイヤークラス
@@ -56,6 +57,7 @@ private:
 	void ReSpawn(); //リスポーン
 	void Input(); //プレイヤー入力処理
 	static CAmmo_UI*m_pAmmoUI;
+	static CLife_UI*m_pLifeUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 

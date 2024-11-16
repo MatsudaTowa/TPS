@@ -457,9 +457,13 @@ void CCamera::ThirdViewCamera()
 
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetMouse();
-				m_rot.y += pMouse->GetMouseMove().x * 0.001f;
-				m_rot.x += pMouse->GetMouseMove().y * 0.001f;
-
+				//現在のシーンを取得 TODO:シーン参照するな
+				CScene::MODE pScene = CScene::GetSceneMode();
+				if (pScene != CScene::MODE::MODE_TITLE)
+				{
+					m_rot.y += pMouse->GetMouseMove().x * 0.001f;
+					m_rot.x += pMouse->GetMouseMove().y * 0.001f;
+				}
 				//キーボード情報取得
 				CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 				

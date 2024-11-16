@@ -173,6 +173,7 @@
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="gun_behavior.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="life_UI.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="gun.h" />
     <ClInclude Include="gun_behavior.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="life_UI.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
