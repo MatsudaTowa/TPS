@@ -184,6 +184,45 @@ void CCharacter::MotionDraw(int NumParts)
 }
 
 //=============================================
+//モーション用の描画(色付き)
+//=============================================
+void CCharacter::MotionDraw(int NumParts, D3DXCOLOR col)
+{
+	//デバイスの取得
+	CRenderer* pRender = CManager::GetRenderer();
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+	D3DMATERIAL9 matDef; //現在のマテリアルの保存
+	D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
+	D3DXMATRIX MtxWorld = GetMtxWorld();
+
+	//マトリックスの初期化
+	D3DXMatrixIdentity(&MtxWorld);
+
+	//αテストを有効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, GetRot().y, GetRot().x, GetRot().z);
+
+	D3DXMatrixMultiply(&MtxWorld, &MtxWorld, &mtxRot);
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, GetPos().x, GetPos().y, GetPos().z);
+
+	D3DXMatrixMultiply(&MtxWorld, &MtxWorld, &mtxTrans);
+
+	//ワールドマトリックスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &MtxWorld);
+
+	for (int nCnt = 0; nCnt < NumParts; nCnt++)
+	{
+		m_apModel[nCnt]->Draw(col);
+	}
+}
+
+//=============================================
 //パーツのロード
 //=============================================
 void CCharacter::Load_Parts(const char* FileName)

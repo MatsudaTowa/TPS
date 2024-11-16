@@ -147,7 +147,7 @@ void CEnemy::Update()
 void CEnemy::Draw()
 {
 	//親クラスのモーション用の描画を呼ぶ
-	MotionDraw(NUM_PARTS);
+	MotionDraw(NUM_PARTS, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 //=============================================

@@ -192,6 +192,86 @@ void CModel_Parts::Draw()
 	
 }
 
+//=============================================
+//描画(materialの色変更)
+//=============================================
+void CModel_Parts::Draw(D3DXCOLOR col)
+{
+	if (m_ModelInfo->pMesh != nullptr && m_ModelInfo->pBuffMat != nullptr)
+	{
+		//デバイスの取得
+		CRenderer* pRender = CManager::GetRenderer();
+		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+		D3DMATERIAL9 matDef; //現在のマテリアルの保存
+		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
+
+		//マトリックスの初期化
+		D3DXMatrixIdentity(&m_mtxWorld);
+
+		//αテストを有効
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+		D3DXMATRIX mtxParent; //親の行列取得
+
+		if (m_pParent != nullptr)
+		{
+			//親のワールドマトリックス取得
+			mtxParent = m_pParent->GetMtxWorld();
+		}
+		else
+		{
+			//最新のワールド返還行列を取得
+			pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
+		}
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxParent);
+
+		//ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+		D3DXMATERIAL* pMat; //マテリアル
+
+		pMat = (D3DXMATERIAL*)m_ModelInfo->pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)m_ModelInfo->dwNumMat; nCntMat++)
+		{
+			//今描画するマテリアル情報格納
+			D3DMATERIAL9 DrawMat = pMat[nCntMat].MatD3D;
+
+			DrawMat.Diffuse = col;
+
+			//マテリアルの設定
+			pDevice->SetMaterial(&DrawMat);
+
+			//テクスチャの設定
+			pDevice->SetTexture(0, m_pTexture[nCntMat]);
+
+			//パーツの設定
+			m_ModelInfo->pMesh->DrawSubset(nCntMat);
+		}
+		//αテストを無効に
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+		//現在を取得
+		pDevice->GetMaterial(&matDef);
+
+		//保存してたマテリアルを戻す
+		pDevice->SetMaterial(&matDef);
+	}
+
+}
+
 
 //=============================================
 //生成

@@ -29,6 +29,7 @@ public:
 	void Unload(); //モデル破棄
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
 	void Draw();
+	void Draw(D3DXCOLOR col);
 
 	//パーツ生成
 	static CModel_Parts*Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot,char* pModel_Path);

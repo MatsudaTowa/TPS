@@ -47,6 +47,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void MotionDraw(int NumParts);
+	void MotionDraw(int NumParts,D3DXCOLOR col);
 
 	void Load_Parts(const char* FileName);
 	void Motion(int NumParts); //ƒ‚[ƒVƒ‡ƒ“ˆ—

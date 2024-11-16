@@ -120,7 +120,7 @@ CWave* CWave::Create(WAVE wave)
 			//プレイヤー生成
 			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
 			//地面生成
-			CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 500.0f));
+			CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
 		}
 		else if (wave == WAVE::RESULT)
 		{
