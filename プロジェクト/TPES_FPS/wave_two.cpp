@@ -31,7 +31,6 @@ HRESULT CWave_Two::Init()
 {
 	CWave::LoadBlock(&WAVE_2_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_2_ENEMY_FILE);
-	CWave::LoadWall(&WAVE_2_WALL_FILE);
 	return S_OK;
 }
 

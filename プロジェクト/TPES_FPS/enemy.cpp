@@ -179,10 +179,18 @@ void CEnemy::Damage(int nDamage)
 {
 	//体力取得
 	int nLife = GetLife();
+	//状態を取得
+	CCharacter::CHARACTER_STATE state = GetState();
 
-	if (nLife > 0)
-	{//HPが残ってたら
+	if (nLife > 0 && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	{//ダメージ状態以外でHPが残ってたら
 		nLife -= nDamage;
+
+		//ダメージ状態に変更
+		state = CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE;
+
+		//状態代入
+		SetState(state);
 
 		//体力代入
 		SetLife(nLife);
@@ -236,6 +244,18 @@ void CEnemy::ChangeDamageState()
 
 		//ステート変更カウント進める
 		nStateCnt++;
+
+		if (nStateCnt >= 10)
+		{
+			//通常に戻す
+			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
+
+			//ステートカウントリセット
+			nStateCnt = 0;
+
+			//状態代入
+			SetState(state);
+		}
 
 		//ステートカウント代入
 		SetStateCnt(nStateCnt);

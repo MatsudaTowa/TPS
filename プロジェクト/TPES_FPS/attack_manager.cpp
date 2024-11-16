@@ -102,7 +102,7 @@ bool CAttack_Manager::HitEnemy()
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._42
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->m_minpos, pEnemy->m_apModel[nCnt]->m_maxpos);
+					ColisionCheck = CColision::CheckPolygonModelColisionCircle(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->m_minpos, pEnemy->m_apModel[nCnt]->m_maxpos);
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//ìñÇΩÇ¡ÇƒÇΩÇÁ
@@ -149,7 +149,7 @@ bool CAttack_Manager::HitPlayer()
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._42
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->m_minpos, pPlayer_test->m_apModel[nCnt]->m_maxpos);
+					ColisionCheck = CColision::CheckPolygonModelColisionCircle(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->m_minpos, pPlayer_test->m_apModel[nCnt]->m_maxpos);
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//ìñÇΩÇ¡ÇƒÇΩÇÁ
@@ -187,18 +187,14 @@ bool CAttack_Manager::HitBlock()
 			{
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-				CColision::COLISION ColisionCheck = CColision::CheckPolygonModelColision(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck_X = CColision::CheckPolygonModelColision_X(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck_Z = CColision::CheckPolygonModelColision_Z(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
-				if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+				if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
 				{//ìñÇΩÇ¡ÇƒÇΩÇÁ
 					//çUåÇÇÃçÌèú
 					return true;
 				}
-				else
-				{
-					return false;
-				}
-				break;
 			}
 		}
 	}

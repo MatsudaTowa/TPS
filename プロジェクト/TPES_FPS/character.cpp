@@ -179,7 +179,18 @@ void CCharacter::MotionDraw(int NumParts)
 
 	for (int nCnt = 0; nCnt < NumParts; nCnt++)
 	{
-		m_apModel[nCnt]->Draw();
+		switch (m_State)
+		{
+		case CCharacter::CHARACTER_STATE::CHARACTER_NORMAL:
+			m_apModel[nCnt]->Draw();
+			break;
+		case CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE:
+			//ダメージ状態の色に変更
+			m_apModel[nCnt]->Draw(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -218,7 +229,18 @@ void CCharacter::MotionDraw(int NumParts, D3DXCOLOR col)
 
 	for (int nCnt = 0; nCnt < NumParts; nCnt++)
 	{
-		m_apModel[nCnt]->Draw(col);
+		switch (m_State)
+		{
+		case CCharacter::CHARACTER_STATE::CHARACTER_NORMAL:
+			m_apModel[nCnt]->Draw(col);
+			break;
+		case CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE:
+			//ダメージ状態の色に変更
+			m_apModel[nCnt]->Draw(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+			break;
+		default:
+			break;
+		}
 	}
 }
 

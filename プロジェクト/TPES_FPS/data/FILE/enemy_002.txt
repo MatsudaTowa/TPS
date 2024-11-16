@@ -15,19 +15,19 @@ NUM_ENEMY = 3
 # エネミー情報
 #------------------------------------------------------------------------------
 ENEMYSET
-	POS = -700.0 30.5 0.0f
+	POS = 300.0 30.5 800.0f
 	ROT = 0.0 0.0 0.0
 	TYPE = 0
 END_ENEMYSET
 
 ENEMYSET
-	POS = -600.0 30.5 0.0f
+	POS = 0.0 30.5 800.0f
 	ROT = 0.0 0.0 0.0
 	TYPE = 0
 END_ENEMYSET
 
 ENEMYSET
-	POS = -500.0 30.5 0.0f
+	POS = -300.0 30.5 800.0f
 	ROT = 0.0 0.0 0.0
 	TYPE = 0
 END_ENEMYSET
