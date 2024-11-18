@@ -77,7 +77,7 @@ void CScore::AddScore(int nValue)
 //=============================================
 //スコア書き出し
 //=============================================
-void CScore::ExportScore(std::string* pFileName)
+void CScore::ExportScore(const std::string* pFileName)
 {
 	//ファイルの読み込み
 	FILE* pFile = fopen(pFileName->c_str(), "wb");
@@ -85,6 +85,23 @@ void CScore::ExportScore(std::string* pFileName)
 	if (pFile != NULL)
 	{
 		fwrite(&m_nScore, sizeof(int), 1, pFile);
+		fclose(pFile);
+	}
+}
+
+//=============================================
+//スコアに0書き出し
+//=============================================
+void CScore::ExportScoreReset(const std::string* pFileName)
+{
+	//ファイルの読み込み
+	FILE* pFile = fopen(pFileName->c_str(), "wb");
+
+	int nReset = 0;
+
+	if (pFile != NULL)
+	{
+		fwrite(&nReset, sizeof(int), 1, pFile);
 		fclose(pFile);
 	}
 }

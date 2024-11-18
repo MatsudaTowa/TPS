@@ -17,6 +17,13 @@
 #include "enemy_test.h"
 
 const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";
+const std::string CGame::RESULT_SCORE_FILE[CWave::GAME_WAVE] = 
+{
+	"data\\FILE\\score\\wave_one_score.bin",
+	"data\\FILE\\score\\wave_two_score.bin",
+	"data\\FILE\\score\\wave_three_score.bin",
+	"data\\FILE\\score\\wave_boss_score.bin",
+};
 
 //プレイヤー
 CPlayer*CGame::m_pPlayer = nullptr;
@@ -29,7 +36,7 @@ CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame():m_nResultDelay(0),m_bEdit(false), m_next_wave(), m_FileName()
+CGame::CGame():m_nResultDelay(0),m_bEdit(false), m_next_wave()
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 	//読み込むブロックの情報初期化
 	m_LoadBlock.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -100,19 +107,15 @@ void CGame::Update()
 		{
 		case CWave::WAVE::ONE:
 			m_next_wave = CWave::WAVE::TWO;
-			m_FileName = "data\\FILE\\score\\wave_one_score.bin";
 			break;
 		case CWave::WAVE::TWO:
 			m_next_wave = CWave::WAVE::THREE;
-			m_FileName = "data\\FILE\\score\\wave_two_score.bin";
 			break;
 		case CWave::WAVE::THREE:
 			m_next_wave = CWave::WAVE::BOSS;
-			m_FileName = "data\\FILE\\score\\wave_three_score.bin";
 			break;
 		case CWave::WAVE::BOSS:
 			m_next_wave = CWave::WAVE::NONE;
-			m_FileName = "data\\FILE\\score\\wave_boss_score.bin";
 			break;
 		case CWave::WAVE::NONE:
 
@@ -128,8 +131,9 @@ void CGame::Update()
 			{
 				m_nResultDelay = 0;
 
-				m_pWave->WaveResult(&m_FileName);
-				SetWave(CWave::WAVE::RESULT, m_next_wave, m_FileName.c_str());
+				//現在のスコアを書き出し
+				m_pWave->WaveResult(&RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
+				SetWave(CWave::WAVE::RESULT, m_next_wave, RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 			}
 		}
 	}
@@ -137,8 +141,8 @@ void CGame::Update()
 	if (pKeyboard->GetTrigger(DIK_TAB))
 	{
 		m_next_wave = CWave::WAVE::BOSS;
-		m_FileName = "data\\FILE\\score\\wave_boss_score.bin";
-		SetWave(CWave::WAVE::RESULT, m_next_wave, m_FileName.c_str());
+
+		SetWave(CWave::WAVE::RESULT, m_next_wave, RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 	}
 
 	if (m_pWave != nullptr)

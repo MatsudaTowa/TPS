@@ -34,6 +34,7 @@ public:
 	}LOAD_BLOCK;
 
 	static const std::string BLOCK_FILE;	//エネミーのファイル
+	static const std::string RESULT_SCORE_FILE[CWave::GAME_WAVE]; //リザルトのファイルネーム
 	static const int DELAY_CNT = 30; //リザルトに飛ぶまでのディレイ
 	static const int BLOCK_TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
 	CGame();
@@ -65,8 +66,6 @@ private:
 	static CWave* m_pWave;
 
 	CWave::WAVE m_next_wave;
-
-	std::string m_FileName; //リザルトのファイルネーム
 
 	void LoadBlock(const std::string* pFileName);
 };

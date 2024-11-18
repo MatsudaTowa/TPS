@@ -9,6 +9,7 @@
 #define _RESULT_H_
 #include "main.h"
 #include "scene.h"
+#include "score.h"
 
 class CResult :public CScene
 {
@@ -20,5 +21,6 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
+	static CScore* m_pScore;
 };
 #endif
