@@ -104,23 +104,6 @@ void CCamera::Update()
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
 
-	if (pKeyboard->GetTrigger(DIK_F1))
-	{
-		m_type = TYPE_BIRDVIEW;
-	}
-	else if (pKeyboard->GetTrigger(DIK_F2))
-	{
-		m_type = TYPE_SIDEVIEW;
-	}
-	else if (pKeyboard->GetTrigger(DIK_F3))
-	{
-		m_type = TYPE_DEBUG;
-	}
-	else if (pKeyboard->GetTrigger(DIK_F6))
-	{
-		m_type = TYPE_THIRDVIEW;
-	}
-
 	switch (m_type)
 	{
 	case TYPE_BIRDVIEW:
