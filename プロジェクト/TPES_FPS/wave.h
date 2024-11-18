@@ -19,7 +19,6 @@ class CWave
 {
 public:
 	static const int TXT_MAX = 1024; //敵を読み込む際の読み込める最大文字数
-	static const int GAME_WAVE = 4; //ゲームのウェーブ数
 	//ウェーブ列挙
 	enum WAVE
 	{

@@ -8,6 +8,14 @@
 #include "renderer.h"
 //#include "fade.h"
 
+const std::string CManager::RESULT_SCORE_FILE[NUM_RESULT_FILE] =
+{
+	"data\\FILE\\score\\wave_one_score.bin",
+	"data\\FILE\\score\\wave_two_score.bin",
+	"data\\FILE\\score\\wave_three_score.bin",
+	"data\\FILE\\score\\wave_boss_score.bin",
+};
+
 //シーン設定
 CScene* CManager::m_pScene = nullptr;
 
@@ -160,6 +168,11 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=============================================
 void CManager::Uninit()
 {
+	for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
+	{
+		ExportScoreReset(&RESULT_SCORE_FILE[nCnt]);
+	}
+
 	if (m_pTexture != nullptr)
 	{
 		m_pTexture->Unload();
@@ -252,6 +265,23 @@ void CManager::Draw()
 		m_pScene->Draw();
 	}
 
+}
+
+//=============================================
+//スコアに0書き出し
+//=============================================
+void CManager::ExportScoreReset(const std::string* pFileName)
+{
+	//ファイルの読み込み
+	FILE* pFile = fopen(pFileName->c_str(), "wb");
+
+	int nReset = 0;
+
+	if (pFile != NULL)
+	{
+		fwrite(&nReset, sizeof(int), 1, pFile);
+		fclose(pFile);
+	}
 }
 
 //=============================================

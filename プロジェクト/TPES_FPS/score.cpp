@@ -90,23 +90,6 @@ void CScore::ExportScore(const std::string* pFileName)
 }
 
 //=============================================
-//スコアに0書き出し
-//=============================================
-void CScore::ExportScoreReset(const std::string* pFileName)
-{
-	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName->c_str(), "wb");
-
-	int nReset = 0;
-
-	if (pFile != NULL)
-	{
-		fwrite(&nReset, sizeof(int), 1, pFile);
-		fclose(pFile);
-	}
-}
-
-//=============================================
 //スコアリセット
 //=============================================
 void CScore::Reset()

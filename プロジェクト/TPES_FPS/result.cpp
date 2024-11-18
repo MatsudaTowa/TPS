@@ -50,11 +50,10 @@ HRESULT CResult::Init()
 //=============================================
 void CResult::Uninit()
 {
-    for (int nCnt = 0; nCnt < CWave::GAME_WAVE; nCnt++)
+    for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
     {
-        m_pScore->ExportScoreReset(&CGame::RESULT_SCORE_FILE[nCnt]);
+        CManager::ExportScoreReset(&CManager::RESULT_SCORE_FILE[nCnt]);
     }
-
     if (m_pScore != nullptr)
     {
         m_pScore->Uninit();

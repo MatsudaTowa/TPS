@@ -20,6 +20,9 @@
 class CManager
 {
 public:
+	static const int NUM_RESULT_FILE = 4;
+	static const std::string RESULT_SCORE_FILE[NUM_RESULT_FILE]; //リザルトのファイルネーム
+
 	CManager();
 	~CManager();
 	HRESULT Init(HINSTANCE hInstance,HWND hWnd,BOOL bWindow);
@@ -55,7 +58,10 @@ public:
 
 	static CFade* m_pFade;
 
+	static void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
+
 private:
+
 	static CScene* m_pScene; //現在のシーン
 	//static CFade* m_pFade;
 	static CRenderer* m_pRenderer;

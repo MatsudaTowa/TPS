@@ -25,7 +25,6 @@ public:
 	virtual void Update();
 	void AddScore(int nValue);
 	void ExportScore(const std::string* pFileName); //スコア書き出し
-	void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
 	void Reset();
 
 	int m_nScore; //スコアの値

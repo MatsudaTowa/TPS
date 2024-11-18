@@ -17,13 +17,6 @@
 #include "enemy_test.h"
 
 const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";
-const std::string CGame::RESULT_SCORE_FILE[CWave::GAME_WAVE] = 
-{
-	"data\\FILE\\score\\wave_one_score.bin",
-	"data\\FILE\\score\\wave_two_score.bin",
-	"data\\FILE\\score\\wave_three_score.bin",
-	"data\\FILE\\score\\wave_boss_score.bin",
-};
 
 //プレイヤー
 CPlayer*CGame::m_pPlayer = nullptr;
@@ -132,8 +125,8 @@ void CGame::Update()
 				m_nResultDelay = 0;
 
 				//現在のスコアを書き出し
-				m_pWave->WaveResult(&RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
-				SetWave(CWave::WAVE::RESULT, m_next_wave, RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
+				m_pWave->WaveResult(&CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
+				SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 			}
 		}
 	}
@@ -142,7 +135,7 @@ void CGame::Update()
 	{
 		m_next_wave = CWave::WAVE::BOSS;
 
-		SetWave(CWave::WAVE::RESULT, m_next_wave, RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
+		SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 	}
 
 	if (m_pWave != nullptr)
