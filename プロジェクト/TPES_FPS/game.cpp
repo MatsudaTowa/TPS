@@ -134,6 +134,13 @@ void CGame::Update()
 		}
 	}
 
+	if (pKeyboard->GetTrigger(DIK_TAB))
+	{
+		m_next_wave = CWave::WAVE::BOSS;
+		m_FileName = "data\\FILE\\score\\wave_boss_score.bin";
+		SetWave(CWave::WAVE::RESULT, m_next_wave, m_FileName.c_str());
+	}
+
 	if (m_pWave != nullptr)
 	{
 		m_pWave->Update();
