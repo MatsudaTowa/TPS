@@ -9,7 +9,7 @@
 #include "player.h"
 
 //ƒ‚ƒfƒ‹ƒpƒX
-const std::string CBlock::MODEL_NAME = "data\\MODEL\\Container.x";
+const std::string CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
 const std::string CBlock::WOOD_MODEL_NAME = "data\\MODEL\\wood.x";
 const std::string CBlock::AZUMAYA_MODEL_NAME = "data\\MODEL\\azumaya.x";
 const std::string CBlock::DANGOYA_MODEL_NAME = "data\\MODEL\\dangoya.x";

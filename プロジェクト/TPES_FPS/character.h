@@ -155,7 +155,9 @@ public:
 
 	//キャラクターのステートパターン
 	CCharacterState* m_pCharacterState;
+
 private:
+
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
 
