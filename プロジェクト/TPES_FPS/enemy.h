@@ -24,20 +24,20 @@ public:
 	static const int DEFAULT_LIFE = 5; //ライフ
 
 	//エネミーの列挙定義
-	typedef enum
+	enum ENEMY_TYPE
 	{
 		ENEMY_TYPE_NORMAL = 0,
 		ENEMY_TYPE_MAX,
-	}ENEMY_TYPE;
+	};
 
 	//モーションの種類の列挙
-	typedef enum
+	enum Motion_Type
 	{
 		MOTION_NEUTRAL = 0,
 		MOTION_MOVE,
 		MOTION_ATTACK,
 		MOTION_MAX,
-	}Motion_Type;
+	};
 
 	CEnemy(int nPriority = ENEMY_PRIORITY);
 	~CEnemy() override;

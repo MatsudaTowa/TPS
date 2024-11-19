@@ -102,7 +102,7 @@ bool CAttack_Manager::HitEnemy()
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._42
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->m_minpos, pEnemy->m_apModel[nCnt]->m_maxpos);
+					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->GetMin(), pEnemy->m_apModel[nCnt]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
@@ -149,7 +149,7 @@ bool CAttack_Manager::HitPlayer()
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._42
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->m_minpos, pPlayer_test->m_apModel[nCnt]->m_maxpos);
+					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->GetMin(), pPlayer_test->m_apModel[nCnt]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç

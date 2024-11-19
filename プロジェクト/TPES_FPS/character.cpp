@@ -587,7 +587,7 @@ void CCharacter::HitBlock()
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
 		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
+		{//オブジェクトに要素が入っていたら
 			//タイプ取得
 			CObject::OBJECT_TYPE type = pObj->GetType();
 
@@ -597,46 +597,101 @@ void CCharacter::HitBlock()
 				//安全にダウンキャスト
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-				//D3DXVECTOR3 dir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-
-				//D3DXIntersect(pBlock->GetpMesh(), &CharacterPos, &dir, &hit, NULL, NULL, NULL, &distance, NULL, NULL);
-
-				//当たり判定チェック
-				CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos,CharacterMin,CharacterMax,pBlock->GetPos(),pBlock->GetMinPos(),pBlock->GetMaxPos());
-				
-				CColision::COLISION Checkcolision_Y = CColision::CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-
-				CColision::COLISION Checkcolision_Z = CColision::CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-
-				if (Checkcolision_X == CColision::COLISION::COLISON_X)
-				{//x方向に当たってたら
-					CharacterPos.x = m_oldpos.x;
-					m_move.x = 0.0f;
-				}
-				if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
-				{//z方向に当たってたら
-					CharacterPos.z = m_oldpos.z;
-					m_move.z = 0.0f;
-				}
-				if (Checkcolision_Y == CColision::COLISION::COLISON_UNDER_Y)
-				{//y(下)方向に当たってたら
-					CharacterPos.y = m_oldpos.y;
-				}
-
-				if (Checkcolision_Y == CColision::COLISION::COLISON_TOP_Y)
-				{//y(上)方向に当たってたら
-					CharacterPos.y = m_oldpos.y;
-					m_move.y = 0.0f;
-					m_bLanding = true; //着地
-				}
+				//各軸の当たり判定
+				ColisionBlock_X(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
+				ColisionBlock_Z(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
+				ColisionBlock_Y(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
 			}
 		}
 	}
-	//SetPos(D3DXVECTOR3(CharacterPos.x, CharacterPos.y - distance, CharacterPos.z));
 
 	SetPos(CharacterPos);
 }
 
+//=============================================
+//ブロックとの接触判定(複数パーツ用)
+//=============================================
+void CCharacter::HitBlock(int NumParts)
+{
+	for (int nCnt = 0; nCnt < NumParts; ++nCnt)
+	{
+		D3DXVECTOR3 pos = {m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43};
+		D3DXVECTOR3 oldpos = m_apModel[nCnt]->GetOldPos();
+		D3DXVECTOR3 Minpos = m_apModel[nCnt]->GetMin();
+		D3DXVECTOR3 Maxpos = m_apModel[nCnt]->GetMax();
+		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//オブジェクトに要素が入っていたら
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//ブロックとの当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+				{
+					//安全にダウンキャスト
+					CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+					//各軸の当たり判定
+					ColisionBlock_X(pos,oldpos, Minpos, Maxpos, pBlock);
+					ColisionBlock_Z(pos,oldpos, Minpos, Maxpos, pBlock);
+					ColisionBlock_Y(pos,oldpos, Minpos, Maxpos, pBlock);
+
+				}
+			}
+		}
+	}
+}
+
+//=============================================
+//ブロックとの接触判定_X
+//=============================================
+void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+{
+	//当たり判定チェック
+	CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	if (Checkcolision_X == CColision::COLISION::COLISON_X)
+	{//x方向に当たってたら
+		CharacterPos.x = CharacterOldPos.x;
+		m_move.x = 0.0f;
+	}
+}
+
+//=============================================
+//ブロックとの接触判定_Y
+//=============================================
+void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+{
+	CColision::COLISION Checkcolision_Y = CColision::CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+
+	if (Checkcolision_Y == CColision::COLISION::COLISON_UNDER_Y)
+	{//y(下)方向に当たってたら
+		CharacterPos.y = CharacterOldPos.y;
+	}
+
+	if (Checkcolision_Y == CColision::COLISION::COLISON_TOP_Y)
+	{//y(上)方向に当たってたら
+		CharacterPos.y = CharacterOldPos.y;
+		m_move.y = 0.0f;
+		m_bLanding = true; //着地
+	}
+}
+
+//=============================================
+//ブロックとの接触判定_Z
+//=============================================
+void CCharacter::ColisionBlock_Z(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+{
+	CColision::COLISION Checkcolision_Z = CColision::CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+
+	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
+	{//z方向に当たってたら
+		CharacterPos.z = CharacterOldPos.z;
+		m_move.z = 0.0f;
+	}
+}
 
 //=============================================
 //床との接触判定

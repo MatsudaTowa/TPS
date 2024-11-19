@@ -45,6 +45,11 @@ public:
 		m_pos = pos;
 	};
 
+	void SetOldPos(D3DXVECTOR3 oldpos)
+	{
+		m_oldpos = oldpos;
+	};
+
 	void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
@@ -55,12 +60,26 @@ public:
 		return m_pos;
 	};
 
+	D3DXVECTOR3 GetOldPos()
+	{
+		return m_oldpos;
+	};
+
 	D3DXVECTOR3 GetRot()
 	{
 		return m_rot;
 	};
-	void SetParent(CModel_Parts*pParent);
 
+	D3DXVECTOR3 GetMin()
+	{
+		return m_minpos;
+	}
+
+	D3DXVECTOR3 GetMax()
+	{
+		return m_maxpos;
+	}
+	void SetParent(CModel_Parts*pParent);
 
 	//ワールドマトリックス取得
 	D3DXMATRIX& GetMtxWorld();
@@ -71,8 +90,6 @@ public:
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_Tpos;
 	D3DXVECTOR3 m_Trot;
-	D3DXVECTOR3 m_minpos; //pos最小値
-	D3DXVECTOR3 m_maxpos; //pos最大値
 	int m_nIdx; //何番目のパーツか
 	char PARTS_NAME[256];
 	int m_nIdxModelParent; //親のインデックス
@@ -81,6 +98,9 @@ private:
 	D3DXMATRIX m_mtxWorld; //ワールドマトリックス
 	MODEL_INFO m_ModelInfo[MAX_MODEL]; //モデル情報
 
+	D3DXVECTOR3 m_minpos; //pos最小値
+	D3DXVECTOR3 m_maxpos; //pos最大値
+	D3DXVECTOR3 m_oldpos;
 	int m_nNumAll; //モデル総数
 
 	CModel_Parts*m_pParent; //親パーツへのポインタ

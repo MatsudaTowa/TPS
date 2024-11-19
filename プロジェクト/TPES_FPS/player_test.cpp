@@ -145,6 +145,10 @@ void CPlayer_test::Update()
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
+	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
+	{
+		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
+	}
 	CCharacter::Update();
 
 	if (m_bRelorad == true)
@@ -199,6 +203,7 @@ void CPlayer_test::Update()
 
 		Motion(NUM_PARTS); //モーション処理
 	}
+	//CCharacter::HitBlock(NUM_PARTS);
 }
 
 //=============================================
