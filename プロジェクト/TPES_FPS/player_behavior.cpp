@@ -128,7 +128,7 @@ void CPlayerAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLE
 			if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
 			{
 				character->m_pGun->m_nRateCnt = 0;
-				//ƒJƒƒ‰‚Ì’†S‚©‚ç”­ŽË
+				//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
 				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41,
 					character->m_apModel[14]->GetMtxWorld()._42, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
 
