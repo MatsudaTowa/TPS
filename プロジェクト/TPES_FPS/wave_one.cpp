@@ -31,6 +31,8 @@ HRESULT CWave_One::Init()
 {
 	CWave::LoadBlock(&WAVE_1_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_1_ENEMY_FILE);
+	//ínñ ê∂ê¨
+	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
 	return S_OK;
 }
 

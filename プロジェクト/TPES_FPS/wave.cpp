@@ -15,8 +15,8 @@
 #include "game_score.h"
 #include "wave_score.h"
 #include"player_test.h"
-#include"field.h"
 #include "wall.h"
+#include "move_point.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
@@ -119,8 +119,6 @@ CWave* CWave::Create(WAVE wave)
 			m_pScore = new CGameScore;
 			//プレイヤー生成
 			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
-			//地面生成
-			CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
 		}
 		else if (wave == WAVE::RESULT)
 		{
@@ -451,6 +449,69 @@ void CWave::LoadEnemy(const std::string* pFileName)
 				{
 					fscanf(pFile, "%s", &aEqual[0]);
 					fscanf(pFile, "%d", &m_LoadEnemy.type);
+				}
+			}
+		}
+	}
+}
+
+//=============================================
+//ポイントの位置をロード
+//=============================================
+void CWave::LoadPoint(const std::string* pFileName)
+{
+	char aDataSearch[TXT_MAX];
+	char aEqual[TXT_MAX]; //[＝]読み込み用
+	int nNumPoint; //ポイントの数
+
+	//ファイルの読み込み
+	FILE* pFile = fopen(pFileName->c_str(), "r");
+
+	if (pFile == NULL)
+	{//種類の情報のデータファイルが開けなかった場合
+		//処理を終了する
+		return;
+	}
+	//ENDが見つかるまで読み込みを繰り返す
+	while (1)
+	{
+		fscanf(pFile, "%s", aDataSearch); //検索
+
+		if (!strcmp(aDataSearch, "END"))
+		{//読み込みを終了
+			fclose(pFile);
+			break;
+		}
+		if (aDataSearch[0] == '#')
+		{
+			continue;
+		}
+
+		if (!strcmp(aDataSearch, "NUM_POINT"))
+		{//モデル数読み込み
+			fscanf(pFile, "%s", &aEqual[0]);
+			fscanf(pFile, "%d", &nNumPoint);
+		}
+		if (!strcmp(aDataSearch, "POINTSET"))
+		{
+			//項目ごとのデータを代入
+			while (1)
+			{
+				fscanf(pFile, "%s", aDataSearch); //検索
+
+				if (!strcmp(aDataSearch, "END_POINTSET"))
+				{
+					//エネミー生成
+					CMovePoint::Create(m_LoadPoint.pos);
+					break;
+				}
+				else if (!strcmp(aDataSearch, "POS"))
+				{
+					fscanf(pFile, "%s", &aEqual[0]);
+					fscanf(pFile, "%f %f %f",
+						&m_LoadPoint.pos.x,
+						&m_LoadPoint.pos.y,
+						&m_LoadPoint.pos.z);
 				}
 			}
 		}
