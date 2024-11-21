@@ -147,7 +147,7 @@ void CCharacter::Draw()
 //=============================================
 //モーション用の描画
 //=============================================
-void CCharacter::MotionDraw(int NumParts)
+void CCharacter::MotionDraw()
 {
 	//デバイスの取得
 	CRenderer* pRender = CManager::GetRenderer();
@@ -177,7 +177,7 @@ void CCharacter::MotionDraw(int NumParts)
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &MtxWorld);
 
-	for (int nCnt = 0; nCnt < NumParts; nCnt++)
+	for (int nCnt = 0; nCnt < m_PartsCnt; nCnt++)
 	{
 		switch (m_State)
 		{
@@ -197,7 +197,7 @@ void CCharacter::MotionDraw(int NumParts)
 //=============================================
 //モーション用の描画(色付き)
 //=============================================
-void CCharacter::MotionDraw(int NumParts, D3DXCOLOR col)
+void CCharacter::MotionDraw(D3DXCOLOR col)
 {
 	//デバイスの取得
 	CRenderer* pRender = CManager::GetRenderer();
@@ -227,7 +227,7 @@ void CCharacter::MotionDraw(int NumParts, D3DXCOLOR col)
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &MtxWorld);
 
-	for (int nCnt = 0; nCnt < NumParts; nCnt++)
+	for (int nCnt = 0; nCnt < m_PartsCnt; nCnt++)
 	{
 		switch (m_State)
 		{
@@ -489,7 +489,7 @@ void CCharacter::Motion(int NumParts)
 
 	int nNextKey = (m_nKeySetCnt + 1) % m_MotionSet[m_Motion].nNumKey;
 
-	for (int nMotionCnt = 0; nMotionCnt < NumParts; nMotionCnt++)
+	for (int nMotionCnt = 0; nMotionCnt < m_PartsCnt; nMotionCnt++)
 	{
 		MovePos[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
 		MoveRot[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
@@ -875,6 +875,14 @@ bool& CCharacter::GetFinish()
 int& CCharacter::GetLife()
 {
 	return m_nLife;
+}
+
+//=============================================
+//パーツ数取得
+//=============================================
+int& CCharacter::GetNumParts()
+{
+	return m_PartsCnt;
 }
 
 float& CCharacter::GetSpeed()

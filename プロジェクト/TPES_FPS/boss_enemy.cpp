@@ -1,38 +1,38 @@
 //=============================================
 //
-//通常の敵の処理[normal_enemy.cpp]
+//ボスの敵の処理[boss_enemy.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "normal_enemy.h"
-#include "normal_enemy_behavior.h"
+#include "boss_enemy.h"
+#include "boss_behavior.h"
 
 //=============================================
 //コンストラクタ
 //=============================================
-CNormalEnemy::CNormalEnemy(int nPriority):CEnemy(nPriority)
+CBossEnemy::CBossEnemy(int nPriority)
 {
 	if (m_pMove == nullptr)
 	{
-		m_pMove = new CNormalMove;
+		m_pMove = new CBossMove;
 	}
 	if (m_pAttack == nullptr)
 	{
-		m_pAttack = new CNormalAttack;
+		m_pAttack = new CBossAttack;
 	}
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CNormalEnemy::~CNormalEnemy()
+CBossEnemy::~CBossEnemy()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CNormalEnemy::Init()
+HRESULT CBossEnemy::Init()
 {
 	//銃初期化
 	if (m_pGun == nullptr)
@@ -51,7 +51,7 @@ HRESULT CNormalEnemy::Init()
 //=============================================
 //終了
 //=============================================
-void CNormalEnemy::Uninit()
+void CBossEnemy::Uninit()
 {
 	//親クラスの終了処理を呼ぶ
 	CEnemy::Uninit();
@@ -60,7 +60,7 @@ void CNormalEnemy::Uninit()
 //=============================================
 //更新
 //=============================================
-void CNormalEnemy::Update()
+void CBossEnemy::Update()
 {
 	CEnemy::Update();
 	Motion(NUM_PARTS); //モーション処理
@@ -69,7 +69,7 @@ void CNormalEnemy::Update()
 //=============================================
 //描画
 //=============================================
-void CNormalEnemy::Draw()
+void CBossEnemy::Draw()
 {
 	CEnemy::Draw();
 }

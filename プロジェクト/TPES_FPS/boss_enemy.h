@@ -7,13 +7,43 @@
 #ifndef _BOSS_ENEMY_H_ //これが定義されてないとき
 
 #define _BOSS_ENEMY_H_
+#include "main.h"
+#include "model_parts.h"
 #include "enemy.h"
+#include "enemy_behavior.h"
 
+//通常のエネミークラス
 class CBossEnemy :public CEnemy
 {
 public:
-	CBossEnemy();
+	static const int NUM_PARTS = 15; //パーツ数
+	static const int MAX_KEY = 20; //キー最大数
+	static const int NUM_MOTION = 3;
+	static const int ENEMY_PRIORITY = 8; //描画順
+	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
+	static const int DEFAULT_LIFE = 30; //ライフ
+
+	//モーションの種類の列挙
+	enum Motion_Type
+	{
+		MOTION_NEUTRAL = 0,
+		MOTION_MOVE,
+		MOTION_ATTACK,
+		MOTION_MAX,
+	};
+
+	CBossEnemy(int nPriority = ENEMY_PRIORITY);
 	~CBossEnemy() override;
+	HRESULT Init() override;
+	void Uninit() override;
+	void Update() override;
+	void Draw() override;
+private:
+
+	//エネミーの移動関連
+	static const float DEFAULT_MOVE; //通常時の移動
+
+	Motion_Type m_Motion; //モーションの種類
 };
 
 #endif

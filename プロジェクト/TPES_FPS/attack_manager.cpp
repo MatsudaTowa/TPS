@@ -95,7 +95,7 @@ bool CAttack_Manager::HitEnemy()
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
 
 				CColision::COLISION ColisionCheck;
-				for (int nCnt = 0; nCnt < pEnemy->NUM_PARTS; nCnt++)
+				for (int nCnt = 0; nCnt < pEnemy->GetNumParts(); nCnt++)
 				{
 					//パーツのオフセットpos
 					D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCnt]->GetMtxWorld()._41

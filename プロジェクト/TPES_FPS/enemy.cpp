@@ -13,8 +13,8 @@
 #include "game.h"
 #include "wave.h"
 #include "player_test.h"
-#include "normal_enemy_behavior.h"
 #include "normal_enemy.h"
+#include "boss_enemy.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -42,8 +42,7 @@ DWORD CEnemy::m_dwNumMat = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
-, m_Motion(),m_Type()
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
@@ -126,7 +125,7 @@ void CEnemy::Update()
 void CEnemy::Draw()
 {
 	//親クラスのモーション用の描画を呼ぶ
-	MotionDraw(NUM_PARTS, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+	MotionDraw();
 }
 
 //=============================================
@@ -140,6 +139,11 @@ CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENE
 	{
 	case ENEMY_TYPE::ENEMY_TYPE_NORMAL:
 		pEnemy = new CNormalEnemy;
+		pEnemy->Load_Parts("data\\Motion.txt");
+		break;
+	case ENEMY_TYPE::ENEMY_TYPE_BOSS:
+		pEnemy = new CBossEnemy;
+		pEnemy->Load_Parts("data\\motion_boss.txt");
 		break;
 	default:
 		assert(false);
@@ -188,10 +192,14 @@ void CEnemy::Damage(int nDamage)
 		CScore* pScore = CWave::GetScore();
 
 		int nAddScore = 0;
+		//TODO:これもストラテジーでやるべき
 		switch (m_Type)
 		{
 		case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:
 			nAddScore = 300;
+			break;
+		case CEnemy::ENEMY_TYPE::ENEMY_TYPE_BOSS:
+			nAddScore = 1000;
 			break;
 		default:
 			assert(false);

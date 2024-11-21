@@ -158,6 +158,7 @@
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="boss_behavior.cpp" />
+    <ClCompile Include="boss_enemy.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />

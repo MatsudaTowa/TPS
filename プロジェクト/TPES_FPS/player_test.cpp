@@ -24,12 +24,6 @@ CLife_UI* CPlayer_test::m_pLifeUI = nullptr;
 //テクスチャ初期化
 LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 
-LPD3DXBUFFER CPlayer_test::m_pBuffMat = nullptr;
-
-LPD3DXMESH CPlayer_test::m_pMesh = nullptr;
-
-DWORD CPlayer_test::m_dwNumMat = 0;
-
 //=============================================
 //コンストラクタ
 //=============================================
@@ -214,7 +208,7 @@ void CPlayer_test::Draw()
 	CInputMouse* pMouse = CManager::GetMouse();
 	pMouse->Debug();
 	//親クラスのモーション用の描画を呼ぶ
-	MotionDraw(NUM_PARTS);
+	MotionDraw();
 	//プレイヤーのデバッグ表示
 	DebugPos();
 }

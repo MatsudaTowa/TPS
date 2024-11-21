@@ -46,8 +46,8 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	void MotionDraw(int NumParts);
-	void MotionDraw(int NumParts,D3DXCOLOR col);
+	void MotionDraw();
+	void MotionDraw(D3DXCOLOR col);
 
 	void Load_Parts(const char* FileName);
 	void Motion(int NumParts); //モーション処理
@@ -130,6 +130,9 @@ public:
 
 	//体力取得
 	int& GetLife();
+
+	//パーツ数取得
+	int& GetNumParts();
 
 	float& GetSpeed();
 
