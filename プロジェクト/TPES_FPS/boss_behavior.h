@@ -10,15 +10,13 @@
 #include "enemy.h"
 
 //=============================================
-//敵の移動のストラテジー
+//敵の徘徊のストラテジー
 //=============================================
-class CBossMove : public CEnemyMove
+class CBossWandering : public CEnemyMove
 {
 public:
-	static const int MAX_JUMPCNT = 2; //ジャンプ回数
-
-	CBossMove();
-	~CBossMove() override;
+	CBossWandering();
+	~CBossWandering() override;
 	void Move(CCharacter* character)override;
 private:
 	static const int MOVE_FRAME = 60; //移動フレーム
@@ -29,6 +27,22 @@ private:
 	int m_nLeft; //右に行く確率
 	bool m_bRandom; //どっちに行くか決める
 	int m_nStateChangeCnt; //ステート変更カウント
+};
+
+//=============================================
+//敵の追従のストラテジー
+//=============================================
+class CBossChase : public CEnemyMove
+{
+public:
+	CBossChase();
+	~CBossChase() override;
+	void Move(CCharacter* character)override;
+private:
+	static const int MOVE_FRAME = 60; //移動フレーム
+	static const int RIGHT_PARCENT = 50; //右の確立
+	static const int LEFT_PARCENT = 100; //左の確立
+
 };
 
 //=============================================

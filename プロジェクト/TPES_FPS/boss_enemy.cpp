@@ -14,7 +14,7 @@ CBossEnemy::CBossEnemy(int nPriority)
 {
 	if (m_pMove == nullptr)
 	{
-		m_pMove = new CBossMove;
+		m_pMove = new CBossWandering;
 	}
 	if (m_pAttack == nullptr)
 	{

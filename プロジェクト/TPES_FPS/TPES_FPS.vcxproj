@@ -167,6 +167,7 @@
     <ClCompile Include="colision.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_behavior.cpp" />
+    <ClCompile Include="enemy_state.cpp" />
     <ClCompile Include="enemy_test.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_parts.cpp" />
+    <ClCompile Include="move_point.cpp" />
     <ClCompile Include="normal_enemy.cpp" />
     <ClCompile Include="normal_enemy_behavior.cpp" />
     <ClCompile Include="number.cpp" />
@@ -233,6 +235,7 @@
     <ClInclude Include="colision.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_behavior.h" />
+    <ClInclude Include="enemy_state.h" />
     <ClInclude Include="enemy_test.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
@@ -247,6 +250,7 @@
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_parts.h" />
+    <ClInclude Include="move_point.h" />
     <ClInclude Include="normal_enemy.h" />
     <ClInclude Include="normal_enemy_behavior.h" />
     <ClInclude Include="number.h" />
