@@ -40,7 +40,7 @@ const float CCamera::THIRDVIEW_LENGTH = 110.0f;
 
 //サードビュー時の補正値
 const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
-const float CCamera::THIRDVIEW_CORRECT_Y = 80.0f;
+const float CCamera::THIRDVIEW_CORRECT_Y = 105.0f;
 const float CCamera::THIRDVIEW_CORRECT_Z = 20.0f;
 
 //サードパーソンビュー時のXの最大可動域
@@ -429,14 +429,14 @@ void CCamera::ThirdViewCamera()
 				THIRDVIEW_LENGTH * sinf(m_rot.x), 
 				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
-				// カメラをプレイヤーの右にする処理:TODO
+				////カメラをプレイヤーの右にする処理:TODO
 				//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
 				//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
 
-				//m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
-				//THIRDVIEW_LENGTH * sinf(m_rot.x), 
-				//-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
+				m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
+				THIRDVIEW_LENGTH * sinf(m_rot.x), 
+				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetMouse();
