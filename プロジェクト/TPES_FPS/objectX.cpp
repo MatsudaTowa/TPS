@@ -15,7 +15,7 @@ CObjectX::CObjectX(int nPriority):CObject(nPriority),m_col(D3DXCOLOR(1.0f,1.0f,1
 	m_pBuffMat = nullptr;
 	m_pMesh = nullptr;
 
-	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
+	for (int nCnt = 0; nCnt < MAX_TEX; ++nCnt)
 	{
 		m_pTexture[nCnt] = nullptr;
 	}
@@ -105,7 +105,7 @@ void CObjectX::Draw()
 
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
 		{
 			//マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
@@ -170,7 +170,7 @@ void CObjectX::Draw(D3DXCOLOR col)
 
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
 		{
 			//今描画するマテリアル情報格納
 			D3DMATERIAL9 DrawMat = pMat[nCntMat].MatD3D;
@@ -205,7 +205,7 @@ void CObjectX::Draw(D3DXCOLOR col)
 //=============================================
 void CObjectX::BindTexture(LPDIRECT3DTEXTURE9 pTex)
 {
-	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
 	{
 		m_pTexture[nCntMat] = pTex;
 	}
@@ -237,7 +237,7 @@ void CObjectX::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh
 
 	//頂点バッファのロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
-	for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+	for (int nCntVtx = 0; nCntVtx < nNumVtx; ++nCntVtx)
 	{
 		//頂点座標の代入
 		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
@@ -316,7 +316,7 @@ D3DXVECTOR3& CObjectX::GetMinPos()
 
 		//頂点バッファのロック
 		m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
-		for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+		for (int nCntVtx = 0; nCntVtx < nNumVtx; ++nCntVtx)
 		{
 			//頂点座標の代入
 			D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;
@@ -370,7 +370,7 @@ D3DXVECTOR3& CObjectX::GetMaxPos()
 
 	//頂点バッファのロック
 		m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
-		for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+		for (int nCntVtx = 0; nCntVtx < nNumVtx; ++nCntVtx)
 		{
 			//頂点座標の代入
 			D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;

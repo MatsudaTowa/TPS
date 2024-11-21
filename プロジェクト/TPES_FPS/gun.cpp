@@ -9,7 +9,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0),m_nDamage(0),m_Size()
+CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0),m_nDamage(0),m_Size(),m_BulletSpeed(0.0f)
 {
 	m_pShot = nullptr;
 	m_pReload = nullptr;
@@ -64,6 +64,14 @@ int& CGun::GetFireRate()
 	return m_FireRate;
 }
 
+//=============================================
+//弾速取得
+//=============================================
+float& CGun::GetBulletSpeed()
+{
+	return m_BulletSpeed;
+}
+
 //弾のスピード
 const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 50.0f;
 const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {1.5f,1.5f,1.5f};
@@ -104,6 +112,8 @@ HRESULT CAssultRifle::Init()
 	int nReloadFrame = GetReloadFrame();
 	//現在の発射レート取得
 	int nFireRate = GetFireRate();
+	//現在の弾速取得
+	float fBulletSpeed = GetBulletSpeed();
 
 	//デフォルトのマガジン弾数代入
 	nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
@@ -113,6 +123,8 @@ HRESULT CAssultRifle::Init()
 	nReloadFrame = CAssultRifle::DEFAULT_AR_RELOAD_FRAME;
 	//デフォルトの発射レート代入
 	nFireRate = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+	//デフォルトの弾速代入
+	fBulletSpeed = CAssultRifle::DEFAULT_AR_BULLET_SPEED;
 
 	//押したらすぐ発射するため
 	m_nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
@@ -128,6 +140,7 @@ HRESULT CAssultRifle::Init()
 	SetLv(nLv);
 	SetReloadFrame(nReloadFrame);
 	SetFireRate(nFireRate);
+	SetBulletSpeed(fBulletSpeed);
 
 	return S_OK;
 }

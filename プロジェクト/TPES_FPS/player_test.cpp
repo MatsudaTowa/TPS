@@ -109,7 +109,7 @@ HRESULT CPlayer_test::Init()
 	SetMove(move);
 
 	//ÉpÅ[Écì«Ç›çûÇ›
-	Load_Parts("data\\Motion.txt");
+	Load_Parts("data\\motion_soldier.txt");
 
 	SetMotion(MOTION_NEUTRAL);
 

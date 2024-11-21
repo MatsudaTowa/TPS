@@ -19,7 +19,7 @@
 class CPlayer_test:public CCharacter
 {
 public:
-	static const int NUM_PARTS = 10; //パーツ数
+	static const int NUM_PARTS = 15; //パーツ数
 	static const int MAX_KEY = 20; //キー最大数
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数

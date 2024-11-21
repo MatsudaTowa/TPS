@@ -28,7 +28,7 @@ MODEL_FILENAME = data/MODEL/soldier_TPS/solder_foot_R.x		# [10]右足
 MODEL_FILENAME = data/MODEL/soldier_TPS/solder_ham_L.x		# [11]左腿
 MODEL_FILENAME = data/MODEL/soldier_TPS/solder_leg_L.x		# [12]左脛
 MODEL_FILENAME = data/MODEL/soldier_TPS/solder_foot_L.x		# [13]左足
-MODEL_FILENAME = data/MODEL/soldier_TPS/ak-47.x		# [14]武器
+MODEL_FILENAME = data/MODEL/soldier_TPS/ak.x		# [14]武器
 
 #------------------------------------------------------------------------------
 # キャラクター情報
@@ -313,9 +313,7 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 END_MOTIONSET
-#========================================
-#  モーション[1] 
-#========================================
+
 #========================================
 #  モーション[1] 
 #========================================
@@ -721,4 +719,4 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 END_MOTIONSET
-END_SCRIPT		# この行は絶対消さないこと！
+END		# この行は絶対消さないこと！

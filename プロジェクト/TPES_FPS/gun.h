@@ -56,6 +56,11 @@ public:
 	{
 		m_FireRate = FireRate;
 	}
+	//発射レート設定
+	void SetBulletSpeed(float BulletSpeed)
+	{
+		m_BulletSpeed = BulletSpeed;
+	}
 	
 	//弾数取得
 	int& GetAmmo();
@@ -65,6 +70,8 @@ public:
 	int& GetReloadFrame();
 	//発射レート取得
 	int& GetFireRate();
+	//弾速取得
+	float& GetBulletSpeed();
 
 	int m_nRateCnt;//レートカウント
 
@@ -78,6 +85,7 @@ private:
 	int m_Lv; //銃のレベル
 	int m_ReloadFrame; //リロードフレーム
 	int m_FireRate; //発射レート
+	float m_BulletSpeed; //弾速
 
 };
 

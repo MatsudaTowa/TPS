@@ -13,6 +13,7 @@
 #include "game.h"
 #include "wave.h"
 #include "player_test.h"
+#include "normal_enemy_behavior.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -47,11 +48,11 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
 	m_NumEnemy++;
 	if (m_pMove == nullptr)
 	{
-		m_pMove = new CEnemyMove;
+		m_pMove = new CNormalMove;
 	}
 	if (m_pAttack == nullptr)
 	{
-		m_pAttack = new CEnemyAttack;
+		m_pAttack = new CNormalAttack;
 	}
 }
 

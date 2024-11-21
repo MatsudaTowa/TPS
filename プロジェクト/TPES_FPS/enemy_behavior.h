@@ -20,15 +20,12 @@ public:
 	CEnemyMove();
 	~CEnemyMove() override;
 	void Move(CCharacter* character)override;
+	void SetMoveVec(D3DXVECTOR3 move_vec)
+	{
+		m_move_vec = move_vec;
+	}
 private:
-	static const int MOVE_FRAME = 60; //移動フレーム
-	static const int RIGHT_PARCENT = 50; //右の確立
-	static const int LEFT_PARCENT = 100; //左の確立
-
-	int m_nRight;//左に行く確率
-	int m_nLeft; //右に行く確率
-	bool m_bRandom; //どっちに行くか決める
-	int m_nStateChangeCnt; //ステート変更カウント
+	D3DXVECTOR3 m_move_vec;
 };
 
 //=============================================
@@ -43,8 +40,5 @@ public:
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 
 private:
-	static const int SHOT_FRAME = 180; //射撃フレーム
-
-	int m_nStateChangeCnt;//ステート変更カウント
 };
 #endif // !_ENEMY_BEHAVIOR_

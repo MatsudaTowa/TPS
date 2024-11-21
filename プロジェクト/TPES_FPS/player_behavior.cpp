@@ -120,7 +120,7 @@ void CPlayerAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLE
 		if (character->m_pAttack != nullptr)
 		{
 			character->m_pGun->m_nRateCnt++;
-			if (character->m_pGun->m_nRateCnt >= CAssultRifle::DEFAULT_AR_FIRE_RATE)
+			if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
 			{
 				character->m_pGun->m_nRateCnt = 0;
 				//カメラの中心から発射
@@ -128,9 +128,9 @@ void CPlayerAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLE
 					character->GetPos().y + 30.0f, pCamera->GetPosR().z + cosf(character->GetRot().y + D3DX_PI));
 
 				//移動量設定 TODO:アサルトのみなのでスピードをかえれるように
-				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED,
-					sinf(pCamera->GetRot().x + D3DX_PI) * CAssultRifle::DEFAULT_AR_BULLET_SPEED,
-					cosf(pCamera->GetRot().y + D3DX_PI) * -CAssultRifle::DEFAULT_AR_BULLET_SPEED);
+				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed(),
+					sinf(pCamera->GetRot().x + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
+					cosf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed());
 				//弾発射
 				character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
 			}
