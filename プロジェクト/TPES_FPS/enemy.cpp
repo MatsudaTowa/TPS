@@ -14,6 +14,7 @@
 #include "wave.h"
 #include "player_test.h"
 #include "normal_enemy_behavior.h"
+#include "normal_enemy.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -46,14 +47,7 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
-	if (m_pMove == nullptr)
-	{
-		m_pMove = new CNormalMove;
-	}
-	if (m_pAttack == nullptr)
-	{
-		m_pAttack = new CNormalAttack;
-	}
+	
 }
 
 //=============================================
@@ -72,24 +66,11 @@ HRESULT CEnemy::Init()
 {
 	CCharacter::Init();
 
-	//銃初期化
-	if (m_pGun == nullptr)
-	{
-		m_pGun = new CAssultRifle;
-
-		m_pGun->Init();
-	}
-
-	CRenderer* pRender = CManager::GetRenderer();
-	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
-
 	//移動量初期化
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//ムーブ値代入
 	SetMove(move);
-
-	Load_Parts("data\\Motion.txt");
 
 	m_Motion = CEnemy::Motion_Type::MOTION_MAX; //ニュートラルに設定
 
@@ -105,7 +86,6 @@ void CEnemy::Uninit()
 {
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
-
 }
 
 //=============================================
@@ -137,8 +117,6 @@ void CEnemy::Update()
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
-
-		Motion(NUM_PARTS); //モーション処理
 	}
 }
 
@@ -156,7 +134,17 @@ void CEnemy::Draw()
 //=============================================
 CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type)
 {
-	CEnemy* pEnemy = new CEnemy;
+	CEnemy* pEnemy = nullptr;
+
+	switch (type)
+	{
+	case ENEMY_TYPE::ENEMY_TYPE_NORMAL:
+		pEnemy = new CNormalEnemy;
+		break;
+	default:
+		assert(false);
+		break;
+	}
 
 	// nullならnullを返す
 	if (pEnemy == nullptr) { return nullptr; }
@@ -164,7 +152,6 @@ CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENE
 	pEnemy->m_Type = type;
 	pEnemy->SetPos(pos); //pos設定
 	pEnemy->SetRot(rot); //rot設定
-	pEnemy->SetLife(DEFAULT_LIFE); //体力代入
 
 	pEnemy->Init(); //初期化処理
 
