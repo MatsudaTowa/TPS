@@ -91,7 +91,6 @@ public:
 	D3DXVECTOR3 m_Tpos;
 	D3DXVECTOR3 m_Trot;
 	int m_nIdx; //何番目のパーツか
-	char PARTS_NAME[256];
 	int m_nIdxModelParent; //親のインデックス
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture[256]; //テクスチャへのポインタ

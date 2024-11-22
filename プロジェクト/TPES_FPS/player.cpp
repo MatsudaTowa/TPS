@@ -14,7 +14,7 @@
 #include "scene.h"
 
 //モデルパス
-const std::string CPlayer::MODEL_NAME = "data\\MODEL\\face.x";
+const char* CPlayer::MODEL_NAME = "data\\MODEL\\face.x";
 
 //通常の移動速度
 const float CPlayer::DEFAULT_MOVE = 0.7;
@@ -95,9 +95,9 @@ HRESULT CPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 	SetLife(nLife); //体力代入
 
 	//xファイル読み込み
-	BindXFile(pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).pBuffMat,
-		pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).dwNumMat,
-		pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).pMesh);
+	BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
+		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
+		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
 
 	SetType(OBJECT_TYPE_PLAYER); //タイプ設定
 
@@ -261,9 +261,9 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot, int nLife)
 	pPlayer->SetLife(nLife); //体力代入
 
 	//xファイル読み込み
-	pPlayer->BindXFile(pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).pBuffMat,
-					pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).dwNumMat,
-					pModel->GetModelInfo(pModel->Regist(&MODEL_NAME)).pMesh);
+	pPlayer->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
+					pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
+					pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
 
 	pPlayer->SetType(OBJECT_TYPE_PLAYER); //タイプ設定
 

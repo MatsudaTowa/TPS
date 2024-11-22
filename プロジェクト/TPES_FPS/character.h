@@ -30,7 +30,7 @@ class CCharacter : public CObjectX
 public:
 	static const int MAX_KEY = 20; //キー最大数
 	static const int MAX_MOTION = 5;
-	static const int MAX_PARTS = 17; //最大パーツ数
+	static const int MAX_PARTS = 64; //最大パーツ数
 	static const float  BOSS_FIELD_X; //ボス戦のX座標
 
 	typedef enum

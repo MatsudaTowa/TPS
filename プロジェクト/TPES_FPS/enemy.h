@@ -67,12 +67,6 @@ private:
 
 	void ReSpawn(); //リスポーン
 
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
-
-	static LPD3DXMESH m_pMesh;
-	static 	LPD3DXBUFFER m_pBuffMat; //マテリアル情報
-	static	DWORD m_dwNumMat; //マテリアル数
-
 	Motion_Type m_Motion; //モーションの種類
 
 };

@@ -26,6 +26,7 @@ CModel_Parts::~CModel_Parts()
 //=============================================
 void CModel_Parts::Unload()
 {
+	//TODO:モデルの情報管理をここでするな！ObjectXも持ってるので消せ！
 	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
 	{
 		if (m_ModelInfo[nCnt].pBuffMat != nullptr)
@@ -45,6 +46,12 @@ void CModel_Parts::Unload()
 			m_ModelInfo[nCnt].ModelName = nullptr;
 		}
 	}
+
+	if (CManager::GetModel() != nullptr)
+	{
+		CManager::GetModel()->Unload();
+	}
+	
 	m_nNumAll = 0;
 }
 
@@ -189,7 +196,6 @@ void CModel_Parts::Draw()
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
-	
 }
 
 //=============================================
@@ -269,7 +275,6 @@ void CModel_Parts::Draw(D3DXCOLOR col)
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
-
 }
 
 

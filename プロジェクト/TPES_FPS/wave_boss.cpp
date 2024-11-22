@@ -44,6 +44,14 @@ HRESULT CWave_Boss::Init()
 //=============================================
 void CWave_Boss::Uninit()
 {
+	for (int nCnt = 0; nCnt < NUM_POINT; ++nCnt)
+	{
+		if (m_pMovePoint[nCnt] != nullptr)
+		{
+			m_pMovePoint[nCnt]->Uninit();
+			m_pMovePoint[nCnt] = nullptr;
+		}
+	}
 	CWave::Uninit();
 }
 

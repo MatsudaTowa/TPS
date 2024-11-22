@@ -5,7 +5,6 @@
 //
 //=============================================
 #include "wave.h"
-#include "enemy_test.h"
 #include "manager.h"
 #include "wave_one.h"
 #include "wave_two.h"
@@ -57,7 +56,6 @@ void CWave::Uninit()
 		m_pScore = nullptr;
 	}
 	CObject::ReleaseAll();
-
 }
 
 //=============================================
@@ -105,7 +103,7 @@ CWave* CWave::Create(WAVE wave)
 	case WAVE::RESULT: //ウェーブリザルト
 
 		delete pWave;
-		pWave = new CWave_Boss;
+		pWave = new CWave_Result;
 		break;
 	default:
 		break;
@@ -126,7 +124,6 @@ CWave* CWave::Create(WAVE wave)
 		}
 		m_pScore->Init();
 	}
-
 
 	if (pWave != nullptr)
 	{
@@ -153,26 +150,6 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 	// 条件分岐
 	switch (wave)
 	{
-	case WAVE::ONE: // ウェーブ1
-		delete pWave;
-		pWave = new CWave_One;
-		break;
-
-	case WAVE::TWO: //ウェーブ2
-		delete pWave;
-		pWave = new CWave_Two;
-		break;
-
-	case WAVE::THREE: // ウェーブ3
-
-		delete pWave;
-		pWave = new CWave_Three;
-		break;
-	case WAVE::BOSS: //ウェーブboss
-
-		delete pWave;
-		pWave = new CWave_Boss;
-		break;
 	case WAVE::RESULT: //ウェーブリザルト
 
 		delete pWave;

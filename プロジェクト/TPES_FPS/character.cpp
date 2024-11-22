@@ -47,6 +47,14 @@ CCharacter::~CCharacter()
 	{
 		delete m_pCharacterState;
 	}
+
+	for (int i = 0; i < 64; i++)
+	{
+		if (m_apModel[i] != nullptr)
+		{
+			m_apModel[i]->Unload();
+		}
+	}
 }
 
 //=============================================
@@ -79,6 +87,7 @@ void CCharacter::Uninit()
 		delete m_pGun;
 		m_pGun = nullptr;
 	}
+
     CObjectX::Uninit();
 }
 
@@ -262,7 +271,7 @@ void CCharacter::Load_Parts(const char* FileName)
 	float radius = 0.0f;//半径
 	float height = 0.0f;//高さ
 
-	char Path[256][MAX_PARTS]; //パーツのパス
+	char Path[MAX_PARTS][256]; //パーツのパス
 
 	//ファイルの読み込み
 	FILE* pFile;
@@ -299,9 +308,9 @@ void CCharacter::Load_Parts(const char* FileName)
 		if (!strcmp(aDataSearch, "MODEL_FILENAME"))
 		{//モデルファイル読み込み
 			fscanf(pFile, "%s", &aEqual[0]);
-			fscanf(pFile, "%s", &Path[0][nCntName]);
+			fscanf(pFile, "%s", &Path[nCntName][0]);
 			//モデルパーツのクリエイト
-			m_apModel[nCntName] = CModel_Parts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &Path[0][nCntName]);
+			m_apModel[nCntName] = CModel_Parts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &Path[nCntName][0]);
 
 			nCntName++;
 		}

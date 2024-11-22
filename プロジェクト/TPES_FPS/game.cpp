@@ -14,7 +14,6 @@
 #include "field.h"
 #include "manager.h"
 #include "player_test.h"
-#include "enemy_test.h"
 
 const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";
 

@@ -13,11 +13,11 @@
 class CBlock : public CObjectX
 {
 public:
-	static const std::string MODEL_NAME;	//モデルの名前
-	static const std::string WOOD_MODEL_NAME;	//モデルの名前
-	static const std::string AZUMAYA_MODEL_NAME;	//モデルの名前
-	static const std::string DANGOYA_MODEL_NAME;	//モデルの名前
-	static const std::string MESH_MODEL_NAME;	//モデルの名前
+	static const char* MODEL_NAME;	//モデルの名前
+	static const char* WOOD_MODEL_NAME;	//モデルの名前
+	static const char* AZUMAYA_MODEL_NAME;	//モデルの名前
+	static const char* DANGOYA_MODEL_NAME;	//モデルの名前
+	static const char* MESH_MODEL_NAME;	//モデルの名前
 
 	static const int BLOCK_PRIORITY = 3; //描画順
 	typedef enum

@@ -20,13 +20,12 @@ public:
 		LPD3DXMESH pMesh; //メッシュ情報
 		LPD3DXBUFFER pBuffMat; //マテリアル情報
 		DWORD dwNumMat; //マテリアル数;
-		std::string* ModelName; //モデルネーム保存用
+		const char* ModelName; //モデルネーム保存用
 	}MODEL_INFO;
 
 	CModel();
 	~CModel();
 	void Unload(); //モデル破棄
-	int Regist(const std::string* pModel);
 	int Regist(const char* pModel);
 	MODEL_INFO GetModelInfo(int nIdx); //モデル情報取得
 

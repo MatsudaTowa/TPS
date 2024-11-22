@@ -30,15 +30,6 @@ const float CEnemy::DEFAULT_JUMP = 25.0f;
 //これより下に行ったら死ぬ座標
 const float CEnemy::DEADZONE_Y = -100.0f;
 
-//テクスチャ初期化
-LPDIRECT3DTEXTURE9 CEnemy::m_pTextureTemp = nullptr;
-
-LPD3DXBUFFER CEnemy::m_pBuffMat = nullptr;
-
-LPD3DXMESH CEnemy::m_pMesh = nullptr;
-
-DWORD CEnemy::m_dwNumMat = 0;
-
 //=============================================
 //コンストラクタ
 //=============================================

@@ -61,10 +61,8 @@ void CObject::ReleaseAll()
 					m_apObject[nCntPri][nCntObj] = nullptr;
 				}
 			}
-
 		}
 	}
-
 }
 
 //=============================================

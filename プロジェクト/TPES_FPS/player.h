@@ -32,7 +32,7 @@ public:
 	static bool m_PlayerDeath;
 
 private:
-	static const std::string MODEL_NAME;	//モデルの名前
+	static const char* MODEL_NAME;	//モデルの名前
 
 	//プレイヤーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動

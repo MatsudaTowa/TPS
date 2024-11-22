@@ -61,33 +61,34 @@ void CScene::Draw()
 CScene* CScene::Create(MODE mode)
 {
     // インスタンス生成
-    CScene* pScene = new CScene;
+    CScene* pScene = nullptr;
 
     // 条件分岐
     switch (mode)
     {
     case MODE_TITLE: // タイトル
 
-        delete pScene;
+        //delete pScene;
         pScene = new CTitle;
         break;
     
     case MODE_TEST: //テスト
-        delete pScene;
+        //delete pScene;
         pScene = new CTest;
         break;
 
     case MODE_GAME: // ゲーム
 
-        delete pScene;
+        //delete pScene;
         pScene = new CGame;
         break;
     case MODE_RESULT: //リザルト
 
-        delete pScene;
+        //delete pScene;
         pScene = new CResult;
         break;
     default:
+    assert(true);
         break;
     }
 
@@ -97,6 +98,8 @@ CScene* CScene::Create(MODE mode)
     }
     //今のシーンの初期化
     pScene->Init();
+
+    CManager::GetModel()->Unload();
 
     return pScene;
 }
