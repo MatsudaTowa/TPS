@@ -24,20 +24,7 @@ public:
 	void Draw() override;
 	static CMovePoint* Create(D3DXVECTOR3 pos);
 
-	//”Ô†İ’è
-	void SetIdx(int Idx)
-	{
-		m_Idx = Idx;
-	}
-
-	//”Ô†æ“¾
-	int& GetIdx()
-	{
-		return m_Idx;
-	}
-
 private:
-	int m_Idx; //‰½”Ô–Ú‚Ì’n“_‚©
 	static int m_NumPoint; //‰½ŒÂ‚ ‚é‚©
 };
 #endif

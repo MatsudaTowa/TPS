@@ -14,7 +14,7 @@ const float CMovePoint::POINT_SIZE = 10.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CMovePoint::CMovePoint(int nPriority):CBillboard(nPriority) ,m_Idx(0)
+CMovePoint::CMovePoint(int nPriority):CBillboard(nPriority)
 {
 	++m_NumPoint;
 }
@@ -77,9 +77,6 @@ CMovePoint* CMovePoint::Create(D3DXVECTOR3 pos)
 
 	//位置の設定
 	pMovePoint->SetPos(pos);
-
-	//自分の番号を割り当て
-	pMovePoint->SetIdx(m_NumPoint);
 
 	pMovePoint->Init();
 

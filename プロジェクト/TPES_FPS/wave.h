@@ -78,7 +78,6 @@ public:
 	void LoadBlock(const std::string* pFileName);
 	void LoadWall(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
-	void LoadPoint(const std::string* pFileName);
 
 	void SetWaveScore(int nScore);
 
