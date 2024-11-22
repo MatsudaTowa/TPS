@@ -9,6 +9,8 @@
 //何番目の地点か
 int CMovePoint::m_NumPoint = 0;
 
+const float CMovePoint::POINT_SIZE = 10.0f;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -29,8 +31,11 @@ CMovePoint::~CMovePoint()
 //=============================================
 HRESULT CMovePoint::Init()
 {
+	SetSize(D3DXVECTOR3(POINT_SIZE,POINT_SIZE,0.0f));
 	//親クラスの初期化
 	CObject3D::Init();
+	//頂点座標
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	return S_OK;
 }
 
@@ -57,7 +62,9 @@ void CMovePoint::Update()
 //=============================================
 void CMovePoint::Draw()
 {
+#ifdef _DEBUG
 	CBillboard::Draw();
+#endif // _DEBUG
 }
 
 //=============================================

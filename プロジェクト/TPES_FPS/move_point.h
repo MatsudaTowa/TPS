@@ -14,6 +14,7 @@ class CMovePoint : public CBillboard
 {
 public:
 	static const int POINT_PRIORITY = 8; //ï`âÊèá
+	static const float POINT_SIZE; //ÉTÉCÉY
 
 	CMovePoint(int nPriority = POINT_PRIORITY);
 	~CMovePoint() override;
