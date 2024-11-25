@@ -7,6 +7,9 @@
 #include "boss_enemy.h"
 #include "boss_behavior.h"
 
+const float CBossEnemy::FIND_PLAYER_DISTANCE = 500.0f;
+const float CBossEnemy::LOST_PLAYER_DISTANCE = 900.0f;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -54,7 +57,7 @@ HRESULT CBossEnemy::Init()
 {
 	if (m_pBossState == nullptr)
 	{
-		m_pBossState = new CWanderingState;
+		m_pBossState = new CChaseState;
 	}
 	//銃初期化
 	if (m_pGun == nullptr)

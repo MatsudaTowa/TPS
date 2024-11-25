@@ -28,6 +28,8 @@ public:
 	static const int ENEMY_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 	static const int DEFAULT_LIFE = 30; //ライフ
+	static const float FIND_PLAYER_DISTANCE; //この値までだったら追いかける
+	static const float LOST_PLAYER_DISTANCE; //この値以上だったら見失う
 
 	//モーションの種類の列挙
 	enum Motion_Type

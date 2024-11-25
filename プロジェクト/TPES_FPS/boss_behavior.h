@@ -43,7 +43,8 @@ class CBossChase
 public:
 	CBossChase();
 	~CBossChase();
-	void Chase(CBossEnemy* boss);
+	void Chase(CBossEnemy* boss, CObject* obj);
+	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
 private:
 
 };
@@ -57,6 +58,7 @@ public:
 	CBossAttack();
 	~CBossAttack() override;
 	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CBossEnemy* boss); //エネミーのポインタ
 private:
 	static const int SHOT_STATE_FRAME = 180; //射撃フレーム
 
