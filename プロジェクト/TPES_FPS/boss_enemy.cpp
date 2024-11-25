@@ -52,6 +52,10 @@ CBossEnemy::~CBossEnemy()
 //=============================================
 HRESULT CBossEnemy::Init()
 {
+	if (m_pBossState == nullptr)
+	{
+		m_pBossState = new CWanderingState;
+	}
 	//e‰Šú‰»
 	if (m_pGun == nullptr)
 	{
@@ -80,6 +84,11 @@ void CBossEnemy::Uninit()
 //=============================================
 void CBossEnemy::Update()
 {
+	//TODO:–³‘Ê‚Èˆ—‘½‚¢‹C‚ª...
+	m_pBossState->Chase(this);
+
+	m_pBossState->Wandering(this);
+
 	CEnemy::Update();
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
 }
@@ -89,6 +98,7 @@ void CBossEnemy::Update()
 //=============================================
 void CBossEnemy::Draw()
 {
+	m_pWandering->DrawDebug();
 	CEnemy::Draw();
 }
 

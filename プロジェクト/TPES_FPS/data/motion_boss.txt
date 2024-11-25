@@ -35,7 +35,7 @@ MODEL_FILENAME = data/MODEL/boss/gatling.x		# [14]武器
 #------------------------------------------------------------------------------
 CHARACTERSET
 	NUM_PARTS = 15					# パーツ数
-	MOVE = 3.0						# 移動量
+	MOVE = 1.0						# 移動量
 	JUMP = 10.25					# ジャンプ量
 	RADIUS = 20.0					# 半径
 	HEIGHT = 40.0					# 高さ

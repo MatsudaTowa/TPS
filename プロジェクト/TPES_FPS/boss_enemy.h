@@ -46,6 +46,10 @@ public:
 	void Draw() override;
 
 	void ChangeState(CBossState* state);
+
+	CBossChase* m_pChase; //追跡処理
+
+	CBossWandering* m_pWandering; //徘徊処理
 private:
 
 	//エネミーの移動関連
@@ -55,10 +59,6 @@ private:
 
 	//ボスのステートパターン
 	CBossState* m_pBossState;
-
-	CBossChase* m_pChase; //追跡処理
-
-	CBossWandering* m_pWandering; //徘徊処理
 };
 
 #endif

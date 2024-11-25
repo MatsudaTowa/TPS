@@ -24,6 +24,11 @@ public:
 	void Draw() override;
 	static CMovePoint* Create(D3DXVECTOR3 pos);
 
+	//”æ“¾
+	static int& GetNumPoint()
+	{
+		return m_NumPoint;
+	};
 private:
 	static int m_NumPoint; //‰½ŒÂ‚ ‚é‚©
 };

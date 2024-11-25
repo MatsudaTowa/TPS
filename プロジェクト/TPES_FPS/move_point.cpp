@@ -24,6 +24,7 @@ CMovePoint::CMovePoint(int nPriority):CBillboard(nPriority)
 //=============================================
 CMovePoint::~CMovePoint()
 {
+	--m_NumPoint;
 }
 
 //=============================================

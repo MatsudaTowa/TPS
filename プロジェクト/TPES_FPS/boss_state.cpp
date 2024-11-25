@@ -32,4 +32,8 @@ void CChaseState::Chase(CBossEnemy* boss)
 //=============================================
 void CWanderingState::Wandering(CBossEnemy* boss)
 {
+	if (boss->m_pWandering != nullptr)
+	{
+		boss->m_pWandering->Wandering(boss);
+	}
 }

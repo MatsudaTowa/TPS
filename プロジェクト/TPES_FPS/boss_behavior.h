@@ -7,7 +7,13 @@
 #ifndef _BOSS_BEHAVIOR_
 #define _BOSS_BEHAVIOR_
 #include "enemy_behavior.h"
-#include "enemy.h"
+#include "boss_enemy.h"
+#include "move_point.h"
+
+//=============================================
+//前方宣言
+//=============================================
+class CBossEnemy;
 
 //=============================================
 //敵の徘徊のストラテジー
@@ -15,10 +21,18 @@
 class CBossWandering
 {
 public:
+	//止まってるフレーム数
+	static const int STOP_FRAME = 30;
 	CBossWandering();
 	~CBossWandering();
-	void Wandering(CEnemy* enemy);
+	void Wandering(CBossEnemy* boss);
+	void StopCnt();
+	void PickNextMovePoint(CMovePoint* pMovePoint);
+	void DrawDebug();
 private:
+	int m_MoveIdx; //移動先の番号
+	int m_StopCnt; //止まってるカウント
+	bool m_isMove; //動くかどうか
 };
 
 //=============================================
@@ -29,7 +43,7 @@ class CBossChase
 public:
 	CBossChase();
 	~CBossChase();
-	void Chase(CEnemy* enemy);
+	void Chase(CBossEnemy* boss);
 private:
 
 };
