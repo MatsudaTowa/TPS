@@ -11,6 +11,9 @@
 #include "model_parts.h"
 #include "character.h"
 #include "enemy_behavior.h"
+#include "enemy_state.h"
+
+class CEnemyState;
 
 //エネミークラス
 class CEnemy :public CCharacter
@@ -51,10 +54,13 @@ public:
 
 	void Damage(int nDamage); //当たり判定
 
+	void ChangeState(CEnemyState* state);
+
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
-
+	//エネミーのステートパターン
+	CEnemyState* m_pEnemyState;
 private:
 
 	//プレイヤーの移動関連

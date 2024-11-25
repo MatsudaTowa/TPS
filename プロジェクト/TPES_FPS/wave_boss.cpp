@@ -118,7 +118,7 @@ void CWave_Boss::LoadPoint(const std::string* pFileName)
 
 				if (!strcmp(aDataSearch, "END_POINTSET"))
 				{
-					//エネミー生成
+					//移動ポイント生成
 					m_pMovePoint[nCntPoint] = CMovePoint::Create(m_LoadPoint.pos);
 					++nCntPoint;
 					break;

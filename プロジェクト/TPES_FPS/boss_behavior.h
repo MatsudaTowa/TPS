@@ -12,36 +12,25 @@
 //=============================================
 //敵の徘徊のストラテジー
 //=============================================
-class CBossWandering : public CEnemyMove
+class CBossWandering
 {
 public:
 	CBossWandering();
-	~CBossWandering() override;
-	void Move(CCharacter* character)override;
+	~CBossWandering();
+	void Wandering(CEnemy* enemy);
 private:
-	static const int MOVE_FRAME = 60; //移動フレーム
-	static const int RIGHT_PARCENT = 50; //右の確立
-	static const int LEFT_PARCENT = 100; //左の確立
-
-	int m_nRight;//左に行く確率
-	int m_nLeft; //右に行く確率
-	bool m_bRandom; //どっちに行くか決める
-	int m_nStateChangeCnt; //ステート変更カウント
 };
 
 //=============================================
 //敵の追従のストラテジー
 //=============================================
-class CBossChase : public CEnemyMove
+class CBossChase
 {
 public:
 	CBossChase();
-	~CBossChase() override;
-	void Move(CCharacter* character)override;
+	~CBossChase();
+	void Chase(CEnemy* enemy);
 private:
-	static const int MOVE_FRAME = 60; //移動フレーム
-	static const int RIGHT_PARCENT = 50; //右の確立
-	static const int LEFT_PARCENT = 100; //左の確立
 
 };
 

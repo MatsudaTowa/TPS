@@ -21,9 +21,9 @@ CBossWandering::~CBossWandering()
 }
 
 //=============================================
-//à⁄ìÆ
+//úpúj
 //=============================================
-void CBossWandering::Move(CCharacter* character)
+void CBossWandering::Wandering(CEnemy* enemy)
 {
 }
 
@@ -42,9 +42,9 @@ CBossChase::~CBossChase()
 }
 
 //=============================================
-//à⁄ìÆ
+//í«ê’
 //=============================================
-void CBossChase::Move(CCharacter* character)
+void CBossChase::Chase(CEnemy* enemy)
 {
 }
 
@@ -67,4 +67,15 @@ CBossAttack::~CBossAttack()
 //=============================================
 void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
+	//if (m_nStateChangeCnt < SHOT_STATE_FRAME)
+	//{
+	//	CEnemyAttack::Attack(Allegiance, type, character);
+	//	++m_nStateChangeCnt;
+	//}
+	//if (m_nStateChangeCnt >= SHOT_STATE_FRAME)
+	//{
+	//	m_nStateChangeCnt = 0;
+	//	//à⁄ìÆèÛë‘Ç…êÿÇËë÷Ç¶
+	//	character->ChangeState(new CMoveState);
+	//}
 }

@@ -1,0 +1,46 @@
+//=============================================
+//
+//ボスのステートパターン[boss_state.h]
+//Auther Matsuda Towa
+//
+//=============================================
+#ifndef _BOSS_STATE_H_
+#define _BOSS_STATE_H_
+
+#include "character_state.h"
+#include "boss_enemy.h"
+
+//=============================================
+//前方宣言
+//=============================================
+class CBossEnemy;
+
+//=============================================
+//ボスのステートクラス
+//=============================================
+class CBossState
+{
+public:
+	virtual void Chase(CBossEnemy* boss);
+	virtual void Wandering(CBossEnemy* boss);
+};
+
+//=============================================
+//エネミーの追跡状態
+//=============================================
+class CChaseState : public CBossState
+{
+public:
+	virtual void Chase(CBossEnemy* boss)override;
+};
+
+//=============================================
+//エネミーの徘徊状態
+//=============================================
+class CWanderingState : public CBossState
+{
+public:
+	virtual void Wandering(CBossEnemy* boss)override;
+};
+
+#endif

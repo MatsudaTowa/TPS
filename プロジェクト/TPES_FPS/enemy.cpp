@@ -37,7 +37,7 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
 {//イニシャライザーでメンバ変数初期化
 	//総数追加
 	m_NumEnemy++;
-	
+	m_pEnemyState = nullptr;
 }
 
 //=============================================
@@ -45,6 +45,10 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
 //=============================================
 CEnemy::~CEnemy()
 {
+	if (m_pEnemyState != nullptr)
+	{
+		delete m_pEnemyState;
+	}
 	//総数減少
 	m_NumEnemy--;
 }
@@ -199,6 +203,19 @@ void CEnemy::Damage(int nDamage)
 		pScore->AddScore(nAddScore);
 		//終了
 		Uninit();
+	}
+}
+
+//=============================================
+//ステート切り替え
+//=============================================
+void CEnemy::ChangeState(CEnemyState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pEnemyState != nullptr)
+	{
+		delete m_pEnemyState;
+		m_pEnemyState = state;
 	}
 }
 

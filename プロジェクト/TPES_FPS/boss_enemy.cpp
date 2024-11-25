@@ -12,9 +12,15 @@
 //=============================================
 CBossEnemy::CBossEnemy(int nPriority)
 {
-	if (m_pMove == nullptr)
+	m_pBossState = nullptr;
+
+	if (m_pWandering == nullptr)
 	{
-		m_pMove = new CBossWandering;
+		m_pWandering = new CBossWandering;
+	}
+	if (m_pChase == nullptr)
+	{
+		m_pChase = new CBossChase;
 	}
 	if (m_pAttack == nullptr)
 	{
@@ -27,6 +33,18 @@ CBossEnemy::CBossEnemy(int nPriority)
 //=============================================
 CBossEnemy::~CBossEnemy()
 {
+	if (m_pBossState != nullptr)
+	{
+		delete m_pBossState;
+	}
+	if (m_pWandering != nullptr)
+	{
+		delete m_pWandering;
+	}
+	if (m_pChase != nullptr)
+	{
+		delete m_pChase;
+	}
 }
 
 //=============================================
@@ -72,4 +90,17 @@ void CBossEnemy::Update()
 void CBossEnemy::Draw()
 {
 	CEnemy::Draw();
+}
+
+//=============================================
+//ボスの状態切り替え
+//=============================================
+void CBossEnemy::ChangeState(CBossState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pBossState != nullptr)
+	{
+		delete m_pBossState;
+		m_pBossState = state;
+	}
 }

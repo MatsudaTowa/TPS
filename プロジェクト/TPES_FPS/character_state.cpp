@@ -33,5 +33,8 @@ void CShotState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYP
 //=============================================
 void CMoveState::Move(CCharacter* character)
 {
-	character->m_pMove->Move(character);
+	if (character->m_pMove != nullptr)
+	{
+		character->m_pMove->Move(character);
+	}
 }

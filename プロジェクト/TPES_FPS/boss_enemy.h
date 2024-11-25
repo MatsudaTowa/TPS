@@ -11,8 +11,14 @@
 #include "model_parts.h"
 #include "enemy.h"
 #include "enemy_behavior.h"
+#include "boss_behavior.h"
+#include "boss_state.h"
 
-//通常のエネミークラス
+class CBossChase;
+class CBossWandering;
+class CBossState;
+
+//ボスのエネミークラス
 class CBossEnemy :public CEnemy
 {
 public:
@@ -38,12 +44,21 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
+
+	void ChangeState(CBossState* state);
 private:
 
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 
 	Motion_Type m_Motion; //モーションの種類
+
+	//ボスのステートパターン
+	CBossState* m_pBossState;
+
+	CBossChase* m_pChase; //追跡処理
+
+	CBossWandering* m_pWandering; //徘徊処理
 };
 
 #endif
