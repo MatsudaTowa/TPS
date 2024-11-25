@@ -22,6 +22,13 @@ void CBossState::Wandering(CBossEnemy* boss)
 }
 
 //=============================================
+//ボスのデバッグ情報
+//=============================================
+void CBossState::DrawDebug()
+{
+}
+
+//=============================================
 //ボスの追跡状態
 //=============================================
 void CChaseState::Chase(CBossEnemy* boss)
@@ -45,6 +52,22 @@ void CChaseState::Chase(CBossEnemy* boss)
 			}
 		}
 	}
+}
+
+//=============================================
+//ボスの追跡状態デバッグ
+//=============================================
+void CChaseState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n追跡");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }
 
 //=============================================
@@ -83,4 +106,20 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 			}
 		}
 	}
+}
+
+//=============================================
+//ボスの徘徊状態デバッグ
+//=============================================
+void CWanderingState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n徘徊");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }

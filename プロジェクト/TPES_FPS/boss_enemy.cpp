@@ -93,6 +93,11 @@ void CBossEnemy::Update()
 	m_pBossState->Wandering(this);
 
 	CEnemy::Update();
+
+	if (GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		ChangeState(new CChaseState);
+	}
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
 }
 
@@ -102,6 +107,7 @@ void CBossEnemy::Update()
 void CBossEnemy::Draw()
 {
 	m_pWandering->DrawDebug();
+	m_pBossState->DrawDebug();
 	CEnemy::Draw();
 }
 

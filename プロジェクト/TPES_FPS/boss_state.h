@@ -23,6 +23,7 @@ class CBossState
 public:
 	virtual void Chase(CBossEnemy* boss);
 	virtual void Wandering(CBossEnemy* boss);
+	virtual void DrawDebug();
 };
 
 //=============================================
@@ -32,6 +33,7 @@ class CChaseState : public CBossState
 {
 public:
 	virtual void Chase(CBossEnemy* boss)override;
+	virtual void DrawDebug()override;
 };
 
 //=============================================
@@ -41,6 +43,7 @@ class CWanderingState : public CBossState
 {
 public:
 	virtual void Wandering(CBossEnemy* boss)override;
+	virtual void DrawDebug()override;
 };
 
 #endif

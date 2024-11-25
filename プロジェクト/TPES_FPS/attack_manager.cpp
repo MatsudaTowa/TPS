@@ -101,7 +101,7 @@ bool CAttack_Manager::HitEnemy()
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._42
 					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->GetMin(), pEnemy->m_apModel[nCnt]->GetMax());
+					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->GetMin(), pEnemy->m_apModel[nCnt]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
@@ -148,7 +148,7 @@ bool CAttack_Manager::HitPlayer()
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._42
 					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CColision::CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->GetMin(), pPlayer_test->m_apModel[nCnt]->GetMax());
+					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->GetMin(), pPlayer_test->m_apModel[nCnt]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
@@ -186,8 +186,8 @@ bool CAttack_Manager::HitBlock()
 			{
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-				CColision::COLISION ColisionCheck_X = CColision::CheckPolygonModelColision_X(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-				CColision::COLISION ColisionCheck_Z = CColision::CheckPolygonModelColision_Z(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_X(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_Z(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
 				if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
 				{//“–‚½‚Á‚Ä‚½‚ç
@@ -224,7 +224,7 @@ bool CAttack_Manager::HitGround()
 			{
 				CField* pField = dynamic_cast<CField*>(pObj);
 
-				CColision::COLISION ColisionCheck = CColision::CheckPolygonFillColision(Attackpos, Attacksize, pField->GetPos(),
+				CColision::COLISION ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonFillColision(Attackpos, Attacksize, pField->GetPos(),
 				D3DXVECTOR3(-pField->GetSize().x, -pField->GetSize().y, -pField->GetSize().z), 
 				D3DXVECTOR3(pField->GetSize().x, pField->GetSize().y, pField->GetSize().z));
 

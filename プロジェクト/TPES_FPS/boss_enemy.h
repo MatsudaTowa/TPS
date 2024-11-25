@@ -53,7 +53,6 @@ public:
 
 	CBossWandering* m_pWandering; //徘徊処理
 private:
-
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 

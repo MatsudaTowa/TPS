@@ -7,6 +7,8 @@
 #include "boss_behavior.h"
 #include "wave_boss.h"
 #include "player_test.h"
+#include "block.h"
+#include "object.h"
 
 //=============================================
 //コンストラクタ
@@ -108,7 +110,7 @@ void CBossWandering::PickNextMovePoint(CMovePoint* pMovePoint)
 }
 
 //=============================================
-//プレイヤーのデバッグ表示
+//徘徊のデバッグ表示
 //=============================================
 void CBossWandering::DrawDebug()
 {
@@ -151,10 +153,15 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	// 目的地との距離を計算
 	float distance = sqrtf(Vector.x * Vector.x + Vector.z * Vector.z);
 
+	D3DXVec3Normalize(&Vector, &Vector);
+
 	// 到達判定用の閾値
 	const float threshold = 200.0f; // 距離が定数以下なら到達とする 遠距離武器だから近づきすぎないように調整
 
-	if (distance < boss->LOST_PLAYER_DISTANCE)
+	// レイキャストを実行し、障害物があるか判定
+	bool hitPlayer = PerformRaycast(boss->GetPos(), Vector, boss->FIND_PLAYER_DISTANCE);
+
+	if (hitPlayer)
 	{
 		//プレイヤーに向かって動かす
 		MovetoPlayer(distance, threshold, Vector, boss);
@@ -163,7 +170,6 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	{
 		boss->ChangeState(new CWanderingState);
 	}
-	
 }
 
 //=============================================
@@ -190,10 +196,48 @@ void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR
 		boss->SetMove(move);
 	}
 	else
-	{//到達していたら
-		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
+	{
+		D3DXVECTOR3 move = {0.0f,0.0f,0.0f};
+		//移動量代入
 		boss->SetMove(move);
 	}
+}
+
+//=============================================
+//障害物があるか判定
+//=============================================
+bool CBossChase::PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction, float maxDistance)
+{
+	// レイの終点を計算
+	D3DXVECTOR3 endPos = startPos + direction * maxDistance;
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++) 
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+			{
+				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+				// バウンディングボックス取得
+				D3DXVECTOR3 boxMin = pBlock->GetMinPos();
+				D3DXVECTOR3 boxMax = pBlock->GetMaxPos();
+				// AABBとの衝突判定
+				if (CManager::GetInstance()->GetColision()->CheckIntersectRay(startPos, direction, boxMin, boxMax))
+				{
+					// 障害物が間にある場合
+					return false;
+				}
+			}
+		}
+	}
+	// 障害物がなく、プレイヤーまでレイが到達する場合
+	return true;
 }
 
 //=============================================

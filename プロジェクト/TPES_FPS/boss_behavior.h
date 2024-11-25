@@ -45,8 +45,8 @@ public:
 	~CBossChase();
 	void Chase(CBossEnemy* boss, CObject* obj);
 	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
+	bool PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction, float maxDistance);
 private:
-
 };
 
 //=============================================

@@ -5,7 +5,6 @@
 //
 //=============================================
 #include "colision.h"
-
 //=============================================
 //コンストラクタ
 //=============================================
@@ -488,5 +487,49 @@ CColision::COLISION CColision::CheckPolygonFillColision(D3DXVECTOR3 Apos, D3DXVE
 			return CColision::COLISION::COLISON_NONE;
 		}
 	}
+}
+
+//=============================================
+//レイとオブジェクトの当たり判定 TODO:理解しろ
+//=============================================
+bool CColision::CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3& rayDir, const D3DXVECTOR3& boxMin, const D3DXVECTOR3& boxMax)
+{
+	// オブジェクトとの交差範囲を計算するための変数
+	float Cross_min = (boxMin.x - rayStart.x) / rayDir.x;
+	float Cross_max = (boxMax.x - rayStart.x) / rayDir.x;
+
+	if (Cross_min > Cross_max)
+	{
+		std::swap(Cross_min, Cross_max); // 進行方向から見てminのほうがmaxよりデカかったら入れ替える
+	}
+
+	// y軸に沿った交差範囲を計算
+	float Cross_y_min = (boxMin.y - rayStart.y) / rayDir.y;
+	float Cross_y_max = (boxMax.y - rayStart.y) / rayDir.y;
+
+	if (Cross_y_min > Cross_y_max)
+	{
+		std::swap(Cross_y_min, Cross_y_max);  // 進行方向から見てminのほうがmaxよりデカかったら入れ替える
+	}
+
+	// 重なる範囲を更新
+	Cross_min = max (Cross_min, Cross_y_min);
+	Cross_max = min (Cross_max, Cross_y_max);
+
+	// z軸に沿った交差範囲を計算
+	float Cross_z_min = (boxMin.z - rayStart.z) / rayDir.z;
+	float Cross_z_max = (boxMax.z - rayStart.z) / rayDir.z;
+
+	if (Cross_z_min > Cross_z_max) 
+	{
+		std::swap(Cross_z_min, Cross_z_max);  // 進行方向から見てminのほうがmaxよりデカかったら入れ替える
+	}
+	// x, y, z 軸全てで交差範囲が重なるかを確認
+	if ((Cross_min > Cross_z_max) || (Cross_z_min > Cross_max))
+	{
+		return false;
+	}
+
+	return true;
 }
 

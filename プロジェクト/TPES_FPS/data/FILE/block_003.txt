@@ -9,7 +9,7 @@ SCRIPT			# この行は絶対消さないこと！
 #------------------------------------------------------------------------------
 # ブロック数
 #------------------------------------------------------------------------------
-NUM_BLOCK = 4
+NUM_BLOCK = 8
 
 #------------------------------------------------------------------------------
 # ブロック情報
@@ -21,7 +21,19 @@ BLOCKSET
 END_BLOCKSET
 
 BLOCKSET
+	POS = -200.0 50.0 50.0
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_BLOCKSET
+
+BLOCKSET
 	POS = 200.0 0.0 200.0
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_BLOCKSET
+
+BLOCKSET
+	POS = 200.0 50.0 200.0
 	ROT = 0.0 0.0 0.0
 	TYPE = 1
 END_BLOCKSET
@@ -33,7 +45,19 @@ BLOCKSET
 END_BLOCKSET
 
 BLOCKSET
+	POS = -200.0 50.0 350.0
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_BLOCKSET
+
+BLOCKSET
 	POS = 200.0 0.0 500.0
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_BLOCKSET
+
+BLOCKSET
+	POS = 200.0 50.0 500.0
 	ROT = 0.0 0.0 0.0
 	TYPE = 1
 END_BLOCKSET
