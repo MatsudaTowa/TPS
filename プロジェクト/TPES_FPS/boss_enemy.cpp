@@ -7,8 +7,8 @@
 #include "boss_enemy.h"
 #include "boss_behavior.h"
 
-const float CBossEnemy::FIND_PLAYER_DISTANCE = 500.0f;
-const float CBossEnemy::LOST_PLAYER_DISTANCE = 900.0f;
+const float CBossEnemy::FIND_PLAYER_DISTANCE = 500.0f; //この値までだったら追いかける
+const float CBossEnemy::LOST_PLAYER_DISTANCE = 800.0f; //この値以上だったら見失う
 
 //=============================================
 //コンストラクタ

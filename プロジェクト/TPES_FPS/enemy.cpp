@@ -260,7 +260,6 @@ void CEnemy::ChangeDamageState()
 			//状態代入
 			SetState(state);
 		}
-
 		//ステートカウント代入
 		SetStateCnt(nStateCnt);
 	}
