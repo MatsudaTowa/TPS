@@ -19,8 +19,20 @@ const std::string CManager::RESULT_SCORE_FILE[NUM_RESULT_FILE] =
 //=============================================
 //コンストラクタ
 //=============================================
-CManager::CManager()
+CManager::CManager():m_pCamera(nullptr),
+	m_pColision(nullptr),
+	m_pFade(nullptr),
+	m_pKeyboard(nullptr),
+	m_pLight(nullptr),
+	m_pModel(nullptr),
+	m_pMouse(nullptr),
+	m_pPad(nullptr),
+	m_pRenderer(nullptr),
+	m_pScene(nullptr),
+	m_pSound(nullptr),
+	m_pTexture(nullptr)
 {
+	
 }
 
 //=============================================
@@ -114,6 +126,12 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	}
 
+	//当たり判定生成
+	if (m_pColision == nullptr)
+	{
+		m_pColision = new CColision();
+	}
+
 	//最初のシーン設定
 	if (m_pFade == nullptr)
 	{
@@ -157,6 +175,14 @@ void CManager::Uninit()
 		delete m_pSound;
 		m_pSound = nullptr;
 	}
+
+	//当たり判定破棄
+	if (m_pColision != nullptr)
+	{
+		delete m_pColision;
+		m_pColision = nullptr;
+	}
+
 
 	if (m_pRenderer != nullptr)
 	{
@@ -348,8 +374,19 @@ CSound* CManager::GetSound()
 	return m_pSound;
 }
 
+//=============================================
+//フェード取得
+//=============================================
 CFade* CManager::GetFade()
 {
 	return m_pFade;
+}
+
+//=============================================
+//当たり判定取得
+//=============================================
+CColision* CManager::GetColision()
+{
+	return m_pColision;
 }
 

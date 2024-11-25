@@ -16,6 +16,7 @@
 #include "scene.h"
 #include "fade.h"
 #include "sound.h"
+#include "colision.h"
 
 class CManager
 {
@@ -62,6 +63,8 @@ public:
 	//フェード取得
 	CFade* GetFade();
 	
+	CColision* GetColision();
+
 	CFade* m_pFade;
 
 	static void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
@@ -79,6 +82,7 @@ private:
 	CTexture* m_pTexture;
 	CModel* m_pModel;
 	CSound* m_pSound;
+	CColision* m_pColision;
 };
 
 #endif

@@ -660,7 +660,7 @@ void CCharacter::HitBlock(int NumParts)
 void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
 	//当たり判定チェック
-	CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	CColision::COLISION Checkcolision_X = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 	if (Checkcolision_X == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
 		CharacterPos.x = CharacterOldPos.x;
@@ -673,7 +673,7 @@ void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& Charact
 //=============================================
 void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
-	CColision::COLISION Checkcolision_Y = CColision::CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	CColision::COLISION Checkcolision_Y = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
 	if (Checkcolision_Y == CColision::COLISION::COLISON_UNDER_Y)
 	{//y(下)方向に当たってたら
@@ -693,7 +693,7 @@ void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& Charact
 //=============================================
 void CCharacter::ColisionBlock_Z(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
-	CColision::COLISION Checkcolision_Z = CColision::CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	CColision::COLISION Checkcolision_Z = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
 	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
 	{//z方向に当たってたら
@@ -729,7 +729,7 @@ void CCharacter::HitField()
 				CField* pField = dynamic_cast<CField*>(pObj);
 
 				//当たり判定チェック
-				CColision::COLISION Checkcolision_Y = CColision::CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
+				CColision::COLISION Checkcolision_Y = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
 
 				if (Checkcolision_Y == CColision::COLISION::COLISON_TOP_Y)
 				{//y(上)方向に当たってたら
@@ -816,7 +816,7 @@ void CCharacter::HitWall()
 void CCharacter::ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
 {
 	//当たり判定チェック
-	CColision::COLISION Checkcolision_X = CColision::CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
+	CColision::COLISION Checkcolision_X = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
 	if (Checkcolision_X == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
 		CharacterPos.x = m_oldpos.x;
@@ -830,7 +830,7 @@ void CCharacter::ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& Ch
 void CCharacter::ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
 {
 	//当たり判定チェック
-	CColision::COLISION Checkcolision_Z = CColision::CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
+	CColision::COLISION Checkcolision_Z = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
 	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
 	{//z方向に当たってたら
 		CharacterPos.z = m_oldpos.z;
