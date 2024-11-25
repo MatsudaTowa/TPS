@@ -61,9 +61,9 @@ void CTitle_Screen::Update()
 	//親クラスの更新呼ぶ
 	CObject2D::Update();
 
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
-	CInputPad* pPad = CManager::GetPad();
+	CInputPad* pPad = CManager::GetInstance()->GetPad();
 
 	switch (m_UItype)
 	{
@@ -99,7 +99,7 @@ void CTitle_Screen::Draw()
 //=============================================
 CTitle_Screen* CTitle_Screen::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TITLE_UI type)
 {
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	CTitle_Screen* pTitle_Screen = new CTitle_Screen;
 
 	//nullならnullを返す
@@ -111,7 +111,7 @@ CTitle_Screen* CTitle_Screen::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TITLE_UI
 
 	pTitle_Screen->m_UItype = type;
 
-	CInputPad* pPad = CManager::GetPad();
+	CInputPad* pPad = CManager::GetInstance()->GetPad();
 
 	switch (pTitle_Screen->m_UItype)
 	{

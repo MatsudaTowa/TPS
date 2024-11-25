@@ -31,48 +31,54 @@ public:
 	void Draw();
 
 	//シーン設定
-	static void SetMode(CScene::MODE mode);
+	void SetMode(CScene::MODE mode);
 
+	static CManager* GetInstance()
+	{
+		static CManager instance; //静的インスタンス
+		return &instance;
+	}
+
+	//シーン取得
+	CScene* GetScene();
 	//レンダラー取得
-	static CScene* GetScene();
-	//レンダラー取得
-	static CRenderer*GetRenderer();
+	CRenderer*GetRenderer();
 	//キーボード情報取得
-	static CInputKeyboard* GetKeyboard();
+	CInputKeyboard* GetKeyboard();
 	//マウス情報取得
-	static CInputMouse* GetMouse();
-	//マウス情報取得
-	static CInputPad* GetPad();
+	CInputMouse* GetMouse();
+	//pad情報取得
+	CInputPad* GetPad();
 	//カメラ取得
-	static CCamera* GetCamera();
+	CCamera* GetCamera();
 	//ライト取得
-	static CLight* GetLight();
+	CLight* GetLight();
 	//テクスチャ取得
-	static CTexture* GetTexture();
+	CTexture* GetTexture();
 	//モデル取得
-	static CModel* GetModel();
+	CModel* GetModel();
 	//サウンド取得
-	static CSound* GetSound();
+	CSound* GetSound();
 	//フェード取得
-	static CFade* GetFade();
-
-	static CFade* m_pFade;
+	CFade* GetFade();
+	
+	CFade* m_pFade;
 
 	static void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
 
 private:
 
-	static CScene* m_pScene; //現在のシーン
+	CScene* m_pScene; //現在のシーン
 	//static CFade* m_pFade;
-	static CRenderer* m_pRenderer;
-	static CInputKeyboard* m_pKeyboard;
-	static CInputMouse* m_pMouse;
-	static CInputPad* m_pPad;
-	static CCamera* m_pCamera;
-	static CLight* m_pLight;
-	static CTexture* m_pTexture;
-	static CModel* m_pModel;
-	static CSound* m_pSound;
+	CRenderer* m_pRenderer;
+	CInputKeyboard* m_pKeyboard;
+	CInputMouse* m_pMouse;
+	CInputPad* m_pPad;
+	CCamera* m_pCamera;
+	CLight* m_pLight;
+	CTexture* m_pTexture;
+	CModel* m_pModel;
+	CSound* m_pSound;
 };
 
 #endif

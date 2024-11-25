@@ -16,42 +16,6 @@ const std::string CManager::RESULT_SCORE_FILE[NUM_RESULT_FILE] =
 	"data\\FILE\\score\\wave_boss_score.bin",
 };
 
-//シーン設定
-CScene* CManager::m_pScene = nullptr;
-
-////シーン設定
-//CFade* CManager::m_pFade = nullptr;
-
-//レンダラー設定
-CRenderer*CManager::m_pRenderer = nullptr;
-
-//キーボード設定
-CInputKeyboard*CManager::m_pKeyboard = nullptr;
-
-//マウス設定
-CInputMouse* CManager::m_pMouse = nullptr;
-
-//Pad設定
-CInputPad* CManager::m_pPad = nullptr;
-
-//カメラ設定
-CCamera*CManager::m_pCamera = nullptr;
-
-//ライト設定
-CLight*CManager::m_pLight = nullptr;
-
-//テクスチャ設定
-CTexture* CManager::m_pTexture = nullptr;
-
-//モデル設定
-CModel* CManager::m_pModel = nullptr;
-
-//サウンド設定
-CSound* CManager::m_pSound = nullptr;
-
-//フェード設定
-CFade* CManager::m_pFade = nullptr;
-
 //=============================================
 //コンストラクタ
 //=============================================

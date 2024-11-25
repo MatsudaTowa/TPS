@@ -102,7 +102,7 @@ void CCamera::Uninit()
 void CCamera::Update()
 {
 	//キーボード情報取得
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	switch (m_type)
 	{
@@ -168,7 +168,7 @@ void CCamera::Update()
 //=============================================
 void CCamera::SetCamera()
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 	//プロジェクションマトリックスの初期化
@@ -255,7 +255,7 @@ CCamera::CANERA_TYPE CCamera::GetType()
 void CCamera::CameraMove()
 {
 	//キーボード情報取得
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
 	if (pKeyboard->GetPress(DIK_J) == true)
@@ -306,7 +306,7 @@ void CCamera::CameraMove()
 void CCamera::CameraTurn()
 {
 	//キーボード情報取得
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	if (pKeyboard->GetPress(DIK_Q) == true)
 	{
 		m_rot.y -= 0.02f;
@@ -376,7 +376,7 @@ void CCamera::SideViewCamera()
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//キーボード情報取得
-		CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+		CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 		if (pKeyboard->GetTrigger(DIK_F4))
 		{
 			m_type = TYPE_PARALLEL_SIDEVIEW;
@@ -439,7 +439,7 @@ void CCamera::ThirdViewCamera()
 				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//マウス情報取得
-				CInputMouse* pMouse = CManager::GetMouse();
+				CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 				//現在のシーンを取得 TODO:シーン参照するな
 				CScene::MODE pScene = CScene::GetSceneMode();
 				if (pScene != CScene::MODE::MODE_TITLE)
@@ -448,7 +448,7 @@ void CCamera::ThirdViewCamera()
 					m_rot.x += pMouse->GetMouseMove().y * 0.001f;
 				}
 				//キーボード情報取得
-				CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+				CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 				
 				if (m_rot.x <= MIN_TURN_X)
 				{
@@ -493,7 +493,7 @@ D3DXVECTOR3 CCamera::GetPosR()
 void CCamera::DebugCameraDraw()
 {
 #ifdef _DEBUG
-	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 

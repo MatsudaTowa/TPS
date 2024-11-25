@@ -170,11 +170,11 @@ void CRenderer::Draw()
 	//描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
-		CManager::GetCamera()->SetCamera();
+		CManager::GetInstance()->GetCamera()->SetCamera();
 		DrawFPS(GetFps());
 		CObject::DrawAll();
-		CManager::GetCamera()->DebugCameraDraw();
-		CManager::GetFade()->Draw();
+		CManager::GetInstance()->GetCamera()->DebugCameraDraw();
+		CManager::GetInstance()->GetFade()->Draw();
 		m_pD3DDevice->EndScene();
 	}
 	//バックバッファとフロントバッファの入れ替え

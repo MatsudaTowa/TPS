@@ -78,7 +78,7 @@ CReticle* CReticle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 		return nullptr; 
 	}
 
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	pRaticle->SetPos(pos); //posİ’è
 	pRaticle->SetSize(size); //ƒTƒCƒYİ’è

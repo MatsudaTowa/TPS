@@ -138,7 +138,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3D
 
 	if (pBullet == nullptr) {return nullptr;}
 
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	pBullet->SetPos(pos); //posİ’è
 	pBullet->SetSize(size); //ƒTƒCƒYİ’è

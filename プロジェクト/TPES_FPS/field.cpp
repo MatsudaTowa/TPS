@@ -77,7 +77,7 @@ CField* CField::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	if (pField == nullptr) { return nullptr; }
 
 	//テクスチャ取得
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	pField->SetPos(pos); //pos設定
 	pField->SetSize(size); //サイズ設定

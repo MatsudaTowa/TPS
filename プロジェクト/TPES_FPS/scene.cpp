@@ -99,7 +99,7 @@ CScene* CScene::Create(MODE mode)
     //¡‚ÌƒV[ƒ“‚Ì‰Šú‰»
     pScene->Init();
 
-    CManager::GetModel()->Unload();
+    CManager::GetInstance()->GetModel()->Unload();
 
     return pScene;
 }

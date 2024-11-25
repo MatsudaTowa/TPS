@@ -66,7 +66,7 @@ void CObject2D::Update()
 //=============================================
 void CObject2D::Draw()
 {
- 	CRenderer* pRender = CManager::GetRenderer();
+ 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
@@ -96,7 +96,7 @@ void CObject2D::Draw()
 //=============================================
 void CObject2D::SetVtx(float rhw, D3DCOLOR col)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)
@@ -148,7 +148,7 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col)
 //=============================================
 void CObject2D::SetVtx(float rhw, D3DCOLOR col, float fAngle, float fLength)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)
@@ -232,7 +232,7 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col, float fAngle, float fLength)
 //=============================================
 void CObject2D::SetVtx_FootPos(float rhw, D3DCOLOR col, float fAngle, float fLength)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)

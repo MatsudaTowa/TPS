@@ -77,7 +77,7 @@ CWall* CWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size)
 	if (pWall == nullptr) { return nullptr; }
 
 	//テクスチャ取得
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	pWall->SetPos(pos); //pos設定
 	pWall->SetRot(rot); //rot設定

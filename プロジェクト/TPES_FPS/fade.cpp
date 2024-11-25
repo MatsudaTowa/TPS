@@ -73,7 +73,7 @@ void CFade::Update()
 			{
 				m_colorFade = 1.0f;
 				m_fade = FADE_IN; //フェードイン状態に
-				CManager::SetMode(m_fademode);
+				CManager::GetInstance()->SetMode(m_fademode);
 			}
 		}
 		//頂点カラーの設定

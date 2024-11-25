@@ -78,10 +78,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 		NULL); //ウィンドウ作成データ
 
 	//生成＆初期化
-	g_pManager = new CManager();
+	CManager* pManager = CManager::GetInstance();
 
 	//初期化処理
-	if (FAILED(g_pManager->Init(hInstance,hWnd, TRUE)))
+	if (FAILED(pManager->Init(hInstance,hWnd, TRUE)))
 	{//初期化失敗したとき
 		return -1;
 	}
@@ -126,14 +126,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))
 			{//60分の1秒経過
 				dwExecLastTime = dwCurrentTime; //最終時刻の設定
-				g_pManager->Update();
-				g_pManager->Draw();
+				pManager->Update();
+				pManager->Draw();
 				dwFrameCnt++;
 			}
 		}
 	}
-	g_pManager->Uninit();
-	delete g_pManager;
+	pManager->Uninit();
 	//ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 	return(int)msg.wParam;

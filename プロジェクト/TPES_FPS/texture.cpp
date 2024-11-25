@@ -63,7 +63,7 @@ int CTexture::Regist(const std::string* pTex)
 	{
 		if (m_apTexture[nCnt] == nullptr)
 		{
-			LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+			LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 			//テクスチャの読み込み
 			D3DXCreateTextureFromFile(pDevice,

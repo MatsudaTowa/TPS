@@ -64,7 +64,7 @@ void CObject3D::Update()
 //=============================================
 void CObject3D::Draw()
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
@@ -112,7 +112,7 @@ void CObject3D::BindTexture(LPDIRECT3DTEXTURE9 pTex)
 //=============================================
 void CObject3D::SetVtx(D3DXVECTOR3 nor, D3DCOLOR col)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)
@@ -166,7 +166,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, D3DCOLOR col)
 //=============================================
 void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength, D3DCOLOR col)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)
@@ -219,7 +219,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength, D3DCOLOR co
 //=============================================
 void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)
@@ -289,7 +289,7 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3
 //=============================================
 void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col)
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	if (m_pVtxBuff == nullptr)

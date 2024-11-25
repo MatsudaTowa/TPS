@@ -26,7 +26,7 @@ CBillboard::~CBillboard()
 //=============================================
 void CBillboard::Draw()
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 

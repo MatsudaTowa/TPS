@@ -47,9 +47,9 @@ void CModel_Parts::Unload()
 		}
 	}
 
-	if (CManager::GetModel() != nullptr)
+	if (CManager::GetInstance()->GetModel() != nullptr)
 	{
-		CManager::GetModel()->Unload();
+		CManager::GetInstance()->GetModel()->Unload();
 	}
 	
 	m_nNumAll = 0;
@@ -132,7 +132,7 @@ void CModel_Parts::Draw()
 	if (m_ModelInfo->pMesh != nullptr && m_ModelInfo->pBuffMat != nullptr)
 	{
 		//デバイスの取得
-		CRenderer* pRender = CManager::GetRenderer();
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
@@ -206,7 +206,7 @@ void CModel_Parts::Draw(D3DXCOLOR col)
 	if (m_ModelInfo->pMesh != nullptr && m_ModelInfo->pBuffMat != nullptr)
 	{
 		//デバイスの取得
-		CRenderer* pRender = CManager::GetRenderer();
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
@@ -284,7 +284,7 @@ void CModel_Parts::Draw(D3DXCOLOR col)
 CModel_Parts* CModel_Parts::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot,char* pModel_Path)
 {
 	CModel_Parts*pModelParts = new CModel_Parts;
-	CModel* pModel = CManager::GetModel();
+	CModel* pModel = CManager::GetInstance()->GetModel();
 	if (pModelParts == nullptr)
 	{
 		return nullptr;

@@ -70,13 +70,13 @@ void CTitle::Uninit()
 void CTitle::Update()
 {
     CObject::UpdateAll();
-    CInputKeyboard* pKeyboard = CManager::GetKeyboard();
-    CInputPad* pPad = CManager::GetPad();
+    CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+    CInputPad* pPad = CManager::GetInstance()->GetPad();
 
     //CFade*pFade= CFade::GetFade();
     if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
     {
-        CManager::m_pFade->SetFade(CScene::MODE::MODE_GAME);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_GAME);
     }
 }
 

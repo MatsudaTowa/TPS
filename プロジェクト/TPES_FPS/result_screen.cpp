@@ -81,7 +81,7 @@ void CResult_Screen::Draw()
 //=============================================
 CResult_Screen* CResult_Screen::Create(D3DXVECTOR3 pos)
 {
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	CResult_Screen* pResult_Screen = new CResult_Screen;
 
 	//null‚È‚çnull‚ð•Ô‚·

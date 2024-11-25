@@ -159,7 +159,7 @@ void CCharacter::Draw()
 void CCharacter::MotionDraw()
 {
 	//デバイスの取得
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	D3DMATERIAL9 matDef; //現在のマテリアルの保存
 	D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
@@ -209,7 +209,7 @@ void CCharacter::MotionDraw()
 void CCharacter::MotionDraw(D3DXCOLOR col)
 {
 	//デバイスの取得
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	D3DMATERIAL9 matDef; //現在のマテリアルの保存
 	D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス

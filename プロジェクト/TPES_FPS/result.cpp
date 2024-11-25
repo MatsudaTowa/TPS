@@ -68,8 +68,8 @@ void CResult::Uninit()
 //=============================================
 void CResult::Update()
 {
-    CInputKeyboard* pKeyboard = CManager::GetKeyboard();
-    CInputPad* pPad = CManager::GetPad();
+    CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+    CInputPad* pPad = CManager::GetInstance()->GetPad();
 
     if (m_pScore != nullptr)
     {
@@ -78,7 +78,7 @@ void CResult::Update()
 
     if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
     {
-        CManager::m_pFade->SetFade(CScene::MODE::MODE_TITLE);
+        CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
     }
 }
 

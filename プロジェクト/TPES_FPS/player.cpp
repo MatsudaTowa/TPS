@@ -71,7 +71,7 @@ CPlayer::~CPlayer()
 //=============================================
 HRESULT CPlayer::Init()
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 
@@ -88,7 +88,7 @@ HRESULT CPlayer::Init()
 //=============================================
 HRESULT CPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 {
-	CModel* pModel = CManager::GetModel();
+	CModel* pModel = CManager::GetInstance()->GetModel();
 
 	SetPos(pos); //pos設定
 	SetRot(rot); //rot設定
@@ -101,14 +101,14 @@ HRESULT CPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 
 	SetType(OBJECT_TYPE_PLAYER); //タイプ設定
 
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 	//移動量初期化
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//シーンのポインタ取得
-	CScene* pScene = CManager::GetScene();
+	CScene* pScene = CManager::GetInstance()->GetScene();
 
 	//CScene::MODE mode = pScene->GetSceneMode();
 
@@ -225,8 +225,8 @@ void CPlayer::Update()
 		}
 
 		//マウスの情報取得
-		CInputMouse* pMouse = CManager::GetMouse();
-		CInputPad* pPad = CManager::GetPad();
+		CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
+		CInputPad* pPad = CManager::GetInstance()->GetPad();
 
 		//どっち向いてるか取得
 		bool bWay = GetWay();
@@ -249,7 +249,7 @@ void CPlayer::Draw()
 //=============================================
 CPlayer* CPlayer::Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot, int nLife)
 {
-	CModel* pModel = CManager::GetModel();
+	CModel* pModel = CManager::GetInstance()->GetModel();
 
 	CPlayer* pPlayer = new CPlayer;
 
@@ -325,8 +325,8 @@ void CPlayer::ReSpawn()
 //=============================================
 void CPlayer::PlayerMove()
 {
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
-	CInputPad* pPad = CManager::GetPad();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+	CInputPad* pPad = CManager::GetInstance()->GetPad();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
 	//カメラタイプ取得
@@ -446,7 +446,7 @@ void CPlayer::PlayerMove()
 void CPlayer::DebugPos()
 {
 #ifdef _DEBUG
-	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 

@@ -90,8 +90,8 @@ void CGame::Uninit()
 //=============================================
 void CGame::Update()
 {
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
-	CInputMouse* pMouse = CManager::GetMouse();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
 	if (CEnemy::m_NumEnemy <= 0)
 	{//“G‚ª‚¢‚È‚­‚È‚Á‚½‚çƒEƒF[ƒu‘JˆÚ
@@ -146,7 +146,7 @@ void CGame::Update()
 	{
 		m_bEdit = m_bEdit ? false : true;
 
-		CCamera*pCamera = CManager::GetCamera();
+		CCamera*pCamera = CManager::GetInstance()->GetCamera();
 
 		pCamera->ResetCamera();
 	}
@@ -158,7 +158,7 @@ void CGame::Update()
 #ifdef _DEBUG
 	if (pKeyboard->GetTrigger(DIK_F7))
 	{
-		CManager::m_pFade->SetFade(CScene::MODE::MODE_TEST);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TEST);
 	}
 #endif // _DEBUG
 

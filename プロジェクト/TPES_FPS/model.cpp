@@ -68,7 +68,7 @@ int CModel::Regist(const char* pModel)
 		if (m_ModelInfo[nCnt].pBuffMat == nullptr
 			&& m_ModelInfo[nCnt].pMesh == nullptr)
 		{
-			LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+			LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 			//Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 			D3DXLoadMeshFromX(pModel,

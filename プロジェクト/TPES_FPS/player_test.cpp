@@ -85,7 +85,7 @@ HRESULT CPlayer_test::Init()
 
 	m_bRelorad = false;
 
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 	//移動量初期化
@@ -93,11 +93,11 @@ HRESULT CPlayer_test::Init()
 
 	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
 	{
-		CModel* pModel = CManager::GetModel();
+		CModel* pModel = CManager::GetInstance()->GetModel();
 	}
 
 	//カメラ情報取得
-	CCamera* pCamera = CManager::GetCamera();
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	//ムーブ値代入
 	SetMove(move);
@@ -184,7 +184,7 @@ void CPlayer_test::Update()
 		}
 
 		//カメラ情報取得
-		CCamera* pCamera = CManager::GetCamera();
+		CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 		if(m_Raticle != nullptr)
 		{
@@ -204,7 +204,7 @@ void CPlayer_test::Update()
 //=============================================
 void CPlayer_test::Draw()
 {
-	CInputMouse* pMouse = CManager::GetMouse();
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse() ;
 	pMouse->Debug();
 	//親クラスのモーション用の描画を呼ぶ
 	MotionDraw();
@@ -217,7 +217,7 @@ void CPlayer_test::Draw()
 //=============================================
 CPlayer_test* CPlayer_test::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 {
-	CModel* pModel = CManager::GetModel();
+	CModel* pModel = CManager::GetInstance()->GetModel();
 
 	CPlayer_test* pPlayer = new CPlayer_test;
 
@@ -254,7 +254,7 @@ void CPlayer_test::Damage(int nDamage)
 	{//HPが0以下だったら
 		//終了
 		Uninit();
-		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 	}
 }
 
@@ -277,9 +277,9 @@ void CPlayer_test::ReSpawn()
 //=============================================
 void CPlayer_test::Input()
 {
-	CInputMouse* pMouse = CManager::GetMouse();
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-	CCamera* pCamera = CManager::GetCamera();
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	if (pMouse->GetPress(1))
 	{//マウスが押されてる間は
@@ -311,7 +311,7 @@ void CPlayer_test::Input()
 		}
 	}
 
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))
 	{
@@ -328,7 +328,7 @@ void CPlayer_test::Input()
 //=============================================
 void CPlayer_test::ResetRot()
 {
-	float rotMoveY = CManager::GetCamera()->GetRot().y;
+	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y;
 
 	//親クラスからrotを取得
 	D3DXVECTOR3 rot = GetRot();
@@ -344,7 +344,7 @@ void CPlayer_test::ResetRot()
 void CPlayer_test::DebugPos()
 {
 #ifdef _DEBUG
-	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 

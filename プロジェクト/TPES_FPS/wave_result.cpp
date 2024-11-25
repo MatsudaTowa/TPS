@@ -61,7 +61,7 @@ void CWave_Result::Update()
 	{
 		m_pScreen->Update();
 	}
-	if (CManager::GetKeyboard()->GetTrigger(DIK_RETURN))
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_RETURN))
 	{
 		if (m_next != WAVE::NONE)
 		{
@@ -69,7 +69,7 @@ void CWave_Result::Update()
 		}
 		else
 		{
-			CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+			CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 		}
 	}
 	CWave::Update();

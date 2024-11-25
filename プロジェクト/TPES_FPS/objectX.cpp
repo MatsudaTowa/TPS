@@ -75,7 +75,7 @@ void CObjectX::Draw()
 	if (m_pMesh != nullptr && m_pBuffMat != nullptr)
 	{
 		//デバイスの取得
-		CRenderer* pRender = CManager::GetRenderer();
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
@@ -140,7 +140,7 @@ void CObjectX::Draw(D3DXCOLOR col)
 	if (m_pMesh != nullptr && m_pBuffMat != nullptr)
 	{
 		//デバイスの取得
-		CRenderer* pRender = CManager::GetRenderer();
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス

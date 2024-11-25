@@ -113,7 +113,7 @@ void CBossWandering::PickNextMovePoint(CMovePoint* pMovePoint)
 void CBossWandering::DrawDebug()
 {
 #ifdef _DEBUG
-	LPD3DXFONT pFont = CManager::GetRenderer()->GetFont();
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 

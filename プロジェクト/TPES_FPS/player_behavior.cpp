@@ -27,7 +27,7 @@ void CPlayerMove::Move(CCharacter* character)
 {
 	//移動の方向の単位ベクトル変数
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	if (pKeyboard->GetPress(DIK_W))
 	{
 		vecDirection.z += 1.0f;
@@ -45,7 +45,7 @@ void CPlayerMove::Move(CCharacter* character)
 		vecDirection.x += 1.0f;
 	}
 
-	float rotMoveY = CManager::GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
+	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
 	CPlayer_test::Motion_Type Motion;
 
@@ -111,9 +111,9 @@ CPlayerAttack::~CPlayerAttack()
 //=============================================
 void CPlayerAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
-	CInputMouse* pMouse = CManager::GetMouse();
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-	CCamera* pCamera = CManager::GetCamera();
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	CPlayer_test::Motion_Type Motion;
 	Motion = CPlayer_test::Motion_Type::MOTION_ATTACK;

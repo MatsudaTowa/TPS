@@ -73,7 +73,7 @@ void CNumber::Draw()
 //=============================================
 CNumber* CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
-	CTexture* pTexture = CManager::GetTexture();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	CNumber* pNumber = new CNumber;
 
 	// null‚È‚çnull‚ð•Ô‚·
@@ -107,7 +107,7 @@ void CNumber::SetNumber(float fNumPos1, float fNumPos2, D3DXCOLOR col)
 //=============================================
 void CNumber::NumberVtx()
 {
-	CRenderer* pRender = CManager::GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 

@@ -58,7 +58,7 @@ void CTest::Uninit()
 //=============================================
 void CTest::Update()
 {
-	CInputKeyboard* pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	//if (m_bEdit == false)
 	//{
@@ -66,7 +66,7 @@ void CTest::Update()
 
 	if (pKeyboard->GetTrigger(DIK_RETURN))
 	{
-		CManager::m_pFade->SetFade(CScene::MODE::MODE_RESULT);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 	}
 }
 
