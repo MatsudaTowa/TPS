@@ -129,7 +129,7 @@ void CBossWandering::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossChase::CBossChase()
+CBossChase::CBossChase():m_bTargetPlayer(false)
 {
 }
 
@@ -159,9 +159,9 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	const float threshold = 200.0f; // 距離が定数以下なら到達とする 遠距離武器だから近づきすぎないように調整
 
 	// レイキャストを実行し、障害物があるか判定
-	bool hitPlayer = PerformRaycast(boss->GetPos(), Vector, boss->FIND_PLAYER_DISTANCE);
+	m_bTargetPlayer = PerformRaycast(boss->GetPos(), Vector, boss->LOST_PLAYER_DISTANCE);
 
-	if (hitPlayer)
+	if (m_bTargetPlayer)
 	{
 		//プレイヤーに向かって動かす
 		MovetoPlayer(distance, threshold, Vector, boss);
@@ -227,7 +227,7 @@ bool CBossChase::PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& 
 				// バウンディングボックス取得
 				D3DXVECTOR3 boxMin = pBlock->GetMinPos();
 				D3DXVECTOR3 boxMax = pBlock->GetMaxPos();
-				// AABBとの衝突判定
+				// ブロックとの衝突判定
 				if (CManager::GetInstance()->GetColision()->CheckIntersectRay(startPos, direction, boxMin, boxMax))
 				{
 					// 障害物が間にある場合
@@ -238,6 +238,28 @@ bool CBossChase::PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& 
 	}
 	// 障害物がなく、プレイヤーまでレイが到達する場合
 	return true;
+}
+
+//=============================================
+//追跡のデバッグ表示
+//=============================================
+void CBossChase::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+	if (m_bTargetPlayer)
+	{
+		sprintf(&aStr[0], "\n\n\n\n対象:プレイヤー");
+	}
+	else if (!m_bTargetPlayer)
+	{
+		sprintf(&aStr[0], "\n\n\n\n対象:ブロック");
+	}
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }
 
 //=============================================
