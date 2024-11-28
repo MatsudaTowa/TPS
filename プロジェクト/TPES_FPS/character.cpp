@@ -96,6 +96,11 @@ void CCharacter::Uninit()
 //=============================================
 void CCharacter::Update()
 {
+	for (int nCnt = 0; nCnt < m_PartsCnt; nCnt++)
+	{
+		m_apModel[nCnt]->SetOldPos({ m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43 });
+	}
+
 	//重力処理
 	Gravity();
 
@@ -125,7 +130,7 @@ void CCharacter::Update()
 	}
 
 	//ブロックとの接触処理
-	HitBlock();
+	HitBlock(m_PartsCnt);
 
 	//床との接触処理
 	HitField();
@@ -622,12 +627,12 @@ void CCharacter::HitBlock()
 //=============================================
 void CCharacter::HitBlock(int NumParts)
 {
-	for (int nCnt = 0; nCnt < NumParts; ++nCnt)
+	for (int nPartsCnt = 0; nPartsCnt < NumParts; ++nPartsCnt)
 	{
-		D3DXVECTOR3 pos = {m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43};
-		D3DXVECTOR3 oldpos = m_apModel[nCnt]->GetOldPos();
-		D3DXVECTOR3 Minpos = m_apModel[nCnt]->GetMin();
-		D3DXVECTOR3 Maxpos = m_apModel[nCnt]->GetMax();
+		D3DXVECTOR3 pos = {m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43};
+		D3DXVECTOR3 oldpos = m_apModel[nPartsCnt]->GetOldPos();
+		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
 		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
@@ -644,10 +649,9 @@ void CCharacter::HitBlock(int NumParts)
 					CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 					//各軸の当たり判定
-					ColisionBlock_X(pos,oldpos, Minpos, Maxpos, pBlock);
-					ColisionBlock_Z(pos,oldpos, Minpos, Maxpos, pBlock);
-					ColisionBlock_Y(pos,oldpos, Minpos, Maxpos, pBlock);
-
+					ColisionBlock_X(pos, oldpos, Minpos, Maxpos, pBlock);
+					ColisionBlock_Z(pos, oldpos, Minpos, Maxpos, pBlock);
+					ColisionBlock_Y(pos, oldpos, Minpos, Maxpos, pBlock);
 				}
 			}
 		}
@@ -657,21 +661,22 @@ void CCharacter::HitBlock(int NumParts)
 //=============================================
 //ブロックとの接触判定_X
 //=============================================
-void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
 	//当たり判定チェック
 	CColision::COLISION Checkcolision_X = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 	if (Checkcolision_X == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
-		CharacterPos.x = CharacterOldPos.x;
+		CharacterPos.x = CharacterOldPos.x + pBlock->GetMinPos().x;
 		m_move.x = 0.0f;
+		SetPos({ m_oldpos.x,GetPos().y,GetPos().z });
 	}
 }
 
 //=============================================
 //ブロックとの接触判定_Y
 //=============================================
-void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
 	CColision::COLISION Checkcolision_Y = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
@@ -691,14 +696,15 @@ void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& Charact
 //=============================================
 //ブロックとの接触判定_Z
 //=============================================
-void CCharacter::ColisionBlock_Z(D3DXVECTOR3& CharacterPos, D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
 	CColision::COLISION Checkcolision_Z = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
 	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
 	{//z方向に当たってたら
-		CharacterPos.z = CharacterOldPos.z;
+		CharacterPos.z = CharacterOldPos.z + pBlock->GetMaxPos().x;
 		m_move.z = 0.0f;
+		SetPos({GetPos().x,GetPos().y,m_oldpos.z});
 	}
 }
 
