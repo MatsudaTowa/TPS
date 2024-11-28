@@ -155,7 +155,7 @@ public:
 
 	CMove*m_pMove;
 
-	CGunAttack*m_pAttack;
+	CGunAttack*m_pGunAttack;
 
 	//キャラクターのステートパターン
 	CCharacterState* m_pCharacterState;

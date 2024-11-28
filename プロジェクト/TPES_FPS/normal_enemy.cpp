@@ -16,9 +16,9 @@ CNormalEnemy::CNormalEnemy(int nPriority):CEnemy(nPriority)
 	{
 		m_pMove = new CNormalMove;
 	}
-	if (m_pAttack == nullptr)
+	if (m_pGunAttack == nullptr)
 	{
-		m_pAttack = new CNormalAttack;
+		m_pGunAttack = new CNormalAttack;
 	}
 }
 

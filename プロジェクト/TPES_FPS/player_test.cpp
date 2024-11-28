@@ -33,9 +33,9 @@ CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle()
 	{
 		m_pMove = new CPlayerMove;
 	}
-	if (m_pAttack == nullptr)
+	if (m_pGunAttack == nullptr)
 	{
-		m_pAttack = new CPlayerAttack;
+		m_pGunAttack = new CPlayerAttack;
 	}
 }
 

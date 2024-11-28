@@ -122,7 +122,7 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 
 	if (pMouse->GetPress(0))
 	{//ËŒ‚ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
-		if (character->m_pAttack != nullptr)
+		if (character->m_pGunAttack != nullptr)
 		{
 			character->m_pGun->m_nRateCnt++;
 			if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())

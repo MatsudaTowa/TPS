@@ -266,27 +266,27 @@ void CBossChase::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossAttack::CBossAttack()
+CBossGunAttack::CBossGunAttack()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CBossAttack::~CBossAttack()
+CBossGunAttack::~CBossGunAttack()
 {
 }
 
 //=============================================
 //攻撃
 //=============================================
-void CBossAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
 	CBossEnemy::Motion_Type Motion;
 	Motion = CBossEnemy::Motion_Type::MOTION_ATTACK;
 	//モーション代入
 	character->SetMotion(Motion);
-	if (character->m_pAttack != nullptr)
+	if (character->m_pGunAttack != nullptr)
 	{
 		character->m_pGun->m_nRateCnt++;
 		if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
@@ -302,12 +302,4 @@ void CBossAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULL
 			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
 		}
 	}
-}
-
-//=============================================
-//ボスのポインターを引数にしてオーバーロード
-//=============================================
-void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CBossEnemy* boss)
-{
-	CEnemyGunAttack::GunAttack(Allegiance, type, boss);
 }

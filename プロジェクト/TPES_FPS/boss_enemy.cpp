@@ -25,9 +25,9 @@ CBossEnemy::CBossEnemy(int nPriority)
 	{
 		m_pChase = new CBossChase;
 	}
-	if (m_pAttack == nullptr)
+	if (m_pGunAttack == nullptr)
 	{
-		m_pAttack = new CBossAttack;
+		m_pGunAttack = new CBossGunAttack;
 	}
 }
 
