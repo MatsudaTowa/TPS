@@ -143,6 +143,8 @@ void CPlayer_test::Update()
 		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
 	}
 	CCharacter::Update();
+	ColisionEnemy();
+
 
 	if (m_bRelorad == true)
 	{//リロード中だったら
@@ -196,6 +198,7 @@ void CPlayer_test::Update()
 
 		Motion(NUM_PARTS); //モーション処理
 	}
+
 	//CCharacter::HitBlock(NUM_PARTS);
 }
 
@@ -336,6 +339,92 @@ void CPlayer_test::ResetRot()
 	rot.y = rotMoveY + D3DX_PI;
 
 	SetRot(rot);
+}
+
+//=============================================
+//エネミーとの当たり判定
+//=============================================
+void CPlayer_test::ColisionEnemy()
+{
+	for (int nPartsCnt = 0; nPartsCnt < GetNumParts(); ++nPartsCnt)
+	{
+		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
+		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//オブジェクトに要素が入っていたら
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//ブロックとの当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+				{
+					//安全にダウンキャスト
+					CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
+
+					CheckColisionEnemy(pEnemy, nPartsCnt, pos, Minpos, Maxpos);
+				}
+			}
+		}
+	}
+	
+}
+
+void CPlayer_test::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+{
+	for (int nEnemyPartsCnt = 0; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)
+	{
+		D3DXVECTOR3 Enemypos = { pEnemy->m_apModel[nEnemyPartsCnt]->GetMtxWorld()._41,
+			pEnemy->m_apModel[nEnemyPartsCnt]->GetMtxWorld()._42,
+			pEnemy->m_apModel[nEnemyPartsCnt]->GetMtxWorld()._43 };
+
+		D3DXVECTOR3 EnemyMinpos = pEnemy->m_apModel[nEnemyPartsCnt]->GetMin();
+		D3DXVECTOR3 EnemyMaxpos = pEnemy->m_apModel[nEnemyPartsCnt]->GetMax();
+		CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColisionSphere(pos, Minpos, Maxpos,
+			Enemypos, EnemyMinpos, EnemyMaxpos);
+
+		if (colision == CColision::COLISION::COLISON_X)
+		{
+			// X軸衝突時の処理
+			SetPos({ GetOldPos().x, GetPos().y, GetPos().z });
+		}
+		if (colision == CColision::COLISION::COLISON_TOP_Y)
+		{
+			// X軸衝突時の処理
+			SetPos({ GetPos().x, GetOldPos().y, GetPos().z });
+		}
+		if (colision == CColision::COLISION::COLISON_Z)
+		{
+			// X軸衝突時の処理
+			SetPos({ GetPos().x, GetPos().y, GetOldPos().z });
+		}
+	}
+}
+
+//======================================================
+//絶対値でどちらの方向に大きく移動した計算
+//======================================================
+void CPlayer_test::CheckVec(D3DXVECTOR3& movementVec)
+{
+	if (fabs(movementVec.x) > fabs(movementVec.y) && fabs(movementVec.x) > fabs(movementVec.z))
+	{
+		// X軸衝突時の処理
+		SetPos({ GetOldPos().x, GetPos().y, GetPos().z });
+	}
+	else if (fabs(movementVec.y) > fabs(movementVec.x) && fabs(movementVec.y) > fabs(movementVec.z))
+	{
+		// Y軸衝突時の処理
+		SetPos({ GetPos().x, GetOldPos().y, GetPos().z });
+	}
+	else
+	{
+		// Z軸衝突時の処理
+		SetPos({ GetPos().x, GetPos().y, GetOldPos().z });
+	}
 }
 
 //=============================================

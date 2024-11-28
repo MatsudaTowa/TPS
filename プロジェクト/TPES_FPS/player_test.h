@@ -14,6 +14,7 @@
 #include"ammo_UI.h"
 #include"life_UI.h"
 #include "player_behavior.h"
+#include "enemy.h"
 
 //プレイヤークラス
 class CPlayer_test:public CCharacter
@@ -46,6 +47,12 @@ public:
 	void Damage(int nDamage); //当たり判定
 
 	void ResetRot(); //方向のリセット
+
+	void ColisionEnemy(); //敵との当たり判定
+
+	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
+
+	void CheckVec(D3DXVECTOR3& movementVec);
 
 private:
 

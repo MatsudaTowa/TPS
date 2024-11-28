@@ -21,7 +21,7 @@ public:
 		COLISON_Z, //X方向に当たってる
 		COLISON_UNDER_Y, //Y方向(下)に当たってる
 		COLISON_TOP_Y, //X方向(上)当たってる
-		COLISION_CIRCLE, //X方向(上)当たってる
+		COLISION_CIRCLE,
 	}COLISION;
 	CColision();
 	~CColision();
@@ -39,6 +39,8 @@ public:
 	COLISION CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 Bsize); //モデルとポリゴン当たり判定チェック関数
 	COLISION CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxPos,
 		D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //モデル同士当たり判定チェック関数
+
+	COLISION CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //モデル同士当たり判定チェック関数_球
 
 	COLISION CheckPolygonModelColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //アイテムとモデル当たり判定チェック関数_球
 	COLISION CheckPolygonModelColision_X(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //アイテムとモデル当たり判定チェック関数

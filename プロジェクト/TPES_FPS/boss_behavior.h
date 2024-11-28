@@ -52,7 +52,7 @@ private:
 };
 
 //=============================================
-//敵の攻撃のストラテジー
+//敵の銃の攻撃のストラテジー
 //=============================================
 class CBossGunAttack : public CEnemyGunAttack
 {
@@ -65,5 +65,18 @@ private:
 	static const int SHOT_STATE_FRAME = 180; //射撃フレーム
 
 	int m_nStateChangeCnt;//ステート変更カウント
+};
+
+//=============================================
+//突進攻撃のストラテジー
+//=============================================
+class CTackle
+{
+public:
+	CTackle();
+	~CTackle();
+	void Tackle(CBossEnemy* boss);
+private:
+	static const int TACKLE_DAMAGE = 30;
 };
 #endif // !_ENEMY_BEHAVIOR_

@@ -360,6 +360,47 @@ CColision::COLISION CColision::CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 }
 
 //=============================================
+//モデル球の当たり判定チェック関数
+//=============================================
+CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
+{
+	//距離を求める
+	D3DXVECTOR3 Length = Apos - Bpos;
+
+	float CenterDistance = sqrtf((Length.x * Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
+
+	//パーツの中心を求める
+	D3DXVECTOR3 originA = (AMaxpos - AMinpos) * 0.5f;
+
+	//パーツの中心を求める
+	D3DXVECTOR3 originB = (BMaxpos - BMinpos) * 0.5f;
+
+	float Radius = (originB.x + originA.x) + (originB.y + originA.y) + (originB.z + originA.z) * 0.5f;
+
+	if (CenterDistance <= Radius)
+	{
+		// 正規化（単位ベクトル化）
+		D3DXVECTOR3 normalizedVec = Length / CenterDistance;
+		if (fabs(normalizedVec.x) > fabs(normalizedVec.y) && fabs(normalizedVec.x) > fabs(normalizedVec.z)) 
+		{
+			return CColision::COLISION::COLISON_X;
+		}
+		else if (fabs(normalizedVec.y) > fabs(normalizedVec.x) && fabs(normalizedVec.y) > fabs(normalizedVec.z))
+		{
+			return CColision::COLISION::COLISON_TOP_Y;
+		}
+		else 
+		{
+			return CColision::COLISION::COLISON_Z;
+		}
+	}
+	else
+	{
+		return CColision::COLISION::COLISON_NONE;
+	}
+}
+
+//=============================================
 //ポリゴンとモデル当たり判定チェック関数
 //=============================================
 CColision::COLISION CColision::CheckPolygonModelColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)

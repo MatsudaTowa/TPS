@@ -278,7 +278,7 @@ CBossGunAttack::~CBossGunAttack()
 }
 
 //=============================================
-//攻撃
+//銃攻撃
 //=============================================
 void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
@@ -302,4 +302,26 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
 		}
 	}
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CTackle::CTackle()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CTackle::~CTackle()
+{
+}
+
+//=============================================
+//タックル攻撃
+//=============================================
+void CTackle::Tackle(CBossEnemy* boss)
+{
+	
 }
