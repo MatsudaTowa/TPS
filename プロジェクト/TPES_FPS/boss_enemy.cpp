@@ -29,6 +29,10 @@ CBossEnemy::CBossEnemy(int nPriority)
 	{
 		m_pGunAttack = new CBossGunAttack;
 	}
+	if (m_pTackle == nullptr)
+	{
+		m_pTackle = new CBossTackle;
+	}
 }
 
 //=============================================
@@ -48,6 +52,10 @@ CBossEnemy::~CBossEnemy()
 	{
 		delete m_pChase;
 	}
+	if (m_pTackle != nullptr)
+	{
+		delete m_pTackle;
+	}
 }
 
 //=============================================
@@ -57,7 +65,7 @@ HRESULT CBossEnemy::Init()
 {
 	if (m_pBossState == nullptr)
 	{
-		m_pBossState = new CChaseState;
+		m_pBossState = new CTackleState;
 	}
 	//銃初期化
 	if (m_pGun == nullptr)
@@ -92,6 +100,8 @@ void CBossEnemy::Update()
 
 	m_pBossState->Wandering(this);
 
+	m_pBossState->Tackle(this);
+
 	CEnemy::Update();
 
 	if (GetState() == CCharacter::CHARACTER_DAMAGE)
@@ -99,6 +109,7 @@ void CBossEnemy::Update()
 		ChangeState(new CChaseState);
 	}
 	Motion(NUM_PARTS); //モーション処理
+
 }
 
 //=============================================
@@ -122,5 +133,62 @@ void CBossEnemy::ChangeState(CBossState* state)
 	{
 		delete m_pBossState;
 		m_pBossState = state;
+	}
+}
+
+//=============================================
+//プレイヤーとの当たり判定
+//=============================================
+void CBossEnemy::ColisionPlayer()
+{
+	for (int nPartsCnt = 0; nPartsCnt < GetNumParts(); ++nPartsCnt)
+	{
+		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
+		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//オブジェクトに要素が入っていたら
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//ブロックとの当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+				{
+					//安全にダウンキャスト
+					CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+
+					CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
+				}
+			}
+		}
+	}
+}
+
+//=============================================
+//プレイヤーとの当たり判定
+//=============================================
+void CBossEnemy::CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+{
+	for (int nPartsCnt = 0; nPartsCnt < pPlayer->GetNumParts(); nPartsCnt++)
+	{
+		D3DXVECTOR3 playerpos = { pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._41,
+			pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._42,
+			pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+
+		D3DXVECTOR3 PlayerMinpos = pPlayer->m_apModel[nPartsCnt]->GetMin();
+		D3DXVECTOR3 PlayerMaxpos = pPlayer->m_apModel[nPartsCnt]->GetMax();
+		CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColisionSphere(pos, Minpos, Maxpos,
+			playerpos, PlayerMinpos, PlayerMaxpos);
+
+		if (colision == CColision::COLISION::COLISON_Z || colision == CColision::COLISION::COLISON_X)
+		{
+			// X軸衝突時の処理
+			pPlayer->SetMove({0.0f,20.0f,0.0f});
+			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
+		}
 	}
 }

@@ -389,7 +389,7 @@ CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3
 		}
 		else if (fabs(normalizedVec.y) > fabs(normalizedVec.x) && fabs(normalizedVec.y) > fabs(normalizedVec.z))
 		{
-			return CColision::COLISION::COLISON_TOP_Y;
+			return CColision::COLISION::COLISON_NONE;
 		}
 		else 
 		{

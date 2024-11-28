@@ -22,6 +22,13 @@ void CBossState::Wandering(CBossEnemy* boss)
 }
 
 //=============================================
+//ボスのタックル状態(基底では何もしない)
+//=============================================
+void CBossState::Tackle(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ボスのデバッグ情報
 //=============================================
 void CBossState::DrawDebug()
@@ -121,6 +128,33 @@ void CWanderingState::DrawDebug()
 	char aStr[256];
 
 	sprintf(&aStr[0], "\n\n徘徊");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
+}
+
+//=============================================
+//ボスのタックル処理
+//=============================================
+void CTackleState::Tackle(CBossEnemy* boss)
+{
+	if (boss->m_pTackle != nullptr)
+	{
+		boss->m_pTackle->Tackle(boss);
+	}
+}
+
+//=============================================
+//ボスのタックル状態デバッグ
+//=============================================
+void CTackleState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n突進");
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG

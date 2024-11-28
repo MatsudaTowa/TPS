@@ -23,6 +23,7 @@ class CBossState
 public:
 	virtual void Chase(CBossEnemy* boss);
 	virtual void Wandering(CBossEnemy* boss);
+	virtual void Tackle(CBossEnemy* boss);
 	virtual void DrawDebug();
 };
 
@@ -46,4 +47,13 @@ public:
 	virtual void DrawDebug()override;
 };
 
+//=============================================
+//エネミーのタックル状態
+//=============================================
+class CTackleState : public CBossState
+{
+public:
+	virtual void Tackle(CBossEnemy* boss)override;
+	virtual void DrawDebug()override;
+};
 #endif

@@ -307,21 +307,88 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 //=============================================
 //コンストラクタ
 //=============================================
-CTackle::CTackle()
+CBossTackle::CBossTackle():m_StayCnt(0), m_TackleCnt(0), m_isTackle(false)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CTackle::~CTackle()
+CBossTackle::~CBossTackle()
 {
 }
 
 //=============================================
 //タックル攻撃
 //=============================================
-void CTackle::Tackle(CBossEnemy* boss)
+void CBossTackle::Tackle(CBossEnemy* boss)
 {
-	
+	if (!m_isTackle)
+	{//タックルしてなかったら
+		LookAtPlayer(boss);
+		++m_StayCnt;
+	}
+
+	if (m_StayCnt > STAY_FLAME)
+	{//カウントが既定カウントに到達したら
+		m_isTackle = true;
+		m_StayCnt = 0;
+	}
+
+	if (m_isTackle)
+	{
+		++m_TackleCnt;
+		D3DXVECTOR3 move = boss->GetMove();
+
+		move.x += sinf(boss->GetRot().y) * boss->GetSpeed() * -10.0f;
+		move.z += cosf(boss->GetRot().y) * boss->GetSpeed() * -10.0f;
+
+		//移動量代入
+		boss->SetMove(move);
+
+		boss->ColisionPlayer();
+
+		if (m_TackleCnt > TACKLE_FLAME)
+		{
+			m_TackleCnt = 0;
+			m_isTackle =false;
+			boss->ChangeState(new CWanderingState);
+		}
+	}
+}
+
+//=============================================
+//プレイヤーのほうを向かせる
+//=============================================
+void CBossTackle::LookAtPlayer(CCharacter* character)
+{
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+
+				//プレイヤーとの距離算出
+				D3DXVECTOR3 Distance = pPlayer_test->GetPos() - character->GetPos();
+
+				//プレイヤーに向ける角度を算出
+				float fAngle = atan2f(Distance.x, Distance.z);
+
+				//親クラスからrotを取得
+				D3DXVECTOR3 rot = character->GetRot();
+
+				rot.y = fAngle + D3DX_PI;
+
+				character->SetRot(rot);
+			}
+		}
+	}
 }

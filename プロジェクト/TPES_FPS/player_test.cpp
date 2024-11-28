@@ -138,6 +138,9 @@ void CPlayer_test::Update()
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
+	//ダメージステートの切り替えTODO:これもステートパターンで
+	ChangeDamageState();
+
 	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
 	{
 		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
@@ -246,9 +249,18 @@ void CPlayer_test::Damage(int nDamage)
 	//体力取得
 	int nLife = GetLife();
 
-	if (nLife > 0)
-	{//HPが残ってたら
+	//状態を取得
+	CCharacter::CHARACTER_STATE state = GetState();
+
+	if (nLife > 0 && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	{//ダメージ状態以外でHPが残ってたら
 		nLife -= nDamage;
+
+		//ダメージ状態に変更
+		state = CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE;
+
+		//状態代入
+		SetState(state);
 
 		//体力代入
 		SetLife(nLife);
@@ -371,7 +383,35 @@ void CPlayer_test::ColisionEnemy()
 			}
 		}
 	}
-	
+}
+
+void CPlayer_test::ChangeDamageState()
+{
+	// 状態を取得
+	CCharacter::CHARACTER_STATE state = GetState();
+
+	if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	{
+		//状態のカウント数取得
+		int nStateCnt = GetStateCnt();
+
+		//ステート変更カウント進める
+		nStateCnt++;
+
+		if (nStateCnt >= 30)
+		{
+			//通常に戻す
+			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
+
+			//ステートカウントリセット
+			nStateCnt = 0;
+
+			//状態代入
+			SetState(state);
+		}
+		//ステートカウント代入
+		SetStateCnt(nStateCnt);
+	}
 }
 
 void CPlayer_test::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)

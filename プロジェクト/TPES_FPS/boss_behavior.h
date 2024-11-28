@@ -70,13 +70,20 @@ private:
 //=============================================
 //突進攻撃のストラテジー
 //=============================================
-class CTackle
+class CBossTackle
 {
 public:
-	CTackle();
-	~CTackle();
+	static const int TACKLE_DAMAGE = 30;
+
+	CBossTackle();
+	~CBossTackle();
 	void Tackle(CBossEnemy* boss);
 private:
-	static const int TACKLE_DAMAGE = 30;
+	static const int STAY_FLAME = 60; //突進までの待機時間
+	static const int TACKLE_FLAME = 150; //タックル時間
+	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
+	int m_StayCnt;
+	int m_TackleCnt;
+	bool m_isTackle;
 };
 #endif // !_ENEMY_BEHAVIOR_

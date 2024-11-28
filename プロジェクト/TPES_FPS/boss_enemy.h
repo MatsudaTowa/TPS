@@ -13,9 +13,11 @@
 #include "enemy_behavior.h"
 #include "boss_behavior.h"
 #include "boss_state.h"
+#include"player_test.h"
 
 class CBossChase;
 class CBossWandering;
+class CBossTackle;
 class CBossState;
 
 //ボスのエネミークラス
@@ -49,9 +51,15 @@ public:
 
 	void ChangeState(CBossState* state);
 
+	void ColisionPlayer(); //プレイヤーとの当たり判定
+
+	void CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
+
 	CBossChase* m_pChase; //追跡処理
 
 	CBossWandering* m_pWandering; //徘徊処理
+
+	CBossTackle* m_pTackle; //タックル処理
 private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
