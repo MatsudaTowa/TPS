@@ -168,7 +168,7 @@ void CAssultRifle::Uninit()
 }
 
 //弾のスピード
-const float CMiniGun::DEFAULT_MINIGUN_BULLET_SPEED = 70.0f;
+const float CMiniGun::DEFAULT_MINIGUN_BULLET_SPEED = 50.0f;
 //弾のサイズ
 const D3DXVECTOR3 CMiniGun::DEFAULT_MINIGUN_SIZE = { 1.0f,1.0f,1.0f };
 //=============================================
