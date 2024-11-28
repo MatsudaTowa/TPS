@@ -360,7 +360,7 @@ CColision::COLISION CColision::CheckColision_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 }
 
 //=============================================
-//モデル球の当たり判定チェック関数
+//モデル球の当たり判定チェック関数 TODO:ガバガバなので修正
 //=============================================
 CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxpos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
 {
@@ -381,6 +381,8 @@ CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3
 	{
 		// 正規化（単位ベクトル化）
 		D3DXVECTOR3 normalizedVec = Length / CenterDistance;
+
+		//絶対値で度の向きに当たったか取得
 		if (fabs(normalizedVec.x) > fabs(normalizedVec.y) && fabs(normalizedVec.x) > fabs(normalizedVec.z)) 
 		{
 			return CColision::COLISION::COLISON_X;

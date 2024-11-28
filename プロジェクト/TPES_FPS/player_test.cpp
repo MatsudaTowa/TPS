@@ -405,28 +405,6 @@ void CPlayer_test::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXV
 	}
 }
 
-//======================================================
-//絶対値でどちらの方向に大きく移動した計算
-//======================================================
-void CPlayer_test::CheckVec(D3DXVECTOR3& movementVec)
-{
-	if (fabs(movementVec.x) > fabs(movementVec.y) && fabs(movementVec.x) > fabs(movementVec.z))
-	{
-		// X軸衝突時の処理
-		SetPos({ GetOldPos().x, GetPos().y, GetPos().z });
-	}
-	else if (fabs(movementVec.y) > fabs(movementVec.x) && fabs(movementVec.y) > fabs(movementVec.z))
-	{
-		// Y軸衝突時の処理
-		SetPos({ GetPos().x, GetOldPos().y, GetPos().z });
-	}
-	else
-	{
-		// Z軸衝突時の処理
-		SetPos({ GetPos().x, GetPos().y, GetOldPos().z });
-	}
-}
-
 //=============================================
 //プレイヤーのデバッグ表示
 //=============================================

@@ -52,7 +52,6 @@ public:
 
 	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
 
-	void CheckVec(D3DXVECTOR3& movementVec);
 
 private:
 
