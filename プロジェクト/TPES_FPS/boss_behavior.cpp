@@ -281,7 +281,22 @@ CBossAttack::~CBossAttack()
 //=============================================
 void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
+	if (character->m_pAttack != nullptr)
+	{
+		character->m_pGun->m_nRateCnt++;
+		if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
+		{
+			character->m_pGun->m_nRateCnt = 0;
+			//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
+			D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41,
+				character->m_apModel[14]->GetMtxWorld()._42, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
 
+			D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
+				0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
+			//’e”­ŽË
+			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
+		}
+	}
 }
 
 //=============================================

@@ -52,6 +52,8 @@ void CChaseState::Chase(CBossEnemy* boss)
 			}
 		}
 	}
+	boss->m_pAttack->Attack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
+
 }
 
 //=============================================
