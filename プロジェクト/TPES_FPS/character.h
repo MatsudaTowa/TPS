@@ -21,7 +21,7 @@
 //前方宣言
 //=============================================
 class CMove;
-class CAttack;
+class CGunAttack;
 class CCharacterState;
 
 //プレイヤークラス
@@ -155,7 +155,7 @@ public:
 
 	CMove*m_pMove;
 
-	CAttack*m_pAttack;
+	CGunAttack*m_pAttack;
 
 	//キャラクターのステートパターン
 	CCharacterState* m_pCharacterState;

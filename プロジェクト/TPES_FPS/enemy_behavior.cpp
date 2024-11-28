@@ -69,21 +69,21 @@ void CEnemyMove::Move(CCharacter* character)
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyAttack::CEnemyAttack()
+CEnemyGunAttack::CEnemyGunAttack()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CEnemyAttack::~CEnemyAttack()
+CEnemyGunAttack::~CEnemyGunAttack()
 {
 }
 
 //=============================================
 //攻撃処理(エネミー)
 //=============================================
-void CEnemyAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
 	LookAtPlayer(character);
 	//TODO:銃のオフセットから
@@ -110,7 +110,7 @@ void CEnemyAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET
 //=============================================
 //プレイヤーのほうを向かせる
 //=============================================
-void CEnemyAttack::LookAtPlayer(CCharacter* character)
+void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 {
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{

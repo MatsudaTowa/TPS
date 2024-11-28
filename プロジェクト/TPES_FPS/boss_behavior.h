@@ -54,12 +54,12 @@ private:
 //=============================================
 //敵の攻撃のストラテジー
 //=============================================
-class CBossAttack : public CEnemyAttack
+class CBossAttack : public CEnemyGunAttack
 {
 public:
 	CBossAttack();
 	~CBossAttack() override;
-	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CBossEnemy* boss); //エネミーのポインタ
 private:
 	static const int SHOT_STATE_FRAME = 180; //射撃フレーム

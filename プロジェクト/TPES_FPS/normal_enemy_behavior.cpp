@@ -99,11 +99,11 @@ CNormalAttack::~CNormalAttack()
 //=============================================
 //çUåÇ
 //=============================================
-void CNormalAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CNormalAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
 	if (m_nStateChangeCnt < SHOT_STATE_FRAME)
 	{
-		CEnemyAttack::Attack(Allegiance,type,character);
+		CEnemyGunAttack::GunAttack(Allegiance,type,character);
 		++m_nStateChangeCnt;
 	}
 	if (m_nStateChangeCnt >= SHOT_STATE_FRAME)

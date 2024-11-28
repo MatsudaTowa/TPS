@@ -25,7 +25,7 @@ void CCharacterState::Move(CCharacter* character)
 //=============================================
 void CShotState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
-	character->m_pAttack->Attack(Allegiance,type,character);
+	character->m_pAttack->GunAttack(Allegiance,type,character);
 }
 
 //=============================================

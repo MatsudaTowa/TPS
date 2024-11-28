@@ -35,12 +35,12 @@ private:
 //=============================================
 //敵の攻撃のストラテジー
 //=============================================
-class CNormalAttack : public CEnemyAttack
+class CNormalAttack : public CEnemyGunAttack
 {
 public:
 	CNormalAttack();
 	~CNormalAttack() override;
-	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 private:
 	static const int SHOT_STATE_FRAME = 180; //射撃フレーム
 

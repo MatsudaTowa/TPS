@@ -109,7 +109,7 @@ CPlayerAttack::~CPlayerAttack()
 //=============================================
 //UŒ‚ˆ—(ƒvƒŒƒCƒ„[)
 //=============================================
-void CPlayerAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 

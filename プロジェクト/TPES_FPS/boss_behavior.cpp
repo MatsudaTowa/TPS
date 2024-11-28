@@ -280,7 +280,7 @@ CBossAttack::~CBossAttack()
 //=============================================
 //çUåÇ
 //=============================================
-void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CBossAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
 	CBossEnemy::Motion_Type Motion;
 	Motion = CBossEnemy::Motion_Type::MOTION_ATTACK;
@@ -309,5 +309,5 @@ void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_
 //=============================================
 void CBossAttack::Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CBossEnemy* boss)
 {
-	CEnemyAttack::Attack(Allegiance, type, boss);
+	CEnemyGunAttack::GunAttack(Allegiance, type, boss);
 }

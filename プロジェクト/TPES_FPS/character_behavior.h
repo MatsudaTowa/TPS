@@ -31,11 +31,11 @@ protected:
 //=============================================
 //攻撃ストラテジー
 //=============================================
-class CAttack
+class CGunAttack
 {
 public:
-	CAttack();
-	virtual ~CAttack();
-	virtual void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type,CCharacter* character) = 0;
+	CGunAttack();
+	virtual ~CGunAttack();
+	virtual void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type,CCharacter* character) = 0;
 };
 #endif

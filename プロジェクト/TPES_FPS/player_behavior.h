@@ -25,11 +25,11 @@ public:
 //=============================================
 //プレイヤーの攻撃のストラテジー
 //=============================================
-class CPlayerAttack : public CAttack
+class CPlayerAttack : public CGunAttack
 {
 public:
 	CPlayerAttack();
 	~CPlayerAttack() override;
-	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 };
 #endif // !_ENEMY_BEHAVIOR_

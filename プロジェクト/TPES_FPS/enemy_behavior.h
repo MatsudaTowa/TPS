@@ -31,12 +31,12 @@ private:
 //=============================================
 //敵の攻撃のストラテジー
 //=============================================
-class CEnemyAttack : public CAttack
+class CEnemyGunAttack : public CGunAttack
 {
 public:
-	CEnemyAttack();
-	~CEnemyAttack() override;
-	void Attack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	CEnemyGunAttack();
+	~CEnemyGunAttack() override;
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 
 private:
