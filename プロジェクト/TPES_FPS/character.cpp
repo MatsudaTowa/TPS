@@ -611,7 +611,7 @@ void CCharacter::HitBlock()
 				//安全にダウンキャスト
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-				//各軸の当たり判定
+				//各軸の当たり判定 TODO:判定のとり方無理やりすぎ
 				ColisionBlock_X(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
 				ColisionBlock_Z(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
 				ColisionBlock_Y(CharacterPos, m_oldpos, CharacterMin, CharacterMax, pBlock);
