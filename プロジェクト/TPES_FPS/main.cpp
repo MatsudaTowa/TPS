@@ -85,8 +85,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 	{//初期化失敗したとき
 		return -1;
 	}
-	// マウスカーソルの非表示
-	ShowCursor(FALSE);
 
 	timeBeginPeriod(1); //分解能を設定
 	dwCurrentTime = 0; //初期化

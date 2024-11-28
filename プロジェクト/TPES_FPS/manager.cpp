@@ -237,6 +237,7 @@ void CManager::Update()
 	{
 		m_pScene->Update();
 	}
+
 	CObject::UpdateAll();
 
 }
