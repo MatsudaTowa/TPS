@@ -8,7 +8,7 @@
 #include "boss_behavior.h"
 
 const float CBossEnemy::FIND_PLAYER_DISTANCE = 500.0f; //この値までだったら追いかける
-const float CBossEnemy::LOST_PLAYER_DISTANCE = 8.0f; //この値以上だったら見失う
+const float CBossEnemy::LOST_PLAYER_DISTANCE = 800.0f; //この値以上だったら見失う
 
 //=============================================
 //コンストラクタ
@@ -62,7 +62,7 @@ HRESULT CBossEnemy::Init()
 	//銃初期化
 	if (m_pGun == nullptr)
 	{
-		m_pGun = new CAssultRifle;
+		m_pGun = new CMiniGun;
 
 		m_pGun->Init();
 	}

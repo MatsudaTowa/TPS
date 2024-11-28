@@ -1,32 +1,32 @@
 //=============================================
 //
-//アサルト銃のストラテジーパターン[assault_behavior.h]
+//ミニガンのストラテジーパターン[minigun_behavior.h]
 //Auther Matsuda Towa
 //
 //=============================================
-#ifndef _ASSAULT_BEHAVIOR_
-#define _ASSAULT_BEHAVIOR_
+#ifndef _MINIGUN_BEHAVIOR_
+#define _MINIGUN_BEHAVIOR_
 #include "gun_behavior.h"
 #include "gun.h"
 
 //=============================================
-//アサルト弾発射ストラテジー
+//ミニガンの弾発射ストラテジー
 //=============================================
-class CAssaultShot : public CShot
+class CMiniGunShot : public CShot
 {
 public:
-	CAssaultShot();
-	~CAssaultShot() override;
+	CMiniGunShot();
+	~CMiniGunShot() override;
 };
 
 //=============================================
 //リロードストラテジー
 //=============================================
-class CAssaultReload : public CReload
+class CMiniGunReload : public CReload
 {
 public:
-	CAssaultReload();
-	~CAssaultReload() override;
+	CMiniGunReload();
+	~CMiniGunReload() override;
 	bool Reload(CGun* gun) override;
 private:
 };

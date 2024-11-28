@@ -1,56 +1,56 @@
 //=============================================
 //
-//アサルト銃のストラテジーパターン[assault_behavior.cpp]
+//ミニガンのストラテジーパターン[minigun_behavior.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "assault_behavior.h"
+#include "minigun_behavior.h"
 
 //=============================================
 //コンストラクタ
 //=============================================
-CAssaultShot::CAssaultShot()
+CMiniGunShot::CMiniGunShot()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CAssaultShot::~CAssaultShot()
+CMiniGunShot::~CMiniGunShot()
 {
 }
 
 //=============================================
 //コンストラクタ
 //=============================================
-CAssaultReload::CAssaultReload()
+CMiniGunReload::CMiniGunReload()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CAssaultReload::~CAssaultReload()
+CMiniGunReload::~CMiniGunReload()
 {
 }
 
 //=============================================
-//アサルトリロード処理
+//リロード
 //=============================================
-bool CAssaultReload::Reload(CGun* gun)
+bool CMiniGunReload::Reload(CGun* gun)
 {
 	bool bReload = true; //リロード中かどうか
 	int nCnt = GetReloadCnt();
-	
-	nCnt++;
 
-	if (nCnt >= CAssultRifle::DEFAULT_AR_RELOAD_FRAME)
+	++nCnt;
+
+	if (nCnt >= CMiniGun::DEFAULT_MINIGUN_RELOAD_FRAME)
 	{
 		nCnt = 0;
 		//現在の弾数取得
 		int nAmmo = gun->GetAmmo();
 		//デフォルトのマガジン弾数代入
-		nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
+		nAmmo = CMiniGun::DEFAULT_MINIGUN_MAG_SIZE;
 		gun->SetAmmo(nAmmo);
 		bReload = false;
 	}

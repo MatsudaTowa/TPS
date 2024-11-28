@@ -34,7 +34,7 @@ public:
 	virtual ~CGun();
 	virtual HRESULT Init() = 0;
 	virtual void Uninit() = 0;
-	virtual bool Reload() = 0;
+	virtual bool Reload();
 
 	//弾数設定
 	void SetAmmo(int Ammo)
@@ -106,7 +106,26 @@ public:
 	~CAssultRifle() override;
 	HRESULT Init() override;
 	void Uninit() override;
-	bool Reload() override;
+private:
+};
+
+//=============================================
+//ミニガンクラス
+//=============================================
+class CMiniGun :public CGun
+{
+public:
+	static const int DEFAULT_MINIGUN_MAG_SIZE = 120; //デフォルトのミニガンのマガジンサイズ
+	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 180; //デフォルトのミニガンのリロードフレーム数
+	static const int DEFAULT_MINIGUN_FIRE_RATE = 30; //デフォルトのミニガンの発射レート
+	static const int DEFAULT_MINIGUN_DAMAGE = 1; //デフォルトのミニガンのダメージ
+	static const float DEFAULT_MINIGUN_BULLET_SPEED; //デフォルトのミニガンの弾のスピード
+	static const D3DXVECTOR3 DEFAULT_MINIGUN_SIZE; //デフォルトのミニガンのサイズ
+
+	CMiniGun();
+	~CMiniGun() override;
+	HRESULT Init() override;
+	void Uninit() override;
 private:
 };
 #endif

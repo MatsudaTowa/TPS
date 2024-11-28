@@ -6,6 +6,7 @@
 //=============================================
 #include "gun.h"
 #include "assault_behavior.h"
+#include "minigun_behavior.h"
 //=============================================
 //コンストラクタ
 //=============================================
@@ -30,6 +31,19 @@ CGun::~CGun()
 		delete m_pReload;
 		m_pReload = nullptr;
 	}
+}
+
+//=============================================
+//リロード
+//=============================================
+bool CGun::Reload()
+{
+	bool bReload = true; //リロード中かどうか
+	if (m_pReload != nullptr)
+	{
+		bReload = m_pReload->Reload(this);
+	}
+	return bReload;
 }
 
 //=============================================
@@ -74,6 +88,7 @@ float& CGun::GetBulletSpeed()
 
 //弾のスピード
 const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 50.0f;
+//弾のサイズ
 const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {1.5f,1.5f,1.5f};
 
 //=============================================
@@ -116,24 +131,24 @@ HRESULT CAssultRifle::Init()
 	float fBulletSpeed = GetBulletSpeed();
 
 	//デフォルトのマガジン弾数代入
-	nAmmo = CAssultRifle::DEFAULT_AR_MAG_SIZE;
+	nAmmo = DEFAULT_AR_MAG_SIZE;
 	//初期レベル代入
 	nLv = 1;
 	//デフォルトのリロードフレーム代入
-	nReloadFrame = CAssultRifle::DEFAULT_AR_RELOAD_FRAME;
+	nReloadFrame = DEFAULT_AR_RELOAD_FRAME;
 	//デフォルトの発射レート代入
-	nFireRate = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+	nFireRate = DEFAULT_AR_FIRE_RATE;
 	//デフォルトの弾速代入
-	fBulletSpeed = CAssultRifle::DEFAULT_AR_BULLET_SPEED;
+	fBulletSpeed = DEFAULT_AR_BULLET_SPEED;
 
 	//押したらすぐ発射するため
-	m_nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+	m_nRateCnt = DEFAULT_AR_FIRE_RATE;
 
 	//ダメージの代入
-	m_nDamage = CAssultRifle::DEFAULT_AR_DAMAGE;
+	m_nDamage = DEFAULT_AR_DAMAGE;
 
 	//サイズの代入
-	m_Size = CAssultRifle::DEFAULT_AR_SIZE;
+	m_Size = DEFAULT_AR_SIZE;
 
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);
@@ -146,21 +161,87 @@ HRESULT CAssultRifle::Init()
 }
 
 //=============================================
-//更新
+//終了
 //=============================================
 void CAssultRifle::Uninit()
 {
 }
 
+//弾のスピード
+const float CMiniGun::DEFAULT_MINIGUN_BULLET_SPEED = 70.0f;
+//弾のサイズ
+const D3DXVECTOR3 CMiniGun::DEFAULT_MINIGUN_SIZE = { 1.0f,1.0f,1.0f };
 //=============================================
-//リロード処理
+//コンストラクタ
 //=============================================
-bool CAssultRifle::Reload()
+CMiniGun::CMiniGun()
 {
-	bool bReload = true; //リロード中かどうか
-	if (m_pReload != nullptr)
+	if (m_pShot == nullptr)
 	{
-		bReload = m_pReload->Reload(this);
+		m_pShot = new CMiniGunShot;
 	}
-	return bReload;
+	if (m_pReload == nullptr)
+	{
+		m_pReload = new CMiniGunReload;
+	}
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CMiniGun::~CMiniGun()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CMiniGun::Init()
+{
+	//現在の弾数取得
+	int nAmmo = GetAmmo();
+	//現在のレベル取得
+	int nLv = GetLv();
+	//現在のリロードフレーム取得
+	int nReloadFrame = GetReloadFrame();
+	//現在の発射レート取得
+	int nFireRate = GetFireRate();
+	//現在の弾速取得
+	float fBulletSpeed = GetBulletSpeed();
+
+	//デフォルトのマガジン弾数代入
+	nAmmo = DEFAULT_MINIGUN_MAG_SIZE;
+	//初期レベル代入
+	nLv = 1;
+	//デフォルトのリロードフレーム代入
+	nReloadFrame = DEFAULT_MINIGUN_RELOAD_FRAME;
+	//デフォルトの発射レート代入
+	nFireRate = DEFAULT_MINIGUN_FIRE_RATE;
+	//デフォルトの弾速代入
+	fBulletSpeed = DEFAULT_MINIGUN_BULLET_SPEED;
+
+	//押したらすぐ発射するため
+	m_nRateCnt = DEFAULT_MINIGUN_FIRE_RATE;
+
+	//ダメージの代入
+	m_nDamage = DEFAULT_MINIGUN_DAMAGE;
+
+	//サイズの代入
+	m_Size = DEFAULT_MINIGUN_SIZE;
+
+	//各メンバー変数に代入
+	SetAmmo(nAmmo);
+	SetLv(nLv);
+	SetReloadFrame(nReloadFrame);
+	SetFireRate(nFireRate);
+	SetBulletSpeed(fBulletSpeed);
+
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CMiniGun::Uninit()
+{
 }
