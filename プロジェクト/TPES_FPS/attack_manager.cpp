@@ -106,7 +106,6 @@ bool CAttack_Manager::HitEnemy()
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
 						pEnemy->Damage(m_nDamage);
-						int nCurrentLife = pEnemy->GetLife();
 						return true;
 					}
 				}
