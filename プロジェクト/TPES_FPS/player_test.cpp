@@ -12,6 +12,12 @@
 #include "camera.h"
 #include "game.h"
 
+//スポーン位置
+const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
+
+//スポーン方向
+const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
+
 //通常の移動速度
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 
@@ -150,7 +156,6 @@ void CPlayer_test::Update()
 	CCharacter::Update();
 	ColisionEnemy();
 
-
 	if (m_bRelorad == true)
 	{//リロード中だったら
 		m_bRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
@@ -177,7 +182,7 @@ void CPlayer_test::Update()
 			int nStateCnt = GetStateCnt();
 
 			//ステート変更カウント進める
-			nStateCnt++;
+			++nStateCnt;
 
 			//ステートカウント代入
 			SetStateCnt(nStateCnt);
@@ -269,9 +274,8 @@ void CPlayer_test::Damage(int nDamage)
 	}
 	if (nLife <= 0)
 	{//HPが0以下だったら
-		//終了
-		Uninit();
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
+		//リスポーン
+		ReSpawn();
 	}
 }
 
@@ -280,13 +284,13 @@ void CPlayer_test::Damage(int nDamage)
 //=============================================
 void CPlayer_test::ReSpawn()
 {
-	////自分自身のpos取得
-	//D3DXVECTOR3 PlayerPos = GetPos();
+	//自分自身のpos取得
+	D3DXVECTOR3 PlayerPos = GetPos();
 
-	//PlayerPos = D3DXVECTOR3(-450.0f, 0.5f, 0.0f);
-
-	////pos代入
-	//SetPos(PlayerPos);
+	//スポーン時の設定にもどす
+	SetPos(CPlayer_test::PLAYER_SPAWN_POS);
+	SetRot(CPlayer_test::PLAYER_SPAWN_ROT);
+	SetLife(CPlayer_test::PLAYER_LIFE);
 }
 
 //=============================================

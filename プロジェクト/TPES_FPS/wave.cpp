@@ -116,7 +116,7 @@ CWave* CWave::Create(WAVE wave)
 		{
 			m_pScore = new CGameScore;
 			//ÉvÉåÉCÉÑÅ[ê∂ê¨
-			CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
+			CPlayer_test* pPlayer_test = CPlayer_test::Create(CPlayer_test::PLAYER_SPAWN_POS, CPlayer_test::PLAYER_SPAWN_ROT, CPlayer_test::PLAYER_LIFE);
 		}
 		else if (wave == WAVE::RESULT)
 		{

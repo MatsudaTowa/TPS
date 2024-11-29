@@ -78,8 +78,6 @@ void CChaseState::Chase(CBossEnemy* boss)
 	if (boss->GetLife() < HP_LOW)
 	{//HPが低い状態だったら
 
-		boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
-
 		++m_PlayTackleCnt;
 
 		if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
@@ -89,11 +87,8 @@ void CChaseState::Chase(CBossEnemy* boss)
 			boss->ChangeState(new CTackleState);
 		}
 	}
-	else if (boss->GetLife() >= HP_LOW)
-	{
-		boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
-	}
 
+	boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
 }
 
 //=============================================
@@ -117,6 +112,10 @@ void CChaseState::DrawDebug()
 //=============================================
 void CWanderingState::Wandering(CBossEnemy* boss)
 {
+	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		boss->ChangeState(new CChaseState);
+	}
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
