@@ -29,7 +29,10 @@ public:
 	static CSmoke* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot,D3DXVECTOR3 size);
 
 private:
+	static const int SMOKE_LIFE = 600; //ÉXÉÇÅ[ÉNÇÃéùë±éûä‘
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
+	int m_nLife;
+	D3DXVECTOR3 m_move;
 };
 
 #endif

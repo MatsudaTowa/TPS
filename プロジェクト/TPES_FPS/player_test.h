@@ -76,5 +76,7 @@ private:
 	void DebugPos();
 
 	bool m_bRelorad; //リロードするかどうか
+
+	bool m_bSmoke; //スモークを使ったか
 };
 #endif

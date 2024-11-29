@@ -11,6 +11,7 @@
 #include "field.h"
 #include "camera.h"
 #include "game.h"
+#include "smoke_grenade.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
@@ -33,7 +34,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pMove == nullptr)
 	{
@@ -88,6 +89,8 @@ HRESULT CPlayer_test::Init()
 	}
 
 	m_Raticle = nullptr;
+
+	m_bSmoke = false;
 
 	m_bRelorad = false;
 
@@ -342,6 +345,17 @@ void CPlayer_test::Input()
 		{
 			//リロード
 			m_bRelorad = true;
+		}
+	}
+
+	if (!m_bSmoke)
+	{
+		if (pKeyboard->GetTrigger(DIK_Q))
+		{
+			m_bSmoke = true;
+			CSmokeGrenade::Create({ GetPos().x,GetPos().y + 50.0f,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -10.0f,
+					sinf(pCamera->GetRot().x + D3DX_PI) * 10.0f,
+					cosf(pCamera->GetRot().y + D3DX_PI) * -10.0f }, { 0.0f,0.0f,0.0f });
 		}
 	}
 }
