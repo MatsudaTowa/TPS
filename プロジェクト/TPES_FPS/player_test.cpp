@@ -99,6 +99,8 @@ HRESULT CPlayer_test::Init()
 	//カメラ情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
+	pCamera->SetRot({0.0f,0.0f,0.0f});
+
 	//ムーブ値代入
 	SetMove(move);
 

@@ -117,7 +117,6 @@ void CCamera::Update()
 		break;
 	case TYPE_THIRDVIEW:
 		ThirdViewCamera();
-		CameraTurn();
 		break;
 	case TYPE_DEBUG:
 		CameraTurn();
