@@ -33,8 +33,14 @@ public:
 class CChaseState : public CBossState
 {
 public:
+	CChaseState();
+	~CChaseState();
 	virtual void Chase(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
+private:
+	static const int HP_LOW = 20;
+	static const int PLAY_TACKLE_FLAME = 120; //タックルを実行するまでのフレーム
+	int m_PlayTackleCnt; //タックルまでの計測用
 };
 
 //=============================================

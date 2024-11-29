@@ -79,7 +79,7 @@ public:
 	~CBossTackle();
 	void Tackle(CBossEnemy* boss);
 private:
-	static const int STAY_FLAME = 60; //突進までの待機時間
+	static const int STAY_FLAME = 120; //突進までの待機時間
 	static const int TACKLE_FLAME = 150; //タックル時間
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 	int m_StayCnt;

@@ -65,7 +65,7 @@ HRESULT CBossEnemy::Init()
 {
 	if (m_pBossState == nullptr)
 	{
-		m_pBossState = new CTackleState;
+		m_pBossState = new CWanderingState;
 	}
 	//e‰Šú‰»
 	if (m_pGun == nullptr)

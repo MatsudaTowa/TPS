@@ -36,6 +36,20 @@ void CBossState::DrawDebug()
 }
 
 //=============================================
+//コンストラクタ
+//=============================================
+CChaseState::CChaseState() : m_PlayTackleCnt(0)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CChaseState::~CChaseState()
+{
+}
+
+//=============================================
 //ボスの追跡状態
 //=============================================
 void CChaseState::Chase(CBossEnemy* boss)
@@ -59,7 +73,26 @@ void CChaseState::Chase(CBossEnemy* boss)
 			}
 		}
 	}
-	boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
+
+	//TODO:ステートパターンで
+	if (boss->GetLife() < HP_LOW)
+	{//HPが低い状態だったら
+
+		boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
+
+		++m_PlayTackleCnt;
+
+		if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
+		{//タックル実行フレームに到達したら
+			m_PlayTackleCnt = 0;
+			//ステート切り替え
+			boss->ChangeState(new CTackleState);
+		}
+	}
+	else if (boss->GetLife() >= HP_LOW)
+	{
+		boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
+	}
 
 }
 
