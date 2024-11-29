@@ -291,6 +291,8 @@ void CPlayer_test::ReSpawn()
 	SetPos(CPlayer_test::PLAYER_SPAWN_POS);
 	SetRot(CPlayer_test::PLAYER_SPAWN_ROT);
 	SetLife(CPlayer_test::PLAYER_LIFE);
+	//TODO:キャラが違う場合は子クラスで実装
+	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
 }
 
 //=============================================
