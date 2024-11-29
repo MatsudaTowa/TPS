@@ -24,6 +24,7 @@ public:
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;
+	void ColisionRange();
 	void Draw()override;
 
 	//ƒXƒ‚[ƒNì¬
@@ -33,6 +34,8 @@ private:
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 	int m_nLife;
 	D3DXVECTOR3 m_move;
+	//TODO:‰½ŒÂoldì‚é‚Â‚à‚èOO
+	D3DXVECTOR3 m_oldpos;
 };
 
 #endif

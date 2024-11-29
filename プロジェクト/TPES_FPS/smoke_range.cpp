@@ -63,7 +63,9 @@ void CSmokeRange::Update()
 //=============================================
 void CSmokeRange::Draw()
 {
-	CObjectX::Draw(D3DXCOLOR(1.0f,1.0f,1.0f,0.8f),D3DXVECTOR3(1.0f,3.0f,1.0f));
+#ifdef _DEBUG
+	CObjectX::Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.8f), D3DXVECTOR3(1.0f, 3.0f, 1.0f));
+#endif // _DEBUG
 }
 
 //=============================================
@@ -85,6 +87,7 @@ CSmokeRange* CSmokeRange::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR3 
 	pSmokeRange->SetPos(pos);
 	pSmokeRange->SetRot(rot);
 	pSmokeRange->Init();
+	pSmokeRange->SetType(OBJECT_TYPE_SMOKE_RANGE);
 
 	return pSmokeRange;
 }

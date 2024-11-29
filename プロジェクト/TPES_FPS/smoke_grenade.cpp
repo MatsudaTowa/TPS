@@ -106,6 +106,7 @@ CSmokeGrenade* CSmokeGrenade::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECT
 	pSmokeGrenade->m_move = move;
 	pSmokeGrenade->SetRot(rot);
 	pSmokeGrenade->Init();
+	pSmokeGrenade->SetType(OBJECT_TYPE_SMOKE_GRENADE);
 
 	return pSmokeGrenade;
 }
