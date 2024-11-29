@@ -221,7 +221,7 @@ void CBossEnemy::DrawDebug()
 	default:
 		break;
 	}
-	sprintf(&aStr[0], "\n\n\n\n\n\n体力:%d",GetLife());
+	sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d 0キーでHP10に",GetLife());
 
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
