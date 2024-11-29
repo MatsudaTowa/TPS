@@ -114,6 +114,12 @@ public:
 		m_bLoopFinish = bFinish;
 	}
 
+	//当たり判定取得
+	void SetColision(CColision::COLISION colision)
+	{
+		m_Colision = colision;
+	}
+
 	//移動量取得
 	D3DXVECTOR3& GetMove();
 
@@ -145,6 +151,9 @@ public:
 
 	//ジャンプ回数取得
 	int& GetJumpCnt();
+
+	//当たり判定取得
+	CColision::COLISION& GetColision();
 
 	void ChangeState(CCharacterState* state);
 
@@ -190,6 +199,7 @@ private:
 	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
+	CColision::COLISION m_Colision; //当たり判定
 
 	//キー情報構造体
 	typedef struct

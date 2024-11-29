@@ -23,7 +23,7 @@ const float CCharacter::GRAVITY_MAX = 20.0f;
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),m_bLanding(false),m_bWay(false),m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_nLife(0)
 ,m_nStateCnt(0),m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
 m_PartsCnt(0), m_nMotionFrameCnt(0), m_nKeySetCnt(0), m_Motion(0), m_bLoopFinish(),m_Speed(), 
-m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pGunAttack(), m_pCharacterState(), m_nJumpCnt(0)
+m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pGunAttack(), m_pCharacterState(), m_nJumpCnt(0),m_Colision(CColision::COLISION::COLISON_NONE)
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
@@ -664,8 +664,8 @@ void CCharacter::HitBlock(int NumParts)
 void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
 	//当たり判定チェック
-	CColision::COLISION Checkcolision_X = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-	if (Checkcolision_X == CColision::COLISION::COLISON_X)
+	m_Colision = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	if (m_Colision == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
 		CharacterPos.x = CharacterOldPos.x + pBlock->GetMinPos().x;
 		m_move.x = 0.0f;
@@ -678,14 +678,14 @@ void CCharacter::ColisionBlock_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& C
 //=============================================
 void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
-	CColision::COLISION Checkcolision_Y = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	m_Colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
-	if (Checkcolision_Y == CColision::COLISION::COLISON_UNDER_Y)
+	if (m_Colision == CColision::COLISION::COLISON_UNDER_Y)
 	{//y(下)方向に当たってたら
 		CharacterPos.y = CharacterOldPos.y;
 	}
 
-	if (Checkcolision_Y == CColision::COLISION::COLISON_TOP_Y)
+	if (m_Colision == CColision::COLISION::COLISON_TOP_Y)
 	{//y(上)方向に当たってたら
 		CharacterPos.y = CharacterOldPos.y;
 		m_move.y = 0.0f;
@@ -698,9 +698,9 @@ void CCharacter::ColisionBlock_Y(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& C
 //=============================================
 void CCharacter::ColisionBlock_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
 {
-	CColision::COLISION Checkcolision_Z = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+	m_Colision = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 
-	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
+	if (m_Colision == CColision::COLISION::COLISON_Z)
 	{//z方向に当たってたら
 		CharacterPos.z = CharacterOldPos.z + pBlock->GetMaxPos().x;
 		m_move.z = 0.0f;
@@ -734,10 +734,10 @@ void CCharacter::HitField()
 			{
 				CField* pField = dynamic_cast<CField*>(pObj);
 
-				//当たり判定チェック
-				CColision::COLISION Checkcolision_Y = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
+				//床のみだけローカルで
+				CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
 
-				if (Checkcolision_Y == CColision::COLISION::COLISON_TOP_Y)
+				if (colision == CColision::COLISION::COLISON_TOP_Y)
 				{//y(上)方向に当たってたら
 					CharacterPos.y = m_oldpos.y;
 					m_move.y = 0.0f;
@@ -900,11 +900,13 @@ int& CCharacter::GetNumParts()
 	return m_PartsCnt;
 }
 
+//=============================================
+//スピード取得
+//=============================================
 float& CCharacter::GetSpeed()
 {
 	return m_Speed;	
 }
-
 
 //=============================================
 //状態取得
@@ -928,6 +930,14 @@ int& CCharacter::GetStateCnt()
 int& CCharacter::GetJumpCnt()
 {
 	return m_nJumpCnt;
+}
+
+//=============================================
+//当たり判定取得
+//=============================================
+CColision::COLISION& CCharacter::GetColision()
+{
+	return m_Colision;
 }
 
 //=============================================

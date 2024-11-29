@@ -95,14 +95,14 @@ void CBossEnemy::Uninit()
 //=============================================
 void CBossEnemy::Update()
 {
+	CEnemy::Update();
+
 	//TODO:無駄な処理多い気が...
 	m_pBossState->Chase(this);
 
 	m_pBossState->Wandering(this);
 
 	m_pBossState->Tackle(this);
-
-	CEnemy::Update();
 
 	if (GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
@@ -117,9 +117,8 @@ void CBossEnemy::Update()
 //=============================================
 void CBossEnemy::Draw()
 {
-	m_pWandering->DrawDebug();
-	m_pBossState->DrawDebug();
-	m_pChase->DrawDebug();
+	//デバッグ表示
+	DrawDebug();
 	CEnemy::Draw();
 }
 
@@ -169,7 +168,7 @@ void CBossEnemy::ColisionPlayer()
 }
 
 //=============================================
-//プレイヤーとの当たり判定
+//プレイヤーとの当たり判定チェック
 //=============================================
 void CBossEnemy::CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
@@ -191,4 +190,37 @@ void CBossEnemy::CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const
 			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
 		}
 	}
+}
+
+//=============================================
+//ボスのデバッグ表示
+//=============================================
+void CBossEnemy::DrawDebug()
+{
+#ifdef _DEBUG
+	m_pWandering->DrawDebug();
+	m_pBossState->DrawDebug();
+	m_pChase->DrawDebug();
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	switch (GetColision())
+	{
+	case CColision::COLISION::COLISON_X:
+		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:X");
+		break;
+	case CColision::COLISION::COLISON_Z:
+		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:Z");
+		break;
+	case CColision::COLISION::COLISON_NONE:
+		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:当たってない");
+		break;
+	default:
+		break;
+	}
+
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }

@@ -64,6 +64,8 @@ private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 
+	void DrawDebug();
+
 	Motion_Type m_Motion; //モーションの種類
 
 	//ボスのステートパターン

@@ -348,10 +348,13 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 		boss->ColisionPlayer();
 
-		if (m_TackleCnt > TACKLE_FLAME)
-		{
+		if (boss->GetColision() == CColision::COLISION::COLISON_X
+			|| boss->GetColision() == CColision::COLISION::COLISON_Z
+			|| boss->GetColision() == CColision::COLISION::COLISION_CIRCLE
+			|| m_TackleCnt > TACKLE_FLAME)
+		{//何かに当たるか終了フレームに到達したら
 			m_TackleCnt = 0;
-			m_isTackle =false;
+			m_isTackle = false;
 			boss->ChangeState(new CWanderingState);
 		}
 	}
