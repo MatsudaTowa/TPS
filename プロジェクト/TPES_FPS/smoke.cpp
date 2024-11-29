@@ -6,6 +6,9 @@
 //=============================================
 #include "smoke.h"
 #include "smoke_range.h"
+#include "manager.h"
+
+const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\steam.png";
 
 //=============================================
 //コンストラクタ
@@ -59,6 +62,7 @@ void CSmoke::Update()
 
 		SetPos(pos);
 
+		//TODO:当たり判定はcolisionにまとめろ
 		ColisionRange();
 	}
 	else
@@ -121,6 +125,10 @@ CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXV
 	pSmoke->SetSize(size);
 	pSmoke->Init();
 	pSmoke->SetType(OBJECT_TYPE_SMOKE);
+
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//pSmoke->BindTexture(pTexture->GetAddress(pTexture->Regist(&SMOKE_TEXTURE_NAME)));
+
 
 	return pSmoke;
 }

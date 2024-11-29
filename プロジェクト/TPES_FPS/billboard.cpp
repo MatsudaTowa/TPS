@@ -44,6 +44,11 @@ void CBillboard::Draw()
 
 	LPDIRECT3DTEXTURE9 pTexture = GetTexture(); //テクスチャ情報取得
 
+	//αテストを有効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 	//マトリックスの初期化
 	D3DXMatrixIdentity(&mtxWorld);
 
@@ -76,6 +81,10 @@ void CBillboard::Draw()
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
+	//αテストを無効に
+	//αブレンディングを元に戻す
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	SetMtxWorld(mtxWorld);
 }

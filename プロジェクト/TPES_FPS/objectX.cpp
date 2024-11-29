@@ -215,10 +215,10 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 		//マトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
 
-		//αテストを有効
-		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+		//αブレンディングを加算合成に設定
+		pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+		pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 		//スケールを反映
 		D3DXMatrixScaling(&mtxScale,scale.x,scale.y,scale.z);
