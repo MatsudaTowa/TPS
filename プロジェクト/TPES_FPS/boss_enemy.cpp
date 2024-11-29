@@ -97,6 +97,12 @@ void CBossEnemy::Update()
 {
 	CEnemy::Update();
 
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_0))
+	{
+		int nLife = 10;
+		SetLife(nLife);
+	}
+
 	//TODO:–³‘Ê‚Èˆ—‘½‚¢‹C‚ª...
 	m_pBossState->Chase(this);
 
