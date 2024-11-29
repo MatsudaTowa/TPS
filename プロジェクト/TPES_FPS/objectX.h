@@ -23,6 +23,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Draw(D3DXCOLOR col);
+	void Draw(D3DXCOLOR col,D3DXVECTOR3 scale);
 
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex);
 

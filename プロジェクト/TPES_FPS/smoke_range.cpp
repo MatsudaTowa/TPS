@@ -13,7 +13,7 @@ const char* CSmokeRange::MODEL_NAME = "data\\MODEL\\Container000.x";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmokeRange::CSmokeRange(int nPriority):CObjectX(nPriority)
+CSmokeRange::CSmokeRange(int nPriority):CObjectX(nPriority), m_nLife(0)
 {
 }
 
@@ -30,6 +30,7 @@ CSmokeRange::~CSmokeRange()
 HRESULT CSmokeRange::Init()
 {
 	CObjectX::Init();
+	m_nLife = CSmoke::SMOKE_LIFE;
 	return S_OK;
 }
 
@@ -47,6 +48,14 @@ void CSmokeRange::Uninit()
 void CSmokeRange::Update()
 {
 	CObjectX::Update();
+	if (m_nLife > 0)
+	{
+		--m_nLife;
+	}
+	else
+	{
+		Uninit();
+	}
 }
 
 //=============================================
@@ -54,7 +63,7 @@ void CSmokeRange::Update()
 //=============================================
 void CSmokeRange::Draw()
 {
-	CObjectX::Draw(D3DXCOLOR(1.0f,1.0f,1.0f,0.2f));
+	CObjectX::Draw(D3DXCOLOR(1.0f,1.0f,1.0f,0.8f),D3DXVECTOR3(1.0f,3.0f,1.0f));
 }
 
 //=============================================

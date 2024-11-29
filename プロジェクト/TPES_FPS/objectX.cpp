@@ -197,7 +197,78 @@ void CObjectX::Draw(D3DXCOLOR col)
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
+}
 
+//=============================================
+//描画(カラー,スケール変更)
+//=============================================
+void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
+{
+	if (m_pMesh != nullptr && m_pBuffMat != nullptr)
+	{
+		//デバイスの取得
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+		D3DMATERIAL9 matDef; //現在のマテリアルの保存
+		D3DXMATRIX mtxScale,mtxRot, mtxTrans; //計算用マトリックス
+
+		//マトリックスの初期化
+		D3DXMatrixIdentity(&m_mtxWorld);
+
+		//αテストを有効
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+		//スケールを反映
+		D3DXMatrixScaling(&mtxScale,scale.x,scale.y,scale.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+		//ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+		D3DXMATERIAL* pMat; //マテリアル
+
+		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
+		{
+			//今描画するマテリアル情報格納
+			D3DMATERIAL9 DrawMat = pMat[nCntMat].MatD3D;
+
+			DrawMat.Diffuse = col;
+
+			//マテリアルの設定
+			pDevice->SetMaterial(&DrawMat);
+
+			//テクスチャの設定
+			pDevice->SetTexture(0, m_pTexture[nCntMat]);
+
+			//パーツの設定
+			m_pMesh->DrawSubset(nCntMat);
+
+		}
+
+		//αテストを無効に
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+		//現在を取得
+		pDevice->GetMaterial(&matDef);
+
+		//保存してたマテリアルを戻す
+		pDevice->SetMaterial(&matDef);
+	}
 }
 
 //=============================================

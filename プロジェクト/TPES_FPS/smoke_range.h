@@ -29,6 +29,7 @@ public:
 
 private:
 	static const char* MODEL_NAME;	//ƒ‚ƒfƒ‹‚Ì–¼‘O
+	int m_nLife;
 };
 
 #endif
