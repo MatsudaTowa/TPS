@@ -79,7 +79,7 @@ void CSmoke::ColisionRange()
 	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 		 //タイプ取得
@@ -89,11 +89,20 @@ void CSmoke::ColisionRange()
 			{
 				CSmokeRange* pRange = dynamic_cast<CSmokeRange*>(pObj);
 
-				if (GetPos().x < pRange->GetMinPos().x)
+				if (GetPos().x - GetSize().x < pRange->GetPos().x + pRange->GetMinPos().x)
 				{
 					m_move.x += 0.01f;
 				}
-				if (GetPos().x > pRange->GetMaxPos().x)
+				else if (GetPos().x + GetSize().x > pRange->GetPos().x + pRange->GetMaxPos().x)
+				{
+					m_move.x -= 0.01f;
+				}
+
+				if (GetPos().z< pRange->GetPos().z + pRange->GetMinPos().z)
+				{
+					m_move.x += 0.01f;
+				}
+				else if (GetPos().z > pRange->GetPos().z + pRange->GetMaxPos().z)
 				{
 					m_move.x -= 0.01f;
 				}

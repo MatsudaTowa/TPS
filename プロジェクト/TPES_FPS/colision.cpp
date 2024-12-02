@@ -505,7 +505,7 @@ CColision::COLISION CColision::CheckPolygonFillColision(D3DXVECTOR3 Apos, D3DXVE
 //=============================================
 //レイとオブジェクトの当たり判定 TODO:理解しろ
 //=============================================
-bool CColision::CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3& rayDir, const D3DXVECTOR3& boxMin, const D3DXVECTOR3& boxMax)
+bool CColision::CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3& rayDir, const D3DXVECTOR3& boxMin, const D3DXVECTOR3& boxMax, float MaxDistance)
 {
 	// オブジェクトとの交差範囲を計算するための変数
 	float Cross_min = (boxMin.x - rayStart.x) / rayDir.x;
@@ -538,7 +538,7 @@ bool CColision::CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3
 		std::swap(Cross_z_min, Cross_z_max);  // 進行方向から見てminのほうがmaxよりデカかったら入れ替える
 	}
 	// x, y, z 軸全てで交差範囲が重なるかを確認
-	if ((Cross_min > Cross_z_max) || (Cross_z_min > Cross_max))
+	if ((Cross_min > Cross_z_max) || (Cross_z_min > Cross_max) || Cross_min > MaxDistance)
 	{
 		return false;
 	}

@@ -10,6 +10,7 @@
 #include "boss_enemy.h"
 #include "block.h"
 #include "object.h"
+#include "smoke_range.h"
 
 //=============================================
 //コンストラクタ
@@ -130,7 +131,7 @@ void CBossWandering::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossChase::CBossChase():m_bTargetPlayer(false)
+CBossChase::CBossChase():m_bTargetPlayer(true)
 {
 }
 
@@ -160,16 +161,17 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	const float threshold = 200.0f; // 距離が定数以下なら到達とする 遠距離武器だから近づきすぎないように調整
 
 	// レイキャストを実行し、障害物があるか判定
-	m_bTargetPlayer = PerformRaycast(boss->GetPos(), Vector, boss->LOST_PLAYER_DISTANCE);
-
-	if (m_bTargetPlayer)
+	if (!PerformRaycast_Block(Vector,boss)
+	|| !PerformRaycast_Smoke(Vector, boss))
 	{
-		//プレイヤーに向かって動かす
-		MovetoPlayer(distance, threshold, Vector, boss);
+		m_bTargetPlayer = false;
+		boss->ChangeState(new CWanderingState);
 	}
 	else
 	{
-		boss->ChangeState(new CWanderingState);
+		m_bTargetPlayer = true;
+		//プレイヤーに向かって動かす
+		MovetoPlayer(distance, threshold, Vector, boss);
 	}
 }
 
@@ -207,10 +209,10 @@ void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR
 //=============================================
 //障害物があるか判定
 //=============================================
-bool CBossChase::PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction, float maxDistance)
+bool CBossChase::PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss)
 {
-	// レイの終点を計算
-	D3DXVECTOR3 endPos = startPos + direction * maxDistance;
+	BOOL Hit = false;
+	float distance;
 
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++) 
 	{
@@ -225,11 +227,51 @@ bool CBossChase::PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& 
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
 			{
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
-				// バウンディングボックス取得
-				D3DXVECTOR3 boxMin = pBlock->GetMinPos();
-				D3DXVECTOR3 boxMax = pBlock->GetMaxPos();
-				// ブロックとの衝突判定
-				if (CManager::GetInstance()->GetColision()->CheckIntersectRay(startPos, direction, boxMin, boxMax))
+
+				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+				D3DXVECTOR3 StartRay = { boss->GetPos().x - pBlock->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pBlock->GetPos().z };
+				D3DXIntersect(pBlock->GetpMesh(), &StartRay,&vector,&Hit,NULL,NULL,NULL,&distance,NULL,NULL);
+
+				if (Hit == true)
+				{
+					// 障害物が間にある場合
+					return false;
+					
+				}
+			}
+		}
+	}
+	// 障害物がなく、プレイヤーまでレイが到達する場合
+	return true;
+}
+
+//=============================================
+//障害物があるか判定
+//=============================================
+bool CBossChase::PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss)
+{
+	BOOL Hit;
+	float distance;
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
+			{
+				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
+				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+				D3DXVECTOR3 StartRay = {boss->GetPos().x - pSmoke->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pSmoke->GetPos().z };
+				
+				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
+
+				if (Hit == true)
 				{
 					// 障害物が間にある場合
 					return false;
@@ -256,7 +298,7 @@ void CBossChase::DrawDebug()
 	}
 	else if (!m_bTargetPlayer)
 	{
-		sprintf(&aStr[0], "\n\n\n\n対象:ブロック");
+		sprintf(&aStr[0], "\n\n\n\n対象:プレイヤー以外");
 	}
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));

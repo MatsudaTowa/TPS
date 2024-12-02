@@ -47,6 +47,6 @@ public:
 	COLISION CheckPolygonModelColision_Z(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //アイテムとモデル当たり判定チェック関数
 	COLISION CheckPolygonFillColision(D3DXVECTOR3 Apos, D3DXVECTOR3 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos); //アイテムとモデル当たり判定(埋まってるか)チェック関数
 
-	bool CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3& rayDir, const D3DXVECTOR3& boxMin, const D3DXVECTOR3& boxMax); //レイとオブジェクト間の当たり判定 TODO:理解しろ！
+	bool CheckIntersectRay(const D3DXVECTOR3& rayStart, const D3DXVECTOR3& rayDir, const D3DXVECTOR3& boxMin, const D3DXVECTOR3& boxMax,float Distance); //レイとオブジェクト間の当たり判定 TODO:理解しろ！
 };
 #endif

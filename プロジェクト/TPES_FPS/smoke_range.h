@@ -15,9 +15,9 @@
 class CSmokeRange : public CObjectX
 {
 public:
-	static const int SMOKE_PRIORITY = 24; //ï`âÊèá
+	static const int SMOKE_RANGE_PRIORITY = 15; //ï`âÊèá
 
-	CSmokeRange(int nPriority = SMOKE_PRIORITY);
+	CSmokeRange(int nPriority = SMOKE_RANGE_PRIORITY);
 	~CSmokeRange()override;
 	HRESULT Init()override;
 	void Uninit()override;

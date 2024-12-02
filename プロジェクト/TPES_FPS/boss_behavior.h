@@ -45,7 +45,10 @@ public:
 	~CBossChase();
 	void Chase(CBossEnemy* boss, CObject* obj);
 	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
-	bool PerformRaycast(const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction, float maxDistance);
+	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
+	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
+	bool ColisionBlock(int nCnt, const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction);
+	bool ColisionSmoke(int nCnt, const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction);
 	void DrawDebug();
 private:
 	bool m_bTargetPlayer; 
