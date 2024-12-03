@@ -29,7 +29,7 @@ public:
 
 private:
 	static const char* MODEL_NAME;	//モデルの名前
-	static const int CREATE_SMOKE_NUM = 50; //生成するスモークの数
+	static const int CREATE_SMOKE_NUM = 100; //生成するスモークの数
 	void HitField();
 	D3DXVECTOR3 m_oldpos;
 	D3DXVECTOR3 m_move;

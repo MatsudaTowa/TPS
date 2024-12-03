@@ -64,7 +64,7 @@ void CSmokeRange::Update()
 void CSmokeRange::Draw()
 {
 #ifdef _DEBUG
-	CObjectX::Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.8f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	//CObjectX::Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.8f), D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 
 #endif // _DEBUG
 

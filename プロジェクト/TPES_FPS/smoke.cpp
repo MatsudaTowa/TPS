@@ -8,7 +8,7 @@
 #include "smoke_range.h"
 #include "manager.h"
 
-const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\steam.png";
+const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\effect000.jpg";
 
 //=============================================
 //コンストラクタ
@@ -100,11 +100,20 @@ void CSmoke::ColisionRange()
 
 				if (GetPos().z< pRange->GetPos().z + pRange->GetMinPos().z)
 				{
-					m_move.x += 0.01f;
+					m_move.z += 0.01f;
 				}
 				else if (GetPos().z > pRange->GetPos().z + pRange->GetMaxPos().z)
 				{
-					m_move.x -= 0.01f;
+					m_move.z -= 0.01f;
+				}
+
+				if (GetPos().y < pRange->GetPos().y + pRange->GetMinPos().y)
+				{
+					m_move.y += 0.01f;
+				}
+				else if (GetPos().y > pRange->GetPos().y + pRange->GetMaxPos().y)
+				{
+					m_move.y -= 0.01f;
 				}
 			}
 		}
@@ -116,7 +125,29 @@ void CSmoke::ColisionRange()
 //=============================================
 void CSmoke::Draw()
 {
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+	//zの比較方法変更
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	//zバッファに書き込まない
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//αブレンディングを加算合成に設定
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+
+	//ビルボードの描画処理
 	CBillboard::Draw();
+
+	//zの比較方法変更
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+	//zバッファに書き込まない
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//αブレンディングを元に戻す
+	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 //=============================================
@@ -136,7 +167,7 @@ CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXV
 	pSmoke->SetType(OBJECT_TYPE_SMOKE);
 
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-	//pSmoke->BindTexture(pTexture->GetAddress(pTexture->Regist(&SMOKE_TEXTURE_NAME)));
+	pSmoke->BindTexture(pTexture->GetAddress(pTexture->Regist(&SMOKE_TEXTURE_NAME)));
 
 
 	return pSmoke;
