@@ -62,7 +62,7 @@ public:
 	~CBossConfusion();
 	void Confusion(CBossEnemy* boss, float StartRot_y);
 	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
-	void ParformRaycast_Player(CBossEnemy* boss, D3DXVECTOR3& vec);
+	bool PerformRaycast_Player(D3DXVECTOR3 vector,CBossEnemy* boss);
 	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
 	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
 private:
@@ -70,7 +70,6 @@ private:
 	static constexpr int NUM_TURN = 2; //見渡す回数
 	int m_TurnCnt; //何回見渡したか
 	bool m_isRight; //見渡す(true:右 false:左)
-	BOOL m_isFindPlayer; //プレイヤーを見つけたか
 };
 
 //=============================================

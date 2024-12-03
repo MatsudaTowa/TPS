@@ -306,7 +306,7 @@ void CBossChase::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossConfusion::CBossConfusion():m_isFindPlayer(false), m_isRight(false), m_TurnCnt(0)
+CBossConfusion::CBossConfusion(): m_isRight(false), m_TurnCnt(0)
 {
 }
 
@@ -335,10 +335,8 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 	D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI)};
 
 	D3DXVec3Normalize(&vec, &vec);
-	
-	ParformRaycast_Player(boss, vec);
 
-	if (m_isFindPlayer && (PerformRaycast_Block(vec,boss) && PerformRaycast_Smoke(vec, boss)))
+	if (PerformRaycast_Player(vec, boss) && (!PerformRaycast_Block(vec,boss) && !PerformRaycast_Smoke(vec, boss)))
 	{//見つけたら
 		boss->ChangeState(new CChaseState);
 	}
@@ -380,8 +378,9 @@ void CBossConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* b
 //=============================================
 //プレイヤーとレイが当たるのかチェック
 //=============================================
-void CBossConfusion::ParformRaycast_Player(CBossEnemy* boss, D3DXVECTOR3& vec)
+bool CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CBossEnemy* boss)
 {
+	BOOL Hit = false;
 	float distance;
 
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
@@ -403,11 +402,16 @@ void CBossConfusion::ParformRaycast_Player(CBossEnemy* boss, D3DXVECTOR3& vec)
 				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vec, &m_isFindPlayer, NULL, NULL, NULL, &distance, NULL, NULL);
+					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
+					if (Hit == true)
+					{
+						return true;
+					}
 				}
 			}
 		}
 	}
+	return false;
 }
 
 //=============================================
@@ -435,17 +439,14 @@ bool CBossConfusion::PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss)
 				//レイを原点からの差分から飛ばす
 				D3DXVECTOR3 StartRay = boss->GetPos() - pBlock->GetPos();
 				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-
 				if (Hit == true)
 				{
-					// 障害物が間にある場合
-					return false;
+					return true;
 				}
 			}
 		}
 	}
-	// 障害物がなく、プレイヤーまでレイが到達する場合
-	return true;
+	return false;
 }
 
 //=============================================
@@ -473,17 +474,14 @@ bool CBossConfusion::PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss)
 				D3DXVECTOR3 StartRay = { boss->GetPos().x - pSmoke->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pSmoke->GetPos().z };
 
 				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-
 				if (Hit == true)
 				{
-					// 障害物が間にある場合
-					return false;
+					return true;
 				}
 			}
 		}
 	}
-	// 障害物がなく、プレイヤーまでレイが到達する場合
-	return true;
+	return false;
 }
 
 //=============================================
