@@ -162,7 +162,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 
 	D3DXVec3Normalize(&Vector, &Vector);
 
-	// レイキャストを実行し、障害物があるか判定
+	// レイキャストを実行し、障害物があるか判定TODO:いったんブロックは除外
 	if (!PerformRaycast_Smoke(Vector, boss))
 	{
 		m_bTargetPlayer = false;
