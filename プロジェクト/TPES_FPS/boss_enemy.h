@@ -17,6 +17,7 @@
 
 class CBossChase;
 class CBossWandering;
+class CBossConfusion;
 class CBossTackle;
 class CBossState;
 
@@ -58,6 +59,8 @@ public:
 	CBossChase* m_pChase; //’ÇÕˆ—
 
 	CBossWandering* m_pWandering; //œpœjˆ—
+
+	CBossConfusion* m_pConfusion; //¬—
 
 	CBossTackle* m_pTackle; //ƒ^ƒbƒNƒ‹ˆ—
 private:

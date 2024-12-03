@@ -25,6 +25,10 @@ CBossEnemy::CBossEnemy(int nPriority)
 	{
 		m_pChase = new CBossChase;
 	}
+	if (m_pConfusion == nullptr)
+	{
+		m_pConfusion = new CBossConfusion;
+	}
 	if (m_pGunAttack == nullptr)
 	{
 		m_pGunAttack = new CBossGunAttack;
@@ -51,6 +55,10 @@ CBossEnemy::~CBossEnemy()
 	if (m_pChase != nullptr)
 	{
 		delete m_pChase;
+	}
+	if (m_pConfusion != nullptr)
+	{
+		delete m_pConfusion;
 	}
 	if (m_pTackle != nullptr)
 	{
@@ -108,6 +116,8 @@ void CBossEnemy::Update()
 
 	m_pBossState->Wandering(this);
 
+	m_pBossState->Confusion(this);
+
 	m_pBossState->Tackle(this);
 
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
@@ -134,6 +144,7 @@ void CBossEnemy::ChangeState(CBossState* state)
 	{
 		delete m_pBossState;
 		m_pBossState = state;
+		m_pBossState->Start(this);
 	}
 }
 

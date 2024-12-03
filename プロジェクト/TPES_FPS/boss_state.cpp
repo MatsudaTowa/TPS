@@ -8,6 +8,13 @@
 #include "player_test.h"
 
 //=============================================
+//最初の呼ばれる関数
+//=============================================
+void CBossState::Start(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ボスの追跡状態(基底では何もしない)
 //=============================================
 void CBossState::Chase(CBossEnemy* boss)
@@ -18,6 +25,13 @@ void CBossState::Chase(CBossEnemy* boss)
 //ボスの徘徊状態(基底では何もしない)
 //=============================================
 void CBossState::Wandering(CBossEnemy* boss)
+{
+}
+
+//=============================================
+//ボスの混乱状態(基底では何もしない)
+//=============================================
+void CBossState::Confusion(CBossEnemy* boss)
 {
 }
 
@@ -187,6 +201,53 @@ void CTackleState::DrawDebug()
 	char aStr[256];
 
 	sprintf(&aStr[0], "\n\n突進");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
+}
+
+//=============================================
+//最初に呼ばれる関数
+//=============================================
+void CConfusionState::Start(CBossEnemy* boss)
+{
+	m_StartRot = boss->GetRot().y;
+	if (m_StartRot < D3DX_PI * 0.5f && m_StartRot > -D3DX_PI * 0.5f)
+	{
+		m_isRight = false;
+	}
+	else if (m_StartRot > D3DX_PI * 0.5f && m_StartRot < -D3DX_PI * 0.5f)
+	{
+		m_isRight = true;
+	}
+}
+
+//=============================================
+//ボスの混乱処理
+//=============================================
+void CConfusionState::Confusion(CBossEnemy* boss)
+{
+	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		boss->ChangeState(new CChaseState);
+	}
+	if (boss->m_pConfusion != nullptr)
+	{
+		boss->m_pConfusion->Confusion(boss, m_StartRot);
+	}
+}
+
+//=============================================
+//ボスの混乱状態デバッグ
+//=============================================
+void CConfusionState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n混乱");
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG

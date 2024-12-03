@@ -47,11 +47,30 @@ public:
 	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
 	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
 	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
-	bool ColisionBlock(int nCnt, const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction);
-	bool ColisionSmoke(int nCnt, const D3DXVECTOR3& startPos, const D3DXVECTOR3& direction);
 	void DrawDebug();
 private:
-	bool m_bTargetPlayer; 
+	BOOL m_bTargetPlayer;
+};
+
+//=============================================
+//混乱のストラテジー
+//=============================================
+class CBossConfusion
+{
+public:
+	CBossConfusion();
+	~CBossConfusion();
+	void Confusion(CBossEnemy* boss, float StartRot_y);
+	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
+	void ParformRaycast_Player(CBossEnemy* boss, D3DXVECTOR3& vec);
+	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
+	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
+private:
+	static constexpr float LOOK_RANGE = 1.57f; //見渡す範囲
+	static constexpr int NUM_TURN = 2; //見渡す回数
+	int m_TurnCnt; //何回見渡したか
+	bool m_isRight; //見渡す(true:右 false:左)
+	BOOL m_isFindPlayer; //プレイヤーを見つけたか
 };
 
 //=============================================
