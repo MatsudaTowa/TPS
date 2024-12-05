@@ -9,6 +9,7 @@
 #include "player.h"
 #include "field.h"
 #include "colision.h"
+#include "smoke_range.h"
 
 //ボス戦のX座標
 const float CCharacter::BOSS_FIELD_X = 600.0f;
@@ -814,6 +815,85 @@ void CCharacter::HitWall()
 		}
 	}
 	SetPos(CharacterPos);
+}
+
+//=============================================
+//レイがスモークと当たるかチェック
+//=============================================
+CCharacter::RayHitInfo CCharacter::PerformRaycast_Smoke(D3DXVECTOR3 vector, CCharacter* character)
+{
+	RayHitInfo Info; //ヒット情報を返す変数
+
+	//初期化
+	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
+	Info.hit = false; //当たっていない状態に
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
+			{
+				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
+				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pSmoke->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pSmoke->GetPos().z };
+
+				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+
+				if (Info.hit == true)
+				{
+					// 障害物が間にある場合
+					return Info;
+				}
+			}
+		}
+	}
+	// 障害物がなく、プレイヤーまでレイが到達する場合
+	return Info;
+}
+
+//=============================================
+//レイがブロックと当たるかチェック
+//=============================================
+CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCharacter* character)
+{
+	RayHitInfo Info; //ヒット情報を返す変数
+	
+	//初期化
+	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
+	Info.hit = false; //当たっていない状態に
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+			{
+				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+				//レイを原点からの差分から飛ばす
+				D3DXVECTOR3 StartRay = character->GetPos() - pBlock->GetPos();
+				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+				if (Info.hit == true)
+				{
+					return Info;
+				}
+			}
+		}
+	}
+	return Info;
 }
 
 //=============================================

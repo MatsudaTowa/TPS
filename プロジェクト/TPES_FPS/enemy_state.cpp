@@ -9,13 +9,20 @@
 //=============================================
 //エネミーの移動
 //=============================================
-void CEnemyState::Move(CEnemy* enemy)
+void CEnemyState::Move(CCharacter* character)
+{
+}
+
+//=============================================
+//エネミーの混乱状態
+//=============================================
+void CEnemyState::Wandering(CEnemy* enemy)
 {
 }
 //=============================================
 //エネミーの移動状態(雑魚敵のみ) TODO:ならステートパターン組み換えよう
 //=============================================
-void CEnemyMoveState::Move(CEnemy* enemy)
+void CEnemyMoveState::Move(CCharacter* character)
 {
-	enemy->m_pMove->Move(enemy);
+	character->m_pMove->Move(character);
 }

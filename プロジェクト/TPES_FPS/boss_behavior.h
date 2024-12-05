@@ -45,8 +45,6 @@ public:
 	~CBossChase();
 	void Chase(CBossEnemy* boss, CObject* obj);
 	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
-	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
-	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
 	void DrawDebug();
 private:
 	BOOL m_bTargetPlayer;
@@ -62,9 +60,7 @@ public:
 	~CBossConfusion();
 	void Confusion(CBossEnemy* boss, float StartRot_y);
 	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
-	bool PerformRaycast_Player(D3DXVECTOR3 vector,CBossEnemy* boss);
-	bool PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss);
-	bool PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss);
+	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector,CBossEnemy* boss);
 private:
 	static constexpr float LOOK_RANGE = 1.57f; //å©ìnÇ∑îÕàÕ
 	static constexpr int NUM_TURN = 2; //å©ìnÇ∑âÒêî

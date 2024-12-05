@@ -34,12 +34,18 @@ public:
 	static const int MAX_PARTS = 64; //最大パーツ数
 	static const float  BOSS_FIELD_X; //ボス戦のX座標
 
-	typedef enum
+	struct RayHitInfo
+	{
+		float distance;
+		BOOL hit;
+	};
+
+	enum CHARACTER_STATE
 	{
 		CHARACTER_NORMAL = 0, //通常状態
 		CHARACTER_DAMAGE, //ダメージ状態
 		CHARACTER_STATE_MAX,
-	}CHARACTER_STATE;
+	};
 
 	CCharacter(int nPriority = CHARACTER_PRIORITY);
 	~CCharacter()override;
@@ -59,6 +65,8 @@ public:
 	void HitBlock(int NumParts); //ブロック当たり判定(複数パーツ用)
 	void HitField(); //床当たり判定
 	void HitWall(); //壁当たり判定
+	RayHitInfo PerformRaycast_Smoke(D3DXVECTOR3 vector, CCharacter* character);
+	RayHitInfo PerformRaycast_Block(D3DXVECTOR3 vector, CCharacter* character);
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)

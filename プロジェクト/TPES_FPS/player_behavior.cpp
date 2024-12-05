@@ -111,8 +111,6 @@ CPlayerSliding::~CPlayerSliding()
 //=============================================
 void CPlayerSliding::Sliding(CPlayer_test* player)
 {
-	D3DXVECTOR3 move = player->GetMove() * 1.45f;
-
 	//スピードがあれば減速
 	//if (move.x > 0.0f)
 	//{
@@ -130,7 +128,7 @@ void CPlayerSliding::Sliding(CPlayer_test* player)
 	//{
 	//	move.z += 0.001f;
 	//}
-	player->SetMove(move);
+	//player->SetMove(move);
 }
 
 //=============================================

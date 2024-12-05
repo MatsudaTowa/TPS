@@ -163,7 +163,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	D3DXVec3Normalize(&Vector, &Vector);
 
 	// レイキャストを実行し、障害物があるか判定TODO:いったんブロックは除外
-	if (!PerformRaycast_Smoke(Vector, boss))
+	if (boss->PerformRaycast_Smoke(Vector, boss).hit)
 	{
 		m_bTargetPlayer = false;
 		boss->ChangeState(new CConfusionState);
@@ -203,82 +203,6 @@ void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR
 		//移動量代入
 		boss->SetMove(move);
 	}
-}
-
-//=============================================
-//障害物があるか判定
-//=============================================
-bool CBossChase::PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss)
-{
-	BOOL Hit = false;
-	float distance;
-
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++) 
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-			{
-				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
-
-				//レイを原点からの差分から飛ばす
-				D3DXVECTOR3 StartRay = boss->GetPos() - pBlock->GetPos();
-				D3DXIntersect(pBlock->GetpMesh(), &StartRay,&vector,&Hit,NULL,NULL,NULL,&distance,NULL,NULL);
-
-				if (Hit == true)
-				{
-					// 障害物が間にある場合
-					return false;
-				}
-			}
-		}
-	}
-	// 障害物がなく、プレイヤーまでレイが到達する場合
-	return true;
-}
-
-//=============================================
-//障害物があるか判定
-//=============================================
-bool CBossChase::PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss)
-{
-	BOOL Hit;
-	float distance;
-
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
-			{
-				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = {boss->GetPos().x - pSmoke->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pSmoke->GetPos().z };
-				
-				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-
-				if (Hit == true)
-				{
-					// 障害物が間にある場合
-					return false;
-				}
-			}
-		}
-	}
-	// 障害物がなく、プレイヤーまでレイが到達する場合
-	return true;
 }
 
 //=============================================
@@ -336,7 +260,11 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 
 	D3DXVec3Normalize(&vec, &vec);
 
-	if (PerformRaycast_Player(vec, boss) && (!PerformRaycast_Block(vec,boss) && !PerformRaycast_Smoke(vec, boss)))
+	CCharacter::RayHitInfo HitPlayerInfo = PerformRaycast_Player(vec, boss);
+	CCharacter::RayHitInfo HitBlockInfo = boss->PerformRaycast_Block(vec, boss);
+	CCharacter::RayHitInfo HitSmokeInfo = boss->PerformRaycast_Smoke(vec, boss);
+
+	if (HitPlayerInfo.hit && HitPlayerInfo.distance < HitBlockInfo.distance)
 	{//見つけたら
 		boss->ChangeState(new CChaseState);
 	}
@@ -378,10 +306,13 @@ void CBossConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* b
 //=============================================
 //プレイヤーとレイが当たるのかチェック
 //=============================================
-bool CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CBossEnemy* boss)
+CCharacter::RayHitInfo CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CBossEnemy* boss)
 {
-	BOOL Hit = false;
-	float distance;
+	CCharacter::RayHitInfo Info; //ヒット情報を返す変数
+
+	//初期化
+	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
+	Info.hit = false; //当たっていない状態に
 
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
@@ -402,86 +333,16 @@ bool CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CBossEnemy* boss)
 				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-					if (Hit == true)
+					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+					if (Info.hit)
 					{
-						return true;
+						return Info;
 					}
 				}
 			}
 		}
 	}
-	return false;
-}
-
-//=============================================
-//障害物があるか判定
-//=============================================
-bool CBossConfusion::PerformRaycast_Block(D3DXVECTOR3 vector, CBossEnemy* boss)
-{
-	BOOL Hit = false;
-	float distance;
-
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-			{
-				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
-
-				//レイを原点からの差分から飛ばす
-				D3DXVECTOR3 StartRay = boss->GetPos() - pBlock->GetPos();
-				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-				if (Hit == true)
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
-
-//=============================================
-//障害物があるか判定
-//=============================================
-bool CBossConfusion::PerformRaycast_Smoke(D3DXVECTOR3 vector, CBossEnemy* boss)
-{
-	BOOL Hit = false;
-	float distance;
-
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
-			{
-				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { boss->GetPos().x - pSmoke->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pSmoke->GetPos().z };
-
-				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Hit, NULL, NULL, NULL, &distance, NULL, NULL);
-				if (Hit == true)
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+	return Info;
 }
 
 //=============================================

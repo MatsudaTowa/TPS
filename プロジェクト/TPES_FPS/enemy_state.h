@@ -18,10 +18,11 @@ class CEnemy;
 //=============================================
 //エネミーのステートクラス
 //=============================================
-class CEnemyState
+class CEnemyState : public CCharacterState
 {
 public:
-	virtual void Move(CEnemy* enemy);
+	virtual void Move(CCharacter* character)override;
+	virtual void Wandering(CEnemy* enemy);
 };
 
 //=============================================
@@ -30,7 +31,7 @@ public:
 class CEnemyMoveState : public CEnemyState
 {
 public:
-	virtual void Move(CEnemy* enemy);
+	virtual void Move(CCharacter* character)override;
 };
 
 #endif // !_CHARACTER_STATE_H
