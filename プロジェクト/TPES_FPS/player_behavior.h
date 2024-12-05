@@ -9,6 +9,7 @@
 #include "character_behavior.h"
 #include "player_test.h"
 
+class CPlayer_test;
 //=============================================
 //プレイヤーの移動のストラテジー
 //=============================================
@@ -21,6 +22,18 @@ public:
 	~CPlayerMove() override;
 	void Move(CCharacter* character)override;
 };
+
+//=============================================
+//プレイヤーの移動のストラテジー
+//=============================================
+class CPlayerSliding
+{
+public:
+	CPlayerSliding();
+	~CPlayerSliding();
+	void Sliding(CPlayer_test* player);
+};
+
 
 //=============================================
 //プレイヤーの攻撃のストラテジー

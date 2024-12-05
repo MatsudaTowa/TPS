@@ -36,6 +36,10 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke()
 {//イニシャライザーでメンバ変数初期化
+	if (m_pSliding == nullptr)
+	{
+		m_pSliding = new CPlayerSliding;
+	}
 	if (m_pMove == nullptr)
 	{
 		m_pMove = new CPlayerMove;
@@ -136,6 +140,11 @@ void CPlayer_test::Uninit()
 		m_pLifeUI->Uninit();
 		m_pLifeUI = nullptr;
 	}
+	if (m_pSliding != nullptr)
+	{
+		delete m_pSliding;
+		m_pSliding = nullptr;
+	}
 
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
@@ -195,7 +204,15 @@ void CPlayer_test::Update()
 		{
 			//入力処理
 			Input();
-			m_pCharacterState->Move(this);
+
+			if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT))
+			{
+				m_pSliding->Sliding(this);
+			}
+			else
+			{
+				m_pCharacterState->Move(this);
+			}
 		}
 
 		//カメラ情報取得

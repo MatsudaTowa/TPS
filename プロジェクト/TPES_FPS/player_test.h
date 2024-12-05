@@ -16,6 +16,7 @@
 #include "player_behavior.h"
 #include "enemy.h"
 
+class CPlayerSliding;
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -72,6 +73,8 @@ private:
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
 	CReticle* m_Raticle;
+
+	CPlayerSliding* m_pSliding;
 
 	void DebugPos();
 
