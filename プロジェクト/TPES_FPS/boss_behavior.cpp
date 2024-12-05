@@ -166,7 +166,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	if (boss->PerformRaycast_Smoke(Vector, boss).hit)
 	{
 		m_bTargetPlayer = false;
-		boss->ChangeState(new CConfusionState);
+		boss->ChangeState(new CConfusionBossState);
 	}
 	else
 	{

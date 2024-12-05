@@ -20,7 +20,9 @@ class CCharacter;
 class CCharacterState
 {
 public:
+	virtual void Start(CCharacter* character);
 	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character); 
+	virtual void Confusion(CCharacter* character);
 	virtual void Move(CCharacter* character);
 };
 
@@ -31,6 +33,19 @@ class CShotState : public CCharacterState
 {
 public:
 	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)override;
+};
+
+//=============================================
+//キャラクターの混乱状態
+//=============================================
+class CConfusionState : public CCharacterState
+{
+public:
+	void Start(CCharacter* character) override;
+	virtual void Confusion(CCharacter* character)override;
+private:
+	float m_StartRot;
+	bool m_isRight; //見渡す(true:右 false:左)
 };
 
 //=============================================

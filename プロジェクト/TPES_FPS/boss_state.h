@@ -58,7 +58,7 @@ public:
 //=============================================
 //エネミーの混乱状態
 //=============================================
-class CConfusionState : public CBossState
+class CConfusionBossState : public CBossState
 {
 public:
 	void Start(CBossEnemy* boss) override;

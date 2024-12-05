@@ -22,6 +22,7 @@
 //=============================================
 class CMove;
 class CGunAttack;
+class CConfusion;
 class CCharacterState;
 
 //プレイヤークラス
@@ -172,6 +173,8 @@ public:
 	CGun* m_pGun;
 
 	CMove*m_pMove;
+
+	CConfusion* m_pConfusion;
 
 	CGunAttack*m_pGunAttack;
 

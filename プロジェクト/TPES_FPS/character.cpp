@@ -29,6 +29,7 @@ m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pGunAttack(), m_pCharacterState(),
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
 	m_pCharacterState = nullptr;
+	m_pConfusion = nullptr;
 }
 
 //=============================================
@@ -47,6 +48,10 @@ CCharacter::~CCharacter()
 	if (m_pCharacterState != nullptr)
 	{
 		delete m_pCharacterState;
+	}
+	if (m_pConfusion != nullptr)
+	{
+		delete m_pConfusion;
 	}
 
 	for (int i = 0; i < 64; i++)
@@ -1030,5 +1035,6 @@ void CCharacter::ChangeState(CCharacterState* state)
 	{
 		delete m_pCharacterState;
 		m_pCharacterState = state;
+		m_pCharacterState->Start(this);
 	}
 }

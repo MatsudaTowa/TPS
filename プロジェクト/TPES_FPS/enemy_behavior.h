@@ -29,6 +29,26 @@ private:
 };
 
 //=============================================
+//敵の移動のストラテジー
+//=============================================
+class CEnemyConfusion : public CConfusion
+{
+public:
+	static const int MAX_JUMPCNT = 2; //ジャンプ回数
+
+	CEnemyConfusion();
+	~CEnemyConfusion() override;
+	void Confusion(CCharacter* character, float StartRot_y)override;
+	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* character);
+	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
+private:
+	static constexpr float LOOK_RANGE = 1.57f; //見渡す範囲
+	static constexpr int NUM_TURN = 2; //見渡す回数
+	int m_TurnCnt; //何回見渡したか
+	bool m_isRight; //見渡す(true:右 false:左)
+};
+
+//=============================================
 //敵の攻撃のストラテジー
 //=============================================
 class CEnemyGunAttack : public CGunAttack

@@ -29,6 +29,18 @@ protected:
 };
 
 //=============================================
+//混乱のストラテジー
+//=============================================
+class CConfusion
+{
+public:
+	CConfusion();
+	virtual ~CConfusion();
+	virtual void Confusion(CCharacter* character, float StartRot_y);
+private:
+};;
+
+//=============================================
 //攻撃ストラテジー
 //=============================================
 class CGunAttack

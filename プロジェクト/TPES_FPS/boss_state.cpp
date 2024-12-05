@@ -8,7 +8,7 @@
 #include "player_test.h"
 
 //=============================================
-//最初の呼ばれる関数
+//最初に呼ばれる関数
 //=============================================
 void CBossState::Start(CBossEnemy* boss)
 {
@@ -209,7 +209,7 @@ void CTackleState::DrawDebug()
 //=============================================
 //最初に呼ばれる関数
 //=============================================
-void CConfusionState::Start(CBossEnemy* boss)
+void CConfusionBossState::Start(CBossEnemy* boss)
 {
 	m_StartRot = boss->GetRot().y;
 	if (m_StartRot < D3DX_PI * 0.5f && m_StartRot > -D3DX_PI * 0.5f)
@@ -225,7 +225,7 @@ void CConfusionState::Start(CBossEnemy* boss)
 //=============================================
 //ボスの混乱処理
 //=============================================
-void CConfusionState::Confusion(CBossEnemy* boss)
+void CConfusionBossState::Confusion(CBossEnemy* boss)
 {
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
@@ -240,7 +240,7 @@ void CConfusionState::Confusion(CBossEnemy* boss)
 //=============================================
 //ボスの混乱状態デバッグ
 //=============================================
-void CConfusionState::DrawDebug()
+void CConfusionBossState::DrawDebug()
 {
 #ifdef _DEBUG
 	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();

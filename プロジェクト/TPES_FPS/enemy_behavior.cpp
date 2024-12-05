@@ -105,6 +105,15 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 	{
 		character->m_pGun->m_pReload->Reload(character->m_pGun);
 	}
+
+	//自分の方向を取得
+	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), 0.0f, cosf(character->GetRot().y + D3DX_PI) };
+
+	// レイキャストを実行し、障害物があるか判定TODO:いったんブロックは除外
+	if (character->PerformRaycast_Smoke(vec, character).hit)
+	{
+		character->ChangeState(new CConfusionState);
+	}
 }
 
 //=============================================
@@ -141,4 +150,122 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 			}
 		}
 	}
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(0)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CEnemyConfusion::~CEnemyConfusion()
+{
+}
+
+//=============================================
+//混乱
+//=============================================
+void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
+{
+	//現在の方向を取得
+	D3DXVECTOR3 rot = character->GetRot();
+
+	//移動量を算出
+	float Rot_Answer_y = rot.y - StartRot_y;
+
+	//方向移動処理
+	MoveRot(rot, Rot_Answer_y, character);
+
+	//自分の方向を取得
+	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), 0.0f, cosf(character->GetRot().y + D3DX_PI) };
+
+	D3DXVec3Normalize(&vec, &vec);
+
+	CCharacter::RayHitInfo HitPlayerInfo = PerformRaycast_Player(vec, character);
+	CCharacter::RayHitInfo HitBlockInfo = character->PerformRaycast_Block(vec, character);
+	CCharacter::RayHitInfo HitSmokeInfo = character->PerformRaycast_Smoke(vec, character);
+
+	if (HitPlayerInfo.hit && HitPlayerInfo.distance < HitBlockInfo.distance)
+	{//見つけたら
+		character->ChangeState(new CShotState);
+	}
+	if (m_TurnCnt >= NUM_TURN)
+	{//上限に達したら
+		m_TurnCnt = 0;
+		character->ChangeState(new CMoveState);
+	}
+}
+
+//=============================================
+//方向移動
+//=============================================
+void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* character)
+{
+	if (m_isRight)
+	{
+		rot.y += 0.01f;
+
+		if (Rot_Answer_y > LOOK_RANGE)
+		{//範囲に到達したら逆回転
+			m_isRight = false;
+			++m_TurnCnt;
+		}
+	}
+	if (!m_isRight)
+	{
+		rot.y -= 0.01f;
+
+		if (Rot_Answer_y < -LOOK_RANGE)
+		{//範囲に到達したら逆回転
+			m_isRight = true;
+			++m_TurnCnt;
+		}
+	}
+	character->SetRot(rot);
+}
+
+//=============================================
+//混乱
+//=============================================
+CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character)
+{
+	CCharacter::RayHitInfo Info; //ヒット情報を返す変数
+
+		//初期化
+	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
+	Info.hit = false; //当たっていない状態に
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+		 //タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+
+				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pPlayer->GetPos().z };
+				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
+				{
+					//レイを飛ばしプレイヤーと当たるかチェック
+					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+					if (Info.hit)
+					{
+						return Info;
+					}
+				}
+			}
+		}
+	}
+	return Info;
 }

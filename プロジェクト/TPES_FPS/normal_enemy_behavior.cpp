@@ -186,6 +186,6 @@ void CNormalAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 
 	if (character->PerformRaycast_Smoke(vec, character).hit)
 	{//ƒXƒ‚[ƒN‚É“–‚½‚Á‚Ä‚½‚ç
-		character->ChangeState(new CMoveState);
+		character->ChangeState(new CConfusionState);
 	}
 }
