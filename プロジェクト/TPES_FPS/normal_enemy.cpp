@@ -34,10 +34,6 @@ CNormalEnemy::~CNormalEnemy()
 //=============================================
 HRESULT CNormalEnemy::Init()
 {
-	if (m_pEnemyState == nullptr)
-	{
-		m_pEnemyState = new CEnemyMoveState;
-	}
 	//èeèâä˙âª
 	if (m_pGun == nullptr)
 	{
