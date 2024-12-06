@@ -273,7 +273,7 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyStan::CEnemyStan():m_StanCnt(0)
+CEnemyStan::CEnemyStan()
 {
 }
 
@@ -289,14 +289,5 @@ CEnemyStan::~CEnemyStan()
 //=============================================
 void CEnemyStan::Stan(CCharacter* character)
 {
-	if (m_StanCnt < STAN_FRAME)
-	{
-		character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
-		++m_StanCnt;
-	}
-	if (m_StanCnt >= STAN_FRAME)
-	{
-		m_StanCnt = 0;
-		character->ChangeState(new CShotState);
-	}
+	character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
 }

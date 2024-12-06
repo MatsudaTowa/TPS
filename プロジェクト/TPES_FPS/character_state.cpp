@@ -62,13 +62,34 @@ void CMoveState::Move(CCharacter* character)
 }
 
 //=============================================
+//最初に呼ばれる関数
+//=============================================
+void CStanState::Start(CCharacter* character)
+{
+	//カウントリセット
+	m_StanCnt = 0;
+}
+
+//=============================================
 //キャラクターのスタン状態
 //=============================================
 void CStanState::Stan(CCharacter* character)
 {
-	if (character->m_pStan != nullptr)
+	if (m_StanCnt < STAN_FRAME)
 	{
-		character->m_pStan->Stan(character);
+		++m_StanCnt;
+
+		if (character->m_pStan != nullptr)
+		{
+			character->m_pStan->Stan(character);
+		}
+	}
+	if (m_StanCnt >= STAN_FRAME)
+	{
+		m_StanCnt = 0;
+
+		//射撃状態に遷移
+		character->ChangeState(new CShotState);
 	}
 }
 

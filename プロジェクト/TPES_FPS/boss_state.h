@@ -16,13 +16,14 @@
 class CBossEnemy;
 
 //=============================================
-//ボスのステートクラス
+//ボスのステートクラス TODO:キャラクターのステートを継承して
 //=============================================
 class CBossState
 {
 public:
 	virtual void Start(CBossEnemy* boss);
 	virtual void Chase(CBossEnemy* boss);
+	virtual void Stan(CBossEnemy* boss);
 	virtual void Wandering(CBossEnemy* boss);
 	virtual void Confusion(CBossEnemy* boss);
 	virtual void Tackle(CBossEnemy* boss);
@@ -43,6 +44,20 @@ private:
 	static const int HP_LOW = 30;
 	static const int PLAY_TACKLE_FLAME = 300; //タックルを実行するまでのフレーム
 	int m_PlayTackleCnt; //タックルまでの計測用
+};
+
+//=============================================
+//エネミーのスタン状態
+//=============================================
+class CBossStanState :public CBossState
+{
+public:
+	void Start(CBossEnemy* boss) override;
+	virtual void Stan(CBossEnemy* boss);
+	virtual void DrawDebug()override;
+private:
+	static constexpr int STAN_FRAME = 600; //スタン時間
+	int m_StanCnt; //スタン計測カウント
 };
 
 //=============================================

@@ -50,6 +50,14 @@ private:
 	BOOL m_bTargetPlayer;
 };
 
+class CBossStan
+{
+public:
+	CBossStan();
+	~CBossStan();
+	void Stan(CBossEnemy* boss);
+};
+
 //=============================================
 //混乱のストラテジー
 //=============================================

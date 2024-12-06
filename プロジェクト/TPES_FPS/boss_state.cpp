@@ -22,6 +22,13 @@ void CBossState::Chase(CBossEnemy* boss)
 }
 
 //=============================================
+//スタン状態
+//=============================================
+void CBossState::Stan(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ボスの徘徊状態(基底では何もしない)
 //=============================================
 void CBossState::Wandering(CBossEnemy* boss)
@@ -116,6 +123,53 @@ void CChaseState::DrawDebug()
 	char aStr[256];
 
 	sprintf(&aStr[0], "\n\n追跡");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
+}
+
+//=============================================
+//最初に呼ばれる関数
+//=============================================
+void CBossStanState::Start(CBossEnemy* boss)
+{
+	m_StanCnt = 0;
+}
+
+//=============================================
+//ボスのスタン状態
+//=============================================
+void CBossStanState::Stan(CBossEnemy* boss)
+{
+	if (m_StanCnt < STAN_FRAME)
+	{
+		++m_StanCnt;
+
+		if (boss->m_pStan != nullptr)
+		{
+			boss->m_pStan->Stan(boss);
+		}
+	}
+	if (m_StanCnt >= STAN_FRAME)
+	{
+		m_StanCnt = 0;
+
+		//射撃状態に遷移
+		boss->ChangeState(new CChaseState);
+	}
+}
+
+//=============================================
+//ボスのスタン状態デバッグ
+//=============================================
+void CBossStanState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\nスタン");
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
@@ -229,7 +283,7 @@ void CConfusionBossState::Confusion(CBossEnemy* boss)
 {
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
-		boss->ChangeState(new CChaseState);
+		boss->ChangeState(new CBossStanState);
 	}
 	if (boss->m_pConfusion != nullptr)
 	{

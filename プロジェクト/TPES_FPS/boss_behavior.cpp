@@ -266,7 +266,7 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 
 	if (HitPlayerInfo.hit && HitPlayerInfo.distance < HitBlockInfo.distance)
 	{//見つけたら
-		boss->ChangeState(new CChaseState);
+		//boss->ChangeState(new CChaseState);
 	}
 	if (m_TurnCnt >= NUM_TURN)
 	{//上限に達したら
@@ -485,4 +485,26 @@ void CBossTackle::LookAtPlayer(CCharacter* character)
 			}
 		}
 	}
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CBossStan::CBossStan()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CBossStan::~CBossStan()
+{
+}
+
+//=============================================
+//スタン処理
+//=============================================
+void CBossStan::Stan(CBossEnemy* boss)
+{
+	boss->SetMotion(CBossEnemy::Motion_Type::MOTION_NEUTRAL);
 }

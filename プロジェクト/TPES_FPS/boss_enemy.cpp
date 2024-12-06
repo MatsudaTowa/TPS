@@ -29,6 +29,10 @@ CBossEnemy::CBossEnemy(int nPriority)
 	{
 		m_pConfusion = new CBossConfusion;
 	}
+	if (m_pStan == nullptr)
+	{
+		m_pStan = new CEnemyStan;
+	}
 	if (m_pGunAttack == nullptr)
 	{
 		m_pGunAttack = new CBossGunAttack;
@@ -115,6 +119,8 @@ void CBossEnemy::Update()
 	m_pBossState->Chase(this);
 
 	m_pBossState->Wandering(this);
+
+	m_pBossState->Stan(this);
 
 	m_pBossState->Confusion(this);
 

@@ -38,8 +38,6 @@ public:
 	~CEnemyStan() override;
 	void Stan(CCharacter* character)override;
 private:
-	static constexpr int STAN_FRAME = 600; //スタン時間
-	int m_StanCnt; //スタン計測カウント
 };
 
 //=============================================
