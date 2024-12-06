@@ -20,6 +20,10 @@ CNormalEnemy::CNormalEnemy(int nPriority):CEnemy(nPriority)
 	{
 		m_pGunAttack = new CNormalAttack;
 	}
+	if (m_pStan == nullptr)
+	{
+		m_pStan = new CEnemyStan;
+	}
 	if (m_pConfusion == nullptr)
 	{
 		m_pConfusion = new CEnemyConfusion;

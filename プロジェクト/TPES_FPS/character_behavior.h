@@ -31,6 +31,18 @@ protected:
 //=============================================
 //混乱のストラテジー
 //=============================================
+class CStan
+{
+public:
+	CStan();
+	virtual ~CStan();
+	virtual void Stan(CCharacter* character);
+private:
+};
+
+//=============================================
+//混乱のストラテジー
+//=============================================
 class CConfusion
 {
 public:
@@ -38,7 +50,7 @@ public:
 	virtual ~CConfusion();
 	virtual void Confusion(CCharacter* character, float StartRot_y);
 private:
-};;
+};
 
 //=============================================
 //攻撃ストラテジー

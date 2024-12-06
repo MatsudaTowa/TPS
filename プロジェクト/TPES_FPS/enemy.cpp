@@ -86,6 +86,8 @@ void CEnemy::Update()
 
 	m_pCharacterState->Move(this);
 
+	m_pCharacterState->Stan(this);
+
 	m_pCharacterState->Confusion(this);
 
 	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);

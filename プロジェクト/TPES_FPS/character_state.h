@@ -22,6 +22,7 @@ class CCharacterState
 public:
 	virtual void Start(CCharacter* character);
 	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character); 
+	virtual void Stan(CCharacter* character);
 	virtual void Confusion(CCharacter* character);
 	virtual void Move(CCharacter* character);
 };
@@ -33,6 +34,15 @@ class CShotState : public CCharacterState
 {
 public:
 	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)override;
+};
+
+//=============================================
+//キャラクターのスタン状態
+//=============================================
+class CStanState : public CCharacterState
+{
+public:
+	virtual void Stan(CCharacter* character)override;
 };
 
 //=============================================

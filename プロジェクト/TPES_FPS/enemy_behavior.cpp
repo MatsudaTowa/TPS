@@ -207,7 +207,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 {
 	if (m_isRight)
 	{
-		rot.y += 0.01f;
+		rot.y += 0.005f;
 
 		if (Rot_Answer_y > LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -217,7 +217,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 	}
 	if (!m_isRight)
 	{
-		rot.y -= 0.01f;
+		rot.y -= 0.005f;
 
 		if (Rot_Answer_y < -LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -268,4 +268,35 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 		}
 	}
 	return Info;
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CEnemyStan::CEnemyStan():m_StanCnt(0)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CEnemyStan::~CEnemyStan()
+{
+}
+
+//=============================================
+//スタン処理
+//=============================================
+void CEnemyStan::Stan(CCharacter* character)
+{
+	if (m_StanCnt < STAN_FRAME)
+	{
+		character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
+		++m_StanCnt;
+	}
+	if (m_StanCnt >= STAN_FRAME)
+	{
+		m_StanCnt = 0;
+		character->ChangeState(new CShotState);
+	}
 }

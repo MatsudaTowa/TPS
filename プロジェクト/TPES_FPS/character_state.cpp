@@ -20,6 +20,13 @@ void CCharacterState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLE
 {
 }
 
+//=============================================
+//キャラクターのスタン
+//=============================================
+void CCharacterState::Stan(CCharacter* character)
+{
+}
+
 
 //=============================================
 //キャラクターの混乱
@@ -55,6 +62,17 @@ void CMoveState::Move(CCharacter* character)
 }
 
 //=============================================
+//キャラクターのスタン状態
+//=============================================
+void CStanState::Stan(CCharacter* character)
+{
+	if (character->m_pStan != nullptr)
+	{
+		character->m_pStan->Stan(character);
+	}
+}
+
+//=============================================
 //最初に呼ばれる関数
 //=============================================
 void CConfusionState::Start(CCharacter* character)
@@ -77,7 +95,7 @@ void CConfusionState::Confusion(CCharacter* character)
 {
 	if (character->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
-		character->ChangeState(new CShotState);
+		character->ChangeState(new CStanState);
 	}
 	if (character->m_pConfusion != nullptr)
 	{

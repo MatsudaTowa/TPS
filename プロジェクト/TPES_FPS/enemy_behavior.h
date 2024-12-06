@@ -29,13 +29,25 @@ private:
 };
 
 //=============================================
-//敵の移動のストラテジー
+//敵のスタンのストラテジー
+//=============================================
+class CEnemyStan : public CStan
+{
+public:
+	CEnemyStan();
+	~CEnemyStan() override;
+	void Stan(CCharacter* character)override;
+private:
+	static constexpr int STAN_FRAME = 600; //スタン時間
+	int m_StanCnt; //スタン計測カウント
+};
+
+//=============================================
+//敵の混乱のストラテジー
 //=============================================
 class CEnemyConfusion : public CConfusion
 {
 public:
-	static const int MAX_JUMPCNT = 2; //ジャンプ回数
-
 	CEnemyConfusion();
 	~CEnemyConfusion() override;
 	void Confusion(CCharacter* character, float StartRot_y)override;

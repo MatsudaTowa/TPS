@@ -29,6 +29,7 @@ m_Jump(), m_pGun(),m_MotionSet(), m_pMove(),m_pGunAttack(), m_pCharacterState(),
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
 	m_pCharacterState = nullptr;
+	m_pStan = nullptr;
 	m_pConfusion = nullptr;
 }
 
@@ -48,6 +49,10 @@ CCharacter::~CCharacter()
 	if (m_pCharacterState != nullptr)
 	{
 		delete m_pCharacterState;
+	}
+	if (m_pStan != nullptr)
+	{
+		delete m_pStan;
 	}
 	if (m_pConfusion != nullptr)
 	{

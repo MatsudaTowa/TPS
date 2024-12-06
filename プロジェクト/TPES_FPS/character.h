@@ -22,6 +22,7 @@
 //=============================================
 class CMove;
 class CGunAttack;
+class CStan;
 class CConfusion;
 class CCharacterState;
 
@@ -173,6 +174,8 @@ public:
 	CGun* m_pGun;
 
 	CMove*m_pMove;
+
+	CStan* m_pStan;
 
 	CConfusion* m_pConfusion;
 
