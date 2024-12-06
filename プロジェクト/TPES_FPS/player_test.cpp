@@ -34,7 +34,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -91,6 +91,8 @@ HRESULT CPlayer_test::Init()
 			m_pLifeUI->Init();
 		}
 	}
+
+	m_pHitCameraEffect = nullptr;
 
 	m_Raticle = nullptr;
 
@@ -160,6 +162,17 @@ void CPlayer_test::Update()
 
 	//ダメージステートの切り替えTODO:これもステートパターンで
 	ChangeDamageState();
+
+	if (m_pHitCameraEffect != nullptr)
+	{//使われていたら
+		m_pHitCameraEffect->SubAlpha();
+
+		if (m_pHitCameraEffect->GetAlpha() < 0.0f)
+		{
+			m_pHitCameraEffect->Uninit();
+			m_pHitCameraEffect = nullptr;
+		}
+	}
 
 	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
 	{
@@ -281,6 +294,12 @@ void CPlayer_test::Damage(int nDamage)
 
 	if (nLife > 0 && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
 	{//ダメージ状態以外でHPが残ってたら
+
+		if (m_pHitCameraEffect == nullptr)
+		{
+			m_pHitCameraEffect = CHitCameraEffect::Create({SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f});
+		}
+
 		nLife -= nDamage;
 
 		//ダメージ状態に変更

@@ -15,6 +15,7 @@
 #include"life_UI.h"
 #include "player_behavior.h"
 #include "enemy.h"
+#include "hit_camera_effect.h"
 
 class CPlayerSliding;
 //プレイヤークラス
@@ -75,6 +76,8 @@ private:
 	CReticle* m_Raticle;
 
 	CPlayerSliding* m_pSliding;
+
+	CHitCameraEffect* m_pHitCameraEffect;
 
 	void DebugPos();
 
