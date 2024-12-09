@@ -5,11 +5,12 @@
 //
 //=============================================
 #include "hit_camera_effect.h"
+#include "hit_camera_effect_mild.h"
+#include "hit_camera_effect_moderate.h"
+#include "hit_camera_effect_severe.h"
 #include "manager.h"
 
-//テクスチャ初期化
-LPDIRECT3DTEXTURE9 CHitCameraEffect::m_pTextureTemp = nullptr;
-const std::string CHitCameraEffect::TEXTURE_NAME = "data\\TEXTURE\\hit_camera_effect002.png";
+const std::string CHitCameraEffect::TEXTURE_NAME_SEVERE = "data\\TEXTURE\\hit_camera_effect002.png";
 
 //=============================================
 //コンストラクタ
@@ -40,7 +41,7 @@ HRESULT CHitCameraEffect::Init()
 	SetSize(size);
 
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, m_alpha));
+	SetVtx(1.0f, D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha));
 
 	return S_OK;
 }
@@ -63,7 +64,7 @@ void CHitCameraEffect::Update()
 	CObject2D::Update();
 
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, m_alpha));
+	SetVtx(1.0f, D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha));
 }
 
 //=============================================
@@ -77,24 +78,37 @@ void CHitCameraEffect::Draw()
 //=============================================
 //生成
 //=============================================
-CHitCameraEffect* CHitCameraEffect::Create(D3DXVECTOR3 pos)
+CHitCameraEffect* CHitCameraEffect::Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE stage)
 {
-	CHitCameraEffect* pHitCameraEffect = new CHitCameraEffect;
+	CHitCameraEffect* pHitCameraEffect = nullptr;
 	//CObject *pObject = Getobject();
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
-	if (pHitCameraEffect != nullptr)
+	switch (stage)
 	{
-		pHitCameraEffect->SetPos(pos); //pos設定
-
-		pHitCameraEffect->m_alpha = 0.8f;
-
-		pHitCameraEffect->SetType(OBJECT_TYPE_FADE); //タイプ設定
-
-		pHitCameraEffect->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
-
-		pHitCameraEffect->Init();
+	case CHitCameraEffect::MILD:
+		pHitCameraEffect = new CHitCameraEffectMild;
+		break;
+	case CHitCameraEffect::MODERATE:
+		pHitCameraEffect = new CHitCameraEffectModerate;
+		break;
+	case CHitCameraEffect::SEVERE:
+		pHitCameraEffect = new CHitCameraEffectSevere;
+		break;
+	default:
+		assert(false);
+		break;
 	}
+
+	if (pHitCameraEffect == nullptr) {return nullptr;}
+
+	pHitCameraEffect->SetPos(pos); //pos設定
+
+	pHitCameraEffect->m_alpha = 0.8f;
+
+	pHitCameraEffect->SetType(OBJECT_TYPE_HIT_CAMERA_EFFECT); //タイプ設定
+
+	pHitCameraEffect->Init();
+
 	return pHitCameraEffect;
 }
 

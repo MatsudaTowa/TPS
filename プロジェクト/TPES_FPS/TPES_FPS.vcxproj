@@ -176,6 +176,9 @@
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="gun_behavior.cpp" />
     <ClCompile Include="hit_camera_effect.cpp" />
+    <ClCompile Include="hit_camera_effect_mild.cpp" />
+    <ClCompile Include="hit_camera_effect_moderate.cpp" />
+    <ClCompile Include="hit_camera_effect_severe.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="life_UI.cpp" />
     <ClCompile Include="light.cpp" />
@@ -249,6 +252,9 @@
     <ClInclude Include="gun.h" />
     <ClInclude Include="gun_behavior.h" />
     <ClInclude Include="hit_camera_effect.h" />
+    <ClInclude Include="hit_camera_effect_mild.h" />
+    <ClInclude Include="hit_camera_effect_moderate.h" />
+    <ClInclude Include="hit_camera_effect_severe.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="life_UI.h" />
     <ClInclude Include="light.h" />

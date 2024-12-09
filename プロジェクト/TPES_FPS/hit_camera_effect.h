@@ -10,13 +10,20 @@
 #include "object2D.h"
 
 //=============================================
-//体力表示クラス
+//ヒット時のカメラエフェクトクラス
 //=============================================
 class CHitCameraEffect:public CObject2D
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
+	static const std::string TEXTURE_NAME_SEVERE;	//重症テクスチャの名前
 	static const int PRIORITY = 30; //描画順
+
+	enum HIT_EFFECT_STAGE
+	{
+		MILD, //軽度
+		MODERATE, //中
+		SEVERE, //重症
+	};
 
 	CHitCameraEffect(int nPriority = PRIORITY);
 	~CHitCameraEffect() override;
@@ -24,7 +31,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
-	static CHitCameraEffect* Create(D3DXVECTOR3 pos);
+	static CHitCameraEffect* Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE stage);
 
 	void SubAlpha();
 
@@ -33,7 +40,6 @@ public:
 		return m_alpha;
 	}
 private:
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 	float m_alpha; //アルファ値
 };
 

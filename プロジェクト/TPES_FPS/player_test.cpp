@@ -297,7 +297,18 @@ void CPlayer_test::Damage(int nDamage)
 
 		if (m_pHitCameraEffect == nullptr)
 		{
-			m_pHitCameraEffect = CHitCameraEffect::Create({SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f});
+			if (nLife >= CPlayer_test::PLAYER_LIFE * 0.6f)
+			{
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MILD);
+			}
+			else if (nLife >= CPlayer_test::PLAYER_LIFE * 0.3f && nLife < CPlayer_test::PLAYER_LIFE * 0.6f)
+			{
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MODERATE);
+			}
+			else if (nLife < CPlayer_test::PLAYER_LIFE * 0.3f)
+			{
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::SEVERE);
+			}
 		}
 
 		nLife -= nDamage;

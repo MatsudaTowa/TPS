@@ -9,7 +9,6 @@
 #include "game.h"
 
 //テクスチャ初期化
-LPDIRECT3DTEXTURE9 CBullet::m_pTextureTemp = nullptr;
 const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\effect000.jpg";
 
 //=============================================
