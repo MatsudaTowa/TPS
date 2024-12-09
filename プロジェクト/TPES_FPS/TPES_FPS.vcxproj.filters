@@ -228,7 +228,7 @@
     <ClCompile Include="hit_camera_effect_severe.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_ammo_UI.cpp">
+    <ClCompile Include="enemy_reload_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -446,7 +446,7 @@
     <ClInclude Include="hit_camera_effect_severe.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_ammo_UI.h">
+    <ClInclude Include="enemy_reload_UI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

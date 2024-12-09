@@ -12,7 +12,6 @@
 #include "character.h"
 #include "enemy_behavior.h"
 #include "enemy_state.h"
-#include "enemy_ammo_UI.h"
 
 class CEnemyState;
 
@@ -59,7 +58,6 @@ public:
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
 
-	CEnemy_Ammo_UI* m_pAmmoUI;
 private:
 
 	//プレイヤーの移動関連

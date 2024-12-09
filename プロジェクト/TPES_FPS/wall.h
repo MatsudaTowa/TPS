@@ -14,7 +14,6 @@
 class CWall : public CObject3D
 {
 public:
-
 	static const int WALL_PRIORITY = 3; //ï`âÊèá
 
 	CWall(int nPriority = WALL_PRIORITY);

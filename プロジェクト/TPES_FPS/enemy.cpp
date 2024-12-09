@@ -36,8 +36,6 @@ const float CEnemy::DEADZONE_Y = -100.0f;
 CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
 {//イニシャライザーでメンバ変数初期化
 
-	m_pAmmoUI = nullptr;
-
 	//総数追加
 	m_NumEnemy++;
 }
@@ -47,11 +45,6 @@ CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
 //=============================================
 CEnemy::~CEnemy()
 {
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->Uninit();
-		m_pAmmoUI = nullptr;
-	}
 	//総数減少
 	m_NumEnemy--;
 }
@@ -81,11 +74,6 @@ HRESULT CEnemy::Init()
 //=============================================
 void CEnemy::Uninit()
 {
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->Uninit();
-		m_pAmmoUI = nullptr;
-	}
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
 }
@@ -104,12 +92,6 @@ void CEnemy::Update()
 	m_pCharacterState->Confusion(this);
 
 	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);
-
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->Update();
-		m_pAmmoUI->SetAmmo_UI(m_pGun->GetAmmo());
-	}
 
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();

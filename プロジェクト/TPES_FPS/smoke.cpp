@@ -169,6 +169,5 @@ CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXV
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	pSmoke->BindTexture(pTexture->GetAddress(pTexture->Regist(&SMOKE_TEXTURE_NAME)));
 
-
 	return pSmoke;
 }

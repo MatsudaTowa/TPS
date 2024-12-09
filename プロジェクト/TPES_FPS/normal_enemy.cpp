@@ -50,12 +50,6 @@ HRESULT CNormalEnemy::Init()
 		m_pGun->Init();
 	}
 
-	if (m_pAmmoUI == nullptr)
-	{
-		m_pAmmoUI = CEnemy_Ammo_UI::Create({m_apModel[1]->GetMtxWorld()._41 + 10.0f,m_apModel[1]->GetMtxWorld()._42 + 40.0f,m_apModel[1]->GetMtxWorld()._43},
-		{5.0f,10.0f,0.0f});
-	}
-
 	SetLife(DEFAULT_LIFE);
 	//親クラスの初期化を呼ぶ
 	CEnemy::Init();
@@ -76,7 +70,6 @@ void CNormalEnemy::Uninit()
 //=============================================
 void CNormalEnemy::Update()
 {
-	m_pAmmoUI->SetPos({ m_apModel[1]->GetMtxWorld()._41 + 10.0f,m_apModel[1]->GetMtxWorld()._42 + 40.0f,m_apModel[1]->GetMtxWorld()._43 });
 	CEnemy::Update();
 	Motion(NUM_PARTS); //モーション処理
 }
