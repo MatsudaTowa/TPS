@@ -10,8 +10,6 @@
 #include "hit_camera_effect_severe.h"
 #include "manager.h"
 
-const std::string CHitCameraEffect::TEXTURE_NAME_SEVERE = "data\\TEXTURE\\hit_camera_effect002.png";
-
 //=============================================
 //コンストラクタ
 //=============================================
