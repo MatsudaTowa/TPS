@@ -29,7 +29,7 @@ public:
 
 private:
 	D3DXVECTOR3 m_pos;
-	CNumber* m_pNumber[NUM_DIGIT];
+	CNumber_2D* m_pNumber[NUM_DIGIT];
 };
 
 #endif // DEBUG

@@ -1,41 +1,38 @@
 //=============================================
 //
-//体力表示「life_UI.cpp」
+//敵の残弾数表示「enemy_ammo_UI.cpp」
 // Author松田永久
 //
 //=============================================
-#include "life_UI.h"
-#include "manager.h"
+#include "enemy_ammo_UI.h"
+
 //桁ごとにずらす
-const float CLife_UI::DIGIT_SHIFT = 50.0f;
+const float CEnemy_Ammo_UI::DIGIT_SHIFT = 10.0f;
 
 //=============================================
 //コンストラクタ
 //=============================================
-CLife_UI::CLife_UI() :m_nLife(0), m_pos(), m_pNumber()
+CEnemy_Ammo_UI::CEnemy_Ammo_UI() :m_nAmmo(), m_pos(), m_size() , m_pNumber()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CLife_UI::~CLife_UI()
+CEnemy_Ammo_UI::~CEnemy_Ammo_UI()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CLife_UI::Init()
+HRESULT CEnemy_Ammo_UI::Init()
 {
-	//初期位置代入
-	m_pos = D3DXVECTOR3(300.0f, 650.0f, 0.0f);
-
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			m_pNumber[nCnt] = CNumber_3D::Create(m_pos,m_size);
 			//座標をずらす
 			m_pos.x -= DIGIT_SHIFT;
 		}
@@ -46,7 +43,7 @@ HRESULT CLife_UI::Init()
 //=============================================
 //終了
 //=============================================
-void CLife_UI::Uninit()
+void CEnemy_Ammo_UI::Uninit()
 {
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
@@ -61,14 +58,23 @@ void CLife_UI::Uninit()
 //=============================================
 //更新
 //=============================================
-void CLife_UI::Update()
+void CEnemy_Ammo_UI::Update()
 {
+	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	{
+		if (m_pNumber[nCnt] != nullptr)
+		{
+			m_pNumber[nCnt]->SetPos(m_pos);
+			//座標をずらす
+			m_pos.x -= DIGIT_SHIFT;
+		}
+	}
 }
 
 //=============================================
-//UIに設定
+//弾数の設定
 //=============================================
-void CLife_UI::SetLife_UI(int nLife)
+void CEnemy_Ammo_UI::SetAmmo_UI(int nAmmo)
 {
 	//テクスチャ座標設定
 	int a_PosTexU[NUM_DIGIT];
@@ -79,7 +85,7 @@ void CLife_UI::SetLife_UI(int nLife)
 	for (nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		//今の時間から計算
-		a_PosTexU[nCnt] = nLife / nDigit % 10;
+		a_PosTexU[nCnt] = nAmmo / nDigit % 10;
 
 		//桁を進める
 		nDigit *= 10;
@@ -95,4 +101,20 @@ void CLife_UI::SetLife_UI(int nLife)
 
 		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
+}
+
+//=============================================
+//生成
+//=============================================
+CEnemy_Ammo_UI* CEnemy_Ammo_UI::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+{
+	CEnemy_Ammo_UI* pAmmoUI = new CEnemy_Ammo_UI;
+	
+	if(pAmmoUI == nullptr) {return nullptr;}
+
+	pAmmoUI->m_pos = pos;
+	pAmmoUI->m_size = size;
+	pAmmoUI->Init();
+
+	return pAmmoUI;
 }

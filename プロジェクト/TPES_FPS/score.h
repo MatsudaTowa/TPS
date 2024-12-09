@@ -42,7 +42,7 @@ public:
 
 	D3DXVECTOR3& GetPos();
 	float& GetDigitShift();
-	CNumber* m_pNumber[NUM_DIGIT];
+	CNumber_2D* m_pNumber[NUM_DIGIT];
 private:
 	D3DXVECTOR3 m_pos;
 	float m_DigitShift;

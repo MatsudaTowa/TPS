@@ -35,7 +35,7 @@ HRESULT CScore::Init()
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
 			//ç¿ïWÇÇ∏ÇÁÇ∑
 			m_pos.x -= m_DigitShift;
 		}
