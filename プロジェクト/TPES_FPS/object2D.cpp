@@ -12,6 +12,11 @@
 //コンストラクタ
 //=============================================
 CObject2D::CObject2D(int nPriority):CObject(nPriority)
+, m_pos({0.0f,0.0f,0.0f})		//座標の初期化
+, m_rot({0.0f,0.0f,0.0f})		//方向の初期化
+, m_col({0.0f,0.0f,0.0f,0.0f})	//色の初期化
+, m_size({0.0f,0.0f})			//サイズの初期化
+, m_tex_pos({0.0f,0.0f})		//テクスチャ座標の初期化
 {
 	m_pTexture = nullptr;
 	m_pVtxBuff = nullptr;
@@ -94,7 +99,7 @@ void CObject2D::Draw()
 //=============================================
 //頂点の設定
 //=============================================
-void CObject2D::SetVtx(float rhw, D3DCOLOR col)
+void CObject2D::SetVtx(float rhw)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -129,10 +134,10 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col)
 	pVtx[3].rhw = rhw;
 
 	//頂点カラーの設定
-	pVtx[0].col = col;
-	pVtx[1].col = col;
-	pVtx[2].col = col;
-	pVtx[3].col = col;
+	pVtx[0].col =
+	pVtx[1].col =
+	pVtx[2].col =
+	pVtx[3].col = m_col;
 
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
 	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
@@ -146,7 +151,7 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col)
 //=============================================
 //頂点の設定(回転、拡縮を含む)
 //=============================================
-void CObject2D::SetVtx(float rhw, D3DCOLOR col, float fAngle, float fLength)
+void CObject2D::SetVtx(float rhw, float fAngle, float fLength)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -221,7 +226,60 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col, float fAngle, float fLength)
 	pVtx[0].col =
 	pVtx[1].col =
 	pVtx[2].col =
-	pVtx[3].col = col;
+	pVtx[3].col = m_col;
+
+	//アンロック
+	m_pVtxBuff->Unlock();
+}
+
+//=============================================
+//ゲージ用の頂点の設定
+//=============================================
+void CObject2D::SetGaugeVtx(float rhw)
+{
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+
+	if (m_pVtxBuff == nullptr)
+	{
+		pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	}
+	VERTEX_2D* pVtx;
+
+	//頂点バッファをロックし頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x
+		, m_pos.y - m_size.y
+		, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + m_size.x
+		, m_pos.y - m_size.y
+		, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x
+		, m_pos.y + m_size.y
+		, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + m_size.x
+		, m_pos.y + m_size.y
+		, 0.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = rhw;
+	pVtx[1].rhw = rhw;
+	pVtx[2].rhw = rhw;
+	pVtx[3].rhw = rhw;
+
+	//頂点カラーの設定
+	pVtx[0].col = 
+	pVtx[1].col = 
+	pVtx[2].col = 
+	pVtx[3].col = m_col;
+
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	//アンロック
 	m_pVtxBuff->Unlock();
@@ -230,7 +288,7 @@ void CObject2D::SetVtx(float rhw, D3DCOLOR col, float fAngle, float fLength)
 //=============================================
 //頂点の設定(pos足元)
 //=============================================
-void CObject2D::SetVtx_FootPos(float rhw, D3DCOLOR col, float fAngle, float fLength)
+void CObject2D::SetVtx_FootPos(float rhw, float fAngle, float fLength)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -265,10 +323,10 @@ void CObject2D::SetVtx_FootPos(float rhw, D3DCOLOR col, float fAngle, float fLen
 	pVtx[3].rhw = rhw;
 
 	//頂点カラーの設定
-	pVtx[0].col = col;
-	pVtx[1].col = col;
-	pVtx[2].col = col;
-	pVtx[3].col = col;
+	pVtx[0].col = 
+	pVtx[1].col = 
+	pVtx[2].col = 
+	pVtx[3].col = m_col;
 
 	//アンロック
 	m_pVtxBuff->Unlock();
@@ -311,6 +369,14 @@ D3DXVECTOR2& CObject2D::GetSize()
 D3DXVECTOR2& CObject2D::GetTexPos()
 {
 	return m_tex_pos;
+}
+
+//=============================================
+//色取得
+//=============================================
+D3DXCOLOR& CObject2D::GetColor()
+{
+	return m_col;
 }
 
 //=============================================

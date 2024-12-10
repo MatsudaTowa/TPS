@@ -39,8 +39,19 @@ HRESULT CWave_Result_Screen::Init()
 	//サイズを代入
 	SetSize(size);
 
+	//サイズを代入
+	SetSize(size);
+
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.85f);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.85f));
+	SetVtx(1.0f);
 	return S_OK;
 }
 

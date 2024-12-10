@@ -43,8 +43,16 @@ HRESULT CResult_Screen::Init()
 	//サイズを代入
 	SetSize(size);
 
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(1.0f);
 	return S_OK;
 }
 

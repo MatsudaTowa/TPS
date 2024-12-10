@@ -39,8 +39,16 @@ HRESULT CTitle_Screen::Init()
 	//テクスチャ座標設定
 	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
 
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(1.0f);
 	return S_OK;
 }
 

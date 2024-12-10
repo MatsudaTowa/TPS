@@ -38,8 +38,16 @@ HRESULT CHitCameraEffect::Init()
 	//サイズを代入
 	SetSize(size);
 
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha));
+	SetVtx(1.0f);
 
 	return S_OK;
 }
@@ -61,8 +69,16 @@ void CHitCameraEffect::Update()
 	//親クラスの終了
 	CObject2D::Update();
 
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha));
+	SetVtx(1.0f);
 }
 
 //=============================================

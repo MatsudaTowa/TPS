@@ -47,20 +47,26 @@ public:
 		m_tex_pos = tex;
 	}
 
-	//テクスチャ座標の代入
 	void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 Buff)
 	{
 		m_pVtxBuff = Buff;
 	}
 
+	//色の代入
+	void SetColor(D3DXCOLOR col)
+	{
+		m_col = col;
+	}
 
 	//頂点座標の代入
-	void SetVtx(float rhw, D3DCOLOR col);
+	void SetVtx(float rhw);
 
 	//頂点座標(拡縮、回転)の代入
-	void SetVtx(float rhw, D3DCOLOR col,float fAngle,float fLength);
+	void SetVtx(float rhw,float fAngle,float fLength);
 
-	void SetVtx_FootPos(float rhw, D3DCOLOR col,float fAngle,float fLength);
+	void SetGaugeVtx(float rhw);
+
+	void SetVtx_FootPos(float rhw,float fAngle,float fLength);
 
 	//posの取得
 	D3DXVECTOR3& GetPos();
@@ -73,6 +79,9 @@ public:
 
 	//テクスチャ座標の取得
 	D3DXVECTOR2& GetTexPos();
+	
+	//色の取得
+	D3DXCOLOR& GetColor();
 
 	LPDIRECT3DVERTEXBUFFER9& GetVtxBuff();
 
@@ -81,11 +90,10 @@ private:
 	LPDIRECT3DTEXTURE9 m_pTexture; //テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff; //頂点バッファへのポインタ
 
-
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR2 m_size;
 	D3DXVECTOR2 m_tex_pos; //tex座標
-
+	D3DXCOLOR m_col;
 };
 #endif

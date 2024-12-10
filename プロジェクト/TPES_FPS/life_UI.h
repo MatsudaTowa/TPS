@@ -9,6 +9,8 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
+#include "player_UI_box.h"
+#include "gauge.h"
 
 //=============================================
 //体力表示クラス
@@ -27,9 +29,21 @@ public:
 	int m_nLife; //体力の値
 	void SetLife_UI(int nLife);
 
+	void SetNumber(int nLife);
+
 private:
-	D3DXVECTOR3 m_pos;
+	static const D3DXVECTOR3 BOX_POS; //枠の位置
+	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ
+
+	static const D3DXVECTOR3 GAUGE_POS; //ゲージの位置
+	static const D3DXVECTOR2 GAUGE_SIZE; //ゲージのサイズ
+
+	static const D3DXVECTOR3 NUM_POS; //数字の位置
+	static const D3DXVECTOR2 NUM_SIZE; //数字のサイズ
 	CNumber_2D* m_pNumber[NUM_DIGIT];
+	CPlayerUIBox* m_pUIBox;
+	CGauge*m_pGauge;
+	D3DXVECTOR3 m_NumPos;
 };
 
 #endif // DEBUG

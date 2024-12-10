@@ -6,13 +6,23 @@
 //=============================================
 #include "life_UI.h"
 #include "manager.h"
+#include "player_test.h"
 //桁ごとにずらす
-const float CLife_UI::DIGIT_SHIFT = 50.0f;
+const float CLife_UI::DIGIT_SHIFT = 28.0f;
+
+const D3DXVECTOR3 CLife_UI::BOX_POS ={ 250.0f, 650.0f, 0.0f };
+const D3DXVECTOR2 CLife_UI::BOX_SIZE ={ 200.0f, 50.0f };
+
+const D3DXVECTOR3 CLife_UI::GAUGE_POS = { 50.0f, 680.0f, 0.0f };
+const D3DXVECTOR2 CLife_UI::GAUGE_SIZE = { 400.0f,15.0f };
+
+const D3DXVECTOR3 CLife_UI::NUM_POS = { 120.0f, 630.0f, 0.0f };
+const D3DXVECTOR2 CLife_UI::NUM_SIZE = { 18.0f, 28.0f };
 
 //=============================================
 //コンストラクタ
 //=============================================
-CLife_UI::CLife_UI() :m_nLife(0), m_pos(), m_pNumber()
+CLife_UI::CLife_UI() :m_nLife(0), m_pNumber(), m_pUIBox(), m_NumPos(), m_pGauge()
 {
 }
 
@@ -28,16 +38,28 @@ CLife_UI::~CLife_UI()
 //=============================================
 HRESULT CLife_UI::Init()
 {
-	//初期位置代入
-	m_pos = D3DXVECTOR3(300.0f, 650.0f, 0.0f);
+	m_NumPos = NUM_POS;
 
+	//UIの枠生成
+	if (m_pUIBox == nullptr)
+	{
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{0.0f,0.0f,0.0f,0.8f});
+	}
+
+	//体力ゲージ生成
+	if (m_pGauge == nullptr)
+	{
+		m_pGauge = CGauge::Create(GAUGE_POS, GAUGE_SIZE, CGauge::GAUGE_TYPE::GAUGE_TYPE_LIFE,{0.0f,1.0f,0.0f,1.0f});
+	}
+
+	//数字生成
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			m_pNumber[nCnt] = CNumber_2D::Create(m_NumPos, NUM_SIZE);
 			//座標をずらす
-			m_pos.x -= DIGIT_SHIFT;
+			m_NumPos.x -= DIGIT_SHIFT;
 		}
 	}
 	return S_OK;
@@ -56,6 +78,18 @@ void CLife_UI::Uninit()
 			m_pNumber[nCnt] = nullptr;
 		}
 	}
+	
+	if (m_pUIBox != nullptr)
+	{
+		m_pUIBox->Uninit();
+		m_pUIBox = nullptr;
+	}
+
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge->Uninit();
+		m_pGauge = nullptr;
+	}
 }
 
 //=============================================
@@ -63,12 +97,33 @@ void CLife_UI::Uninit()
 //=============================================
 void CLife_UI::Update()
 {
+	if (m_pUIBox != nullptr)
+	{
+		m_pUIBox->Update();
+	}
+
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge->Update();
+	}
 }
 
 //=============================================
 //UIに設定
 //=============================================
 void CLife_UI::SetLife_UI(int nLife)
+{
+	SetNumber(nLife);
+
+	float gaugeWidth = (nLife * GAUGE_SIZE.x) / CPlayer_test::PLAYER_LIFE;
+
+	m_pGauge->SetGauge({ gaugeWidth , m_pGauge->GetSize().y});
+}
+
+//=============================================
+//数字設定
+//=============================================
+void CLife_UI::SetNumber(int nLife)
 {
 	//テクスチャ座標設定
 	int a_PosTexU[NUM_DIGIT];

@@ -29,6 +29,7 @@ CFade::~CFade()
 //=============================================
 HRESULT CFade::Init()
 {
+	//サイズ取得
 	D3DXVECTOR2 size = GetSize();
 
 	size = D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -36,8 +37,16 @@ HRESULT CFade::Init()
 	//サイズを代入
 	SetSize(size);
 
+	//カラー取得
+	D3DXCOLOR col = GetColor();
+
+	col = D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade);
+
+	//カラーを代入
+	SetColor(col);
+
 	//頂点設定
-	SetVtx(1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade));
+	SetVtx(1.0f);
 
 	return S_OK;
 }
@@ -76,8 +85,17 @@ void CFade::Update()
 				CManager::GetInstance()->SetMode(m_fademode);
 			}
 		}
+
+		//カラー取得
+		D3DXCOLOR col = GetColor();
+
+		col = D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade);
+
+		//カラーを代入
+		SetColor(col);
+
 		//頂点カラーの設定
-		SetVtx(1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade));
+		SetVtx(1.0f);
 	}
 
 }
