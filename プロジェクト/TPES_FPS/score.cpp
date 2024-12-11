@@ -7,10 +7,16 @@
 #include "score.h"
 #include "manager.h"
 
+const D3DXVECTOR3 CScore::BOX_POS = { 1070.0f, 665.0f, 0.0f };
+const D3DXVECTOR2 CScore::BOX_SIZE = { 190.0f, 45.0f };
+
+const D3DXVECTOR3 CScore::NUM_POS = { 100.0f, 650.0f, 0.0f };
+const D3DXVECTOR2 CScore::NUM_SIZE = { 8.0f, 18.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
-CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f))
+CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f)), m_pPlayerUIBox()
 {//イニシャライザーでメンバ変数初期化
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
@@ -31,6 +37,11 @@ CScore::~CScore()
 //=============================================
 HRESULT CScore::Init()
 {
+	if (m_pPlayerUIBox == nullptr)
+	{
+		//m_pPlayerUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{1.0f,1.0f,1.0f,1.0f}, CPlayerUIBox::BOX_TYPE::BOX_TYPE_SCORE);
+	}
+
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)

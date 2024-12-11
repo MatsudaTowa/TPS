@@ -9,6 +9,7 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
+#include "player_UI_box.h"
 
 //=============================================
 //スコアクラス
@@ -16,8 +17,6 @@
 class CScore
 {
 public:
-	static const int NUM_DIGIT = 6;  //桁数
-
 	CScore();
 	virtual ~CScore();
 	virtual HRESULT Init();
@@ -42,9 +41,19 @@ public:
 
 	D3DXVECTOR3& GetPos();
 	float& GetDigitShift();
-	CNumber_2D* m_pNumber[NUM_DIGIT];
 private:
+	static const int NUM_DIGIT = 6;  //桁数
+
+	static const D3DXVECTOR3 BOX_POS; //枠の位置
+	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ
+
+	static const D3DXVECTOR3 NUM_POS; //数字の位置
+	static const D3DXVECTOR2 NUM_SIZE; //数字のサイズ
+
 	D3DXVECTOR3 m_pos;
+	CNumber_2D* m_pNumber[NUM_DIGIT];
+	CPlayerUIBox* m_pPlayerUIBox;
+
 	float m_DigitShift;
 };
 

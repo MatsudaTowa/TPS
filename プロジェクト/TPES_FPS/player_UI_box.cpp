@@ -7,8 +7,6 @@
 #include "player_UI_box.h"
 #include "manager.h"
 
-const std::string CPlayerUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box.png";
-
 //=============================================
 //コンストラクタ
 //=============================================
@@ -68,9 +66,24 @@ void CPlayerUIBox::Draw()
 //=============================================
 //生成
 //=============================================
-CPlayerUIBox* CPlayerUIBox::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col)
+CPlayerUIBox* CPlayerUIBox::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, BOX_TYPE type)
 {
-	CPlayerUIBox*pUIBox = new CPlayerUIBox;
+	CPlayerUIBox*pUIBox = nullptr;
+
+	switch (type)
+	{
+	case CPlayerUIBox::BOX_TYPE_LIFE:
+		pUIBox = new CLifeUIBox;
+		break;
+	case CPlayerUIBox::BOX_TYPE_AMMO:
+		pUIBox = new CAmmoUIBox;
+		break;
+	case CPlayerUIBox::BOX_TYPE_SCORE:
+		pUIBox = new CScoreUIBox;
+		break;
+	default:
+		break;
+	}
 	
 	if(pUIBox == nullptr) {return nullptr;}
 
@@ -85,10 +98,160 @@ CPlayerUIBox* CPlayerUIBox::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR 
 
 	pUIBox->SetType(OBJECT_TYPE_UI_BOX);
 
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-	//pUIBox->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
-
 	pUIBox->Init();
 
 	return pUIBox;
+}
+
+const std::string CLifeUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_000.png";
+
+//=============================================
+//コンストラクタ
+//=============================================
+CLifeUIBox::CLifeUIBox(int nPriority):CPlayerUIBox(nPriority)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CLifeUIBox::~CLifeUIBox()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CLifeUIBox::Init()
+{
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	CPlayerUIBox::Init();
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CLifeUIBox::Uninit()
+{
+	CPlayerUIBox::Uninit();
+}
+
+//=============================================
+//更新
+//=============================================
+void CLifeUIBox::Update()
+{
+	CPlayerUIBox::Update();
+}
+
+//=============================================
+//描画
+//=============================================
+void CLifeUIBox::Draw()
+{
+	CPlayerUIBox::Draw();
+}
+
+const std::string CAmmoUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_001.png";
+
+//=============================================
+//コンストラクタ
+//=============================================
+CAmmoUIBox::CAmmoUIBox(int nPriority) :CPlayerUIBox(nPriority)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CAmmoUIBox::~CAmmoUIBox()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CAmmoUIBox::Init()
+{
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	CPlayerUIBox::Init();
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CAmmoUIBox::Uninit()
+{
+	CPlayerUIBox::Uninit();
+}
+
+//=============================================
+//更新
+//=============================================
+void CAmmoUIBox::Update()
+{
+	CPlayerUIBox::Update();
+}
+
+//=============================================
+//描画
+//=============================================
+void CAmmoUIBox::Draw()
+{
+	CPlayerUIBox::Draw();
+}
+
+const std::string CScoreUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_001.png";
+
+//=============================================
+//コンストラクタ
+//=============================================
+CScoreUIBox::CScoreUIBox(int nPriority)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CScoreUIBox::~CScoreUIBox()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CScoreUIBox::Init()
+{
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	CPlayerUIBox::Init();
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CScoreUIBox::Uninit()
+{
+	CPlayerUIBox::Uninit();
+}
+
+//=============================================
+//更新
+//=============================================
+void CScoreUIBox::Update()
+{
+	CPlayerUIBox::Update();
+}
+
+//=============================================
+//描画
+//=============================================
+void CScoreUIBox::Draw()
+{
+	CPlayerUIBox::Draw();
 }

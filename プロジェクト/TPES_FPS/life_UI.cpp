@@ -11,7 +11,7 @@
 const float CLife_UI::DIGIT_SHIFT = 15.0f;
 
 const D3DXVECTOR3 CLife_UI::BOX_POS ={ 200.0f, 665.0f, 0.0f };
-const D3DXVECTOR2 CLife_UI::BOX_SIZE ={ 150.0f, 35.0f };
+const D3DXVECTOR2 CLife_UI::BOX_SIZE ={ 180.0f, 50.0f };
 
 const D3DXVECTOR3 CLife_UI::GAUGE_POS = { 50.0f, 685.0f, 0.0f };
 const D3DXVECTOR2 CLife_UI::GAUGE_SIZE = { 300.0f,15.0f };
@@ -43,7 +43,7 @@ HRESULT CLife_UI::Init()
 	//UIÇÃògê∂ê¨
 	if (m_pUIBox == nullptr)
 	{
-		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{0.0f,0.0f,0.0f,0.65f});
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{ 1.0f,1.0f,1.0f,1.0f },CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
 	}
 
 	//ëÃóÕÉQÅ[ÉWê∂ê¨

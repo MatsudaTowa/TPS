@@ -79,7 +79,7 @@ HRESULT CPlayer_test::Init()
 	{
 		if (m_pGunIcon == nullptr)
 		{
-			m_pGunIcon = CGunIcon::Create({ 1120.0f, 665.0f, 0.0f }, { 80.0f,40.0f }, { 1.0f,1.0f,1.0f,1.0f }, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
+			m_pGunIcon = CGunIcon::Create({ 1150.0f, 665.0f, 0.0f }, { 70.0f,30.0f }, { 1.0f,1.0f,1.0f,1.0f }, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
 		}
 		//Žc’e”‰Šú‰»
 		if (m_pAmmoUI == nullptr)
@@ -87,6 +87,8 @@ HRESULT CPlayer_test::Init()
 			m_pAmmoUI = new CAmmo_UI;
 
 			m_pAmmoUI->Init();
+
+			m_pAmmoUI->SetDefaultAmmo_UI(m_pGun->GetAmmo());
 		}
 		//‘Ì—ÍUI‰Šú‰»
 		if (m_pLifeUI == nullptr)
@@ -198,7 +200,7 @@ void CPlayer_test::Update()
 
 	if (m_pAmmoUI != nullptr)
 	{
-		m_pAmmoUI->SetAmmo_UI(m_pGun->GetAmmo());
+		m_pAmmoUI->SetCurrentAmmo_UI(m_pGun->GetAmmo());
 	}
 
 	if (m_pLifeUI != nullptr)
