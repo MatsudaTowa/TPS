@@ -34,27 +34,29 @@ public:
 		m_pos = pos;
 	}
 
+	void SetSize(D3DXVECTOR2 size)
+	{
+		m_size = size;
+	}
+
 	void SetDigitShift(float shift)
 	{
 		m_DigitShift = shift;
 	}
 
 	D3DXVECTOR3& GetPos();
+	D3DXVECTOR2& GetSize();
 	float& GetDigitShift();
 private:
 	static const int NUM_DIGIT = 6;  //桁数
-
-	static const D3DXVECTOR3 BOX_POS; //枠の位置
-	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ
 
 	static const D3DXVECTOR3 NUM_POS; //数字の位置
 	static const D3DXVECTOR2 NUM_SIZE; //数字のサイズ
 
 	D3DXVECTOR3 m_pos;
+	D3DXVECTOR2 m_size;
 	CNumber_2D* m_pNumber[NUM_DIGIT];
-	CPlayerUIBox* m_pPlayerUIBox;
 
 	float m_DigitShift;
 };
-
 #endif // DEBUG

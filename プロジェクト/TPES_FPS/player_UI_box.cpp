@@ -205,7 +205,7 @@ void CAmmoUIBox::Draw()
 	CPlayerUIBox::Draw();
 }
 
-const std::string CScoreUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_001.png";
+const std::string CScoreUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_002.png";
 
 //=============================================
 //コンストラクタ

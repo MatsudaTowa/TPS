@@ -6,7 +6,10 @@
 //=============================================
 #include "wave_score.h"
 
-const float CWaveScore::DIGIT_SHIFT = 50.0f;
+const float CWaveScore::DIGIT_SHIFT = 70.0f;
+
+const D3DXVECTOR3 CWaveScore::NUM_POS = { 850.0f ,SCREEN_HEIGHT * 0.5f,0.0f };
+const D3DXVECTOR2 CWaveScore::NUM_SIZE = { 40.0f, 50.0f };
 //=============================================
 //コンストラクタ
 //=============================================
@@ -26,8 +29,8 @@ CWaveScore::~CWaveScore()
 //=============================================
 HRESULT CWaveScore::Init()
 {
-	D3DXVECTOR3 pos = D3DXVECTOR3(750.0f ,SCREEN_HEIGHT * 0.5f,0.0f);
-	CScore::SetPos(pos);
+	CScore::SetPos(NUM_POS);
+	CScore::SetSize(NUM_SIZE);
 	CScore::SetDigitShift(DIGIT_SHIFT);
 	CScore::Init();
 	return S_OK;

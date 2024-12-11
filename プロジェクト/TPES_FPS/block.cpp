@@ -102,7 +102,10 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
 			pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
 			pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
-			break;
+		D3DXMATERIAL* pMat; //マテリアルポインタ
+		pMat = (D3DXMATERIAL*)pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat->GetBufferPointer();
+		//pBlock->BindTexture((pTex->GetAddress(pTex->Regist(&pMat.pTextureFilename()))); //テクスチャ設定
+		break;
 	case CBlock::BLOCKTYPE::BLOCKTYPE_WOOD:
 		//Xファイル読み込み
 		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(WOOD_MODEL_NAME)).pBuffMat,
@@ -131,6 +134,7 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	default:
 		break;
 	}
+
 
 	pBlock->SetType(OBJECT_TYPE_BLOCK); //タイプ設定
 	pBlock->Init();

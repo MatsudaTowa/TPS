@@ -23,6 +23,13 @@ public:
 	void Uninit() override;
 	void Update() override;
 private:
+	static const D3DXVECTOR3 BOX_POS; //枠の位置
+	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ
+
+	static const D3DXVECTOR3 NUM_POS; //数字の位置
+	static const D3DXVECTOR2 NUM_SIZE; //数字のサイズ
+
+	CPlayerUIBox* m_pPlayerUIBox;
 };
 
 #endif // DEBUG

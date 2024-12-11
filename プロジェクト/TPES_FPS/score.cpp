@@ -7,16 +7,13 @@
 #include "score.h"
 #include "manager.h"
 
-const D3DXVECTOR3 CScore::BOX_POS = { 1070.0f, 665.0f, 0.0f };
-const D3DXVECTOR2 CScore::BOX_SIZE = { 190.0f, 45.0f };
-
-const D3DXVECTOR3 CScore::NUM_POS = { 100.0f, 650.0f, 0.0f };
-const D3DXVECTOR2 CScore::NUM_SIZE = { 8.0f, 18.0f };
+const D3DXVECTOR3 CScore::NUM_POS = { 750.0f, 55.0f, 0.0f };
+const D3DXVECTOR2 CScore::NUM_SIZE = { 20.0f, 30.0f };
 
 //=============================================
 //コンストラクタ
 //=============================================
-CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f)), m_pPlayerUIBox()
+CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_size({0.0f,0.0f})
 {//イニシャライザーでメンバ変数初期化
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
@@ -37,16 +34,11 @@ CScore::~CScore()
 //=============================================
 HRESULT CScore::Init()
 {
-	if (m_pPlayerUIBox == nullptr)
-	{
-		//m_pPlayerUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{1.0f,1.0f,1.0f,1.0f}, CPlayerUIBox::BOX_TYPE::BOX_TYPE_SCORE);
-	}
-
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, m_size);
 			//座標をずらす
 			m_pos.x -= m_DigitShift;
 		}
@@ -146,6 +138,14 @@ void CScore::SetScore(int nScore)
 D3DXVECTOR3& CScore::GetPos()
 {
 	return m_pos;
+}
+
+//=============================================
+//表示サイズ取得
+//=============================================
+D3DXVECTOR2& CScore::GetSize()
+{
+	return m_size;
 }
 
 //=============================================

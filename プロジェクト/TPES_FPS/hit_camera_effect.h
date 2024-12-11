@@ -16,7 +16,7 @@ class CHitCameraEffect:public CObject2D
 {
 public:
 	static const std::string TEXTURE_NAME_SEVERE;	//重症テクスチャの名前
-	static const int PRIORITY = 30; //描画順
+	static const int PRIORITY = 80; //描画順
 
 	enum HIT_EFFECT_STAGE
 	{

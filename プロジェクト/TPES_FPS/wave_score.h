@@ -23,6 +23,9 @@ public:
 	void Uninit() override;
 	void Update() override;
 private:
+
+	static const D3DXVECTOR3 NUM_POS; //数字の位置
+	static const D3DXVECTOR2 NUM_SIZE; //数字のサイズ
 };
 
 #endif // DEBUG
