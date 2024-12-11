@@ -34,7 +34,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect(), m_pGunIcon()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -72,10 +72,15 @@ HRESULT CPlayer_test::Init()
 		m_pGun->Init();
 	}
 
+
 	//現在のシーンを取得 TODO:シーン参照するな
 	CScene::MODE pScene = CScene::GetSceneMode();
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
+		if (m_pGunIcon == nullptr)
+		{
+			m_pGunIcon = CGunIcon::Create({ 1120.0f, 665.0f, 0.0f }, { 80.0f,40.0f }, { 1.0f,1.0f,1.0f,1.0f }, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
+		}
 		//残弾数初期化
 		if (m_pAmmoUI == nullptr)
 		{
@@ -141,6 +146,11 @@ void CPlayer_test::Uninit()
 	{
 		m_pLifeUI->Uninit();
 		m_pLifeUI = nullptr;
+	}
+	if (m_pGunIcon != nullptr)
+	{
+		m_pGunIcon->Uninit();
+		m_pGunIcon = nullptr;
 	}
 	if (m_pSliding != nullptr)
 	{
@@ -252,6 +262,7 @@ void CPlayer_test::Draw()
 {
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse() ;
 	pMouse->Debug();
+
 	//親クラスのモーション用の描画を呼ぶ
 	MotionDraw();
 	//プレイヤーのデバッグ表示

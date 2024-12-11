@@ -16,8 +16,10 @@
 #include "player_behavior.h"
 #include "enemy.h"
 #include "hit_camera_effect.h"
+#include "gun_icon.h"
 
 class CPlayerSliding;
+class CAmmo_UI;
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -68,11 +70,12 @@ private:
 
 	void ReSpawn(); //リスポーン
 	void Input(); //プレイヤー入力処理
-	static CAmmo_UI*m_pAmmoUI;
-	static CLife_UI*m_pLifeUI;
+	static CAmmo_UI* m_pAmmoUI;
+	static CLife_UI* m_pLifeUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
+	CGunIcon* m_pGunIcon;
 	CReticle* m_Raticle;
 
 	CPlayerSliding* m_pSliding;

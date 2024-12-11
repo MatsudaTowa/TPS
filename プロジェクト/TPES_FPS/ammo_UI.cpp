@@ -8,12 +8,17 @@
 #include "manager.h"
 
 //桁ごとにずらす
-const float CAmmo_UI::DIGIT_SHIFT = 50.0f;
+const float CAmmo_UI::DIGIT_SHIFT = 28.0f;
+const D3DXVECTOR3 CAmmo_UI::BOX_POS = { 1080.0f, 665.0f, 0.0f };
+const D3DXVECTOR2 CAmmo_UI::BOX_SIZE = { 150.0f, 35.0f };
+
+const D3DXVECTOR3 CAmmo_UI::NUM_POS = { 1000.0f, 665.0f, 0.0f };
+const D3DXVECTOR2 CAmmo_UI::NUM_SIZE = { 15.0f, 35.0f };
 
 //=============================================
 //コンストラクタ
 //=============================================
-CAmmo_UI::CAmmo_UI():m_nAmmo(),m_pos(),m_pNumber()
+CAmmo_UI::CAmmo_UI():m_nAmmo(),m_pos(),m_pNumber(), m_pUIBox()
 {
 }
 
@@ -30,13 +35,19 @@ CAmmo_UI::~CAmmo_UI()
 HRESULT CAmmo_UI::Init()
 {
 	//初期位置代入
-	m_pos = D3DXVECTOR3(1100.0f, 650.0f, 0.0f);
+	m_pos = NUM_POS;
+
+	//UIの枠生成
+	if (m_pUIBox == nullptr)
+	{
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, { 0.0f,0.0f,0.0f,0.65f });
+	}
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, D3DXVECTOR2(30.0f, 50.0f));
+			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, NUM_SIZE);
 			//座標をずらす
 			m_pos.x -= DIGIT_SHIFT;
 		}
@@ -56,6 +67,12 @@ void CAmmo_UI::Uninit()
 			m_pNumber[nCnt]->Uninit();
 			m_pNumber[nCnt] = nullptr;
 		}
+	}
+
+	if (m_pUIBox != nullptr)
+	{
+		m_pUIBox->Uninit();
+		m_pUIBox = nullptr;
 	}
 }
 

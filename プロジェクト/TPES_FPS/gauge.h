@@ -16,6 +16,7 @@
 class CGauge : public CObject2D
 {
 public:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
 
 	enum GAUGE_TYPE
 	{

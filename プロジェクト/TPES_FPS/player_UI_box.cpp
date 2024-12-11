@@ -7,6 +7,8 @@
 #include "player_UI_box.h"
 #include "manager.h"
 
+const std::string CPlayerUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box.png";
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -82,6 +84,9 @@ CPlayerUIBox* CPlayerUIBox::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR 
 	pUIBox->SetColor(col);
 
 	pUIBox->SetType(OBJECT_TYPE_UI_BOX);
+
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//pUIBox->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
 	pUIBox->Init();
 

@@ -1,41 +1,35 @@
 //=============================================
 //
-//ゲージ管理[gauge.cpp]
+//銃の表示[gun_icon.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "gauge.h"
+#include "gun_icon.h"
 #include "manager.h"
-
-const std::string CGauge::TEXTURE_NAME = "data\\TEXTURE\\gauge.png";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CGauge::CGauge(int nPriority) :CObject2D(nPriority)
+CGunIcon::CGunIcon(int nPriority):CObject2D(nPriority)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CGauge::~CGauge()
+CGunIcon::~CGunIcon()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CGauge::Init()
+HRESULT CGunIcon::Init()
 {
-	//親クラスの初期化を呼ぶ
+	//初期化
 	CObject2D::Init();
 
-	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
-
-	//頂点設定
-	SetGaugeVtx(1.0f);
+	SetVtx(1.0f);
 
 	return S_OK;
 }
@@ -43,101 +37,85 @@ HRESULT CGauge::Init()
 //=============================================
 //終了
 //=============================================
-void CGauge::Uninit()
+void CGunIcon::Uninit()
 {
-	//親クラスの終了呼ぶ
+	//終了
 	CObject2D::Uninit();
 }
 
 //=============================================
 //更新
 //=============================================
-void CGauge::Update()
+void CGunIcon::Update()
 {
-	//親クラスの更新呼ぶ
+	//更新
 	CObject2D::Update();
 
-	//頂点設定
-	SetGaugeVtx(1.0f);
+	SetVtx(1.0f);
 }
 
 //=============================================
 //描画
 //=============================================
-void CGauge::Draw()
+void CGunIcon::Draw()
 {
-	//親クラスの描画呼ぶ
+	//描画
 	CObject2D::Draw();
 }
 
-
 //=============================================
-//ゲージ設定
+//描画
 //=============================================
-void CGauge::SetGauge(D3DXVECTOR2 size)
+CGunIcon* CGunIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, ICON_TYPE type)
 {
-	SetSize(size);
-}
-
-//=============================================
-//生成
-//=============================================
-CGauge* CGauge::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXCOLOR col)
-{
-	CGauge* pGauge = nullptr;
+	CGunIcon* pGunIcon = nullptr;
 
 	switch (type)
 	{
-	case GAUGE_TYPE_LIFE:
-		pGauge = new CGauge_Life;
+	case CGunIcon::ICON_TYPE_AR:
+		pGunIcon = new CARIcon;
 		break;
 	default:
-		assert(false);
 		break;
 	}
 
-	// nullならnullを返す
-	if (pGauge == nullptr) { return nullptr; }
+	if(pGunIcon == nullptr) {return nullptr;}
 
-	pGauge->SetPos(pos); //pos設定
+	pGunIcon->SetPos(pos);
+	pGunIcon->SetSize(size);
+	pGunIcon->SetColor(col);
 
-	pGauge->SetSize(size); //size設定
+	pGunIcon->Init();
 
-	pGauge->SetColor(col);
-
-	pGauge->m_type = type; //ゲージのタイプ設定
-
-	pGauge->SetType(OBJECT_TYPE_GAUGE); //タイプ設定
-
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-	//pGauge->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
-
-	pGauge->Init();
-
-	return pGauge;
+	return pGunIcon;
 }
 
+//テクスチャ初期化
+const std::string CARIcon::TEXTURE_NAME = "data\\TEXTURE\\ak.png";
 //=============================================
 //コンストラクタ
 //=============================================
-CGauge_Life::CGauge_Life(int nPriority) :CGauge(nPriority)
+CARIcon::CARIcon(int nPriority):CGunIcon(nPriority)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CGauge_Life::~CGauge_Life()
+CARIcon::~CARIcon()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CGauge_Life::Init()
+HRESULT CARIcon::Init()
 {
-	//親クラスの初期化
-	CGauge::Init();
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+
+	//初期化
+	CGunIcon::Init();
 
 	return S_OK;
 }
@@ -145,27 +123,26 @@ HRESULT CGauge_Life::Init()
 //=============================================
 //終了
 //=============================================
-void CGauge_Life::Uninit()
+void CARIcon::Uninit()
 {
-	//親クラスの終了
-	CGauge::Uninit();
+	//終了
+	CGunIcon::Uninit();
 }
 
 //=============================================
 //更新
 //=============================================
-void CGauge_Life::Update()
+void CARIcon::Update()
 {
-	//親クラスの更新
-	CGauge::Update();
+	//更新
+	CGunIcon::Update();
 }
 
 //=============================================
 //描画
 //=============================================
-void CGauge_Life::Draw()
+void CARIcon::Draw()
 {
-	//親クラスの描画
-	CGauge::Draw();
+	//描画
+	CGunIcon::Draw();
 }
-
