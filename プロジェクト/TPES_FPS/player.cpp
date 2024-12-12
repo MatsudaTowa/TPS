@@ -329,59 +329,29 @@ void CPlayer::PlayerMove()
 	CInputPad* pPad = CManager::GetInstance()->GetPad();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
-	//カメラタイプ取得
-	CCamera::CANERA_TYPE pCameraType = CCamera::GetType();
-
 	//どっち向いてるか取得
 	bool bWay = GetWay();
 
-	switch (pCameraType)
-	{//サイドビューの時は横にしか動かないように設定
-	case CCamera::CANERA_TYPE::TYPE_SIDEVIEW:
-		if (pKeyboard->GetPress(DIK_A) || pPad->GetPress(CInputPad::JOYKEY::JOYKEY_LEFT))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
-		}
-		else if (pKeyboard->GetPress(DIK_D) || pPad->GetPress(CInputPad::JOYKEY::JOYKEY_RIGHT))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
-	case CCamera::CANERA_TYPE::TYPE_PARALLEL_SIDEVIEW:
-		if (pKeyboard->GetPress(DIK_A) || pPad->GetPress(CInputPad::JOYKEY::JOYKEY_LEFT))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
-		}
-		else if (pKeyboard->GetPress(DIK_D) || pPad->GetPress(CInputPad::JOYKEY::JOYKEY_RIGHT))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
-	default:
-		if (pKeyboard->GetPress(DIK_W))
-		{
-			vecDirection.z += 1.0f;
-		}
-		if (pKeyboard->GetPress(DIK_S))
-		{
-			vecDirection.z -= 1.0f;
-		}
-		if (pKeyboard->GetPress(DIK_A))
-		{
-			vecDirection.x -= 1.0f;
-			bWay = false;
-		}
-		else if (pKeyboard->GetPress(DIK_D))
-		{
-			vecDirection.x += 1.0f;
-			bWay = true;
-		}
-		break;
+	
+	if (pKeyboard->GetPress(DIK_W))
+	{
+		vecDirection.z += 1.0f;
 	}
+	if (pKeyboard->GetPress(DIK_S))
+	{
+		vecDirection.z -= 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_A))
+	{
+		vecDirection.x -= 1.0f;
+		bWay = false;
+	}
+	else if (pKeyboard->GetPress(DIK_D))
+	{
+		vecDirection.x += 1.0f;
+		bWay = true;
+	}
+
 
 	//どっち向いてるか代入
 	SetWay(bWay);

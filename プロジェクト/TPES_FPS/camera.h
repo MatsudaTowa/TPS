@@ -9,21 +9,20 @@
 #define _CAMERA_H_
 #include "main.h"
 #include "input.h"
+#include "camera_state.h"
+
+class CCameraState;
 class CCamera
 {
 public:
-	//カメラタイプ宣言
-	typedef enum
+	//カメラタイプ宣言 TODO:ステートパターンで
+	enum CANERA_TYPE
 	{
-		TYPE_BIRDVIEW = 0,
-		TYPE_SIDEVIEW,
-		TYPE_PARALLEL_SIDEVIEW, //平行投影
 		TYPE_THIRDVIEW, //第三者視点
+		TYPE_ULTVIEW, //ウルト視点
 		TYPE_DEBUG,
 		TYPE_MAX,
-	}CANERA_TYPE;
-
-	static CANERA_TYPE m_type; //カメラタイプ
+	};
 
 	CCamera();
 	~CCamera();
@@ -32,6 +31,8 @@ public:
 	void Update();
 	void SetCamera();
 	void ResetCamera();
+
+	void ChangeCameraState(CCameraState* state);
 
 	//方向取得
 	void SetRot(D3DXVECTOR3 rot)
@@ -49,6 +50,11 @@ public:
 		m_posR = posR;
 	}
 
+	void SetLength(float length)
+	{
+		m_fLength = length;
+	}
+
 	//方向取得
 	D3DXVECTOR3 GetRot();
 	//視点取得
@@ -56,11 +62,12 @@ public:
 	//注視点取得
 	D3DXVECTOR3 GetPosR();
 
+	float& GetLength();
+
 	//カメラのデバック表示
 	void DebugCameraDraw(); 
 
-	//現在のカメラのタイプ取得
-	static CANERA_TYPE GetType();
+	CCameraState* m_pCameraState;
 private:
 	static const float DEFAULT_MOVE; //通常時の移動
 	static const float DAMPING_COEFFICIENT; //移動抵抗
@@ -78,18 +85,12 @@ private:
 	static const float THIRDVIEW_CORRECT_Y; //サードパーソンビュー時の補正値Y
 	static const float THIRDVIEW_CORRECT_Z; //サードパーソンビュー時の補正値Z
 
-	static const float THIRDVIEW_LENGTH; //サードパーソンビュー時の距離
-
 	static const float MAX_TURN_X; //サードパーソンビュー時のXの最大可動域
 	static const float MIN_TURN_X; //サードパーソンビュー時のXの最小可動域
 
 	void CameraMove(); //カメラ移動処理
 
 	void CameraTurn(); //カメラ回転処理
-
-	void BirdViewCamera(); //バードビュー処理
-
-	void SideViewCamera(); //サイドビュー処理
 
 	void ThirdViewCamera(); //サードパーソンビュー処理
 

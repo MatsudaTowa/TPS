@@ -12,6 +12,7 @@
 #include "camera.h"
 #include "game.h"
 #include "smoke_grenade.h"
+#include "camera_state.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
@@ -380,6 +381,7 @@ void CPlayer_test::Input()
 		{
 			if (m_pUlt->GetCoolTimeCnt() >= m_pUlt->GetCoolTime())
 			{
+				pCamera->ChangeCameraState(new CUltCameraState);
 				ChangePlayerState(new CUltState);
 			}
 		}

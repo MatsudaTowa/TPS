@@ -5,6 +5,8 @@
 //
 //=============================================
 #include "player_state.h"
+#include "manager.h"
+#include "camera_state.h"
 
 //=============================================
 //デフォルト状態の処理
@@ -59,6 +61,8 @@ void CUltState::Ult(CPlayer_test* player)
 
 	if (isFinish)
 	{
+		CCamera* pCamera = CManager::GetInstance()->GetCamera();
+		pCamera->ChangeCameraState(new CThirdView);
 		player->ChangePlayerState(new CDefaultState);
 	}
 }

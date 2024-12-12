@@ -35,9 +35,6 @@ const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
 //サイドビュー時のZの距離
 const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
 
-//サードビュー時の距離
-const float CCamera::THIRDVIEW_LENGTH = 130.0f;
-
 //サードビュー時の補正値
 const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
 const float CCamera::THIRDVIEW_CORRECT_Y = 105.0f;
@@ -48,12 +45,22 @@ const float CCamera::MAX_TURN_X = 0.5f;
 //サードパーソンビュー時のXの最小可動域
 const float CCamera::MIN_TURN_X = -0.15f;
 
-CCamera::CANERA_TYPE CCamera::m_type = TYPE_THIRDVIEW;
-
 //=============================================
 //コンストラクタ
 //=============================================
-CCamera::CCamera()
+CCamera::CCamera():
+m_fAngle(0.0f),
+m_fLength(0.0f),
+m_moveR({0.0f,0.0f,0.0f}),
+m_moveV({0.0f,0.0f,0.0f}),
+m_mtxProjection(),
+m_mtxView(),
+m_pCameraState(),
+m_posR({0.0f,0.0f,0.0f}),
+m_posV({0.0f,0.0f,0.0f}),
+m_rot({0.0f,0.0,0.0f}),
+m_rotmove({0.0f,0.0f,0.0f}),
+m_vecU({0.0f,0.0f,0.0f})
 {
 }
 
@@ -69,7 +76,10 @@ CCamera::~CCamera()
 //=============================================
 HRESULT CCamera::Init()
 {
-	
+	if (m_pCameraState == nullptr)
+	{
+		m_pCameraState = new CThirdView;
+	}
 	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
 
@@ -94,6 +104,11 @@ HRESULT CCamera::Init()
 //=============================================
 void CCamera::Uninit()
 {
+	if (m_pCameraState != nullptr)
+	{
+		delete m_pCameraState;
+		m_pCameraState = nullptr;
+	}
 }
 
 //=============================================
@@ -104,27 +119,13 @@ void CCamera::Update()
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
-	switch (m_type)
+	if (m_pCameraState != nullptr)
 	{
-	case TYPE_BIRDVIEW:
-		BirdViewCamera();
-		break;
-	case TYPE_SIDEVIEW:
-		SideViewCamera();
-		break;
-	case TYPE_PARALLEL_SIDEVIEW:
-		SideViewCamera();
-		break;
-	case TYPE_THIRDVIEW:
-		ThirdViewCamera();
-		break;
-	case TYPE_DEBUG:
-		CameraTurn();
-		CameraMove();
-		break;
-	default:
-		break;
+		m_pCameraState->ThirdView(this);
+		m_pCameraState->Ult(this);
 	}
+
+	ThirdViewCamera();
 
 	if (m_rot.y > D3DX_PI)
 	{
@@ -173,25 +174,12 @@ void CCamera::SetCamera()
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
 
-	switch (m_type)
-	{
-	case TYPE_PARALLEL_SIDEVIEW:
-		//平行投影
-		D3DXMatrixOrthoLH(&m_mtxProjection,
-		(float)SCREEN_WIDTH * 0.2f,
-		(float)SCREEN_HEIGHT* 0.2f,
-		5.0f,
-		500.0f);
-		break;
-	default:
-		//プロジェクションマトリックスを作成
-		D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
-			D3DXToRadian(45.0f),
-			(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
-			10.0f,
-			2000.0f);
-		break;
-	}
+	//プロジェクションマトリックスを作成
+	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
+		D3DXToRadian(45.0f),
+		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
+		10.0f,
+		2000.0f);
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
@@ -237,15 +225,19 @@ void CCamera::ResetCamera()
 	//対角線の角度を算出する
 	m_fAngle = atan2f(vecCamera.y, vecCamera.z);
 
-	m_type = TYPE_DEBUG;
 }
 
 //=============================================
-//カメラタイプ取得
+//カメラの状態変更
 //=============================================
-CCamera::CANERA_TYPE CCamera::GetType()
+void CCamera::ChangeCameraState(CCameraState* state)
 {
-	return m_type;
+	//今のステートを消し引数のステートに切り替える
+	if (m_pCameraState != nullptr)
+	{
+		delete m_pCameraState;
+		m_pCameraState = state;
+	}
 }
 
 //=============================================
@@ -342,67 +334,6 @@ void CCamera::CameraTurn()
 }
 
 //=============================================
-//バードビュー処理
-//=============================================
-void CCamera::BirdViewCamera()
-{
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-				m_posR =pPlayer->GetPos();
-				m_posV.x = m_posR.x - sinf(m_rot.y);
-				m_posV.y = BIRDVIEW_LENGTH_Y;
-				m_posV.z = m_posR.z - cosf(m_rot.y);
-				break;
-			}
-		}
-	}
-}
-
-//=============================================
-//サイドビュー処理
-//=============================================
-void CCamera::SideViewCamera()
-{
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//キーボード情報取得
-		CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-		if (pKeyboard->GetTrigger(DIK_F4))
-		{
-			m_type = TYPE_PARALLEL_SIDEVIEW;
-		}
-
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-				m_posR.x = pPlayer->GetPos().x;
-				m_posR.y = 20.0f;
-				m_posR.z = pPlayer->GetPos().z;
-				m_posV.x = m_posR.x - sinf(m_rot.y)* SIDEVIEW_LENGTH_X;
-				m_posV.y = SIDEVIEW_LENGTH_Y;
-				m_posV.z = m_posR.z - cosf(m_rot.y) * SIDEVIEW_LENGTH_Z;
-				break;
-			}
-		}
-	}
-}
-
-//=============================================
 //サードパーソンビュー処理
 //=============================================
 void CCamera::ThirdViewCamera()
@@ -424,18 +355,14 @@ void CCamera::ThirdViewCamera()
 				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				m_posR.z = pPlayer->GetPos().z;
 
-				m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
-				THIRDVIEW_LENGTH * sinf(m_rot.x), 
-				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
-
 				//カメラをプレイヤーの右にする処理:TODO
 				//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
 				//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 				//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
 
-				m_posV = m_posR + D3DXVECTOR3(-THIRDVIEW_LENGTH * cosf(m_rot.x) * sinf(m_rot.y), 
-				THIRDVIEW_LENGTH * sinf(m_rot.x), 
-				-THIRDVIEW_LENGTH * cosf(m_rot.x) * cosf(m_rot.y));
+				m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
+					m_fLength * sinf(m_rot.x),
+				-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
@@ -484,6 +411,14 @@ D3DXVECTOR3 CCamera::GetPosV()
 D3DXVECTOR3 CCamera::GetPosR()
 {
 	return m_posR;
+}
+
+//=============================================
+//距離取得
+//=============================================
+float& CCamera::GetLength()
+{
+	return m_fLength;
 }
 
 //=============================================
