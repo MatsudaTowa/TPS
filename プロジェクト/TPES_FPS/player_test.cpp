@@ -34,7 +34,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect(), m_pGunIcon()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect(), m_pGunIcon(), m_pUlt(), m_pPlayerState()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -55,6 +55,10 @@ CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_
 //=============================================
 CPlayer_test::~CPlayer_test()
 {
+	if (m_pPlayerState != nullptr)
+	{
+		delete m_pPlayerState;
+	}
 }
 
 //=============================================
@@ -64,6 +68,11 @@ HRESULT CPlayer_test::Init()
 {
 	CCharacter::Init();
 
+	if (m_pPlayerState == nullptr)
+	{
+		m_pPlayerState = new CDefaultState;
+	}
+
 	//銃初期化
 	if (m_pGun == nullptr)
 	{
@@ -72,6 +81,11 @@ HRESULT CPlayer_test::Init()
 		m_pGun->Init();
 	}
 
+	if (m_pUlt == nullptr)
+	{
+		m_pUlt = new CMediumUlt;
+		m_pUlt->Init();
+	}
 
 	//現在のシーンを取得 TODO:シーン参照するな
 	CScene::MODE pScene = CScene::GetSceneMode();
@@ -154,6 +168,11 @@ void CPlayer_test::Uninit()
 		m_pGunIcon->Uninit();
 		m_pGunIcon = nullptr;
 	}
+	if (m_pUlt != nullptr)
+	{
+		m_pUlt->Uninit();
+		m_pUlt = nullptr;
+	}
 	if (m_pSliding != nullptr)
 	{
 		delete m_pSliding;
@@ -175,6 +194,12 @@ void CPlayer_test::Update()
 	//ダメージステートの切り替えTODO:これもステートパターンで
 	ChangeDamageState();
 
+	if (m_pPlayerState != nullptr)
+	{
+		m_pPlayerState->Default(this);
+		m_pPlayerState->Ult(this);
+	}
+
 	if (m_pHitCameraEffect != nullptr)
 	{//使われていたら
 		m_pHitCameraEffect->SubAlpha();
@@ -192,11 +217,6 @@ void CPlayer_test::Update()
 	}
 	CCharacter::Update();
 	ColisionEnemy();
-
-	if (m_bRelorad == true)
-	{//リロード中だったら
-		m_bRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
-	}
 
 	if (m_pAmmoUI != nullptr)
 	{
@@ -223,21 +243,6 @@ void CPlayer_test::Update()
 
 			//ステートカウント代入
 			SetStateCnt(nStateCnt);
-		}
-
-		if (GetFinish())
-		{
-			//入力処理
-			Input();
-
-			if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT))
-			{
-				m_pSliding->Sliding(this);
-			}
-			else
-			{
-				m_pCharacterState->Move(this);
-			}
 		}
 
 		//カメラ情報取得
@@ -365,8 +370,21 @@ void CPlayer_test::Input()
 {
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
+	if (pKeyboard->GetPress(DIK_X))
+	{
+		if (m_pUlt != nullptr)
+		{
+			if (m_pUlt->GetCoolTimeCnt() >= m_pUlt->GetCoolTime())
+			{
+				ChangePlayerState(new CUltState);
+			}
+		}
+	}
+	
 	if (pMouse->GetPress(1))
 	{//マウスが押されてる間は
 		//射撃状態に変更
@@ -397,8 +415,6 @@ void CPlayer_test::Input()
 		}
 	}
 
-	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-
 	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))
 	{
 		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
@@ -417,6 +433,19 @@ void CPlayer_test::Input()
 					sinf(pCamera->GetRot().x + D3DX_PI) * 10.0f,
 					cosf(pCamera->GetRot().y + D3DX_PI) * -10.0f }, { 0.0f,0.0f,0.0f });
 		}
+	}
+}
+
+//=============================================
+//プレイヤーのステート変更
+//=============================================
+void CPlayer_test::ChangePlayerState(CPlayerState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pPlayerState != nullptr)
+	{
+		delete m_pPlayerState;
+		m_pPlayerState = state;
 	}
 }
 

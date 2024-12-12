@@ -754,6 +754,10 @@ void CCharacter::HitField()
 					m_move.y = 0.0f;
 					m_bLanding = true; //着地
 				}
+				else
+				{
+					m_bLanding = false; //着地
+				}
 
 				//TODO:壁の当たり判定やったらこれを使う必要なくなる
 				{
@@ -786,7 +790,6 @@ void CCharacter::HitField()
 						m_move.x = 0.0f;
 					}
 				}
-				
 			}
 		}
 	}

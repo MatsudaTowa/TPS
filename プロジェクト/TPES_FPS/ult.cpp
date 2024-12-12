@@ -1,0 +1,135 @@
+//=============================================
+//
+//アルティメット[ult.cpp]
+//Auther Matsuda Towa
+//
+//=============================================
+#include "ult.h"
+
+//=============================================
+//コンストラクタ
+//=============================================
+CUlt::CUlt():
+m_CoolTimeCnt(0),	//カウント0に
+m_CoolTime(0),		//クールタイム0に
+m_isFinish(false)	//終わっていない状態に
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CUlt::~CUlt()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CUlt::Init()
+{
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CUlt::Uninit()
+{
+	delete this;
+}
+
+//=============================================
+//更新
+//=============================================
+void CUlt::Update()
+{
+	if (m_CoolTimeCnt < m_CoolTime)
+	{
+		++m_CoolTimeCnt;
+	}
+	else if (m_CoolTimeCnt >= m_CoolTime)
+	{//クールタイムに到達したら
+		//終了してない状態に
+		m_isFinish = false;
+	}
+	
+}
+
+const float CMediumUlt::FLYING_HIGHT = 400.0f;
+const D3DXVECTOR3 CMediumUlt::SPEED = {7.0f,8.0f,7.0f};
+
+//=============================================
+//コンストラクタ
+//=============================================
+CMediumUlt::CMediumUlt():m_move_y(0.0f)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CMediumUlt::~CMediumUlt()
+{
+}
+
+//=============================================
+//初期化
+//=============================================
+HRESULT CMediumUlt::Init()
+{
+	//親クラスの初期化
+	CUlt::Init();
+
+	SetCoolTime(MEDIUM_ULT_COOL_TIME);
+	return S_OK;
+}
+
+//=============================================
+//終了
+//=============================================
+void CMediumUlt::Uninit()
+{
+	//親クラスの終了
+	CUlt::Uninit();
+}
+
+//=============================================
+//更新
+//=============================================
+void CMediumUlt::Update()
+{
+	//親クラスの更新
+	CUlt::Update();
+}
+
+//=============================================
+//ウルトの実行処理
+//=============================================
+bool CMediumUlt::Action(CPlayer_test* player)
+{
+	float rot = CManager::GetInstance()->GetCamera()->GetRot().y;
+
+	if (!m_isFinish)
+	{
+		if (m_move_y < FLYING_HIGHT)
+		{
+			player->SetMove({ sinf(rot) * SPEED.x,SPEED.y,cosf(rot) * SPEED.z });
+			m_move_y += SPEED.y;
+		}
+		if (m_move_y >= FLYING_HIGHT)
+		{
+			player->SetMove({ sinf(rot) * SPEED.x,-SPEED.y * 2.0f,cosf(rot) * SPEED.z });
+
+			if (player->GetLaunding())
+			{//着地したら終了
+				m_isFinish = true;
+				m_move_y = 0;
+
+				//クールタイムリセット
+				SetCoolTimeCnt(0);
+			}
+		}
+	}
+	return m_isFinish;
+}

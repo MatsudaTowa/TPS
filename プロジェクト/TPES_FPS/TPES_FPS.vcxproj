@@ -201,6 +201,7 @@
     <ClCompile Include="object_map.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_behavior.cpp" />
+    <ClCompile Include="player_state.cpp" />
     <ClCompile Include="player_test.cpp" />
     <ClCompile Include="player_UI_box.cpp" />
     <ClCompile Include="precompile.cpp">
@@ -221,6 +222,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
+    <ClCompile Include="ult.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="wave.cpp" />
     <ClCompile Include="wave_boss.cpp" />
@@ -281,6 +283,7 @@
     <ClInclude Include="object_map.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_behavior.h" />
+    <ClInclude Include="player_state.h" />
     <ClInclude Include="player_test.h" />
     <ClInclude Include="player_UI_box.h" />
     <ClInclude Include="precompile.h" />
@@ -298,6 +301,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
+    <ClInclude Include="ult.h" />
     <ClInclude Include="wall.h" />
     <ClInclude Include="wave.h" />
     <ClInclude Include="wave_boss.h" />

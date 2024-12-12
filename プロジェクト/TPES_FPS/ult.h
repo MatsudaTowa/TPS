@@ -1,0 +1,74 @@
+//=============================================
+//
+//アルティメット[ult.h]
+//Auther Matsuda Towa
+//
+//=============================================
+#ifndef _ULT_
+#define _ULT_
+#include "character_behavior.h"
+#include "player_test.h"
+
+class CPlayer_test;
+//=============================================
+//アルティメット処理ストラテジー
+//=============================================
+class CUlt
+{
+public:
+	CUlt();
+	virtual ~CUlt();
+	virtual HRESULT Init();
+	virtual void Uninit();
+	virtual void Update();
+	virtual bool Action(CPlayer_test* player) = 0;
+
+	//クールタイム代入
+	void SetCoolTime(int CoolTime)
+	{
+		m_CoolTime = CoolTime;
+	}
+
+	//クールタイム代入
+	void SetCoolTimeCnt(int CoolTimeCnt)
+	{
+		m_CoolTimeCnt = CoolTimeCnt;
+	}
+
+	int& GetCoolTime()
+	{
+		return m_CoolTime;
+	}
+
+	int& GetCoolTimeCnt()
+	{
+		return m_CoolTimeCnt;
+	}
+protected:
+	bool m_isFinish;
+private:
+	int m_CoolTime;
+	int m_CoolTimeCnt;
+};
+
+//=============================================
+//ミディアムキャラアルティメット処理ストラテジー
+//=============================================
+class CMediumUlt:public CUlt
+{
+public:
+	CMediumUlt();
+	~CMediumUlt() override;
+	HRESULT Init() override;
+	void Uninit() override;
+	void Update() override;
+	bool Action(CPlayer_test* player) override;
+private:
+	static const int MEDIUM_ULT_COOL_TIME = 600;
+	static const float FLYING_HIGHT; //どこまで飛ぶか
+	static const D3DXVECTOR3 SPEED;
+
+	float m_move_y; //y軸の移動量
+};
+
+#endif // !_ULT_

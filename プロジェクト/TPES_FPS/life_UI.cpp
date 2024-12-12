@@ -8,7 +8,7 @@
 #include "manager.h"
 #include "player_test.h"
 //桁ごとにずらす
-const float CLife_UI::DIGIT_SHIFT = 15.0f;
+const float CLife_UI::DIGIT_SHIFT = 18.0f;
 
 const D3DXVECTOR3 CLife_UI::BOX_POS ={ 200.0f, 665.0f, 0.0f };
 const D3DXVECTOR2 CLife_UI::BOX_SIZE ={ 180.0f, 50.0f };
@@ -17,7 +17,7 @@ const D3DXVECTOR3 CLife_UI::GAUGE_POS = { 50.0f, 685.0f, 0.0f };
 const D3DXVECTOR2 CLife_UI::GAUGE_SIZE = { 300.0f,15.0f };
 
 const D3DXVECTOR3 CLife_UI::NUM_POS = { 100.0f, 650.0f, 0.0f };
-const D3DXVECTOR2 CLife_UI::NUM_SIZE = { 8.0f, 18.0f };
+const D3DXVECTOR2 CLife_UI::NUM_SIZE = { 10.0f, 18.0f };
 
 //=============================================
 //コンストラクタ

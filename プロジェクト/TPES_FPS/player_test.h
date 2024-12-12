@@ -17,9 +17,13 @@
 #include "enemy.h"
 #include "hit_camera_effect.h"
 #include "gun_icon.h"
+#include "player_state.h"
+#include "ult.h"
 
+class CPlayerState;
 class CPlayerSliding;
 class CAmmo_UI;
+class CUlt;
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -61,6 +65,17 @@ public:
 
 	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
 
+	void Input(); //プレイヤー入力処理
+
+	void ChangePlayerState(CPlayerState* state);
+
+	CReticle* m_Raticle;
+
+	CUlt* m_pUlt;
+
+	CPlayerSliding* m_pSliding;
+
+	CPlayerState* m_pPlayerState;
 private:
 
 	//プレイヤーの移動関連
@@ -69,16 +84,12 @@ private:
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン
-	void Input(); //プレイヤー入力処理
 	static CAmmo_UI* m_pAmmoUI;
 	static CLife_UI* m_pLifeUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
 	CGunIcon* m_pGunIcon;
-	CReticle* m_Raticle;
-
-	CPlayerSliding* m_pSliding;
 
 	CHitCameraEffect* m_pHitCameraEffect;
 
