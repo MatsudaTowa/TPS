@@ -192,6 +192,7 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_parts.cpp" />
     <ClCompile Include="move_point.cpp" />
+    <ClCompile Include="object2D_anim.cpp" />
     <ClCompile Include="normal_enemy.cpp" />
     <ClCompile Include="normal_enemy_behavior.cpp" />
     <ClCompile Include="number.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="ult.cpp" />
     <ClCompile Include="ult_icon.cpp" />
+    <ClCompile Include="ult_icon_effect.cpp" />
     <ClCompile Include="ult_range.cpp" />
     <ClCompile Include="ult_UI.cpp" />
     <ClCompile Include="wall.cpp" />
@@ -278,6 +280,7 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="model_parts.h" />
     <ClInclude Include="move_point.h" />
+    <ClInclude Include="object2D_anim.h" />
     <ClInclude Include="normal_enemy.h" />
     <ClInclude Include="normal_enemy_behavior.h" />
     <ClInclude Include="number.h" />
@@ -308,6 +311,7 @@
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="ult.h" />
     <ClInclude Include="ult_icon.h" />
+    <ClInclude Include="ult_icon_effect.h" />
     <ClInclude Include="ult_range.h" />
     <ClInclude Include="ult_UI.h" />
     <ClInclude Include="wall.h" />

@@ -12,7 +12,9 @@ const D3DXCOLOR CUltIcon::START_COLOR = {0.2f,0.2f,0.2f,1.0f};
 //=============================================
 //コンストラクタ
 //=============================================
-CUltIcon::CUltIcon(int nPriority):CObject2D(nPriority), m_AddColor(0.0f)
+CUltIcon::CUltIcon(int nPriority):CObject2D(nPriority),
+m_AddColor(0.0f),
+m_pIconEffect()
 {
 }
 
@@ -28,6 +30,10 @@ CUltIcon::~CUltIcon()
 //=============================================
 HRESULT CUltIcon::Init()
 {
+	if (m_pIconEffect == nullptr)
+	{
+		m_pIconEffect = CUltIconEffect::Create(GetPos(),{75.0f,75.0f},{1.0f,0.8f,0.0f,0.75f});
+	}
 	CObject2D::Init();
 
 	//頂点生成
@@ -40,6 +46,11 @@ HRESULT CUltIcon::Init()
 //=============================================
 void CUltIcon::Uninit()
 {
+	if (m_pIconEffect != nullptr)
+	{
+		m_pIconEffect->Uninit();
+		m_pIconEffect = nullptr;
+	}
 	CObject2D::Uninit();
 }
 

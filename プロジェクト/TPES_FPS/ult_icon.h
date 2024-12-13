@@ -9,6 +9,7 @@
 #define _ULT_ICON_H_
 #include "main.h"
 #include "object2D.h"
+#include "ult_icon_effect.h"
 
 //ウルト表記クラス
 class CUltIcon : public CObject2D
@@ -30,6 +31,7 @@ public:
 	static CUltIcon* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float add_col, ULT_TYPE type);
 private:
 	float m_AddColor; //色加算の値
+	CUltIconEffect* m_pIconEffect;
 };
 
 class CMediumIcon : public CUltIcon
