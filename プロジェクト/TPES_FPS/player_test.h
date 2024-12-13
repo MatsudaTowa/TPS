@@ -13,6 +13,7 @@
 #include "reticle.h"
 #include"ammo_UI.h"
 #include"life_UI.h"
+#include "ult_UI.h"
 #include "player_behavior.h"
 #include "enemy.h"
 #include "hit_camera_effect.h"
@@ -23,6 +24,7 @@
 class CPlayerState;
 class CPlayerSliding;
 class CAmmo_UI;
+class CUlt_UI;
 class CUlt;
 //プレイヤークラス
 class CPlayer_test:public CCharacter
@@ -86,6 +88,8 @@ private:
 	void ReSpawn(); //リスポーン
 	static CAmmo_UI* m_pAmmoUI;
 	static CLife_UI* m_pLifeUI;
+
+	CUlt_UI* m_pUltUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 

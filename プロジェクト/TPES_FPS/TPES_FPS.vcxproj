@@ -224,6 +224,9 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="ult.cpp" />
+    <ClCompile Include="ult_icon.cpp" />
+    <ClCompile Include="ult_range.cpp" />
+    <ClCompile Include="ult_UI.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="wave.cpp" />
     <ClCompile Include="wave_boss.cpp" />
@@ -304,6 +307,9 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="ult.h" />
+    <ClInclude Include="ult_icon.h" />
+    <ClInclude Include="ult_range.h" />
+    <ClInclude Include="ult_UI.h" />
     <ClInclude Include="wall.h" />
     <ClInclude Include="wave.h" />
     <ClInclude Include="wave_boss.h" />

@@ -1,54 +1,61 @@
 //=============================================
 //
-//1ウェーブ処理[wave_one.cpp]
+//ウルト範囲処理[ult_range.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "wave_one.h"
+#include "ult_range.h"
 
-const std::string CWave_One::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
-const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_000.txt";
-const std::string CWave_One::WAVE_1_WALL_FILE = "data\\FILE\\wall_000.txt";
+const D3DXVECTOR3 CUltRange::SIZE = {50.0f,0.0f,50.0f};
 
 //=============================================
 //コンストラクタ
 //=============================================
-CWave_One::CWave_One()
+CUltRange::CUltRange()
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CWave_One::~CWave_One()
+CUltRange::~CUltRange()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CWave_One::Init()
+HRESULT CUltRange::Init()
 {
-	CWave::LoadBlock(&WAVE_1_BLOCK_FILE);
-	CWave::LoadEnemy(&WAVE_1_ENEMY_FILE);
-	//CWave::LoadWall(&WAVE_1_WALL_FILE);
-	//地面生成
-	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
 	return S_OK;
 }
 
 //=============================================
 //終了
 //=============================================
-void CWave_One::Uninit()
+void CUltRange::Uninit()
 {
-	CWave::Uninit();
+	delete this;
 }
 
 //=============================================
 //更新
 //=============================================
-void CWave_One::Update()
+void CUltRange::Update()
 {
-	CWave::Update();
+}
+
+//=============================================
+//描画
+//=============================================
+void CUltRange::Draw()
+{
+}
+
+//=============================================
+//生成
+//=============================================
+CUltRange* CUltRange::Create(D3DXVECTOR3 pos)
+{
+	return nullptr;
 }

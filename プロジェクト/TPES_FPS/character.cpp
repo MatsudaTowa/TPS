@@ -801,33 +801,33 @@ void CCharacter::HitField()
 //=============================================
 void CCharacter::HitWall()
 {
-	D3DXVECTOR3 CharacterPos = GetPos();
+	//D3DXVECTOR3 CharacterPos = GetPos();
 
-	//サイズ取得
-	D3DXVECTOR3 CharacterMin = GetMinPos();
-	D3DXVECTOR3 CharacterMax = GetMaxPos();
+	////サイズ取得
+	//D3DXVECTOR3 CharacterMin = GetMinPos();
+	//D3DXVECTOR3 CharacterMax = GetMaxPos();
 
-	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CWall::WALL_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+	//for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	//{
+	//	//オブジェクト取得
+	//	CObject* pObj = CObject::Getobject(CWall::WALL_PRIORITY, nCnt);
+	//	if (pObj != nullptr)
+	//	{//ヌルポインタじゃなければ
+	//		//タイプ取得
+	//		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//ブロックとの当たり判定
-			//床との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_WALL)
-			{
-				CWall* pWall = dynamic_cast<CWall*>(pObj);
+	//		//ブロックとの当たり判定
+	//		//床との当たり判定
+	//		if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_WALL)
+	//		{
+	//			CWall* pWall = dynamic_cast<CWall*>(pObj);
 
-				ColisionWall_X(CharacterPos, CharacterMin, CharacterMax, pWall);
-				ColisionWall_Z(CharacterPos, CharacterMin, CharacterMax, pWall);
-			}
-		}
-	}
-	SetPos(CharacterPos);
+	//			ColisionWall_X(CharacterPos, CharacterMin, CharacterMax, pWall);
+	//			ColisionWall_Z(CharacterPos, CharacterMin, CharacterMax, pWall);
+	//		}
+	//	}
+	//}
+	//SetPos(CharacterPos);
 }
 
 //=============================================

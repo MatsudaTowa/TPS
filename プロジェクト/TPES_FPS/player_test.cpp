@@ -35,7 +35,14 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),m_Raticle(), m_bSmoke(), m_pHitCameraEffect(), m_pGunIcon(), m_pUlt(), m_pPlayerState()
+CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),
+m_Raticle(),
+m_bSmoke(),
+m_pHitCameraEffect(),
+m_pGunIcon(),
+m_pUlt(), 
+m_pPlayerState(),
+m_pUltUI()
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -112,6 +119,13 @@ HRESULT CPlayer_test::Init()
 
 			m_pLifeUI->Init();
 		}
+		//ウルトUI初期化
+		if (m_pUltUI == nullptr)
+		{
+			m_pUltUI = new CUlt_UI;
+
+			m_pUltUI->Init(this);
+		}
 	}
 
 	m_pHitCameraEffect = nullptr;
@@ -163,6 +177,11 @@ void CPlayer_test::Uninit()
 	{
 		m_pLifeUI->Uninit();
 		m_pLifeUI = nullptr;
+	}
+	if (m_pUltUI != nullptr)
+	{
+		m_pUltUI->Uninit();
+		m_pUltUI = nullptr;
 	}
 	if (m_pGunIcon != nullptr)
 	{
@@ -227,6 +246,11 @@ void CPlayer_test::Update()
 	if (m_pLifeUI != nullptr)
 	{
 		m_pLifeUI->SetLife_UI(GetLife());
+	}
+
+	if (m_pUltUI != nullptr)
+	{
+		m_pUltUI->SetCurrentUlt_UI(this);
 	}
 
 	if (pScene != CScene::MODE::MODE_TITLE)

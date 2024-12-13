@@ -59,6 +59,7 @@ public:
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
 
 private:
+	//void ColisionUlt(D3DXVECTOR3& enemyPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
 
 	//プレイヤーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動

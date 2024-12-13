@@ -15,7 +15,7 @@ class CObject
 public:
 	static const int MAX_OBJECT = 256; //オブジェクトの最大数
 
-	typedef enum
+	enum OBJECT_TYPE
 	{
 		OBJECT_TYPE_NONE = 0,
 		OBJECT_TYPE_TITLE,
@@ -23,6 +23,7 @@ public:
 		OBJECT_TYPE_RESULT,
 		OBJECT_TYPE_FADE,
 		OBJECT_TYPE_UI_BOX,
+		OBJECT_TYPE_ULT_ICON,
 		OBJECT_TYPE_HIT_CAMERA_EFFECT,
 		OBJECT_TYPE_GAUGE,
 		OBJECT_TYPE_NUMBER,
@@ -39,7 +40,7 @@ public:
 		OBJECT_TYPE_SMOKE_GRENADE,
 		OBJECT_TYPE_SMOKE_RANGE,
 		OBJECT_TYPE_MAX,
-	}OBJECT_TYPE;
+	};
 
 	CObject(int nPriority = MAX_PRIORITY);
 
