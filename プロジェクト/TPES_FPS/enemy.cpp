@@ -211,8 +211,6 @@ void CEnemy::Damage(int nDamage)
 //=============================================
 void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 {
-	Damage(nDamage);
-
 	//ウルトの着地地点と敵の方向情報
 	D3DXVECTOR3 Vector = UltPos - GetPos();
 
@@ -227,6 +225,9 @@ void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 
 	//移動量代入
 	SetMove(move);
+
+	Damage(nDamage);
+
 }
 
 //=============================================
