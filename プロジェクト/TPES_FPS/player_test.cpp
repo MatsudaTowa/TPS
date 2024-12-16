@@ -523,6 +523,9 @@ void CPlayer_test::ColisionEnemy()
 	}
 }
 
+//=============================================
+//ƒ_ƒ[ƒWó‘Ô‚ÌØ‚è‘Ö‚¦
+//=============================================
 void CPlayer_test::ChangeDamageState()
 {
 	// ó‘Ô‚ğæ“¾
@@ -552,6 +555,9 @@ void CPlayer_test::ChangeDamageState()
 	}
 }
 
+//=============================================
+//“G‚Æ‚Ì“–‚½‚è”»’è
+//=============================================
 void CPlayer_test::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
 	for (int nEnemyPartsCnt = 0; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)

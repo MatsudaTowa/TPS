@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "ult.h"
+#include "ult_range.h"
 
 //=============================================
 //コンストラクタ
@@ -61,7 +62,7 @@ const D3DXVECTOR3 CMediumUlt::SPEED = {7.0f,8.0f,7.0f};
 //=============================================
 //コンストラクタ
 //=============================================
-CMediumUlt::CMediumUlt():m_move_y(0.0f)
+CMediumUlt::CMediumUlt():m_move_y(0.0f), m_pUltRange()
 {
 }
 
@@ -89,6 +90,12 @@ HRESULT CMediumUlt::Init()
 //=============================================
 void CMediumUlt::Uninit()
 {
+	if (m_pUltRange != nullptr)
+	{//ウルトの判定が破棄されていなければ
+		m_pUltRange->Uninit();
+		m_pUltRange = nullptr;
+	}
+
 	//親クラスの終了
 	CUlt::Uninit();
 }
@@ -100,6 +107,16 @@ void CMediumUlt::Update()
 {
 	//親クラスの更新
 	CUlt::Update();
+
+	if (m_pUltRange != nullptr)
+	{//ウルトの判定が生成されていれば
+		m_pUltRange->Update();
+		if (m_pUltRange->GetLife() <= 0)
+		{
+			m_pUltRange->Uninit();
+			m_pUltRange = nullptr;
+		}
+	}
 }
 
 //=============================================
@@ -122,6 +139,10 @@ bool CMediumUlt::Action(CPlayer_test* player)
 
 			if (player->GetLaunding())
 			{//着地したら終了
+				if (m_pUltRange == nullptr)
+				{
+					m_pUltRange = CUltRange::Create(player->GetPos());
+				}
 				m_isFinish = true;
 				m_move_y = 0;
 

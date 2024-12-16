@@ -9,6 +9,7 @@
 #include "character_behavior.h"
 #include "player_test.h"
 #include "ult_icon.h"
+#include "ult_range.h"
 
 class CPlayer_test;
 //=============================================
@@ -70,6 +71,7 @@ private:
 	static const D3DXVECTOR3 SPEED;
 
 	float m_move_y; //yŽ²‚ÌˆÚ“®—Ê
+	CUltRange* m_pUltRange; //ƒEƒ‹ƒg‚Ì”»’è
 };
 
 #endif // !_ULT_

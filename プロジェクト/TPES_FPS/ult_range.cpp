@@ -5,13 +5,16 @@
 //
 //=============================================
 #include "ult_range.h"
+#include "manager.h"
+#include "enemy.h"
+#include "object.h"
 
-const D3DXVECTOR3 CUltRange::SIZE = {50.0f,0.0f,50.0f};
+const float CUltRange::RADIUS = 20.0f;
 
 //=============================================
 //コンストラクタ
 //=============================================
-CUltRange::CUltRange()
+CUltRange::CUltRange() :m_nLife(0), m_pos({0.0f,0.0f,0.0f})
 {
 }
 
@@ -27,6 +30,7 @@ CUltRange::~CUltRange()
 //=============================================
 HRESULT CUltRange::Init()
 {
+	m_nLife = LIFE;
 	return S_OK;
 }
 
@@ -43,13 +47,36 @@ void CUltRange::Uninit()
 //=============================================
 void CUltRange::Update()
 {
-}
+	--m_nLife;
 
-//=============================================
-//描画
-//=============================================
-void CUltRange::Draw()
-{
+	if (m_nLife > 0)
+	{
+		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//ヌルポインタじゃなければ
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//敵との当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+				{
+					CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
+
+					CColision::COLISION ColisionCheck;
+					
+					ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos,RADIUS,enemy->GetPos());
+
+					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+					{
+						enemy->Damage(MAX_DAMAGE);
+					}
+				}
+			}
+		}
+	}
 }
 
 //=============================================
@@ -57,5 +84,13 @@ void CUltRange::Draw()
 //=============================================
 CUltRange* CUltRange::Create(D3DXVECTOR3 pos)
 {
-	return nullptr;
+	CUltRange* pRange = new CUltRange;
+
+	//何も入ってなかったらreturn
+	if (pRange == nullptr) { return nullptr; }
+
+	pRange->m_pos = pos;
+	pRange->Init();
+
+	return pRange;
 }
