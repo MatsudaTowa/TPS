@@ -54,6 +54,8 @@ public:
 
 	void Damage(int nDamage); //当たり判定
 
+	virtual void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage); //ウルトの判定
+
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント

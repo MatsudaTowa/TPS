@@ -207,6 +207,29 @@ void CEnemy::Damage(int nDamage)
 }
 
 //=============================================
+//ウルトが当たったとこの処理
+//=============================================
+void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
+{
+	Damage(nDamage);
+
+	//ウルトの着地地点と敵の方向情報
+	D3DXVECTOR3 Vector = UltPos - GetPos();
+
+	//対象物との角度計算
+	float angle = atan2f(Vector.x, Vector.z);
+
+	D3DXVECTOR3 move = GetMove();
+
+	//反対方向に吹っ飛ばすのでスピードはマイナス
+	move.x += sinf(angle) * (-GetSpeed() * 20.0f);
+	move.z += cosf(angle) * (-GetSpeed() * 20.0f);
+
+	//移動量代入
+	SetMove(move);
+}
+
+//=============================================
 //リスポーン
 //=============================================
 void CEnemy::ReSpawn()

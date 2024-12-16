@@ -65,13 +65,20 @@ void CUltRange::Update()
 				{
 					CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
 
-					CColision::COLISION ColisionCheck;
+					CColision::CIRCLE ColisionCheck;
 					
 					ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos,RADIUS,enemy->GetPos());
 
-					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+					if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
 					{
-						enemy->Damage(MAX_DAMAGE);
+						if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * 0.5f)
+						{//近かったらマックスダメージ
+							enemy->MediumUltHit(m_pos, MAX_DAMAGE);
+						}
+						else
+						{
+							enemy->MediumUltHit(m_pos, MAX_DAMAGE * 0.5f);
+						}
 					}
 				}
 			}

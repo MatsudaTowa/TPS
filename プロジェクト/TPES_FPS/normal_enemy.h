@@ -21,7 +21,7 @@ public:
 	static const int NUM_MOTION = 3;
 	static const int ENEMY_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
-	static const int DEFAULT_LIFE = 5; //ライフ
+	static const int DEFAULT_LIFE = 10; //ライフ
 
 	//モーションの種類の列挙
 	enum Motion_Type

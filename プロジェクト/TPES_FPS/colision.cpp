@@ -406,21 +406,26 @@ CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3
 //=============================================
 //円の中に入っているか
 //=============================================
-CColision::COLISION CColision::CheckColisionCircle(D3DXVECTOR3 Apos, float Radius, D3DXVECTOR3 Bpos)
+CColision::CIRCLE CColision::CheckColisionCircle(D3DXVECTOR3 Apos, float Radius, D3DXVECTOR3 Bpos)
 {
+	CIRCLE circle; //円の判定アウトプット情報
+	circle.colision = COLISON_NONE; //当たり判定情報初期化
+	circle.CenterDistance = 0.0f; //距離初期化
+
 	//距離を求める
 	D3DXVECTOR3 Length = Bpos - Apos;
 
-	float CenterDistance = sqrtf((Length.x * Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
+	circle.CenterDistance = sqrtf((Length.x * Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
 
-	if (CenterDistance <= Radius*Radius)
+	if (circle.CenterDistance <= Radius*Radius)
 	{
-		return COLISION_CIRCLE;
+		circle.colision = COLISION_CIRCLE;
 	}
 	else
 	{
-		return COLISON_NONE;
+		circle.colision = COLISON_NONE;
 	}
+	return circle;
 }
 
 //=============================================
