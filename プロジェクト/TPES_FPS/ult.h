@@ -8,6 +8,7 @@
 #define _ULT_
 #include "character_behavior.h"
 #include "player_test.h"
+#include "ult_icon.h"
 
 class CPlayer_test;
 //=============================================

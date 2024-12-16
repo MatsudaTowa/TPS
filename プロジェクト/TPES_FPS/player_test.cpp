@@ -407,6 +407,7 @@ void CPlayer_test::Input()
 			{
 				pCamera->ChangeCameraState(new CUltCameraState);
 				ChangePlayerState(new CUltState);
+				m_pUltUI->Reset(); //UI‚ÌƒŠƒZƒbƒgˆ—
 			}
 		}
 	}

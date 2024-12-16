@@ -53,7 +53,6 @@ void CUlt::Update()
 		//I—¹‚µ‚Ä‚È‚¢ó‘Ô‚É
 		m_isFinish = false;
 	}
-	
 }
 
 const float CMediumUlt::FLYING_HIGHT = 400.0f;

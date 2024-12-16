@@ -13,8 +13,9 @@ const D3DXCOLOR CUltIcon::START_COLOR = {0.2f,0.2f,0.2f,1.0f};
 //コンストラクタ
 //=============================================
 CUltIcon::CUltIcon(int nPriority):CObject2D(nPriority),
-m_AddColor(0.0f),
-m_pIconEffect()
+m_isAddColor(true),	//加算状態に
+m_AddColor(0.0f),	//色の加算値初期化
+m_pIconEffect()		//アイコンのエフェクトポインター初期化
 {
 }
 
@@ -30,10 +31,6 @@ CUltIcon::~CUltIcon()
 //=============================================
 HRESULT CUltIcon::Init()
 {
-	if (m_pIconEffect == nullptr)
-	{
-		m_pIconEffect = CUltIconEffect::Create(GetPos(),{75.0f,75.0f},{1.0f,0.8f,0.0f,0.75f});
-	}
 	CObject2D::Init();
 
 	//頂点生成
@@ -63,15 +60,24 @@ void CUltIcon::Update()
 
 	D3DXCOLOR col = GetColor();
 
-	col.r += m_AddColor;
-	col.g += m_AddColor;
-	col.b += m_AddColor;
-
-	if (col.r >= 1.0f
-		&& col.g >= 1.0f
-		&& col.b >= 1.0f)
+	if (m_isAddColor)
 	{
-		col = {1.0f,1.0f,1.0f,1.0f};
+		col.r += m_AddColor;
+		col.g += m_AddColor;
+		col.b += m_AddColor;
+
+		if (col.r >= 1.0f
+			&& col.g >= 1.0f
+			&& col.b >= 1.0f)
+		{
+			col = { 1.0f,1.0f,1.0f,1.0f };
+			m_isAddColor = false; //加算終了
+
+			if (m_pIconEffect == nullptr)
+			{
+				m_pIconEffect = CUltIconEffect::Create(GetPos(), { 75.0f,75.0f }, { 1.0f,0.8f,0.0f,0.75f });
+			}
+		}
 	}
 
 	SetColor(col);
@@ -119,6 +125,21 @@ CUltIcon* CUltIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float add_col, ULT
 	pUltIcon->Init();
 
 	return pUltIcon;
+}
+
+//=============================================
+//ウルトを使った際に呼ばれる
+//=============================================
+void CUltIcon::Reset()
+{
+	SetColor(START_COLOR); //色を初期の色に
+	m_isAddColor = true; //加算状態に
+
+	if (m_pIconEffect != nullptr)
+	{
+		m_pIconEffect->Uninit();
+		m_pIconEffect = nullptr;
+	}
 }
 
 //テクスチャ初期化

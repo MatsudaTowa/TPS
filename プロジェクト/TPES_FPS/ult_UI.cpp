@@ -42,7 +42,6 @@ HRESULT CUlt_UI::Init(CPlayer_test* player)
 	{
 		float Addcolor = (1.0 - CUltIcon::START_COLOR.r) / player->m_pUlt->GetCoolTime();
 
-		//TODO:ウルトのクールタイムとの割合でadd計算
 		m_pIcon = CUltIcon::Create(ICON_POS, ICON_SIZE, Addcolor, CUltIcon::ULT_TYPE::ULT_TYPE_MEDIUM);
 	}
 
@@ -133,4 +132,14 @@ void CUlt_UI::SetNumber(int nParcent)
 
 		m_pParcent[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
+}
+
+//=============================================
+// リセット関数(ultが使われたときに呼ばれる)
+//=============================================
+void CUlt_UI::Reset()
+{
+	//各クラスのリセット関数を呼ぶだけ
+	//アイコンのリセット処理
+	m_pIcon->Reset();
 }

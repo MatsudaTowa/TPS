@@ -28,6 +28,8 @@ public:
 
 	void SetNumber(int nParcent);
 
+	void Reset();
+
 private:
 	static const int NUM_DIGIT = 3;  //Œ…”
 	static const float PARCENT_DIGIT_SHIFT;  //Œ…‚²‚Æ‚ÉÀ•W‚ğ‚¸‚ç‚·
