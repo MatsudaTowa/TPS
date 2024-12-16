@@ -21,7 +21,7 @@ const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
 const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
 
 //“–‚½‚è”»’è–³ŒøƒtƒŒ[ƒ€”
-const int CPlayer_test::IGNORE_COLLISION_FRAME = 180;
+const int CPlayer_test::IGNORE_COLLISION_FRAME = 300;
 
 //’Êí‚ÌˆÚ“®’ïR
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
