@@ -52,6 +52,7 @@ public:
 	HRESULT Init();
 	void Uninit();
 	void Update();
+	void CanDetectEnemyCollision();
 	void Draw();
 
 	//プレイヤー作成
@@ -83,6 +84,7 @@ private:
 	//プレイヤーの移動関連
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const int MAX_JUMPCNT; //ジャンプ回数
+	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン
@@ -99,8 +101,12 @@ private:
 
 	void DebugPos();
 
-	bool m_bRelorad; //リロードするかどうか
+	int m_IgnoreColisionCnt;
 
-	bool m_bSmoke; //スモークを使ったか
+	bool m_isEnemyColision; //エネミーとの判定をとるか
+
+	bool m_isRelorad; //リロードするかどうか
+
+	bool m_isSmoke; //スモークを使ったか
 };
 #endif

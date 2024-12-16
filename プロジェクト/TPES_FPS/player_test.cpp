@@ -20,7 +20,10 @@ const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
 //スポーン方向
 const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
 
-//通常の移動速度
+//当たり判定無効フレーム数
+const int CPlayer_test::IGNORE_COLLISION_FRAME = 180;
+
+//通常の移動抵抗
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 
 //プレイヤーをリスポーンされる座標
@@ -36,13 +39,15 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 //コンストラクタ
 //=============================================
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),
-m_Raticle(),
-m_bSmoke(),
-m_pHitCameraEffect(),
-m_pGunIcon(),
-m_pUlt(), 
-m_pPlayerState(),
-m_pUltUI()
+m_Raticle(),				//レティクルのポインタ初期化
+m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
+m_isSmoke(false),			//スモークを使っていない状態に
+m_isEnemyColision(true),	//エネミーと判定をとる状態に
+m_pHitCameraEffect(),		//カメラのエフェクトのポインタ初期化
+m_pGunIcon(),				//銃のアイコンのポインタ初期化
+m_pUlt(),					//ウルトのポインタ初期化 
+m_pPlayerState(),			//プレイヤーのステート初期化
+m_pUltUI()					//ウルトのUI初期化
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -132,9 +137,9 @@ HRESULT CPlayer_test::Init()
 
 	m_Raticle = nullptr;
 
-	m_bSmoke = false;
+	m_isSmoke = false;
 
-	m_bRelorad = false;
+	m_isRelorad = false;
 
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
@@ -236,7 +241,10 @@ void CPlayer_test::Update()
 		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
 	}
 	CCharacter::Update();
-	ColisionEnemy();
+
+	//敵と判定をとる場合だったらとる
+	//とらない場合はカウントアップ
+	CanDetectEnemyCollision();
 
 	if (m_pAmmoUI != nullptr)
 	{
@@ -285,6 +293,25 @@ void CPlayer_test::Update()
 	}
 
 	//CCharacter::HitBlock(NUM_PARTS);
+}
+
+void CPlayer_test::CanDetectEnemyCollision()
+{
+	if (m_isEnemyColision)
+	{//敵との当たり判定をとる状態だったら
+		ColisionEnemy();
+	}
+	else if (!m_isEnemyColision)
+	{//敵との当たり判定をとらない状態だったら
+		++m_IgnoreColisionCnt;
+
+		if (m_IgnoreColisionCnt > IGNORE_COLLISION_FRAME)
+		{//フレームに到達したら
+		 //当たり判定をとる状態に
+			m_IgnoreColisionCnt = 0;
+			m_isEnemyColision = true;
+		}
+	}
 }
 
 //=============================================
@@ -408,6 +435,8 @@ void CPlayer_test::Input()
 				pCamera->ChangeCameraState(new CUltCameraState);
 				ChangePlayerState(new CUltState);
 				m_pUltUI->Reset(); //UIのリセット処理
+				
+				m_isEnemyColision = false;
 			}
 		}
 	}
@@ -447,15 +476,15 @@ void CPlayer_test::Input()
 		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
 			//リロード
-			m_bRelorad = true;
+			m_isRelorad = true;
 		}
 	}
 
-	if (!m_bSmoke)
+	if (!m_isSmoke)
 	{
 		if (pKeyboard->GetTrigger(DIK_Q))
 		{
-			m_bSmoke = true;
+			m_isSmoke = true;
 			CSmokeGrenade::Create({ GetPos().x,GetPos().y + 50.0f,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -10.0f,
 					sinf(pCamera->GetRot().x + D3DX_PI) * 10.0f,
 					cosf(pCamera->GetRot().y + D3DX_PI) * -10.0f }, { 0.0f,0.0f,0.0f });
