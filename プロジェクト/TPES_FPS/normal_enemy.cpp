@@ -81,3 +81,14 @@ void CNormalEnemy::Draw()
 {
 	CEnemy::Draw();
 }
+
+//=============================================
+//ウルトヒット処理
+//=============================================
+void CNormalEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
+{
+	ChangeState(new CStanState);
+
+	//親クラスのヒット処理
+	CEnemy::MediumUltHit(UltPos,nDamage);
+}

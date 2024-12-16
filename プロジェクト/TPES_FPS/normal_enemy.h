@@ -38,6 +38,8 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
+
+	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
 private:
 
 	//エネミーの移動関連

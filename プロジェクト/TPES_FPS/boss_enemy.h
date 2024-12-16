@@ -56,6 +56,8 @@ public:
 
 	void CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
 
+	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
+
 	CBossChase* m_pChase; //’ÇÕˆ—
 
 	CBossWandering* m_pWandering; //œpœjˆ—

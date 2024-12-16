@@ -210,6 +210,15 @@ void CBossEnemy::CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const
 		}
 	}
 }
+//=============================================
+//ウルトヒット処理
+//=============================================
+void CBossEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
+{
+	ChangeState(new CBossStanState);
+	//親クラスのヒット処理
+	CEnemy::MediumUltHit(UltPos, nDamage);
+}
 
 //=============================================
 //ボスのデバッグ表示
