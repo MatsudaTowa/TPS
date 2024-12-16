@@ -41,6 +41,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),
 m_Raticle(),				//レティクルのポインタ初期化
 m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
+m_isRelorad(false),			//リロードしていない状態に
 m_isSmoke(false),			//スモークを使っていない状態に
 m_isEnemyColision(true),	//エネミーと判定をとる状態に
 m_pHitCameraEffect(),		//カメラのエフェクトのポインタ初期化
@@ -132,14 +133,6 @@ HRESULT CPlayer_test::Init()
 			m_pUltUI->Init(this);
 		}
 	}
-
-	m_pHitCameraEffect = nullptr;
-
-	m_Raticle = nullptr;
-
-	m_isSmoke = false;
-
-	m_isRelorad = false;
 
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
