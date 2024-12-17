@@ -44,10 +44,5 @@ private:
 	BLOCKTYPE m_type;
 	bool m_bBreak; //壊せるかどうか
 	int m_nLife;
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
-
-	static LPD3DXMESH m_pMesh; //メッシュ情報
-	static 	LPD3DXBUFFER m_pBuffMat; //マテリアル情報
-	static	DWORD m_dwNumMat; //マテリアル数;
 };
 #endif

@@ -44,7 +44,7 @@ HRESULT CTitle::Init()
     CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
 
 	//ブロック生成
-	LoadBlock(&CTitle::BLOCK_FILE);
+	//LoadBlock(&CTitle::BLOCK_FILE);
 
 	//プレイヤー生成
 	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -300.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);

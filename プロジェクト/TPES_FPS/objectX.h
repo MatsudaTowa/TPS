@@ -14,9 +14,9 @@
 class CObjectX : public CObject
 {
 public:
-	static const int MAX_TEX = 16; //テクスチャの数
+	static const int MAX_TEX = 256; //テクスチャの数
 
-	CObjectX(int nPriority );
+	CObjectX(int nPriority);
 	~CObjectX()override;
 	HRESULT Init()override;
 	void Uninit()override;
@@ -25,7 +25,7 @@ public:
 	void Draw(D3DXCOLOR col);
 	void Draw(D3DXCOLOR col,D3DXVECTOR3 scale);
 
-	void BindTexture(LPDIRECT3DTEXTURE9 pTex);
+	void BindTexture(LPDIRECT3DTEXTURE9 pTex,int Idx);
 
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
 

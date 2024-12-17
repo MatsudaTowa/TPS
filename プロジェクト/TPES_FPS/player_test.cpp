@@ -279,6 +279,10 @@ void CPlayer_test::Update()
 			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 		}
 
+		if (m_isRelorad == true)
+		{//リロード中だったら
+			m_isRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
+		}
 		//どっち向いてるか取得
 		bool bWay = GetWay();
 

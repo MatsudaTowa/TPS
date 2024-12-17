@@ -183,7 +183,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "date\\TEXTURE\\container.jpg";
+    "data\\TEXTURE\\container.jpg";
    }
   }
  }

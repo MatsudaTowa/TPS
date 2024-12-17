@@ -9,20 +9,7 @@
 #include "player.h"
 
 //モデルパス
-const char* CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
-const char* CBlock::WOOD_MODEL_NAME = "data\\MODEL\\wood.x";
-const char* CBlock::AZUMAYA_MODEL_NAME = "data\\MODEL\\azumaya.x";
-const char* CBlock::DANGOYA_MODEL_NAME = "data\\MODEL\\dangoya.x";
-const char* CBlock::MESH_MODEL_NAME = "data\\MODEL\\mesh.x";
-
-//テクスチャ初期化
-LPDIRECT3DTEXTURE9 CBlock::m_pTextureTemp = nullptr;
-
-LPD3DXBUFFER CBlock::m_pBuffMat = nullptr;
-
-LPD3DXMESH CBlock::m_pMesh = nullptr;
-
-DWORD CBlock::m_dwNumMat = 0;
+const char* CBlock::MODEL_NAME = "data\\MODEL\\c.x";
 
 //=============================================
 //コンストラクタ
@@ -95,46 +82,10 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	pBlock->m_bBreak = bBreak; //壊せるかどうか
 	//pBlock->BindTexture(m_pTextureTemp);
 
-	switch (pBlock->m_type)
-	{
-	case CBlock::BLOCKTYPE::BLOCKTYPE_DEFAULT:
-		//Xファイル読み込み
-		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
-			pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
-			pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
-		D3DXMATERIAL* pMat; //マテリアルポインタ
-		pMat = (D3DXMATERIAL*)pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat->GetBufferPointer();
-		//pBlock->BindTexture((pTex->GetAddress(pTex->Regist(&pMat.pTextureFilename()))); //テクスチャ設定
-		break;
-	case CBlock::BLOCKTYPE::BLOCKTYPE_WOOD:
-		//Xファイル読み込み
-		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(WOOD_MODEL_NAME)).pBuffMat,
-			pModel->GetModelInfo(pModel->Regist(WOOD_MODEL_NAME)).dwNumMat,
-			pModel->GetModelInfo(pModel->Regist(WOOD_MODEL_NAME)).pMesh);
-		break;
-	case CBlock::BLOCKTYPE::BLOCKTYPE_AZUMAYA:
-		//Xファイル読み込み
-		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(AZUMAYA_MODEL_NAME)).pBuffMat,
-			pModel->GetModelInfo(pModel->Regist(AZUMAYA_MODEL_NAME)).dwNumMat,
-			pModel->GetModelInfo(pModel->Regist(AZUMAYA_MODEL_NAME)).pMesh);
-		break;
-	case CBlock::BLOCKTYPE::BLOCKTYPE_DANGOYA:
-		//Xファイル読み込み
-		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(DANGOYA_MODEL_NAME)).pBuffMat,
-			pModel->GetModelInfo(pModel->Regist(DANGOYA_MODEL_NAME)).dwNumMat,
-			pModel->GetModelInfo(pModel->Regist(DANGOYA_MODEL_NAME)).pMesh);
-		break;
-	case CBlock::BLOCKTYPE::BLOCKTYPE_MESH:
-		//Xファイル読み込み
-		pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MESH_MODEL_NAME)).pBuffMat,
-			pModel->GetModelInfo(pModel->Regist(MESH_MODEL_NAME)).dwNumMat,
-			pModel->GetModelInfo(pModel->Regist(MESH_MODEL_NAME)).pMesh);
-		//pBlock->BindTexture((pTex->GetAddress(pTex->Regist(&pMat->pTextureFilename()))); //テクスチャ設定
-		break;
-	default:
-		break;
-	}
-
+	//Xファイル読み込み
+	pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
+		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
+		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
 
 	pBlock->SetType(OBJECT_TYPE_BLOCK); //タイプ設定
 	pBlock->Init();

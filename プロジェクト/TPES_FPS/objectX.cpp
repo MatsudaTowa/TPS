@@ -33,7 +33,7 @@ CObjectX::~CObjectX()
 //=============================================
 HRESULT CObjectX::Init()
 {
-
+	
 	return S_OK;
 }
 
@@ -56,6 +56,13 @@ void CObjectX::Uninit()
 		m_pBuffMat = nullptr;
 	}
 
+	for (int nCnt = 0; nCnt < MAX_TEX; ++nCnt)
+	{
+		if (m_pTexture[nCnt] != nullptr)
+		{
+			m_pTexture[nCnt] = nullptr;
+		}
+	}
 	Release();
 
 }
@@ -80,13 +87,11 @@ void CObjectX::Draw()
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
 
+		//現在を取得
+		pDevice->GetMaterial(&matDef);
+
 		//マトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
-
-		//αテストを有効
-		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 		//向きを反映
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
@@ -105,7 +110,7 @@ void CObjectX::Draw()
 
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
 		{
 			//マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
@@ -117,19 +122,9 @@ void CObjectX::Draw()
 			m_pMesh->DrawSubset(nCntMat);
 		}
 
-		// ディフューズカラーを変更
-		pMat->MatD3D.Diffuse = D3DXCOLOR(pMat->MatD3D.Diffuse.r, pMat->MatD3D.Diffuse.g, pMat->MatD3D.Diffuse.b, pMat->MatD3D.Diffuse.a);
-
-		//αテストを無効に
-		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
-		//現在を取得
-		pDevice->GetMaterial(&matDef);
-
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
-	
 }
 
 //=============================================
@@ -144,6 +139,9 @@ void CObjectX::Draw(D3DXCOLOR col)
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
+
+		//現在を取得
+		pDevice->GetMaterial(&matDef);
 
 		//マトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
@@ -191,9 +189,6 @@ void CObjectX::Draw(D3DXCOLOR col)
 		//αテストを無効に
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-		//現在を取得
-		pDevice->GetMaterial(&matDef);
-
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
@@ -211,6 +206,9 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 		D3DMATERIAL9 matDef; //現在のマテリアルの保存
 		D3DXMATRIX mtxScale,mtxRot, mtxTrans; //計算用マトリックス
+
+				//現在を取得
+		pDevice->GetMaterial(&matDef);
 
 		//マトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
@@ -263,9 +261,6 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 		//αテストを無効に
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-		//現在を取得
-		pDevice->GetMaterial(&matDef);
-
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
@@ -274,12 +269,9 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 //=============================================
 //テクスチャ設定
 //=============================================
-void CObjectX::BindTexture(LPDIRECT3DTEXTURE9 pTex)
+void CObjectX::BindTexture(LPDIRECT3DTEXTURE9 pTex, int Idx)
 {
-	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; ++nCntMat)
-	{
-		m_pTexture[nCntMat] = pTex;
-	}
+	m_pTexture[Idx] = pTex;
 }
 
 //=============================================
@@ -293,6 +285,27 @@ void CObjectX::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh
 	m_pBuffMat = pBuffMat;
 	m_dwNumMat = dwNumMat;
 	m_pMesh = pMesh;
+
+	D3DXMATERIAL* pMat; //マテリアルポインタ
+
+	if (m_pBuffMat != nullptr)
+	{
+		pMat = (D3DXMATERIAL*)pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+		{
+			if (pMat[nCntMat].pTextureFilename != NULL)
+			{
+				LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+				//テクスチャの読み込み
+				D3DXCreateTextureFromFile(pDevice,
+					pMat[nCntMat].pTextureFilename,
+					&m_pTexture[nCntMat]
+				);
+
+			}
+		}
+	}
 
 	int nNumVtx; //頂点数
 	DWORD sizeFVF; //頂点フォーマットのサイズ
