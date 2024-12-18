@@ -7,8 +7,7 @@
 #include "dash_effect.h"
 #include "manager.h"
 
-const char* CDashEffect::MODEL_NAME = "dash_effect.x";
-
+const char* CDashEffect::MODEL_NAME = "data\\MODEL\\dash_effect.x";
 
 //=============================================
 //コンストラクタ
@@ -54,7 +53,7 @@ void CDashEffect::Update()
 //=============================================
 void CDashEffect::Draw()
 {
-	CObjectX::Draw();
+	CObjectX::Draw({10.0f,10.0f,10.0f});
 }
 
 //=============================================
@@ -75,6 +74,8 @@ CDashEffect* CDashEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	pEffect->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
+
+	pEffect->SetType(OBJECT_TYPE_DUSH_EFFECT); //タイプ設定
 
 	pEffect->Init();
 

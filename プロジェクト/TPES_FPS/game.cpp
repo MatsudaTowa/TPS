@@ -13,6 +13,7 @@
 #include "block.h"
 #include "field.h"
 #include "manager.h"
+#include "dash_effect.h"
 #include "player_test.h"
 
 const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";

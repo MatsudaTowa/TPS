@@ -23,6 +23,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Draw(D3DXCOLOR col);
+	void Draw(D3DXVECTOR3 scale);
 	void Draw(D3DXCOLOR col,D3DXVECTOR3 scale);
 
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex,int Idx);
@@ -96,6 +97,7 @@ private:
 
 	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEX]; //テクスチャへのポインタ
 
+	D3DXVECTOR3 m_scare;
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_minpos; //pos最小値

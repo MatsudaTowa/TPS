@@ -93,6 +93,11 @@ void CObjectX::Draw()
 		//マトリックスの初期化
 		D3DXMatrixIdentity(&m_mtxWorld);
 
+		//αテストを有効
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 		//向きを反映
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
 
@@ -121,7 +126,8 @@ void CObjectX::Draw()
 			//パーツの設定
 			m_pMesh->DrawSubset(nCntMat);
 		}
-
+		//αテストを無効に
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
@@ -189,6 +195,76 @@ void CObjectX::Draw(D3DXCOLOR col)
 		//αテストを無効に
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
+		//保存してたマテリアルを戻す
+		pDevice->SetMaterial(&matDef);
+	}
+}
+
+//=============================================
+//描画(スケール変更)
+//=============================================
+void CObjectX::Draw(D3DXVECTOR3 scale)
+{
+	if (m_pMesh != nullptr && m_pBuffMat != nullptr)
+	{
+		//デバイスの取得
+		CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+		LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+		D3DMATERIAL9 matDef; //現在のマテリアルの保存
+		D3DXMATRIX mtxScale, mtxRot, mtxTrans; //計算用マトリックス
+
+		//現在を取得
+		pDevice->GetMaterial(&matDef);
+
+		//マトリックスの初期化
+		D3DXMatrixIdentity(&m_mtxWorld);
+
+		//αテストを有効
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+		//スケールを反映
+		D3DXMatrixScaling(&mtxScale, scale.x, scale.y, scale.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+
+		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+		//ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+		// 法線の自動正規化を有効に
+		pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+
+		D3DXMATERIAL* pMat; //マテリアル
+
+		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+		{
+			//マテリアルの設定
+			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+			//テクスチャの設定
+			pDevice->SetTexture(0, m_pTexture[nCntMat]);
+
+			//パーツの設定
+			m_pMesh->DrawSubset(nCntMat);
+		}
+
+		//αテストを無効に
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+		// 法線の自動正規化を無効に
+		pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
