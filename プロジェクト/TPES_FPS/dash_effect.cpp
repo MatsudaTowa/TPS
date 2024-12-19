@@ -28,6 +28,7 @@ CDashEffect::~CDashEffect()
 //=============================================
 HRESULT CDashEffect::Init()
 {
+	//•`‰æ‚É•K—v‚Èî•ñİ’è
 	SetScale({ 10.0f, 10.0f, 10.0f });
 	SetColor({ 1.0f, 1.0f, 1.0f,0.35f });
 	CObjectX::Init();

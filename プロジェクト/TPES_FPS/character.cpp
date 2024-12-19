@@ -145,8 +145,8 @@ void CCharacter::Update()
 	//°‚Æ‚ÌÚGˆ—
 	HitField();
 
-	//•Ç‚Æ‚ÌÚGˆ—
-	HitWall();
+	////•Ç‚Æ‚ÌÚGˆ—
+	//HitWall();
 
 	switch (m_State)
 	{
