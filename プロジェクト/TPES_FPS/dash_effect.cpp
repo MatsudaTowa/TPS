@@ -28,6 +28,8 @@ CDashEffect::~CDashEffect()
 //=============================================
 HRESULT CDashEffect::Init()
 {
+	SetScale({ 10.0f, 10.0f, 10.0f });
+	SetColor({ 1.0f, 1.0f, 1.0f,0.35f });
 	CObjectX::Init();
 	return S_OK;
 }
@@ -53,7 +55,7 @@ void CDashEffect::Update()
 //=============================================
 void CDashEffect::Draw()
 {
-	CObjectX::Draw({1.0f,1.0f,1.0f,0.5f}, { 10.0f,10.0f,10.0f });
+	CObjectX::Draw();
 }
 
 //=============================================

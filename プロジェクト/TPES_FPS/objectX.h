@@ -22,13 +22,16 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	void Draw(D3DXCOLOR col);
-	void Draw(D3DXVECTOR3 scale);
-	void Draw(D3DXCOLOR col,D3DXVECTOR3 scale);
 
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex,int Idx);
 
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
+
+	//scaleの代入
+	void SetScale(D3DXVECTOR3 scale)
+	{
+		m_scale = scale;
+	}
 
 	//posの代入
 	void SetPos(D3DXVECTOR3 pos)
@@ -65,6 +68,8 @@ public:
 	{
 		m_col = col;
 	}
+	//scaleの取得
+	D3DXVECTOR3& GetScale();
 
 	//posの取得
 	D3DXVECTOR3& GetPos();
@@ -97,7 +102,7 @@ private:
 
 	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEX]; //テクスチャへのポインタ
 
-	D3DXVECTOR3 m_scare;
+	D3DXVECTOR3 m_scale;
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_minpos; //pos最小値

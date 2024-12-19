@@ -81,8 +81,7 @@ HRESULT CCharacter::Init()
 	m_Motion = -1;
 	//ループモーション終わってる判定に
 	m_bLoopFinish = true;
-	//銃クラス作成
-	//m_pGun = new CGun;
+
 	//親クラスの初期化
 	CObjectX::Init();
     return S_OK;
@@ -148,6 +147,19 @@ void CCharacter::Update()
 
 	//壁との接触処理
 	HitWall();
+
+	switch (m_State)
+	{
+	case CCharacter::CHARACTER_STATE::CHARACTER_NORMAL:
+		SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+		break;
+	case CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE:
+		//ダメージ状態の色に変更
+		SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+		break;
+	default:
+		break;
+	}
 }
 
 //=============================================
@@ -155,18 +167,7 @@ void CCharacter::Update()
 //=============================================
 void CCharacter::Draw()
 {
-	switch (m_State)
-	{
-	case CCharacter::CHARACTER_STATE::CHARACTER_NORMAL:
-		CObjectX::Draw();
-		break;
-	case CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE:
-		//ダメージ状態の色に変更
-		CObjectX::Draw(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
-		break;
-	default:
-		break;
-	}
+	CObjectX::Draw();
 }
 
 //=============================================
