@@ -428,7 +428,16 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 	if (m_isTackle)
 	{
+		if (boss->m_pDashEffect == nullptr)
+		{
+			float fAngle = atan2f(sinf(boss->GetRot().y), cosf(boss->GetRot().y));
+
+			//TODO:位置はモーションつけてから調整
+			boss->m_pDashEffect = CDashEffect::Create(boss->GetPos(), { 0.0f,fAngle,0.0f });
+		}
+
 		++m_TackleCnt;
+
 		D3DXVECTOR3 move = boss->GetMove();
 
 		move.x += sinf(boss->GetRot().y) * boss->GetSpeed() * -10.0f;
@@ -436,6 +445,12 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 		//移動量代入
 		boss->SetMove(move);
+
+		if (boss->m_pDashEffect != nullptr)
+		{//エフェクトがあったら
+			//エフェクトを動かす
+			boss->m_pDashEffect->SetPos(boss->GetPos());
+		}
 
 		boss->ColisionPlayer();
 
@@ -446,6 +461,13 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		{//何かに当たるか終了フレームに到達したら
 			m_TackleCnt = 0;
 			m_isTackle = false;
+
+			if (boss->m_pDashEffect != nullptr)
+			{//エフェクトがあったら
+				//エフェクト破棄
+				boss->m_pDashEffect->Uninit();
+				boss->m_pDashEffect = nullptr;
+			}
 			boss->ChangeState(new CWanderingState);
 		}
 	}

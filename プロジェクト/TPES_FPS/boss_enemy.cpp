@@ -17,6 +17,8 @@ CBossEnemy::CBossEnemy(int nPriority)
 {
 	m_pBossState = nullptr;
 
+	m_pDashEffect = nullptr;
+
 	if (m_pWandering == nullptr)
 	{
 		m_pWandering = new CBossWandering;
@@ -67,6 +69,11 @@ CBossEnemy::~CBossEnemy()
 	if (m_pTackle != nullptr)
 	{
 		delete m_pTackle;
+	}
+	if (m_pDashEffect != nullptr)
+	{
+		m_pDashEffect->Uninit();
+		m_pDashEffect = nullptr;
 	}
 }
 

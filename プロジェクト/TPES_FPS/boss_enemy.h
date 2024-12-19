@@ -14,6 +14,7 @@
 #include "boss_behavior.h"
 #include "boss_state.h"
 #include"player_test.h"
+#include "dash_effect.h"
 
 class CBossChase;
 class CBossWandering;
@@ -65,6 +66,8 @@ public:
 	CBossConfusion* m_pConfusion; //混乱
 
 	CBossTackle* m_pTackle; //タックル処理
+
+	CDashEffect* m_pDashEffect;
 private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動

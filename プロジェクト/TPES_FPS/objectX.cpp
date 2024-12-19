@@ -312,6 +312,9 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 		//ワールドマトリックスの設定
 		pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
+		// 法線の自動正規化を有効に
+		pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+
 		D3DXMATERIAL* pMat; //マテリアル
 
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
@@ -336,6 +339,9 @@ void CObjectX::Draw(D3DXCOLOR col, D3DXVECTOR3 scale)
 
 		//αテストを無効に
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+		// 法線の自動正規化を無効に
+		pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 
 		//保存してたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
