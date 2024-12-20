@@ -8,6 +8,7 @@
 #include "billboard.h"
 #include "crosshair.h"
 #include"centerdot.h"
+#include "hitmaker.h"
 
 #ifndef _RETICLE_H_ //‚±‚ê‚ª’è‹`‚³‚ê‚Ä‚È‚¢‚Æ‚«
 
@@ -54,9 +55,12 @@ public:
 	{
 		return m_ReticleCol;
 	}
-private:
+
 	CCrossHair* m_pCrosshair;
 	CCenterDot* m_pCenterDot;
+	CHitMaker* m_pHitMaker;
+private:
+
 	D3DXVECTOR3 m_ReticlePos;
 	D3DXVECTOR3 m_ReticleSize;
 	D3DXCOLOR m_ReticleCol;

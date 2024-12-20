@@ -10,8 +10,10 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CReticle::CReticle():m_pCrosshair(nullptr),
-m_pCenterDot(nullptr),
+CReticle::CReticle():
+m_pCrosshair(nullptr),				//クロスヘアのポインター
+m_pCenterDot(nullptr),				//センタードットのポインター
+m_pHitMaker(nullptr),				//ヒットマーカーのポインター
 m_ReticlePos({0.0f,0.0f,0.0f}),		//レティクルの位置
 m_ReticleSize({0.0f,0.0f,0.0f}),	//レティクルのサイズ
 m_ReticleCol({0.0f,1.0f,1.0f,1.0f})	//レティクルの色
@@ -34,6 +36,12 @@ CReticle::~CReticle()
 		m_pCenterDot->Uninit();
 		m_pCenterDot = nullptr;
 	}
+
+	if (m_pHitMaker != nullptr)
+	{
+		m_pHitMaker->Uninit();
+		m_pHitMaker = nullptr;
+	}
 }
 
 //=============================================
@@ -49,6 +57,11 @@ HRESULT CReticle::Init()
 	if (m_pCenterDot == nullptr)
 	{
 		m_pCenterDot = CCenterDot::Create(m_ReticlePos, { 0.0f,0.0f,0.0f }, m_ReticleSize, m_ReticleCol);
+	}
+
+	if (m_pHitMaker == nullptr)
+	{
+		m_pHitMaker = CHitMaker::Create(m_ReticlePos, { 0.0f,0.0f,0.0f }, m_ReticleSize, {1.0f,1.0f,1.0f,0.0f});
 	}
 	return S_OK;
 }
@@ -70,6 +83,12 @@ void CReticle::Uninit()
 		m_pCenterDot = nullptr;
 	}
 
+	if (m_pHitMaker != nullptr)
+	{
+		m_pHitMaker->Uninit();
+		m_pHitMaker = nullptr;
+	}
+
 	delete this;
 }
 
@@ -86,5 +105,11 @@ void CReticle::Update()
 	if (m_pCenterDot != nullptr)
 	{
 		m_pCenterDot->SetPos(m_ReticlePos);
+	}
+
+	if (m_pHitMaker != nullptr)
+	{
+		m_pHitMaker->SetPos(m_ReticlePos);
+
 	}
 }
