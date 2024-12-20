@@ -460,7 +460,7 @@ void CPlayer_test::Input()
 
 			//’l‚ð‘ã“ü
 			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
-			m_Raticle->SetSize({10.0f,10.0f,0.0f});
+			m_Raticle->SetSize({5.0f,5.0f,0.0f});
 
 			m_Raticle->Init();
 		}
