@@ -7,6 +7,7 @@
 #include "main.h"
 #include "billboard.h"
 #include "crosshair.h"
+#include"centerdot.h"
 
 #ifndef _RETICLE_H_ //‚±‚ê‚ª’è‹`‚³‚ê‚Ä‚È‚¢‚Æ‚«
 
@@ -55,6 +56,7 @@ public:
 	}
 private:
 	CCrossHair* m_pCrosshair;
+	CCenterDot* m_pCenterDot;
 	D3DXVECTOR3 m_ReticlePos;
 	D3DXVECTOR3 m_ReticleSize;
 	D3DXCOLOR m_ReticleCol;

@@ -163,6 +163,7 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
+    <ClCompile Include="centerdot.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="character_behavior.cpp" />
     <ClCompile Include="character_state.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />
+    <ClInclude Include="centerdot.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="character_behavior.h" />
     <ClInclude Include="character_state.h" />
