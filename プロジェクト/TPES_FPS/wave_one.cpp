@@ -8,7 +8,7 @@
 #include "dash_effect.h"
 
 const std::string CWave_One::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
-const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_000.txt";
+const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_data_000.bin";
 const std::string CWave_One::WAVE_1_WALL_FILE = "data\\FILE\\wall_000.txt";
 
 //=============================================
@@ -35,6 +35,7 @@ HRESULT CWave_One::Init()
 	CWave::LoadWall(&WAVE_1_WALL_FILE);
 	//ínñ ê∂ê¨
 	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
+	CDashEffect::Create({ 0.0f,10.0f,0.0f }, { 0.0f,0.0f,0.0f });
 
 	return S_OK;
 }

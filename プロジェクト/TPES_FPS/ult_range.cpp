@@ -47,39 +47,44 @@ void CUltRange::Uninit()
 //=============================================
 void CUltRange::Update()
 {
+	//すでに体力がないなら関数を抜ける
+	if (m_nLife <= 0)
+	{
+		return;
+	}
+
 	--m_nLife;
 
-	if (m_nLife > 0)
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
-		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
+		if (pObj == nullptr)
+		{//ヌルポインタなら飛ばす
+			continue;
+		}
+
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		//敵との当たり判定
+		if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
 		{
-			//オブジェクト取得
-			CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
-			if (pObj != nullptr)
-			{//ヌルポインタじゃなければ
-				//タイプ取得
-				CObject::OBJECT_TYPE type = pObj->GetType();
+			CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
 
-				//敵との当たり判定
-				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+			CColision::CIRCLE ColisionCheck;
+
+			ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos, RADIUS, enemy->GetPos());
+
+			if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
+			{
+				if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * 0.5f)
+				{//近かったらマックスダメージ
+					enemy->MediumUltHit(m_pos, MAX_DAMAGE);
+				}
+				else
 				{
-					CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
-
-					CColision::CIRCLE ColisionCheck;
-					
-					ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos,RADIUS,enemy->GetPos());
-
-					if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
-					{
-						if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * 0.5f)
-						{//近かったらマックスダメージ
-							enemy->MediumUltHit(m_pos, MAX_DAMAGE);
-						}
-						else
-						{
-							enemy->MediumUltHit(m_pos, MAX_DAMAGE * 0.5f);
-						}
-					}
+					enemy->MediumUltHit(m_pos, MAX_DAMAGE * 0.5f);
 				}
 			}
 		}

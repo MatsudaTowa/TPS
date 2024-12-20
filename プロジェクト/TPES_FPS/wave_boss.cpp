@@ -7,7 +7,7 @@
 #include "wave_boss.h"
 
 const std::string CWave_Boss::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
-const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_003.txt";
+const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_data_001.bin";
 const std::string CWave_Boss::WAVE_BOSS_WALL_FILE = "data\\FILE\\wall_003.txt";
 const std::string CWave_Boss::WAVE_BOSS_POINT_FILE = "data\\FILE\\boss_move_point.txt";
 

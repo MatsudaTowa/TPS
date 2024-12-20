@@ -7,7 +7,7 @@
 #include "wave_two.h"
 
 const std::string CWave_Two::WAVE_2_ENEMY_FILE = "data\\FILE\\enemy_001.txt";
-const std::string CWave_Two::WAVE_2_BLOCK_FILE = "data\\FILE\\block_001.txt";
+const std::string CWave_Two::WAVE_2_BLOCK_FILE = "data\\FILE\\block_data_001.bin";
 const std::string CWave_Two::WAVE_2_WALL_FILE = "data\\FILE\\wall_001.txt";
 
 //=============================================

@@ -96,22 +96,24 @@ void CEnemy::Update()
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
-	if (pScene != CScene::MODE::MODE_TITLE)
+	if (pScene == CScene::MODE::MODE_TITLE)
 	{
-		//ダメージステートの切り替えTODO:これもステートパターンで
-		ChangeDamageState();
-
-		//ゲームの状態取得
-		CGame::GAME_STATE Game_state = CGame::GetState();
-
-		if (GetPos().y < DEADZONE_Y)
-		{//リスポーン処理
-			ReSpawn();
-		}
-
-		//どっち向いてるか取得
-		bool bWay = GetWay();
+		return;
 	}
+
+	//ダメージステートの切り替えTODO:これもステートパターンで
+	ChangeDamageState();
+
+	//ゲームの状態取得
+	CGame::GAME_STATE Game_state = CGame::GetState();
+
+	if (GetPos().y < DEADZONE_Y)
+	{//リスポーン処理
+		ReSpawn();
+	}
+
+	//どっち向いてるか取得
+	bool bWay = GetWay();
 }
 
 //=============================================

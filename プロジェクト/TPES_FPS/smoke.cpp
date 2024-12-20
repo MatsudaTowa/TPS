@@ -80,42 +80,46 @@ void CSmoke::ColisionRange()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			continue;
+		}
 
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
-			{
-				CSmokeRange* pRange = dynamic_cast<CSmokeRange*>(pObj);
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-				if (GetPos().x - GetSize().x < pRange->GetPos().x + pRange->GetMinPos().x)
-				{
-					m_move.x += 0.01f;
-				}
-				else if (GetPos().x + GetSize().x > pRange->GetPos().x + pRange->GetMaxPos().x)
-				{
-					m_move.x -= 0.01f;
-				}
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
+		{
+			continue;
+		}
 
-				if (GetPos().z< pRange->GetPos().z + pRange->GetMinPos().z)
-				{
-					m_move.z += 0.01f;
-				}
-				else if (GetPos().z > pRange->GetPos().z + pRange->GetMaxPos().z)
-				{
-					m_move.z -= 0.01f;
-				}
+		CSmokeRange* pRange = dynamic_cast<CSmokeRange*>(pObj);
 
-				if (GetPos().y < pRange->GetPos().y + pRange->GetMinPos().y)
-				{
-					m_move.y += 0.01f;
-				}
-				else if (GetPos().y > pRange->GetPos().y + pRange->GetMaxPos().y)
-				{
-					m_move.y -= 0.01f;
-				}
-			}
+		if (GetPos().x - GetSize().x < pRange->GetPos().x + pRange->GetMinPos().x)
+		{
+			m_move.x += 0.01f;
+		}
+		else if (GetPos().x + GetSize().x > pRange->GetPos().x + pRange->GetMaxPos().x)
+		{
+			m_move.x -= 0.01f;
+		}
+
+		if (GetPos().z < pRange->GetPos().z + pRange->GetMinPos().z)
+		{
+			m_move.z += 0.01f;
+		}
+		else if (GetPos().z > pRange->GetPos().z + pRange->GetMaxPos().z)
+		{
+			m_move.z -= 0.01f;
+		}
+
+		if (GetPos().y < pRange->GetPos().y + pRange->GetMinPos().y)
+		{
+			m_move.y += 0.01f;
+		}
+		else if (GetPos().y > pRange->GetPos().y + pRange->GetMaxPos().y)
+		{
+			m_move.y -= 0.01f;
 		}
 	}
 }

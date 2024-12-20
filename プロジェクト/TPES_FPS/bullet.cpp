@@ -75,44 +75,44 @@ void CBullet::OnActive()
 	//体力取得
 	int nLife = GetLife();
 
-	if (nLife > 0)
-	{//ライフがあれば処理実行
-		D3DXVECTOR3 pos = GetPos();
-		pos += m_move;
-		//座標を更新
-		SetPos(pos);
-		//頂点座標
-		SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-		//当たり判定チェック変数
-		bool bHitCheck = false;
-
-		switch (m_Allegiance)
-		{
-		case BULLET_ALLEGIANCE_PLAYER:
-			bHitCheck = HitEnemy();
-			break;
-
-		case BULLET_ALLEGIANCE_ENEMY:
-			bHitCheck = HitPlayer();
-			break;
-
-		default:
-			assert(false);
-			break;
-		}
-
-		//当たり判定チェックTODO:レイでやれ
-		bHitCheck = HitBlock();
-
-		if (bHitCheck == true)
-		{//当たってたら
-			Uninit();
-		}
-	}
-	else
+	if (nLife <= 0)
 	{
 		//終了
+		Uninit();
+		return;
+	}
+
+	//ライフがあれば処理実行
+	D3DXVECTOR3 pos = GetPos();
+	pos += m_move;
+	//座標を更新
+	SetPos(pos);
+	//頂点座標
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	//当たり判定チェック変数
+	bool bHitCheck = false;
+
+	switch (m_Allegiance)
+	{
+	case BULLET_ALLEGIANCE_PLAYER:
+		bHitCheck = HitEnemy();
+		break;
+
+	case BULLET_ALLEGIANCE_ENEMY:
+		bHitCheck = HitPlayer();
+		break;
+
+	default:
+		assert(false);
+		break;
+	}
+
+	//当たり判定チェックTODO:レイでやれ
+	bHitCheck = HitBlock();
+
+	if (bHitCheck == true)
+	{//当たってたら
 		Uninit();
 	}
 }

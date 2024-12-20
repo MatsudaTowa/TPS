@@ -203,7 +203,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "data\\TEXTURE\\dash_effect.png";
+    "data\\TEXTURE\\dash_effect001.png";
    }
   }
   Material {
