@@ -111,7 +111,12 @@ void CBullet::OnActive()
 	//当たり判定チェックTODO:レイでやれ
 	bHitCheck = HitBlock();
 
-	if (bHitCheck == true)
+	//当たり判定チェック変数
+	bool bPenetration = false;
+
+	bPenetration = PenetrationBlock();
+
+	if (bHitCheck == true || bPenetration == true)
 	{//当たってたら
 		Uninit();
 	}
@@ -177,4 +182,39 @@ D3DXVECTOR3 CBullet::GetMove()
 CBullet::BULLET_ALLEGIANCE CBullet::GetBulletAllegiance()
 {
 	return m_Allegiance;
+}
+
+bool CBullet::PenetrationBlock()
+{
+	//位置取得
+	D3DXVECTOR3 Attackpos = GetPos();
+	//サイズ取得
+	D3DXVECTOR3 Attacksize = GetSize();
+
+	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+			{
+				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+				CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_X(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+				CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_Z(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+
+				if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
+				{//当たってたら
+					//攻撃の削除
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }

@@ -68,6 +68,7 @@ public:
 
 	BULLET_ALLEGIANCE GetBulletAllegiance();
 private:
+	bool PenetrationBlock();
 	BULLET_ALLEGIANCE m_Allegiance; //“G‚©©•ª‚©‚ğ”»’f‚·‚é—ñ‹“Œ^•Ï”
 	BULLET_TYPE m_type; //’e‚Ìí—Ş
 	D3DXVECTOR3 m_move; //ˆÚ“®—Ê

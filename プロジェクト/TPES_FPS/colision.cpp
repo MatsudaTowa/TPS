@@ -528,3 +528,89 @@ CColision::COLISION CColision::CheckPolygonFillColision(D3DXVECTOR3 Apos, D3DXVE
 	}
 }
 
+//=============================================
+//ポリゴンとモデル貫通判定チェック関数X
+//=============================================
+CColision::COLISION CColision::CheckPolygonModelPenetration_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
+{
+	if (Aoldpos.x < Bpos.x + BMinpos.x
+		&& Apos.x > Bpos.x + BMaxpos.x)
+	{
+		if (Apos.z < Bpos.z + BMaxpos.z
+			&& Apos.z > Bpos.z + BMinpos.z
+			&& Apos.y < Bpos.y + BMaxpos.y
+			&& Apos.y > Bpos.y + BMinpos.y
+			)
+		{//当たり判定(Z)
+			return CColision::COLISION::COLISON_X;
+		}
+		else
+		{
+			return CColision::COLISION::COLISON_NONE;
+		}
+	}
+	else if (Aoldpos.x > Bpos.x + BMinpos.x
+		&& Apos.x < Bpos.x + BMaxpos.x)
+	{
+		if (Apos.z < Bpos.z + BMaxpos.z
+			&& Apos.z > Bpos.z + BMinpos.z
+			&& Apos.y < Bpos.y + BMaxpos.y
+			&& Apos.y > Bpos.y + BMinpos.y
+			)
+		{//当たり判定(Z)
+			return CColision::COLISION::COLISON_X;
+		}
+		else
+		{
+			return CColision::COLISION::COLISON_NONE;
+		}
+	}
+	else
+	{
+		return CColision::COLISION::COLISON_NONE;
+	}
+}
+
+//=============================================
+//ポリゴンとモデル貫通判定チェック関数Z
+//=============================================
+CColision::COLISION CColision::CheckPolygonModelPenetration_Z(D3DXVECTOR3 Aoldpos,D3DXVECTOR3 Apos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos)
+{
+	if (Aoldpos.z  < Bpos.z + BMinpos.z
+		&& Apos.z > Bpos.z + BMaxpos.z)
+	{
+		if (Apos.x < Bpos.x + BMaxpos.x
+			&& Apos.x > Bpos.x + BMinpos.x
+			&& Apos.y < Bpos.y + BMaxpos.y
+			&& Apos.y > Bpos.y + BMinpos.y
+			)
+		{//当たり判定(Z)
+			return CColision::COLISION::COLISON_Z;
+		}
+		else
+		{
+			return CColision::COLISION::COLISON_NONE;
+		}
+	}
+	else if (Aoldpos.z > Bpos.z + BMinpos.z
+		&& Apos.z < Bpos.z + BMaxpos.z)
+	{
+		if (Apos.x < Bpos.x + BMaxpos.x
+			&& Apos.x > Bpos.x + BMinpos.x
+			&& Apos.y < Bpos.y + BMaxpos.y
+			&& Apos.y > Bpos.y + BMinpos.y
+			)
+		{//当たり判定(Z)
+			return CColision::COLISION::COLISON_Z;
+		}
+		else
+		{
+			return CColision::COLISION::COLISON_NONE;
+		}
+	}
+	else
+	{
+		return CColision::COLISION::COLISON_NONE;
+	}
+}
+
