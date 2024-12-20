@@ -44,5 +44,7 @@ public:
 	CPlayerAttack();
 	~CPlayerAttack() override;
 	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+private:
+	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
 };
 #endif // !_ENEMY_BEHAVIOR_

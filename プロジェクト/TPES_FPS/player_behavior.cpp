@@ -163,20 +163,15 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	{//ŽËŒ‚ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
 		if (character->m_pGunAttack != nullptr)
 		{
-			character->m_pGun->m_nRateCnt++;
-			if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
+			if (character->m_pGun->GetAmmo() > 0)
 			{
-				character->m_pGun->m_nRateCnt = 0;
-				//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
-				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41,
-					character->m_apModel[14]->GetMtxWorld()._42, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
+				++character->m_pGun->m_nRateCnt;
 
-				//ˆÚ“®—ÊÝ’è
-				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed(),
-					sinf(pCamera->GetRot().x + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
-					cosf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed());
-				//’e”­ŽË
-				character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
+				ShotBullet(character, pCamera, Allegiance, type);
+			}
+			else
+			{
+				character->m_pGun->m_pReload->Reload(character->m_pGun);
 			}
 		}
 	}
@@ -184,5 +179,25 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	{
 		character->m_pGun->m_nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
 	}
-	
+}
+
+//=============================================
+//’e”­ŽË
+//=============================================
+void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type)
+{
+	if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
+	{
+		character->m_pGun->m_nRateCnt = 0;
+		//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
+		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41,
+			character->m_apModel[14]->GetMtxWorld()._42, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
+
+		//ˆÚ“®—ÊÝ’è
+		D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed(),
+			sinf(pCamera->GetRot().x + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
+			cosf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed());
+		//’e”­ŽË
+		character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->m_nDamage, Allegiance, type, character->m_pGun);
+	}
 }
