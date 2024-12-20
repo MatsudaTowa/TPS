@@ -11,7 +11,16 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CObject3D::CObject3D(int nPriority):CObject(nPriority)
+CObject3D::CObject3D(int nPriority):CObject(nPriority),
+m_col({1.0f,1.0f,1.0f,1.0f}),
+m_pos({0.0f,0.0f,0.0f}),
+m_rot({0.0f,0.0f,0.0f}),
+m_size({0.0f,0.0f,0.0f}),
+m_tex_pos(0.0f,0.0f),
+m_nAnimFrame(0),
+m_nAnimCnt(0),
+m_tex_move(0.0f,0.0f),
+m_mtxWorld()
 {
 	m_pTexture = nullptr;
 	m_pVtxBuff = nullptr;
@@ -110,7 +119,7 @@ void CObject3D::BindTexture(LPDIRECT3DTEXTURE9 pTex)
 //=============================================
 //頂点の設定
 //=============================================
-void CObject3D::SetVtx(D3DXVECTOR3 nor, D3DCOLOR col)
+void CObject3D::SetVtx(D3DXVECTOR3 nor)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -148,7 +157,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, D3DCOLOR col)
 	pVtx[0].col =
 	pVtx[1].col =
 	pVtx[2].col =
-	pVtx[3].col = col;
+	pVtx[3].col = m_col;
 
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
 	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
@@ -164,7 +173,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, D3DCOLOR col)
 //=============================================
 //頂点の設定(拡縮回転)
 //=============================================
-void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength, D3DCOLOR col)
+void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -202,7 +211,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength, D3DCOLOR co
 	pVtx[0].col =
 	pVtx[1].col =
 	pVtx[2].col =
-	pVtx[3].col = col;
+	pVtx[3].col = m_col;
 
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
 	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
@@ -217,7 +226,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength, D3DCOLOR co
 //=============================================
 //アニメーション専用頂点の設定
 //=============================================
-void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move)
+void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -255,7 +264,7 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3
 	pVtx[0].col =
 		pVtx[1].col =
 		pVtx[2].col =
-		pVtx[3].col = col;
+		pVtx[3].col = m_col;
 
 	m_nAnimCnt++;
 
@@ -287,7 +296,7 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col,D3DXVECTOR2 tex_pos, D3
 //=============================================
 //頂点の設定(pos足元)
 //=============================================
-void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col)
+void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor)
 {
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
@@ -325,10 +334,18 @@ void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col)
 	pVtx[0].col =
 		pVtx[1].col =
 		pVtx[2].col =
-		pVtx[3].col = col;
+		pVtx[3].col = m_col;
 
 	//アンロック
 	m_pVtxBuff->Unlock();
+}
+
+//=============================================
+//色取得
+//=============================================
+D3DXCOLOR& CObject3D::GetColor()
+{
+	return m_col;
 }
 
 //=============================================

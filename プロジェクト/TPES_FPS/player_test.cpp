@@ -196,6 +196,11 @@ void CPlayer_test::Uninit()
 		delete m_pSliding;
 		m_pSliding = nullptr;
 	}
+	if (m_Raticle != nullptr)
+	{
+		m_Raticle->Uninit();
+		m_Raticle = nullptr;
+	}
 
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
@@ -277,6 +282,7 @@ void CPlayer_test::Update()
 		if(m_Raticle != nullptr)
 		{
 			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+			m_Raticle->Update();
 		}
 
 		if (m_isRelorad)
@@ -450,8 +456,13 @@ void CPlayer_test::Input()
 
 		if (m_Raticle == nullptr)
 		{//使われていなかったら
-			m_Raticle = CReticle::Create(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f));
+			m_Raticle = new CReticle;
+
+			//値を代入
+			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+			m_Raticle->SetSize({10.0f,10.0f,0.0f});
+
+			m_Raticle->Init();
 		}
 		m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL, this);
 	}

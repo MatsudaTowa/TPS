@@ -6,6 +6,7 @@
 //=============================================
 #include "main.h"
 #include "billboard.h"
+#include "crosshair.h"
 
 #ifndef _RETICLE_H_ //これが定義されてないとき
 
@@ -14,27 +15,49 @@
 //=============================================
 //レティクルクラス
 //=============================================
-class CReticle : public CBillboard
+class CReticle
 {
 public:
-	static const std::string RETICLE_TEXTURE_NAME;	//テクスチャの名前
+	CReticle();
+	~CReticle();
+	HRESULT Init();
+	void Uninit();
+	void Update();
 
-	static const int RETICLE_PRIORITY = 30; //描画順
+	void SetPos(D3DXVECTOR3 pos)
+	{
+		m_ReticlePos = pos;
+	}
 
-	CReticle(int nPriority = RETICLE_PRIORITY);
-	~CReticle()override;
-	HRESULT Init()override;
-	void Uninit()override;
-	void Update()override;
-	void Draw()override;
+	void SetSize(D3DXVECTOR3 size)
+	{
+		m_ReticleSize = size;
+	}
 
-	//弾作成
-	static CReticle* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size);
+	void SetCol(D3DXCOLOR col)
+	{
+		m_ReticleCol = col;
+	}
 
-	void Move();
+	D3DXVECTOR3& GetReticlePos()
+	{
+		return m_ReticlePos;
+	}
+
+	D3DXVECTOR3& GetReticleSize()
+	{
+		return m_ReticleSize;
+	}
+
+	D3DXCOLOR& GetReticleCol()
+	{
+		return m_ReticleCol;
+	}
 private:
-	D3DXVECTOR3 m_move; //移動量
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
+	CCrossHair* m_pCrosshair;
+	D3DXVECTOR3 m_ReticlePos;
+	D3DXVECTOR3 m_ReticleSize;
+	D3DXCOLOR m_ReticleCol;
 };
 
 #endif

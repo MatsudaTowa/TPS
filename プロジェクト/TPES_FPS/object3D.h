@@ -25,6 +25,13 @@ public:
 
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex);
 
+	//色の取得
+	//色の代入
+	void SetColor(D3DXCOLOR col)
+	{
+		m_col = col;
+	}
+
 	//posの代入
 	void SetPos(D3DXVECTOR3 pos)
 	{
@@ -75,14 +82,17 @@ public:
 
 
 	//頂点座標の代入
-	void SetVtx(D3DXVECTOR3 nor, D3DCOLOR col);
+	void SetVtx(D3DXVECTOR3 nor);
 
 	//頂点座標の代入
-	void SetVtx(D3DXVECTOR3 nor,float fAngle, float fLength, D3DCOLOR col);
+	void SetVtx(D3DXVECTOR3 nor,float fAngle, float fLength);
 
 	//頂点座標の代入
-	void SetVtxAnim(D3DXVECTOR3 nor, D3DCOLOR col, D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
-	void SetVtx_FootPos(D3DXVECTOR3 nor, D3DCOLOR col);
+	void SetVtxAnim(D3DXVECTOR3 nor,D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
+	void SetVtx_FootPos(D3DXVECTOR3 nor);
+
+	//色の取得
+	D3DXCOLOR& GetColor();
 
 	//posの取得
 	D3DXVECTOR3& GetPos();
@@ -116,6 +126,7 @@ private:
 	LPDIRECT3DTEXTURE9 m_pTexture; //テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff; //頂点バッファへのポインタ
 
+	D3DXCOLOR m_col; //色
 	D3DXVECTOR3 m_pos; //位置
 	D3DXVECTOR3 m_rot; //方向
 	D3DXVECTOR3 m_size; //サイズ

@@ -88,7 +88,7 @@ void CBullet::OnActive()
 	//座標を更新
 	SetPos(pos);
 	//頂点座標
-	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
 
 	//当たり判定チェック変数
 	bool bHitCheck = false;

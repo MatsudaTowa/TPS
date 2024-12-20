@@ -36,7 +36,7 @@ HRESULT CField::Init()
 	D3DXVECTOR3 sizeThis = GetSize();
 
 	//í∏ì_ê›íË
-	SetVtx(D3DXVECTOR3(0.0f,1.0f,0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(D3DXVECTOR3(0.0f,1.0f,0.0f));
 
 	return S_OK;
 }

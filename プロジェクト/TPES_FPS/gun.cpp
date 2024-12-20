@@ -87,7 +87,7 @@ float& CGun::GetBulletSpeed()
 }
 
 //弾のスピード
-const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 50.0f;
+const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 70.0f;
 //弾のサイズ
 const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {1.5f,1.5f,1.5f};
 

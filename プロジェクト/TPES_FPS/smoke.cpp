@@ -32,7 +32,7 @@ HRESULT CSmoke::Init()
 	CObject3D::Init();
 	m_nLife = SMOKE_LIFE; //ライフ設定
 	//頂点座標
-	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
 	return S_OK;
 }
 

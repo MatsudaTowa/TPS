@@ -36,7 +36,7 @@ HRESULT CMovePoint::Init()
 	//親クラスの初期化
 	CObject3D::Init();
 	//頂点座標
-	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
 	return S_OK;
 }
 
