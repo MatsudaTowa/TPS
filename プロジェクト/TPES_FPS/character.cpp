@@ -689,14 +689,14 @@ void CCharacter::HitField()
 				//TODO:•Ç‚Ì“–‚½‚è”»’è‚â‚Á‚½‚ç‚±‚ê‚ðŽg‚¤•K—v‚È‚­‚È‚é
 				{
 					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x
-						&& CharacterPos.x < pField->GetPos().x - pField->GetSize().x)
+						&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x)
 					{
 						CharacterPos.x = m_oldpos.x;
 						m_move.x = 0.0f;
 					}
 
 					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x
-						&& CharacterPos.x > pField->GetPos().x + pField->GetSize().x)
+						&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x)
 					{
 						CharacterPos.x = m_oldpos.x;
 						m_move.x = 0.0f;
@@ -704,14 +704,14 @@ void CCharacter::HitField()
 
 
 					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z
-						&& CharacterPos.z < pField->GetPos().z - pField->GetSize().z)
+						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z)
 					{
 						CharacterPos.z = m_oldpos.z;
 						m_move.x = 0.0f;
 					}
 
 					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z
-						&& CharacterPos.z > pField->GetPos().z + pField->GetSize().z)
+						&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z)
 					{
 						CharacterPos.z = m_oldpos.z;
 						m_move.x = 0.0f;

@@ -38,11 +38,6 @@ void CDefaultState::Default(CPlayer_test* player)
 		player->Input();
 	}
 
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LSHIFT))
-	{
-		player->m_pSliding->Sliding(player);
-	}
-	else
 	{
 		player->m_pCharacterState->Move(player);
 	}
