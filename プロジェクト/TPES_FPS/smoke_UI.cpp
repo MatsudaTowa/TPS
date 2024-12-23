@@ -18,6 +18,9 @@ const D3DXVECTOR2 CSmoke_UI::ICON_SIZE = { 40.0f, 40.0f };
 const D3DXVECTOR3 CSmoke_UI::NUMBER_POS = { 1000.0f, 665.0f, 0.0f };
 const D3DXVECTOR2 CSmoke_UI::NUMBER_SIZE = { 20.0f, 30.0f };
 
+const D3DXVECTOR3 CSmoke_UI::KEY_UI_POS = { 800.0f,700.0f,0.0f };
+const D3DXVECTOR2 CSmoke_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -25,8 +28,9 @@ CSmoke_UI::CSmoke_UI():
 m_SmokePos({0.0f,0.0f,0.0f}),	//スモークの位置初期化
 m_NumSmoke(0),					//スモークの数初期化
 m_pCurrentSmoke(),				//現在のスモークの数のポインタ初期化
-m_pUIBox(),					//UIの枠初期化
-m_pIcon()					//アイコンの初期化
+m_pUIBox(),						//UIの枠初期化
+m_pIcon(),						//アイコンの初期化
+m_pkeyboard_UI()				//キーボードの初期化
 {
 }
 
@@ -56,6 +60,12 @@ HRESULT CSmoke_UI::Init(CPlayer_test* player)
 		m_pIcon = CSmokeIcon::Create(ICON_POS, ICON_SIZE, { 1.0f,1.0f,1.0f,1.0f });
 	}
 
+	//キーボードUIの枠生成
+	if (m_pkeyboard_UI == nullptr)
+	{
+		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CKeyboard_UI::KEY_Q);
+	}
+
 	//数字生成
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
@@ -81,11 +91,18 @@ void CSmoke_UI::Uninit()
 		m_pUIBox = nullptr;
 	}
 
-	//UIのアイコン破棄
+	//キーボードUIのアイコン破棄
 	if (m_pIcon != nullptr)
 	{
 		m_pIcon->Uninit();
 		m_pIcon = nullptr;
+	}
+
+	//UIのアイコン破棄
+	if (m_pkeyboard_UI != nullptr)
+	{
+		m_pkeyboard_UI->Uninit();
+		m_pkeyboard_UI = nullptr;
 	}
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)

@@ -25,6 +25,5 @@ public:
 	static CSmokeIcon* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col);
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 };
 #endif

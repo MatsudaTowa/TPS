@@ -10,9 +10,10 @@
 #include "object2D.h"
 #include "number.h"
 #include "player_test.h"
-#include "ult_icon.h"
+#include "keyboard_UI.h"
 
 class CPlayer_test;
+class CUltIcon;
 //=============================================
 //残弾数表示クラス
 //=============================================
@@ -26,23 +27,20 @@ public:
 	void Update();
 	void SetCurrentUlt_UI(CPlayer_test* player);
 
-	void SetNumber(int nParcent);
-
 	void Reset();
 
 private:
-	static const int NUM_DIGIT = 3;  //桁数
 	static const float PARCENT_DIGIT_SHIFT;  //桁ごとに座標をずらす
 
 	static const D3DXVECTOR3 ICON_POS; //ウルトアイコンの位置
 	static const D3DXVECTOR2 ICON_SIZE; //ウルトアイコンのサイズ
 
-	static const D3DXVECTOR3 PARCENT_POS; //ウルトパーセントの位置
-	static const D3DXVECTOR2 PARCENT_SIZE; //ウルトパーセントのサイズ
+	static const D3DXVECTOR3 KEY_UI_POS; //キーボードのUIの位置
+	static const D3DXVECTOR2 KEY_UI_SIZE; //キーボードのUIのサイズ
 
 	D3DXVECTOR3 m_PercentPos;
 	CUltIcon* m_pIcon;
-	CNumber_2D* m_pParcent[NUM_DIGIT];
+	CKeyboard_UI* m_pKeyboard_UI;
 };
 
 #endif // DEBUG

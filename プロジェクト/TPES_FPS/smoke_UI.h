@@ -12,6 +12,7 @@
 #include "player_test.h"
 #include "player_UI_box.h"
 #include "smoke_icon.h"
+#include "keyboard_UI.h"
 
 class CPlayer_test;
 //=============================================
@@ -44,10 +45,14 @@ private:
 	static const D3DXVECTOR3 NUMBER_POS; //数字の位置
 	static const D3DXVECTOR2 NUMBER_SIZE; //数字のサイズ
 
+	static const D3DXVECTOR3 KEY_UI_POS; //キーボードのUIの位置
+	static const D3DXVECTOR2 KEY_UI_SIZE; //キーボードのUIのサイズ
+
 	int m_NumSmoke;
 	D3DXVECTOR3 m_SmokePos;
 	CSmokeIcon* m_pIcon;
 	CPlayerUIBox* m_pUIBox;
+	CKeyboard_UI* m_pkeyboard_UI;
 	CNumber_2D* m_pCurrentSmoke[NUM_DIGIT];
 };
 

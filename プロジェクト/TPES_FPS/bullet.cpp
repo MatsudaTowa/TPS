@@ -10,7 +10,7 @@
 #include "player_test.h"
 
 //テクスチャ初期化
-const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\effect000.jpg";
+const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\bullet.png";
 
 //=============================================
 //コンストラクタ

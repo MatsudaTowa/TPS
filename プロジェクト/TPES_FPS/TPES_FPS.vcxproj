@@ -190,6 +190,7 @@
     <ClCompile Include="hit_camera_effect_moderate.cpp" />
     <ClCompile Include="hit_camera_effect_severe.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="keyboard_UI.cpp" />
     <ClCompile Include="life_UI.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="hit_camera_effect_moderate.h" />
     <ClInclude Include="hit_camera_effect_severe.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="keyboard_UI.h" />
     <ClInclude Include="life_UI.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
