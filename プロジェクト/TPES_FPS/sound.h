@@ -19,6 +19,7 @@ public:
 	{
 		SOUND_LABEL_BGM_TITLE = 0,		// BGM0
 		SOUND_LABEL_SE_HIT,		// HitSE
+		SOUND_LABEL_SE_SHOT,		// ShotSE
 		SOUND_LABEL_MAX
 	};
 

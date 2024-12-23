@@ -96,7 +96,7 @@ protected:
 	LOAD_WALL m_LoadWall; //読み込むときに必要な壁の情報
 	LOAD_POINT m_LoadPoint; //読み込むときに必要なポイントの情報
 
-	int m_nScore; //スコア格納変数
+	int m_nTotalScore; //スコア格納変数
 	static CScore* m_pScore;
 	static WAVE m_next; //次のウェーブ
 	static const char* m_ResultFile; //リザルトファイル

@@ -10,6 +10,7 @@
 #include "main.h"
 #include "scene.h"
 #include "score.h"
+#include "manager.h"
 
 class CResult :public CScene
 {
@@ -20,7 +21,13 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
+	int LoadScore(const char* FileName);
+
 private:
-	static CScore* m_pScore;
+	static const char* WAVE_RESULT_FILE[CManager::NUM_RESULT_FILE];
+	static const D3DXVECTOR3 SCORE_POS[CManager::NUM_RESULT_FILE + 1];
+	static const D3DXVECTOR2 SCORE_SIZE[2];
+	static const float DIGIT_SHIFT[2];
+	CScore* m_pScore[CManager::NUM_RESULT_FILE + 1];
 };
 #endif
