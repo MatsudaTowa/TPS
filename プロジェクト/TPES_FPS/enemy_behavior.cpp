@@ -186,7 +186,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 	{
 		m_pReaction = CEnemy_Reaction_UI::Create({ character->m_apModel[1]->GetMtxWorld()._41,
 			character->m_apModel[1]->GetMtxWorld()._42 + 40.0f,
-			character->m_apModel[1]->GetMtxWorld()._43 }, { 20.0f,20.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_WANDERING);
+			character->m_apModel[1]->GetMtxWorld()._43 }, { 20.0f,20.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_CONFUSION);
 	}
 	//Œ»Ý‚Ì•ûŒü‚ðŽæ“¾
 	D3DXVECTOR3 rot = character->GetRot();

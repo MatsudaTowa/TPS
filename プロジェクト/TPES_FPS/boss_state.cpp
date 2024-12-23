@@ -289,10 +289,6 @@ void CConfusionBossState::Start(CBossEnemy* boss)
 //=============================================
 void CConfusionBossState::Confusion(CBossEnemy* boss)
 {
-	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
-	{
-		boss->ChangeState(new CBossStanState);
-	}
 	if (boss->m_pConfusion != nullptr)
 	{
 		boss->m_pConfusion->Confusion(boss, m_StartRot);

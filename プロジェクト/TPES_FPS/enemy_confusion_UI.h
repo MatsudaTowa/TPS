@@ -1,6 +1,6 @@
 //=============================================
 //
-//ìGÇÃç¨óêÇÃUI[enemy_wandering_UI.h]
+//ìGÇÃç¨óêÇÃUI[enemy_confusion_UI.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -12,11 +12,11 @@
 
 #define _ENEMY_WANDERING_UI_H_
 
-class CEnemy_Wandering_UI : public CEnemy_Reaction_UI
+class CEnemy_Confusion_UI : public CEnemy_Reaction_UI
 {
 public:
-	CEnemy_Wandering_UI(int nPriority = PRIORITY);
-	~CEnemy_Wandering_UI()override;
+	CEnemy_Confusion_UI(int nPriority = PRIORITY);
+	~CEnemy_Confusion_UI()override;
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;

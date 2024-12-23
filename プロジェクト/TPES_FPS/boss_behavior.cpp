@@ -239,6 +239,11 @@ CBossConfusion::CBossConfusion(): m_isRight(false), m_TurnCnt(0)
 //=============================================
 CBossConfusion::~CBossConfusion()
 {
+	if (m_pReaction != nullptr)
+	{
+		m_pReaction->Uninit();
+		m_pReaction = nullptr;
+	}
 }
 
 //=============================================
@@ -246,6 +251,12 @@ CBossConfusion::~CBossConfusion()
 //=============================================
 void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 {
+	if (m_pReaction == nullptr)
+	{
+		m_pReaction = CEnemy_Reaction_UI::Create({ boss->m_apModel[1]->GetMtxWorld()._41,
+			boss->m_apModel[1]->GetMtxWorld()._42 + 70.0f,
+			boss->m_apModel[1]->GetMtxWorld()._43 }, { 40.0f,40.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_CONFUSION);
+	}
 	//Œ»Ý‚Ì•ûŒü‚ðŽæ“¾
 	D3DXVECTOR3 rot = boss->GetRot();
 
@@ -264,12 +275,26 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 	CCharacter::RayHitInfo HitBlockInfo = boss->PerformRaycast_Block(vec, boss);
 	CCharacter::RayHitInfo HitSmokeInfo = boss->PerformRaycast_Smoke(vec, boss);
 
+	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
+		boss->ChangeState(new CBossStanState);
+	}
 	if (HitPlayerInfo.hit && HitPlayerInfo.distance < HitBlockInfo.distance)
 	{//Œ©‚Â‚¯‚½‚ç
 		//boss->ChangeState(new CChaseState);
 	}
 	if (m_TurnCnt >= NUM_TURN)
 	{//ãŒÀ‚É’B‚µ‚½‚ç
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
 		m_TurnCnt = 0;
 		boss->ChangeState(new CWanderingState);
 	}

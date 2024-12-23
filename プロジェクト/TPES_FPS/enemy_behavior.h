@@ -9,7 +9,6 @@
 #include "character_behavior.h"
 #include "enemy.h"
 #include "enemy_reaction_UI.h"
-#include "enemy_wandering_UI.h"
 
 //=============================================
 //敵の移動のストラテジー

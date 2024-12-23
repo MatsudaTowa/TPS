@@ -175,7 +175,7 @@
     <ClCompile Include="enemy_reaction_UI.cpp" />
     <ClCompile Include="enemy_reload_UI.cpp" />
     <ClCompile Include="enemy_state.cpp" />
-    <ClCompile Include="enemy_wandering_UI.cpp" />
+    <ClCompile Include="enemy_confusion_UI.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
@@ -271,7 +271,7 @@
     <ClInclude Include="enemy_reaction_UI.h" />
     <ClInclude Include="enemy_reload_UI.h" />
     <ClInclude Include="enemy_state.h" />
-    <ClInclude Include="enemy_wandering_UI.h" />
+    <ClInclude Include="enemy_confusion_UI.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />

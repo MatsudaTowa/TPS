@@ -5,7 +5,7 @@
 //
 //=============================================
 #include "enemy_reaction_UI.h"
-#include "enemy_wandering_UI.h"
+#include "enemy_confusion_UI.h"
 #include "manager.h"
 
 //=============================================
@@ -81,8 +81,8 @@ CEnemy_Reaction_UI* CEnemy_Reaction_UI::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size
 	{
 	case CEnemy_Reaction_UI::REACTION_RELOAD:
 		break;
-	case CEnemy_Reaction_UI::REACTION_WANDERING:
-		pReactionUI = new CEnemy_Wandering_UI;
+	case CEnemy_Reaction_UI::REACTION_CONFUSION:
+		pReactionUI = new CEnemy_Confusion_UI;
 		break;
 	case CEnemy_Reaction_UI::REACTION_STAN:
 		break;

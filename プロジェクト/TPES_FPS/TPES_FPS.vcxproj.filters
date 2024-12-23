@@ -285,7 +285,7 @@
     <ClCompile Include="enemy_reaction_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_wandering_UI.cpp">
+    <ClCompile Include="enemy_confusion_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -560,7 +560,7 @@
     <ClInclude Include="enemy_reaction_UI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_wandering_UI.h">
+    <ClInclude Include="enemy_confusion_UI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

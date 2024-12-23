@@ -4,29 +4,29 @@
 //Auther Matsuda Towa
 //
 //=============================================
-#include "enemy_wandering_UI.h"
+#include "enemy_confusion_UI.h"
 #include "manager.h"
 
-const std::string CEnemy_Wandering_UI::TEXTURE_NAME = "data\\TEXTURE\\wandering_UI.png";
+const std::string CEnemy_Confusion_UI::TEXTURE_NAME = "data\\TEXTURE\\wandering_UI.png";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy_Wandering_UI::CEnemy_Wandering_UI(int nPriority):CEnemy_Reaction_UI(nPriority)
+CEnemy_Confusion_UI::CEnemy_Confusion_UI(int nPriority):CEnemy_Reaction_UI(nPriority)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CEnemy_Wandering_UI::~CEnemy_Wandering_UI()
+CEnemy_Confusion_UI::~CEnemy_Confusion_UI()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CEnemy_Wandering_UI::Init()
+HRESULT CEnemy_Confusion_UI::Init()
 {
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	//テクスチャ読み込み
@@ -38,7 +38,7 @@ HRESULT CEnemy_Wandering_UI::Init()
 //=============================================
 //終了
 //=============================================
-void CEnemy_Wandering_UI::Uninit()
+void CEnemy_Confusion_UI::Uninit()
 {
 	CEnemy_Reaction_UI::Uninit();
 }
@@ -46,7 +46,7 @@ void CEnemy_Wandering_UI::Uninit()
 //=============================================
 //更新
 //=============================================
-void CEnemy_Wandering_UI::Update()
+void CEnemy_Confusion_UI::Update()
 {
 	CEnemy_Reaction_UI::Update();
 }
@@ -54,7 +54,7 @@ void CEnemy_Wandering_UI::Update()
 //=============================================
 //描画
 //=============================================
-void CEnemy_Wandering_UI::Draw()
+void CEnemy_Confusion_UI::Draw()
 {
 	CEnemy_Reaction_UI::Draw();
 }
