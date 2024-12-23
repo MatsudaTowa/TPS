@@ -136,7 +136,7 @@ CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENE
 	{
 	case ENEMY_TYPE::ENEMY_TYPE_NORMAL:
 		pEnemy = new CNormalEnemy;
-		pEnemy->Load_Parts("data\\Motion.txt");
+		pEnemy->Load_Parts("data\\motion_enemy000.txt");
 		break;
 	case ENEMY_TYPE::ENEMY_TYPE_BOSS:
 		pEnemy = new CBossEnemy;

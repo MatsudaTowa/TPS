@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "player_test.h"
 #include "object.h"
+#include "normal_enemy.h"
 
 //=============================================
 //コンストラクタ
@@ -90,6 +91,11 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 	D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z);
 	D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
 	0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
+
+	CNormalEnemy::Motion_Type Motion;
+	Motion = CNormalEnemy::Motion_Type::MOTION_ATTACK;
+	//モーション代入
+	character->SetMotion(Motion);
 
 	if (character->m_pGun->GetAmmo() > 0)
 	{
@@ -289,5 +295,5 @@ CEnemyStan::~CEnemyStan()
 //=============================================
 void CEnemyStan::Stan(CCharacter* character)
 {
-	character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
+	character->SetMotion(CNormalEnemy::Motion_Type::MOTION_STAN);
 }
