@@ -19,7 +19,7 @@ public:
 	static const char* DANGOYA_MODEL_NAME;	//モデルの名前
 	static const char* MESH_MODEL_NAME;	//モデルの名前
 
-	static const int BLOCK_PRIORITY = 3; //描画順
+	static const int BLOCK_PRIORITY = 22; //描画順
 	typedef enum
 	{
 		BLOCKTYPE_NONE = 0,

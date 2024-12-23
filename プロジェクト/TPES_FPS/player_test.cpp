@@ -23,6 +23,9 @@ const D3DXVECTOR3 CPlayer_test::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
 //当たり判定無効フレーム数
 const int CPlayer_test::IGNORE_COLLISION_FRAME = 300;
 
+//スモーク復活フレーム数
+const int CPlayer_test::SMOKE_RECAST_FRAME = 1800;
+
 //通常の移動抵抗
 const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 
@@ -41,6 +44,7 @@ LPDIRECT3DTEXTURE9 CPlayer_test::m_pTextureTemp = nullptr;
 CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),
 m_Raticle(),				//レティクルのポインタ初期化
 m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
+m_SmokeRecastCnt(0),		//スモーク復活カウントリセット
 m_isRelorad(false),			//リロードしていない状態に
 m_isSmoke(false),			//スモークを使っていない状態に
 m_isEnemyColision(true),	//エネミーと判定をとる状態に
@@ -256,25 +260,8 @@ void CPlayer_test::Update()
 	//とらない場合はカウントアップ
 	CanDetectEnemyCollision();
 
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->SetCurrentAmmo_UI(m_pGun->GetAmmo());
-	}
-
-	if (m_pLifeUI != nullptr)
-	{
-		m_pLifeUI->SetLife_UI(GetLife());
-	}
-
-	if (m_pUltUI != nullptr)
-	{
-		m_pUltUI->SetCurrentUlt_UI(this);
-	}
-
-	if (m_pSmokeUI != nullptr)
-	{
-		m_pSmokeUI->SetCurrentSmoke_UI(this);
-	}
+	//UI設定
+	SetUI();
 
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
@@ -291,6 +278,16 @@ void CPlayer_test::Update()
 
 			//ステートカウント代入
 			SetStateCnt(nStateCnt);
+		}
+
+		if (m_isSmoke)
+		{//スモークが使った状態だったら
+			++m_SmokeRecastCnt;
+			if (m_SmokeRecastCnt > SMOKE_RECAST_FRAME)
+			{
+				m_SmokeRecastCnt = 0;
+				m_isSmoke = false;
+			}
 		}
 
 		//カメラ情報取得
@@ -315,6 +312,35 @@ void CPlayer_test::Update()
 	//CCharacter::HitBlock(NUM_PARTS);
 }
 
+//=============================================
+//UI設定
+//=============================================
+void CPlayer_test::SetUI()
+{
+	if (m_pAmmoUI != nullptr)
+	{
+		m_pAmmoUI->SetCurrentAmmo_UI(m_pGun->GetAmmo());
+	}
+
+	if (m_pLifeUI != nullptr)
+	{
+		m_pLifeUI->SetLife_UI(GetLife());
+	}
+
+	if (m_pUltUI != nullptr)
+	{
+		m_pUltUI->SetCurrentUlt_UI(this);
+	}
+
+	if (m_pSmokeUI != nullptr)
+	{
+		m_pSmokeUI->SetCurrentSmoke_UI(this);
+	}
+}
+
+//=============================================
+//敵との判定
+//=============================================
 void CPlayer_test::CanDetectEnemyCollision()
 {
 	if (m_isEnemyColision)

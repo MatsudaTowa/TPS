@@ -98,8 +98,10 @@ private:
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const int MAX_JUMPCNT; //ジャンプ回数
 	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
+	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
+	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン
 	static CAmmo_UI* m_pAmmoUI;
 	static CLife_UI* m_pLifeUI;
@@ -116,6 +118,8 @@ private:
 	void DebugPos();
 
 	int m_IgnoreColisionCnt;
+
+	int m_SmokeRecastCnt;
 
 	bool m_isEnemyColision; //エネミーとの判定をとるか
 
