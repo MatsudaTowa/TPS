@@ -48,7 +48,8 @@ m_pHitCameraEffect(),		//カメラのエフェクトのポインタ初期化
 m_pGunIcon(),				//銃のアイコンのポインタ初期化
 m_pUlt(),					//ウルトのポインタ初期化 
 m_pPlayerState(),			//プレイヤーのステート初期化
-m_pUltUI()					//ウルトのUI初期化
+m_pUltUI(),					//ウルトのUI初期化
+m_pSmokeUI()				//スモークのUI初期化
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -132,6 +133,12 @@ HRESULT CPlayer_test::Init()
 
 			m_pUltUI->Init(this);
 		}
+
+		if (m_pSmokeUI == nullptr)
+		{
+			m_pSmokeUI = new CSmoke_UI;
+			m_pSmokeUI->Init(this);
+		}
 	}
 
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
@@ -190,6 +197,11 @@ void CPlayer_test::Uninit()
 	{
 		m_pUlt->Uninit();
 		m_pUlt = nullptr;
+	}
+	if (m_pSmokeUI != nullptr)
+	{
+		m_pSmokeUI->Uninit();
+		m_pSmokeUI = nullptr;
 	}
 	if (m_pSliding != nullptr)
 	{
@@ -257,6 +269,11 @@ void CPlayer_test::Update()
 	if (m_pUltUI != nullptr)
 	{
 		m_pUltUI->SetCurrentUlt_UI(this);
+	}
+
+	if (m_pSmokeUI != nullptr)
+	{
+		m_pSmokeUI->SetCurrentSmoke_UI(this);
 	}
 
 	if (pScene != CScene::MODE::MODE_TITLE)

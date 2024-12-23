@@ -77,6 +77,8 @@ void CUlt_UI::Uninit()
 		m_pIcon->Uninit();
 		m_pIcon = nullptr;
 	}
+
+	delete this;
 }
 
 //=============================================

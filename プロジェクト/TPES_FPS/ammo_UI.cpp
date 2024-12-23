@@ -93,6 +93,8 @@ void CAmmo_UI::Uninit()
 		m_pUIBox->Uninit();
 		m_pUIBox = nullptr;
 	}
+
+	delete this;
 }
 
 //=============================================

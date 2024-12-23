@@ -222,7 +222,9 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="smoke.cpp" />
     <ClCompile Include="smoke_grenade.cpp" />
+    <ClCompile Include="smoke_icon.cpp" />
     <ClCompile Include="smoke_range.cpp" />
+    <ClCompile Include="smoke_UI.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -311,7 +313,9 @@
     <ClInclude Include="score.h" />
     <ClInclude Include="smoke.h" />
     <ClInclude Include="smoke_grenade.h" />
+    <ClInclude Include="smoke_icon.h" />
     <ClInclude Include="smoke_range.h" />
+    <ClInclude Include="smoke_UI.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="texture.h" />

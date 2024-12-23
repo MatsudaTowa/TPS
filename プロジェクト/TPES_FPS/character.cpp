@@ -702,7 +702,6 @@ void CCharacter::HitField()
 						m_move.x = 0.0f;
 					}
 
-
 					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z
 						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z)
 					{

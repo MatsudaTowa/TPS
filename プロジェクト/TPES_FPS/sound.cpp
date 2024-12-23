@@ -9,7 +9,7 @@
 const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MAX] =
 {
 	{"data/SOUND/BGM/aaa_aaa.wav", -1,0.7f},         //BGM0
-	{"data/SOUND/SE/hit.wav", 0,0.7f},         //HitSE
+	{"data/SOUND/SE/hit.wav", 0,1.0f},         //HitSE
 	{"data/SOUND/SE/shot.wav", 0,0.7f},         //HitSE
 };
 

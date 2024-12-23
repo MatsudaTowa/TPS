@@ -20,12 +20,15 @@
 #include "gun_icon.h"
 #include "player_state.h"
 #include "ult.h"
+#include "smoke_UI.h"
 
 class CPlayerState;
 class CPlayerSliding;
 class CAmmo_UI;
 class CUlt_UI;
 class CUlt;
+class CSmoke_UI;
+
 //プレイヤークラス
 class CPlayer_test:public CCharacter
 {
@@ -72,6 +75,16 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
+	void SetSmoke(bool isSmoke)
+	{
+		m_isSmoke = isSmoke;
+	}
+
+	bool& GetSmoke()
+	{
+		return m_isSmoke;
+	}
+
 	CReticle* m_Raticle;
 
 	CUlt* m_pUlt;
@@ -92,6 +105,7 @@ private:
 	static CLife_UI* m_pLifeUI;
 
 	CUlt_UI* m_pUltUI;
+	CSmoke_UI* m_pSmokeUI;
 
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 
