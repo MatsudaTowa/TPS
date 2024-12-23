@@ -161,8 +161,8 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(0)
-{
+CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(0), m_pReaction()
+{	
 }
 
 //=============================================
@@ -170,6 +170,11 @@ CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(0)
 //=============================================
 CEnemyConfusion::~CEnemyConfusion()
 {
+	if (m_pReaction != nullptr)
+	{
+		m_pReaction->Uninit();
+		m_pReaction = nullptr;
+	}
 }
 
 //=============================================
@@ -177,6 +182,12 @@ CEnemyConfusion::~CEnemyConfusion()
 //=============================================
 void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 {
+	if (m_pReaction == nullptr)
+	{
+		m_pReaction = CEnemy_Reaction_UI::Create({ character->m_apModel[1]->GetMtxWorld()._41,
+			character->m_apModel[1]->GetMtxWorld()._42 + 40.0f,
+			character->m_apModel[1]->GetMtxWorld()._43 }, { 20.0f,20.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_WANDERING);
+	}
 	//現在の方向を取得
 	D3DXVECTOR3 rot = character->GetRot();
 
@@ -197,10 +208,29 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 
 	if (HitPlayerInfo.hit && HitPlayerInfo.distance < HitBlockInfo.distance)
 	{//見つけたら
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
 		character->ChangeState(new CShotState);
+	}
+	if (character->GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
+		character->ChangeState(new CStanState);
 	}
 	if (m_TurnCnt >= NUM_TURN)
 	{//上限に達したら
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
 		m_TurnCnt = 0;
 		character->ChangeState(new CMoveState);
 	}

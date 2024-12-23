@@ -114,10 +114,6 @@ void CConfusionState::Start(CCharacter* character)
 //=============================================
 void CConfusionState::Confusion(CCharacter* character)
 {
-	if (character->GetState() == CCharacter::CHARACTER_DAMAGE)
-	{
-		character->ChangeState(new CStanState);
-	}
 	if (character->m_pConfusion != nullptr)
 	{
 		character->m_pConfusion->Confusion(character, m_StartRot);
