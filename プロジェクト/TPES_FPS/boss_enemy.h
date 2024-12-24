@@ -31,7 +31,7 @@ public:
 	static const int NUM_MOTION = 3;
 	static const int ENEMY_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
-	static const int DEFAULT_LIFE = 100; //ライフ
+	static const int DEFAULT_LIFE = 1500; //ライフ
 	static const float FIND_PLAYER_DISTANCE; //この値までだったら追いかける
 	static const float LOST_PLAYER_DISTANCE; //この値以上だったら見失う
 

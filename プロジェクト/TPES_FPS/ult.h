@@ -66,7 +66,7 @@ public:
 	void Update() override;
 	bool Action(CPlayer_test* player) override;
 private:
-	static const int MEDIUM_ULT_COOL_TIME = 600;
+	static const int MEDIUM_ULT_COOL_TIME = 1800;
 	static const float FLYING_HIGHT; //‚Ç‚±‚Ü‚Å”ò‚Ô‚©
 	static const D3DXVECTOR3 SPEED;
 

@@ -190,7 +190,7 @@ void CGame::ApplyDeathPenalty()
 					if (pScore->m_nScore > 0)
 					{
 						//TODO:ADD‚â‚ß‚ë
-						pScore->AddScore(-1000);
+						pScore->AddScore(-50);
 
 						if (pScore->m_nScore <= 0)
 						{//0‚ð‰º‰ñ‚Á‚½‚ç

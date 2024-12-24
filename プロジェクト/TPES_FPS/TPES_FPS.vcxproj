@@ -170,6 +170,7 @@
     <ClCompile Include="colision.cpp" />
     <ClCompile Include="crosshair.cpp" />
     <ClCompile Include="dash_effect.cpp" />
+    <ClCompile Include="death_icon.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_behavior.cpp" />
     <ClCompile Include="enemy_reaction_UI.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="colision.h" />
     <ClInclude Include="crosshair.h" />
     <ClInclude Include="dash_effect.h" />
+    <ClInclude Include="death_icon.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_behavior.h" />
     <ClInclude Include="enemy_reaction_UI.h" />
