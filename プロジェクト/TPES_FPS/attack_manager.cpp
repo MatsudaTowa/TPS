@@ -108,8 +108,6 @@ bool CAttack_Manager::HitEnemy()
 						if (nCnt != 1)
 						{
 							pEnemy->Damage(m_nDamage);
-
-
 						}
 						else if (nCnt == 1)
 						{
