@@ -45,6 +45,7 @@ CPlayer_test::CPlayer_test(int nPriority) :CCharacter(nPriority),
 m_Raticle(),				//レティクルのポインタ初期化
 m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
 m_SmokeRecastCnt(0),		//スモーク復活カウントリセット
+m_DeathCnt(0),				//死亡カウントリセット
 m_isRelorad(false),			//リロードしていない状態に
 m_isSmoke(false),			//スモークを使っていない状態に
 m_isEnemyColision(true),	//エネミーと判定をとる状態に
@@ -459,6 +460,8 @@ void CPlayer_test::ReSpawn()
 	SetLife(CPlayer_test::PLAYER_LIFE);
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
+
+	++m_DeathCnt;
 }
 
 //=============================================

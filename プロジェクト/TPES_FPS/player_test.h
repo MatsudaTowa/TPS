@@ -75,9 +75,19 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
+	void SetDeathCnt(int DeathCnt)
+	{
+		m_DeathCnt = DeathCnt;
+	}
+
 	void SetSmoke(bool isSmoke)
 	{
 		m_isSmoke = isSmoke;
+	}
+
+	int& GetDeathCnt()
+	{
+		return m_DeathCnt;
 	}
 
 	bool& GetSmoke()
@@ -120,6 +130,8 @@ private:
 	int m_IgnoreColisionCnt;
 
 	int m_SmokeRecastCnt;
+
+	int m_DeathCnt;
 
 	bool m_isEnemyColision; //エネミーとの判定をとるか
 

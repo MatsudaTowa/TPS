@@ -124,6 +124,9 @@ void CGame::Update()
 			{
 				m_nResultDelay = 0;
 
+				//死んだ数分だけスコアマイナス
+				ApplyDeathPenalty();
+
 				//現在のスコアを書き出し
 				m_pWave->WaveResult(&CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
 				SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
@@ -131,6 +134,7 @@ void CGame::Update()
 		}
 	}
 
+#ifdef _DEBUG
 	if (pKeyboard->GetTrigger(DIK_TAB))
 	{
 		m_next_wave = CWave::WAVE::BOSS;
@@ -138,19 +142,14 @@ void CGame::Update()
 		SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 	}
 
+#endif // _DEBUG
+
+	
 	if (m_pWave != nullptr)
 	{
 		m_pWave->Update();
 	}
 	
-	if (pKeyboard->GetTrigger(DIK_F5))
-	{
-		m_bEdit = m_bEdit ? false : true;
-
-		CCamera*pCamera = CManager::GetInstance()->GetCamera();
-
-		pCamera->ResetCamera();
-	}
 	//if (m_bEdit == false)
 	//{
 	CObject::UpdateAll();
@@ -163,6 +162,46 @@ void CGame::Update()
 	}
 #endif // _DEBUG
 
+}
+
+//=============================================
+//死んだ数だけスコアマイナス
+//=============================================
+void CGame::ApplyDeathPenalty()
+{
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+		 //タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+
+				for (int nCnt = 0; nCnt < pPlayer_test->GetDeathCnt(); nCnt++)
+				{
+					CScore* pScore = CWave::GetScore();
+
+					if (pScore->m_nScore > 0)
+					{
+						//TODO:ADDやめろ
+						pScore->AddScore(-1000);
+
+						if (pScore->m_nScore <= 0)
+						{//0を下回ったら
+							//スコア0に
+							pScore->m_nScore = 0;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 //=============================================

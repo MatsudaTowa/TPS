@@ -41,6 +41,7 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
+	void ApplyDeathPenalty();
 	void Draw() override;
 	static void SetState(GAME_STATE state)
 	{
