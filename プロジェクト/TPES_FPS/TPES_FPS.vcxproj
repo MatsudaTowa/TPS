@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="action_UI.cpp" />
     <ClCompile Include="ammo_UI.cpp" />
     <ClCompile Include="assault_behavior.cpp" />
     <ClCompile Include="attack_manager.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="minigun_behavior.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_parts.cpp" />
+    <ClCompile Include="mouse_UI.cpp" />
     <ClCompile Include="move_point.cpp" />
     <ClCompile Include="object2D_anim.cpp" />
     <ClCompile Include="normal_enemy.cpp" />
@@ -236,6 +238,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="tutorial.cpp" />
+    <ClCompile Include="tutorial_UI.cpp" />
     <ClCompile Include="ult.cpp" />
     <ClCompile Include="ult_icon.cpp" />
     <ClCompile Include="ult_icon_effect.cpp" />
@@ -252,6 +255,7 @@
     <ClCompile Include="wave_two.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="action_UI.h" />
     <ClInclude Include="ammo_UI.h" />
     <ClInclude Include="assault_behavior.h" />
     <ClInclude Include="attack_manager.h" />
@@ -299,6 +303,7 @@
     <ClInclude Include="minigun_behavior.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_parts.h" />
+    <ClInclude Include="mouse_UI.h" />
     <ClInclude Include="move_point.h" />
     <ClInclude Include="object2D_anim.h" />
     <ClInclude Include="normal_enemy.h" />
@@ -332,6 +337,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="tutorial.h" />
+    <ClInclude Include="tutorial_UI.h" />
     <ClInclude Include="ult.h" />
     <ClInclude Include="ult_icon.h" />
     <ClInclude Include="ult_icon_effect.h" />

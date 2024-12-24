@@ -111,7 +111,7 @@ bool CAttack_Manager::HitEnemy()
 						}
 						else if (nCnt == 1)
 						{
-							pEnemy->Damage(m_nDamage * 2);
+							pEnemy->Damage(100);
 						}
 						CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_HIT);
 

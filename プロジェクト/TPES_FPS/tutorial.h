@@ -14,6 +14,7 @@
 #include "wave.h"
 #include "score.h"
 #include"wave_result.h"
+#include "tutorial_UI.h"
 
 class CTutorial:public CScene
 {
@@ -56,6 +57,8 @@ private:
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	LOAD_WALL m_LoadWall; //読み込むときに必要な壁の情報
+
+	CTutorial_UI* m_pTutorial_UI;
 
 	void LoadBlock(const std::string* pFileName);
 	void LoadWall(const std::string* pFileName);

@@ -14,7 +14,7 @@ const std::string CTutorial::WALL_FILE = "data\\FILE\\wall_002.txt";
 //=============================================
 //コンストラクタ
 //=============================================
-CTutorial::CTutorial()
+CTutorial::CTutorial():m_pTutorial_UI()
 {
 }
 
@@ -38,6 +38,12 @@ HRESULT CTutorial::Init()
 	//地面生成
 	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
 
+	if (m_pTutorial_UI == nullptr)
+	{
+		m_pTutorial_UI = new CTutorial_UI;
+		m_pTutorial_UI->Init();
+	}
+
 	return S_OK;
 }
 
@@ -46,6 +52,11 @@ HRESULT CTutorial::Init()
 //=============================================
 void CTutorial::Uninit()
 {
+	if (m_pTutorial_UI != nullptr)
+	{
+		m_pTutorial_UI->Uninit();
+		m_pTutorial_UI = nullptr;
+	}
 	CObject::ReleaseAll();
 }
 
@@ -56,6 +67,10 @@ void CTutorial::Update()
 {
 	CObject::UpdateAll();
 
+	if (m_pTutorial_UI != nullptr)
+	{
+		m_pTutorial_UI->Update();
+	}
 
 	if (CEnemy::m_NumEnemy <= 0)
 	{//敵がいなくなったら再スポーン

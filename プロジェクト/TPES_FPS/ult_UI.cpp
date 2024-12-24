@@ -47,8 +47,6 @@ HRESULT CUlt_UI::Init(CPlayer_test* player)
 	{
 		m_pKeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, {1.0f,1.0f,1.0f,1.0f},CKeyboard_UI::KEY_X);
 	}
-
-
 	return S_OK;
 }
 
