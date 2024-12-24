@@ -17,7 +17,7 @@ public:
 	static const std::string SMOKE_TEXTURE_NAME; //テクスチャの名前
 	static const int SMOKE_LIFE = 600; //スモークの持続時間
 
-	static const int SMOKE_PRIORITY = 24; //描画順
+	static const int SMOKE_PRIORITY = 10; //描画順
 
 	CSmoke(int nPriority = SMOKE_PRIORITY);
 	~CSmoke()override;
