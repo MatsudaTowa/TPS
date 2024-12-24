@@ -10,6 +10,7 @@
 #include "test.h"
 #include "result.h"
 #include "manager.h"
+#include "tutorial.h"
 
 CScene::MODE CScene::m_Mode = CScene::MODE::MODE_TITLE;
 //=============================================
@@ -75,6 +76,11 @@ CScene* CScene::Create(MODE mode)
     case MODE_TEST: //テスト
         //delete pScene;
         pScene = new CTest;
+        break;
+
+    case MODE_TUTORIAL: //チュートリアル
+//delete pScene;
+        pScene = new CTutorial;
         break;
 
     case MODE_GAME: // ゲーム

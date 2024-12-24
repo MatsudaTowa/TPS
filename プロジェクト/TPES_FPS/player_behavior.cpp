@@ -168,24 +168,6 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 				++character->m_pGun->m_nRateCnt;
 
 				ShotBullet(character, pCamera, Allegiance, type);
-
-				for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-				{
-					//オブジェクト取得
-					CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
-					if (pObj != nullptr)
-					{//ヌルポインタじゃなければ
-						//タイプ取得
-						CObject::OBJECT_TYPE type = pObj->GetType();
-
-						//敵との当たり判定
-						if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
-						{
-							CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-							pEnemy->ChangeState(new CShotState);
-						}
-					}
-				}
 			}
 			else
 			{

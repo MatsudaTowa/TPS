@@ -186,23 +186,30 @@ void CEnemy::Damage(int nDamage)
 	}
 	if (nLife <= 0)
 	{//HPが0以下だったら
-		CScore* pScore = CWave::GetScore();
+		//現在のシーンを取得
+		CScene::MODE pScene = CScene::GetSceneMode();
 
-		int nAddScore = 0;
-		//TODO:これもストラテジーでやるべき
-		switch (m_Type)
+		if (pScene == CScene::MODE_GAME)
 		{
-		case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:
-			nAddScore = 300;
-			break;
-		case CEnemy::ENEMY_TYPE::ENEMY_TYPE_BOSS:
-			nAddScore = 1000;
-			break;
-		default:
-			assert(false);
-			break;
+			CScore* pScore = CWave::GetScore();
+
+			int nAddScore = 0;
+			//TODO:これもストラテジーでやるべき
+			switch (m_Type)
+			{
+			case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:
+				nAddScore = 300;
+				break;
+			case CEnemy::ENEMY_TYPE::ENEMY_TYPE_BOSS:
+				nAddScore = 1000;
+				break;
+			default:
+				assert(false);
+				break;
+			}
+			pScore->AddScore(nAddScore);
 		}
-		pScore->AddScore(nAddScore);
+		
 		//終了
 		Uninit();
 	}
