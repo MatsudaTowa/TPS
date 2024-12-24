@@ -105,9 +105,18 @@ bool CAttack_Manager::HitEnemy()
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
-						pEnemy->Damage(m_nDamage);
+						if (nCnt != 1)
+						{
+							pEnemy->Damage(m_nDamage);
 
+
+						}
+						else if (nCnt == 1)
+						{
+							pEnemy->Damage(m_nDamage * 2);
+						}
 						CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_HIT);
+
 						return true;
 					}
 				}
