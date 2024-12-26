@@ -49,6 +49,7 @@ CGame::~CGame()
 //=============================================
 HRESULT CGame::Init()
 {
+	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
 	m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 
 	if (m_pWave == nullptr)
@@ -70,6 +71,7 @@ HRESULT CGame::Init()
 //=============================================
 void CGame::Uninit()
 {
+	CManager::GetInstance()->GetSound()->StopSound();
 	m_GameState = GAME_STATE_NORMAL;
 
 	if (m_pPlayer != nullptr)

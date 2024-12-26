@@ -8,7 +8,8 @@
 // ÉTÉEÉìÉhÇÃèÓïÒ
 const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MAX] =
 {
-	{"data/SOUND/BGM/aaa_aaa.wav", -1,0.7f},         //BGM0
+	{"data/SOUND/BGM/title.wav", -1,0.7f},         //BGM0
+	{"data/SOUND/BGM/in_game.wav", -1,0.3f},         //BGM1
 	{"data/SOUND/SE/hit.wav", 0,1.0f},         //HitSE
 	{"data/SOUND/SE/shot.wav", 0,0.4f},         //HitSE
 };

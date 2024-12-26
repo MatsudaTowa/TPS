@@ -40,6 +40,7 @@ CTitle::~CTitle()
 //=============================================
 HRESULT CTitle::Init()
 {
+	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
     //’n–Ê¶¬
     CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
 
@@ -61,6 +62,7 @@ HRESULT CTitle::Init()
 //=============================================
 void CTitle::Uninit()
 {
+	CManager::GetInstance()->GetSound()->StopSound();
     CObject::ReleaseAll();
 }
 
