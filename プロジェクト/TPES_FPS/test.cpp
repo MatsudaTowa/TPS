@@ -16,7 +16,7 @@
 #include "manager.h"
 
 //読み込むブロック情報のファイル
-const std::string CTest::BLOCK_FILE = "data\\FILE\\block_test.txt";
+const std::string CTest::BLOCK_FILE = "data\\FILE\\block_data_tutorial.bin";
 
 //=============================================
 // コンストラクタ
@@ -39,6 +39,8 @@ HRESULT CTest::Init()
 {
 	//ブロック生成
 	LoadBlock(&CTest::BLOCK_FILE);
+
+	CField::Create({ 0.0f,0.0f,0.0f }, { 1000.0f,0.0f,1000.0f });
 
 	//プレイヤー生成
 	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
@@ -82,73 +84,33 @@ void CTest::Draw()
 //=============================================
 void CTest::LoadBlock(const std::string* pFileName)
 {
-	char aDataSearch[BLOCK_TXT_MAX];
-	char aEqual[BLOCK_TXT_MAX]; //[＝]読み込み用
-	int nNumBlock; //ブロックの数
+	//生成するブロック数読み込み用
+	int NumBlock = 0;
+
+	//生成するブロック情報読み込み用
+	LOAD_BLOCK Info[256];
 
 	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName->c_str(), "r");
+	FILE* pFile = fopen(pFileName->c_str(), "rb");
 
-	if (pFile == NULL)
-	{//種類の情報のデータファイルが開けなかった場合
-		//処理を終了する
+	if (pFile != NULL)
+	{
+		//敵の使用してる数の読み込み
+		fread(&NumBlock, sizeof(int), 1, pFile);
+
+		//敵の使用数分、敵の読み込み
+		fread(&Info[0], sizeof(LOAD_BLOCK), NumBlock, pFile);
+
+		//ファイルを閉じる
+		fclose(pFile);
+	}
+	else
+	{
 		return;
 	}
-	//ENDが見つかるまで読み込みを繰り返す
-	while (1)
+
+	for (int nCnt = 0; nCnt < NumBlock; nCnt++)
 	{
-		fscanf(pFile, "%s", aDataSearch); //検索
-
-		if (!strcmp(aDataSearch, "END"))
-		{//読み込みを終了
-			fclose(pFile);
-			break;
-		}
-		if (aDataSearch[0] == '#')
-		{
-			continue;
-		}
-
-		if (!strcmp(aDataSearch, "NUM_BLOCK"))
-		{//モデル数読み込み
-			fscanf(pFile, "%s", &aEqual[0]);
-			fscanf(pFile, "%d", &nNumBlock);
-		}
-		if (!strcmp(aDataSearch, "BLOCKSET"))
-		{
-			//項目ごとのデータを代入
-			while (1)
-			{
-				fscanf(pFile, "%s", aDataSearch); //検索
-
-				if (!strcmp(aDataSearch, "END_BLOCKSET"))
-				{
-					//エネミー生成
-					CBlock::Create(m_LoadBlock.type, m_LoadBlock.pos, m_LoadBlock.rot, 1, false);
-					break;
-				}
-				else if (!strcmp(aDataSearch, "POS"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f %f %f",
-						&m_LoadBlock.pos.x,
-						&m_LoadBlock.pos.y,
-						&m_LoadBlock.pos.z);
-				}
-				else if (!strcmp(aDataSearch, "ROT"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f %f %f",
-						&m_LoadBlock.rot.x,
-						&m_LoadBlock.rot.y,
-						&m_LoadBlock.rot.z);
-				}
-				else if (!strcmp(aDataSearch, "TYPE"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%d", &m_LoadBlock.type);
-				}
-			}
-		}
+		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, 1, false);
 	}
 }

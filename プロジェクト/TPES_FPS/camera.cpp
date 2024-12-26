@@ -49,6 +49,7 @@ const float CCamera::MIN_TURN_X = -0.15f;
 //コンストラクタ
 //=============================================
 CCamera::CCamera():
+
 m_fAngle(0.0f),
 m_fLength(0.0f),
 m_moveR({0.0f,0.0f,0.0f}),
@@ -122,10 +123,32 @@ void CCamera::Update()
 	if (m_pCameraState != nullptr)
 	{
 		m_pCameraState->ThirdView(this);
+		m_pCameraState->FreeView(this);
 		m_pCameraState->Ult(this);
 	}
 
-	ThirdViewCamera();
+	//マウス情報取得
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
+	//現在のシーンを取得 TODO:シーン参照するな
+	CScene::MODE pScene = CScene::GetSceneMode();
+	if (pScene != CScene::MODE::MODE_TITLE)
+	{
+		m_rot.y += pMouse->GetMouseMove().x * 0.001f;
+		m_rot.x += pMouse->GetMouseMove().y * 0.001f;
+	}
+
+	m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
+		m_fLength * sinf(m_rot.x),
+		-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
+
+	if (m_rot.x <= MIN_TURN_X)
+	{
+		m_rot.x = MIN_TURN_X;
+	}
+	if (m_rot.x >= MAX_TURN_X)
+	{
+		m_rot.x = MAX_TURN_X;
+	}
 
 	if (m_rot.y > D3DX_PI)
 	{
@@ -228,26 +251,12 @@ void CCamera::ResetCamera()
 }
 
 //=============================================
-//カメラの状態変更
-//=============================================
-void CCamera::ChangeCameraState(CCameraState* state)
-{
-	//今のステートを消し引数のステートに切り替える
-	if (m_pCameraState != nullptr)
-	{
-		delete m_pCameraState;
-		m_pCameraState = state;
-	}
-}
-
-//=============================================
 //カメラ移動量
 //=============================================
-void CCamera::CameraMove()
+void CCamera::InputMove()
 {
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
 	if (pKeyboard->GetPress(DIK_J) == true)
 	{
@@ -286,9 +295,33 @@ void CCamera::CameraMove()
 
 		m_moveV.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
 		m_moveR.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
-
 	}
 
+
+	if (pKeyboard->GetPress(DIK_SPACE))
+	{
+		m_moveV.y += 1.0f;
+		m_moveR.y += 1.0f;
+	}
+
+	if (pKeyboard->GetPress(DIK_LSHIFT))
+	{
+		m_moveV.y -= 1.0f;
+		m_moveR.y -= 1.0f;
+	}
+}
+
+//=============================================
+//カメラの状態変更
+//=============================================
+void CCamera::ChangeCameraState(CCameraState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pCameraState != nullptr)
+	{
+		delete m_pCameraState;
+		m_pCameraState = state;
+	}
 }
 
 //=============================================
@@ -340,7 +373,6 @@ void CCamera::ThirdViewCamera()
 {
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
-
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
@@ -364,26 +396,6 @@ void CCamera::ThirdViewCamera()
 					m_fLength * sinf(m_rot.x),
 				-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
 
-				//マウス情報取得
-				CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-				//現在のシーンを取得 TODO:シーン参照するな
-				CScene::MODE pScene = CScene::GetSceneMode();
-				if (pScene != CScene::MODE::MODE_TITLE)
-				{
-					m_rot.y += pMouse->GetMouseMove().x * 0.001f;
-					m_rot.x += pMouse->GetMouseMove().y * 0.001f;
-				}
-				//キーボード情報取得
-				CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-				
-				if (m_rot.x <= MIN_TURN_X)
-				{
-					m_rot.x = MIN_TURN_X;
-				}
-				if (m_rot.x >= MAX_TURN_X)
-				{
-					m_rot.x = MAX_TURN_X;
-				}
 			}
 		}
 	}

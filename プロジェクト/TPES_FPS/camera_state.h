@@ -20,8 +20,20 @@ class CCamera;
 class CCameraState
 {
 public:
+	virtual void FreeView(CCamera* camera);
 	virtual void ThirdView(CCamera* camera);
 	virtual void Ult(CCamera* camera);
+};
+
+//=============================================
+//自由なカメラ
+//=============================================
+class CFreeView : public CCameraState
+{
+public:
+	virtual void FreeView(CCamera* camera)override;
+private:
+	static const float FREEVIEW_LENGTH; //サードパーソンビュー時の距離
 };
 
 //=============================================

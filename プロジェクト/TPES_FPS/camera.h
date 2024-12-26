@@ -32,6 +32,9 @@ public:
 	void SetCamera();
 	void ResetCamera();
 
+	void InputMove();
+
+
 	void ChangeCameraState(CCameraState* state);
 
 	//方向取得
@@ -67,6 +70,9 @@ public:
 	//カメラのデバック表示
 	void DebugCameraDraw(); 
 
+	void ThirdViewCamera(); //サードパーソンビュー処理
+
+
 	CCameraState* m_pCameraState;
 private:
 	static const float DEFAULT_MOVE; //通常時の移動
@@ -88,11 +94,8 @@ private:
 	static const float MAX_TURN_X; //サードパーソンビュー時のXの最大可動域
 	static const float MIN_TURN_X; //サードパーソンビュー時のXの最小可動域
 
-	void CameraMove(); //カメラ移動処理
-
 	void CameraTurn(); //カメラ回転処理
 
-	void ThirdViewCamera(); //サードパーソンビュー処理
 
 	D3DXVECTOR3 m_posV; //視点
 	D3DXVECTOR3 m_posR; //注視点
