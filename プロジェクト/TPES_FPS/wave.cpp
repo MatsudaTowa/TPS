@@ -16,6 +16,7 @@
 #include"player_test.h"
 #include "wall.h"
 #include "move_point.h"
+#include "mask.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
@@ -42,6 +43,7 @@ CWave::~CWave()
 //=============================================
 HRESULT CWave::Init()
 {
+	CMask::Create();
 	return S_OK;
 }
 

@@ -69,6 +69,8 @@ protected:
 	void Release(); //©•ª©g‚Ì‰ğ•ú
 
 private:
+
+	//TODO:‚â‚Î‚¢
 	static CObject* m_apObject[MAX_PRIORITY][MAX_OBJECT];
 
 	int m_nPriority; //•`‰æ—Dæ“x

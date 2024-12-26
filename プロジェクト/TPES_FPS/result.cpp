@@ -60,6 +60,8 @@ CResult::~CResult()
 //=============================================
 HRESULT CResult::Init()
 {
+    CScene::Init();
+
     for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
     {
         //ƒXƒRƒA‰Šú‰»

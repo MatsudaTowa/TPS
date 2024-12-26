@@ -133,7 +133,7 @@ void CSmoke::Draw()
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 	//zの比較方法変更
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 	//zバッファに書き込まない
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	//αブレンディングを加算合成に設定

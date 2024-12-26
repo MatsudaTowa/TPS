@@ -34,8 +34,7 @@ void CDefaultState::Default(CPlayer_test* player)
 
 	if (player->GetFinish())
 	{
-		//“ü—Íˆ—
-		player->Input();
+
 	}
 
 	{

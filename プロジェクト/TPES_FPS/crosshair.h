@@ -19,7 +19,7 @@ class CCrossHair : public CBillboard
 public:
 	static const std::string CROSSHAIR_TEXTURE_NAME;	//テクスチャの名前
 
-	static const int RETICLE_PRIORITY = 30; //描画順
+	static const int RETICLE_PRIORITY = 20; //描画順
 
 	CCrossHair(int nPriority = RETICLE_PRIORITY);
 	~CCrossHair()override;

@@ -30,6 +30,8 @@ CTutorial::~CTutorial()
 //=============================================
 HRESULT CTutorial::Init()
 {
+	CScene::Init();
+
 	CPlayer_test* pPlayer_test = CPlayer_test::Create(CPlayer_test::PLAYER_SPAWN_POS, CPlayer_test::PLAYER_SPAWN_ROT, CPlayer_test::PLAYER_LIFE);
 
 	LoadBlock(&BLOCK_FILE);

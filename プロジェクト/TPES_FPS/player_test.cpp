@@ -257,6 +257,9 @@ void CPlayer_test::Update()
 	}
 	CCharacter::Update();
 
+	//入力処理
+	Input();
+
 	//敵と判定をとる場合だったらとる
 	//とらない場合はカウントアップ
 	CanDetectEnemyCollision();

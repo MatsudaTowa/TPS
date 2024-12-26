@@ -31,6 +31,8 @@ CWave_Boss::~CWave_Boss()
 //=============================================
 HRESULT CWave_Boss::Init()
 {
+	CWave::Init();
+
 	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
 	CWave::LoadWall(&WAVE_BOSS_WALL_FILE);

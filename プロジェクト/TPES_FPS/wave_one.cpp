@@ -30,6 +30,7 @@ CWave_One::~CWave_One()
 //=============================================
 HRESULT CWave_One::Init()
 {
+	CWave::Init();
 	CWave::LoadBlock(&WAVE_1_BLOCK_FILE);
 	CWave::LoadEnemy(&WAVE_1_ENEMY_FILE);
 	CWave::LoadWall(&WAVE_1_WALL_FILE);

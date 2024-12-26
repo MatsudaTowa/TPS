@@ -198,6 +198,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="mask.cpp" />
     <ClCompile Include="minigun_behavior.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_parts.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="mask.h" />
     <ClInclude Include="minigun_behavior.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_parts.h" />
