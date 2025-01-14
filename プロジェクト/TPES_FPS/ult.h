@@ -10,6 +10,7 @@
 #include "player_test.h"
 #include "ult_icon.h"
 #include "ult_range.h"
+#include "ult_camera_effect.h"
 
 class CPlayer_test;
 //=============================================
@@ -72,6 +73,7 @@ private:
 
 	float m_move_y; //y軸の移動量
 	CUltRange* m_pUltRange; //ウルトの判定
+	CUltCameraEffect* m_pUltCameraEffect; //ウルトのカメラエフェクト
 };
 
 #endif // !_ULT_

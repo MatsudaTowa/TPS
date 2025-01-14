@@ -246,6 +246,7 @@ void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 
 	//反対方向に吹っ飛ばすのでスピードはマイナス
 	move.x += sinf(angle) * (-GetSpeed() * 20.0f);
+	move.y += GetSpeed() * 10.0f;
 	move.z += cosf(angle) * (-GetSpeed() * 20.0f);
 
 	//移動量代入

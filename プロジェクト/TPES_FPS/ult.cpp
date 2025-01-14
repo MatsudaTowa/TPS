@@ -62,7 +62,7 @@ const D3DXVECTOR3 CMediumUlt::SPEED = {7.0f,8.0f,7.0f};
 //=============================================
 //コンストラクタ
 //=============================================
-CMediumUlt::CMediumUlt():m_move_y(0.0f), m_pUltRange()
+CMediumUlt::CMediumUlt():m_move_y(0.0f), m_pUltRange(), m_pUltCameraEffect()
 {
 }
 
@@ -94,6 +94,12 @@ void CMediumUlt::Uninit()
 	{//ウルトの判定が破棄されていなければ
 		m_pUltRange->Uninit();
 		m_pUltRange = nullptr;
+	}
+
+	if (m_pUltCameraEffect != nullptr)
+	{//破棄されていなければ
+		m_pUltCameraEffect->Uninit();
+		m_pUltCameraEffect = nullptr;
 	}
 
 	//親クラスの終了
@@ -130,6 +136,10 @@ bool CMediumUlt::Action(CPlayer_test* player)
 	{
 		if (m_move_y < FLYING_HIGHT)
 		{
+			if (m_pUltCameraEffect == nullptr)
+			{
+				m_pUltCameraEffect = CUltCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f });
+			}
 			player->SetMove({ sinf(rot) * SPEED.x,SPEED.y,cosf(rot) * SPEED.z });
 			m_move_y += SPEED.y;
 		}
@@ -142,6 +152,12 @@ bool CMediumUlt::Action(CPlayer_test* player)
 				if (m_pUltRange == nullptr)
 				{
 					m_pUltRange = CUltRange::Create(player->GetPos());
+
+					if (m_pUltCameraEffect != nullptr)
+					{//破棄されていなければ
+						m_pUltCameraEffect->Uninit();
+						m_pUltCameraEffect = nullptr;
+					}
 				}
 				m_isFinish = true;
 				m_move_y = 0;
