@@ -128,7 +128,6 @@ void CBossEnemy::Update()
 	m_pBossState->Tackle(this);
 
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
-
 }
 
 //=============================================
