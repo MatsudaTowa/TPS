@@ -204,6 +204,7 @@
     <ClCompile Include="model_parts.cpp" />
     <ClCompile Include="mouse_UI.cpp" />
     <ClCompile Include="move_point.cpp" />
+    <ClCompile Include="muzzle_flash.cpp" />
     <ClCompile Include="object2D_anim.cpp" />
     <ClCompile Include="normal_enemy.cpp" />
     <ClCompile Include="normal_enemy_behavior.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="model_parts.h" />
     <ClInclude Include="mouse_UI.h" />
     <ClInclude Include="move_point.h" />
+    <ClInclude Include="muzzle_flash.h" />
     <ClInclude Include="object2D_anim.h" />
     <ClInclude Include="normal_enemy.h" />
     <ClInclude Include="normal_enemy_behavior.h" />

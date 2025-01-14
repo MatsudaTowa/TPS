@@ -31,6 +31,8 @@ void CShot::Shot(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamag
 	{
 		CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), move,
 			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(size.x, size.y, 0.0f), 60, nDamage, Allegiance, type);
+
+		CMuzzleFlash::Create(pos);
 		--nAmmo;
 	}
 	gun->SetAmmo(nAmmo);

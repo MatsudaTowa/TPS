@@ -7,6 +7,7 @@
 #ifndef _GUN_BEHAVIOR_
 #define _GUN_BEHAVIOR_
 #include "gun.h"
+#include "muzzle_flash.h"
 
 //=============================================
 //‘O•ûéŒ¾

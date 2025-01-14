@@ -190,8 +190,9 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 	{
 		character->m_pGun->m_nRateCnt = 0;
 		//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
-		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41,
-			character->m_apModel[14]->GetMtxWorld()._42, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
+
+		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
+			character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
 
 		//ˆÚ“®—ÊÝ’è
 		D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed(),

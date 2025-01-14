@@ -160,6 +160,10 @@ bool CAttack_Manager::HitPlayer()
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//“–‚½‚Á‚Ä‚½‚ç
+						#ifdef _DEBUG
+						return true;
+						#endif // _DEBUG
+
 						pPlayer_test->Damage(m_nDamage);
 						int nCurrentLife = pPlayer_test->GetLife();
 						return true;
