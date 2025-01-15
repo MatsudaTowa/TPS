@@ -61,7 +61,8 @@ void CWave_Result::Update()
 	{
 		m_pScreen->Update();
 	}
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_RETURN))
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_RETURN)
+		|| CManager::GetInstance()->GetMouse()->GetTrigger(0))
 	{
 		if (m_next != WAVE::NONE)
 		{

@@ -10,7 +10,7 @@
 
 //texƒpƒX
 const std::string CTitle_Screen::ROGO_TEXTURE_NAME = "data\\TEXTURE\\TitleLogo.png";
-const std::string CTitle_Screen::BUTTON_A_TEXTURE_NAME = "data\\TEXTURE\\title_test.png";
+const std::string CTitle_Screen::BUTTON_A_TEXTURE_NAME = "data\\TEXTURE\\press_enter.png";
 const std::string CTitle_Screen::BUTTON_ENTER_TEXTURE_NAME = "data\\TEXTURE\\press_enter.png";
 
 //=============================================
@@ -80,11 +80,11 @@ void CTitle_Screen::Update()
 		break;
 	case CTitle_Screen::TITLE_UI::UI_TITLE_PRESS_BUTTON:
 		if (pPad->GetConnet())
-		{
+		{//padÚ‘±’†
 			BindTexture(pTexture->GetAddress(pTexture->Regist(&BUTTON_A_TEXTURE_NAME)));
 		}
 		else if (!pPad->GetConnet())
-		{
+		{//padÚ‘±‚µ‚Ä‚È‚¢
 			BindTexture(pTexture->GetAddress(pTexture->Regist(&BUTTON_ENTER_TEXTURE_NAME)));
 		}
 		break;
