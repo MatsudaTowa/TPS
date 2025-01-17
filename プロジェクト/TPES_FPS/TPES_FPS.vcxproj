@@ -240,6 +240,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="tutorial.cpp" />
+    <ClCompile Include="tutorial_screen.cpp" />
     <ClCompile Include="tutorial_UI.cpp" />
     <ClCompile Include="ult.cpp" />
     <ClCompile Include="ult_camera_effect.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="tutorial.h" />
+    <ClInclude Include="tutorial_screen.h" />
     <ClInclude Include="tutorial_UI.h" />
     <ClInclude Include="ult.h" />
     <ClInclude Include="ult_camera_effect.h" />

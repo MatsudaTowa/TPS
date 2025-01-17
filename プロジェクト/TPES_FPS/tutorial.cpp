@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "tutorial.h"
+#include "tutorial_screen.h"
 #include "player_test.h"
 
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
@@ -39,6 +40,8 @@ HRESULT CTutorial::Init()
 	LoadWall(&WALL_FILE);
 	//ínñ ê∂ê¨
 	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
+
+	CTutorial_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 50.0f, 0.0f), D3DXVECTOR2(200.0f, 100.0f), CTutorial_Screen::TUTORIAL_UI::UI_TUTORIAL_TXT);
 
 	if (m_pTutorial_UI == nullptr)
 	{
