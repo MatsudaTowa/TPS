@@ -30,10 +30,13 @@ const float CEnemy::DEFAULT_JUMP = 25.0f;
 //これより下に行ったら死ぬ座標
 const float CEnemy::DEADZONE_Y = -100.0f;
 
+//ステンシルテスト有効フレーム
+const int CEnemy::STENCIL_FLAME = 300.0f;
+
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type(), m_isStencil(false)
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type(), m_isStencil(false),m_StencilCnt(0)
 {//イニシャライザーでメンバ変数初期化
 
 	//総数追加
@@ -92,6 +95,17 @@ void CEnemy::Update()
 	m_pCharacterState->Confusion(this);
 
 	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);
+
+	if (m_isStencil)
+	{//ステンシルテストが有効だったら
+		++m_StencilCnt;
+		if (m_StencilCnt > STENCIL_FLAME)
+		{//フレームに到達していたら
+			m_StencilCnt = 0;
+			//ステンシルテストを無効に
+			m_isStencil = false;
+		}
+	}
 
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
@@ -295,14 +309,11 @@ void CEnemy::ChangeDamageState()
 		//ステート変更カウント進める
 		nStateCnt++;
 
-		if (nStateCnt >= 300)
+		if (nStateCnt >= 10)
 		{
 			//通常に戻す
 			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
-			if (m_isStencil)
-			{
-				m_isStencil = false;
-			}
+
 			//ステートカウントリセット
 			nStateCnt = 0;
 

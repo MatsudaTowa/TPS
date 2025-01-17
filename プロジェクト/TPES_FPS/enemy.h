@@ -68,6 +68,7 @@ private:
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const float DEFAULT_JUMP; //通常時のジャンプ力
 	static const int NUM_MOTION; //モーションの数
+	static const int STENCIL_FLAME; //ステンシルテスト有効フレーム
 
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
@@ -75,6 +76,7 @@ private:
 
 	Motion_Type m_Motion; //モーションの種類
 	bool m_isStencil; //ステンシルテストを有効にするか
+	int m_StencilCnt; //ステンシルテスト有効カウント
 };
 
 #endif
