@@ -33,7 +33,7 @@ const float CEnemy::DEADZONE_Y = -100.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type()
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type(), m_isStencil(false)
 {//イニシャライザーでメンバ変数初期化
 
 	//総数追加
@@ -122,8 +122,9 @@ void CEnemy::Update()
 void CEnemy::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスのポインタ
+
 	// ステンシルテストを有効にする
-	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_STENCILENABLE, m_isStencil);
 	// 比較参照値を設定する
 	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
 	// ステンシルマスクを指定する
@@ -187,15 +188,23 @@ void CEnemy::Damage(int nDamage)
 	//状態を取得
 	CCharacter::CHARACTER_STATE state = GetState();
 
-	if (nLife > 0 && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	if (nLife > 0)
 	{//ダメージ状態以外でHPが残ってたら
 		nLife -= nDamage;
 
-		//ダメージ状態に変更
-		state = CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE;
+		if (!m_isStencil)
+		{
+			m_isStencil = true;
+		}
 
-		//状態代入
-		SetState(state);
+		if (state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+		{
+			//ダメージ状態に変更
+			state = CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE;
+
+			//状態代入
+			SetState(state);
+		}
 
 		//体力代入
 		SetLife(nLife);
@@ -286,11 +295,14 @@ void CEnemy::ChangeDamageState()
 		//ステート変更カウント進める
 		nStateCnt++;
 
-		if (nStateCnt >= 10)
+		if (nStateCnt >= 300)
 		{
 			//通常に戻す
 			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
-
+			if (m_isStencil)
+			{
+				m_isStencil = false;
+			}
 			//ステートカウントリセット
 			nStateCnt = 0;
 

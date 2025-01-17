@@ -62,7 +62,8 @@ void CNormalMove::Move(CCharacter* character)
 	CCharacter::RayHitInfo HitSmokeInfo = character->PerformRaycast_Smoke(vec, character);
 
 	if ((HitPlayerInfo.hit
-	&&!HitBlockInfo.hit))
+	&&!HitBlockInfo.hit)
+	|| character->GetState() == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
 	{//ダメージ状態もしくはレイがプレイヤーに当たっていたら
 		character->SetMotion(CEnemy::Motion_Type::MOTION_NEUTRAL);
 

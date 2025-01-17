@@ -74,7 +74,7 @@ private:
 	void ReSpawn(); //リスポーン
 
 	Motion_Type m_Motion; //モーションの種類
-
+	bool m_isStencil; //ステンシルテストを有効にするか
 };
 
 #endif
