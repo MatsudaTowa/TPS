@@ -607,6 +607,32 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		//移動量代入
 		boss->SetMove(move);
 
+		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//ヌルポインタじゃなければ
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//敵との当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+				{
+					CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+					//プレイヤーの位置への方向情報
+					D3DXVECTOR3 Vector = pPlayer_test->GetPos() - boss->GetPos();
+
+					if (boss->PerformRaycast_Player(Vector, boss).hit
+						&& boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
+					{
+						boss->ChangeState(new CChaseState);
+					}
+				}
+			}
+		}
+
+
 		if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 		{
 			boss->ChangeState(new CBossStanState);
