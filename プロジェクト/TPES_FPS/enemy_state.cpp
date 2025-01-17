@@ -1,28 +1,29 @@
-//=============================================
+//#include "enemy_state.h"
 //
-//エネミーのステートパターン[enemy_state.cpp]
-//Auther Matsuda Towa
+//void CEnemyState::Start(CEnemy* enemy)
+//{
+//}
 //
-//=============================================
-#include "enemy_state.h"
-
-//=============================================
-//エネミーの移動
-//=============================================
-void CEnemyState::Move(CCharacter* character)
-{
-}
-
-//=============================================
-//エネミーの混乱状態
-//=============================================
-void CEnemyState::Wandering(CEnemy* enemy)
-{
-}
-//=============================================
-//エネミーの移動状態(雑魚敵のみ) TODO:ならステートパターン組み換えよう
-//=============================================
-void CEnemyMoveState::Move(CCharacter* character)
-{
-	character->m_pMove->Move(character);
-}
+//void CEnemyState::Chase(CEnemy* enemy)
+//{
+//}
+//
+//void CEnemyState::Stan(CEnemy* enemy)
+//{
+//}
+//
+//void CEnemyState::Wandering(CEnemy* enemy)
+//{
+//}
+//
+//void CEnemyState::Confusion(CEnemy* enemy)
+//{
+//}
+//
+//void CEnemyState::Tackle(CEnemy* enemy)
+//{
+//}
+//
+//void CEnemyState::DrawDebug()
+//{
+//}

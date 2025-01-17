@@ -27,6 +27,7 @@ public:
 	virtual void Wandering(CBossEnemy* boss);
 	virtual void Confusion(CBossEnemy* boss);
 	virtual void Tackle(CBossEnemy* boss);
+	virtual void Search(CBossEnemy* boss);
 	virtual void DrawDebug();
 };
 
@@ -93,5 +94,18 @@ public:
 	void Start(CBossEnemy* boss) override;
 	virtual void Tackle(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
+};
+
+//=============================================
+//エネミーのプレイヤーを探す状態
+//=============================================
+class CSearchState : public CBossState
+{
+public:
+	void Start(CBossEnemy* boss) override;
+	virtual void Search(CBossEnemy* boss)override;
+	virtual void DrawDebug()override;
+private:
+	D3DXVECTOR3 m_TargetPos;
 };
 #endif

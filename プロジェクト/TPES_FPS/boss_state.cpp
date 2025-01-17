@@ -50,6 +50,13 @@ void CBossState::Tackle(CBossEnemy* boss)
 }
 
 //=============================================
+//ボスのプレイヤーを探す情報
+//=============================================
+void CBossState::Search(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ボスのデバッグ情報
 //=============================================
 void CBossState::DrawDebug()
@@ -309,4 +316,46 @@ void CConfusionBossState::DrawDebug()
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
+}
+
+//=============================================
+//最初の一回だけ呼ばれる関数
+//=============================================
+void CSearchState::Start(CBossEnemy* boss)
+{
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+		 //タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+				m_TargetPos = pPlayer->GetPos();
+			}
+		}
+	}
+}
+
+//=============================================
+//プレイヤー探索
+//=============================================
+void CSearchState::Search(CBossEnemy* boss)
+{
+	if (boss->m_pSearch != nullptr)
+	{
+		boss->m_pSearch->Search(boss, m_TargetPos);
+	}
+}
+
+//=============================================
+//ボスの探索状態デバッグ
+//=============================================
+void CSearchState::DrawDebug()
+{
 }

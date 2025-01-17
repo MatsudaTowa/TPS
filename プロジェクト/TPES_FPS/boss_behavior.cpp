@@ -162,11 +162,17 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 
 	D3DXVec3Normalize(&Vector, &Vector);
 
-	// レイキャストを実行し、障害物があるか判定TODO:いったんブロックは除外
+	// レイキャストを実行し、障害物があるか判定
 	if (boss->PerformRaycast_Smoke(Vector, boss).hit)
 	{
 		m_bTargetPlayer = false;
 		boss->ChangeState(new CConfusionBossState);
+	}
+	else if (boss->PerformRaycast_Block(Vector, boss).hit
+		&&boss->PerformRaycast_Player(Vector, boss).distance > boss->PerformRaycast_Block(Vector, boss).distance)
+	{
+		m_bTargetPlayer = false;
+		boss->ChangeState(new CSearchState);
 	}
 	else
 	{
@@ -553,4 +559,65 @@ CBossStan::~CBossStan()
 void CBossStan::Stan(CBossEnemy* boss)
 {
 	boss->SetMotion(CBossEnemy::Motion_Type::MOTION_NEUTRAL);
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CBossSearch::CBossSearch()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CBossSearch::~CBossSearch()
+{
+}
+
+//=============================================
+//探索処理
+//=============================================
+void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
+{
+	//対象の位置への方向情報
+	D3DXVECTOR3 point = { TargetPos.x - boss->GetPos().x,0.0f,TargetPos.z - boss->GetPos().z };
+
+	// 目的地との距離を計算
+	float distance = sqrtf(point.x * point.x + point.z * point.z);
+
+	// 到達判定用の閾値
+	const float threshold = 0.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
+
+	// まだ目的地に到達していない場合のみ移動処理を行う
+	if (distance > threshold)
+	{
+		//対象物との角度計算
+		float angle = atan2f(point.x, point.z);
+
+		D3DXVECTOR3 move = boss->GetMove();
+
+		move.x += sinf(angle) * boss->GetSpeed();
+		move.z += cosf(angle) * boss->GetSpeed();
+		//親クラスからrotを取得
+		D3DXVECTOR3 rot = boss->GetRot();
+		rot.y = angle + D3DX_PI;
+		//rotを代入
+		boss->SetRot(rot);
+		//移動量代入
+		boss->SetMove(move);
+
+		if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
+		{
+			boss->ChangeState(new CBossStanState);
+		}
+	}
+	else
+	{//到達していたら
+
+		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
+		boss->SetMove(move);
+
+		boss->ChangeState(new CConfusionBossState);
+	}
 }

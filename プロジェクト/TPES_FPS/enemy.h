@@ -56,6 +56,8 @@ public:
 
 	virtual void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage); //ウルトの判定
 
+	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
+
 	static int m_NumEnemy; //エネミーの総数
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
@@ -68,7 +70,7 @@ private:
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const float DEFAULT_JUMP; //通常時のジャンプ力
 	static const int NUM_MOTION; //モーションの数
-	static const int STENCIL_FLAME; //ステンシルテスト有効フレーム
+	static const int STENCIL_FLAME; //ステンシルテスト有効
 
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 

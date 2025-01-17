@@ -280,6 +280,44 @@ void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 }
 
 //=============================================
+//プレイヤーとレイが当たっているか
+//=============================================
+CCharacter::RayHitInfo CEnemy::PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character)
+{
+	CCharacter::RayHitInfo Info;
+
+	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	{
+		//オブジェクト取得
+		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		if (pObj != nullptr)
+		{//ヌルポインタじゃなければ
+		 //タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+
+				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
+				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
+				{
+					//レイを飛ばしプレイヤーと当たるかチェック
+					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+					if (Info.hit == true)
+					{
+						return Info;
+					}
+				}
+			}
+		}
+	}
+	return Info;
+}
+
+//=============================================
 //リスポーン
 //=============================================
 void CEnemy::ReSpawn()

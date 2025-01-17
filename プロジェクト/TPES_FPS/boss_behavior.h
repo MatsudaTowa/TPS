@@ -51,6 +51,9 @@ private:
 	BOOL m_bTargetPlayer;
 };
 
+//=============================================
+//敵のスタンのストラテジー
+//=============================================
 class CBossStan
 {
 public:
@@ -112,5 +115,17 @@ private:
 	int m_StayCnt;
 	int m_TackleCnt;
 	bool m_isTackle;
+};
+
+//=============================================
+//探索のストラテジー
+//=============================================
+class CBossSearch
+{
+public:
+	CBossSearch();
+	~CBossSearch();
+	void Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos);
+private:
 };
 #endif // !_ENEMY_BEHAVIOR_

@@ -43,6 +43,10 @@ CBossEnemy::CBossEnemy(int nPriority)
 	{
 		m_pTackle = new CBossTackle;
 	}
+	if (m_pSearch == nullptr)
+	{
+		m_pSearch = new CBossSearch;
+	}
 }
 
 //=============================================
@@ -69,6 +73,10 @@ CBossEnemy::~CBossEnemy()
 	if (m_pTackle != nullptr)
 	{
 		delete m_pTackle;
+	}
+	if (m_pSearch != nullptr)
+	{
+		delete m_pSearch;
 	}
 	if (m_pDashEffect != nullptr)
 	{
@@ -116,7 +124,6 @@ void CBossEnemy::Update()
 {
 	CEnemy::Update();
 
-	//TODO:–³‘Ê‚Èˆ—‘½‚¢‹C‚ª...
 	m_pBossState->Chase(this);
 
 	m_pBossState->Wandering(this);
@@ -126,6 +133,8 @@ void CBossEnemy::Update()
 	m_pBossState->Confusion(this);
 
 	m_pBossState->Tackle(this);
+
+	m_pBossState->Search(this);
 
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
 }

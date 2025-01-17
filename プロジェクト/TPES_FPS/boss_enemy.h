@@ -20,6 +20,7 @@ class CBossChase;
 class CBossWandering;
 class CBossConfusion;
 class CBossTackle;
+class CBossSearch;
 class CBossState;
 
 //ボスのエネミークラス
@@ -66,6 +67,8 @@ public:
 	CBossConfusion* m_pConfusion; //混乱
 
 	CBossTackle* m_pTackle; //タックル処理
+
+	CBossSearch* m_pSearch; //探索処理
 
 	CDashEffect* m_pDashEffect;
 private:
