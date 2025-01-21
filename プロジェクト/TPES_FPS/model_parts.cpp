@@ -12,6 +12,9 @@
 //=============================================
 CModel_Parts::CModel_Parts():m_oldpos()
 {
+	m_ColisionBlockInfo.bColision_X = false;
+	m_ColisionBlockInfo.bColision_X = false;
+	m_ColisionBlockInfo.bColision_Z = false;
 }
 
 //=============================================

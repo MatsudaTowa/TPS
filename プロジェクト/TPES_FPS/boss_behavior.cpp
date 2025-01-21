@@ -63,6 +63,18 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 			boss->SetRot(rot);
 			//移動量代入
 			boss->SetMove(move);
+
+			switch (boss->GetAxis())
+			{
+			case CBossEnemy::X:
+				PickNextMovePoint(pMovePoint);
+				break;
+			case CBossEnemy::Z:
+				PickNextMovePoint(pMovePoint);
+				break;
+			default:
+				break;
+			}
 		}
 		else
 		{//到達していたら
@@ -124,7 +136,7 @@ void CBossWandering::DrawDebug()
 	sprintf(&aStr[0], "\n[ボス進む位置]%d"
 		,m_MoveIdx );
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -229,7 +241,7 @@ void CBossChase::DrawDebug()
 		sprintf(&aStr[0], "\n\n\n\n対象:プレイヤー以外");
 	}
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -484,22 +496,26 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 		boss->ColisionPlayer();
 
-		if (boss->GetColision() == CColision::COLISION::COLISON_X
-			|| boss->GetColision() == CColision::COLISION::COLISON_Z
-			|| boss->GetColision() == CColision::COLISION::COLISION_CIRCLE
-			|| m_TackleCnt > TACKLE_FLAME)
-		{//何かに当たるか終了フレームに到達したら
-			m_TackleCnt = 0;
-			m_isTackle = false;
+		for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
+		{
+			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X
+				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Y
+				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
+				|| m_TackleCnt > TACKLE_FLAME)
+			{//何かに当たるか終了フレームに到達したら
+				m_TackleCnt = 0;
+				m_isTackle = false;
 
-			if (boss->m_pDashEffect != nullptr)
-			{//エフェクトがあったら
-				//エフェクト破棄
-				boss->m_pDashEffect->Uninit();
-				boss->m_pDashEffect = nullptr;
+				if (boss->m_pDashEffect != nullptr)
+				{//エフェクトがあったら
+					//エフェクト破棄
+					boss->m_pDashEffect->Uninit();
+					boss->m_pDashEffect = nullptr;
+				}
+				boss->ChangeState(new CWanderingState);
 			}
-			boss->ChangeState(new CWanderingState);
 		}
+
 	}
 }
 
@@ -597,8 +613,22 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 
 		D3DXVECTOR3 move = boss->GetMove();
 
-		move.x += sinf(angle) * boss->GetSpeed();
-		move.z += cosf(angle) * boss->GetSpeed();
+		switch (boss->GetAxis())
+		{
+		case CBossEnemy::NONE:
+			move.x += sinf(angle) * boss->GetSpeed();
+			move.z += cosf(angle) * boss->GetSpeed();
+			break;
+		case CBossEnemy::X:
+			boss->ChangeState(new CConfusionBossState);
+			break;
+		case CBossEnemy::Z:
+			boss->ChangeState(new CConfusionBossState);
+			break;
+		default:
+			break;
+		}
+
 		//親クラスからrotを取得
 		D3DXVECTOR3 rot = boss->GetRot();
 		rot.y = angle + D3DX_PI;
@@ -632,10 +662,9 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 			}
 		}
 
-
 		if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 		{
-			boss->ChangeState(new CBossStanState);
+			boss->ChangeState(new CChaseState);
 		}
 	}
 	else

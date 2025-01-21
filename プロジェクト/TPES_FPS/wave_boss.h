@@ -24,7 +24,7 @@ public:
 	static const std::string WAVE_BOSS_WALL_FILE;	//ウェーブボスの壁のファイル
 	static const std::string WAVE_BOSS_POINT_FILE;	//ウェーブボスポイントのファイル
 
-	static const int NUM_POINT = 9;
+	static const int NUM_POINT = 12;
 
 	CWave_Boss();
 	~CWave_Boss()override;

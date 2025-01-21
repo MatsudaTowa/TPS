@@ -307,8 +307,6 @@ void CPlayer_test::Update()
 		{//リロード中だったら
 			m_isRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
 		}
-		//どっち向いてるか取得
-		bool bWay = GetWay();
 
 		Motion(NUM_PARTS); //モーション処理
 	}

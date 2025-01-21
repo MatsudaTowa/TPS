@@ -71,6 +71,25 @@ public:
 	CBossSearch* m_pSearch; //探索処理
 
 	CDashEffect* m_pDashEffect;
+
+	enum COLISION_AXIS
+	{
+		NONE,
+		X,
+		Z,
+		MAX,
+	};
+
+	void SethitAxis(COLISION_AXIS axis)
+	{
+		m_HitAxis = axis;
+	}
+
+
+	COLISION_AXIS& GetAxis()
+	{
+		return m_HitAxis;
+	}
 private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
@@ -81,6 +100,9 @@ private:
 
 	//ボスのステートパターン
 	CBossState* m_pBossState;
+
+	COLISION_AXIS m_HitAxis;
+
 };
 
 #endif

@@ -137,6 +137,27 @@ void CBossEnemy::Update()
 	m_pBossState->Search(this);
 
 	Motion(NUM_PARTS); //モーション処理
+
+	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
+	{
+		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
+		{
+			m_HitAxis = X;
+			break;
+		}
+		else if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z)
+		{
+			m_HitAxis = Z;
+			break;
+		}
+		else
+		{
+			m_HitAxis = NONE;
+		}
+	}
+
+	D3DXVECTOR3 move = GetMove();
+
 }
 
 //=============================================
@@ -242,23 +263,23 @@ void CBossEnemy::DrawDebug()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	switch (GetColision())
+	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
 	{
-	case CColision::COLISION::COLISON_X:
-		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:X");
-		break;
-	case CColision::COLISION::COLISON_Z:
-		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:Z");
-		break;
-	case CColision::COLISION::COLISON_NONE:
-		sprintf(&aStr[0], "\n\n\n\n\n当たり判定:当たってない");
-		break;
-	default:
-		break;
+		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
+		{
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:X\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+		}
+		else if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z)
+		{
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:Z\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+		}
+		else
+		{
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:当たってない\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+		}
 	}
-	sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d\n0キーでHP10に",GetLife());
 
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }

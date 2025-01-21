@@ -42,6 +42,14 @@ public:
 		BOOL hit;
 	};
 
+	struct ColisionBlockInfo
+	{
+		bool bColision_X; //X軸に当たっている
+		bool bColision_Y; //Y軸に当たっている
+		bool bColision_Z; //Z軸に当たっている
+		float radius;
+	};
+
 	enum CHARACTER_STATE
 	{
 		CHARACTER_NORMAL = 0, //通常状態
@@ -62,7 +70,6 @@ public:
 	void SetMotion(int Motion); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
 	void Jump(); //ジャンプ処理
-	void HitBlock(); //ブロック当たり判定
 	void HitBlock(int NumParts); //ブロック当たり判定(複数パーツ用)
 	void HitField(); //床当たり判定
 	void HitWall(); //壁当たり判定
@@ -85,12 +92,6 @@ public:
 	void SetLanding(bool bLanding)
 	{
 		m_bLanding = bLanding;
-	}
-
-	//どっち向いてるかどうかを代入(true:右false:左)
-	void SetWay(bool bWay)
-	{
-		m_bWay = bWay;
 	}
 
 	//体力代入
@@ -122,13 +123,6 @@ public:
 	{
 		m_bLoopFinish = bFinish;
 	}
-
-	//当たり判定取得
-	void SetColision(CColision::COLISION colision)
-	{
-		m_Colision = colision;
-	}
-
 	//移動量取得
 	D3DXVECTOR3& GetMove();
 
@@ -137,9 +131,6 @@ public:
 
 	//着地してるかどうか取得
 	bool& GetLaunding();
-
-	//どっち向いてるかどうかを取得(true:右false:左)
-	bool& GetWay();
 
 	//終わってるか取得
 	bool& GetFinish();
@@ -160,9 +151,6 @@ public:
 
 	//ジャンプ回数取得
 	int& GetJumpCnt();
-
-	//当たり判定取得
-	CColision::COLISION& GetColision();
 
 	void ChangeState(CCharacterState* state);
 
@@ -188,9 +176,9 @@ private:
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
 
-	void ColisionBlock_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
-	void ColisionBlock_Y(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
-	void ColisionBlock_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
+	void ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
+	void ColisionBlock_Y(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
+	void ColisionBlock_Z(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
 	//壁の判定
 	void ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
 	void ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
@@ -198,7 +186,6 @@ private:
 	D3DXVECTOR3 m_move; //速度
 	D3DXVECTOR3 m_oldpos; //過去の位置
 	bool m_bLanding; //着地してるかどうか
-	bool m_bWay; //どっち向いてるか(true:右false:左)
 	bool m_bLoopFinish; //ループモーションが終わったか
 	int m_nLife; //体力
 	int m_nShotBullet; //撃った弾数
@@ -212,7 +199,6 @@ private:
 	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
-	CColision::COLISION m_Colision; //当たり判定
 
 	//キー情報構造体
 	typedef struct

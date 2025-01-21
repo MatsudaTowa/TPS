@@ -131,7 +131,7 @@ void CChaseState::DrawDebug()
 
 	sprintf(&aStr[0], "\n\n追跡");
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -178,7 +178,7 @@ void CBossStanState::DrawDebug()
 
 	sprintf(&aStr[0], "\n\nスタン");
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -236,7 +236,7 @@ void CWanderingState::DrawDebug()
 
 	sprintf(&aStr[0], "\n\n徘徊");
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -271,7 +271,7 @@ void CTackleState::DrawDebug()
 
 	sprintf(&aStr[0], "\n\n突進");
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 
@@ -314,7 +314,7 @@ void CConfusionBossState::DrawDebug()
 
 	sprintf(&aStr[0], "\n\n混乱");
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_CENTER, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 }
 

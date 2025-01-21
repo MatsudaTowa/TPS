@@ -205,7 +205,7 @@ void CPlayer::Update()
 		D3DXVECTOR3 maxpos = GetMaxPos();
 
 		//ブロックとの接触処理
-		HitBlock();
+		//HitBlock();
 
 		//床との接触処理
 		HitField();
@@ -223,13 +223,6 @@ void CPlayer::Update()
 		{//リスポーン処理
 			ReSpawn();
 		}
-
-		//マウスの情報取得
-		CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-		CInputPad* pPad = CManager::GetInstance()->GetPad();
-
-		//どっち向いてるか取得
-		bool bWay = GetWay();
 	}
 }
 
@@ -328,10 +321,6 @@ void CPlayer::PlayerMove()
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	CInputPad* pPad = CManager::GetInstance()->GetPad();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
-
-	//どっち向いてるか取得
-	bool bWay = GetWay();
-
 	
 	if (pKeyboard->GetPress(DIK_W))
 	{
@@ -344,17 +333,11 @@ void CPlayer::PlayerMove()
 	if (pKeyboard->GetPress(DIK_A))
 	{
 		vecDirection.x -= 1.0f;
-		bWay = false;
 	}
 	else if (pKeyboard->GetPress(DIK_D))
 	{
 		vecDirection.x += 1.0f;
-		bWay = true;
 	}
-
-
-	//どっち向いてるか代入
-	SetWay(bWay);
 
 	//移動量取得
 	D3DXVECTOR3 move = GetMove();

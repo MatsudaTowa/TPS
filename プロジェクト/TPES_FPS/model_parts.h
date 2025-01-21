@@ -24,6 +24,15 @@ public:
 		char* ModelName; //モデルネーム保存用
 	}MODEL_INFO;
 
+	struct ColisionBlockInfo
+	{
+		bool bColision_X; //X軸に当たっている
+		bool bColision_Y; //Y軸に当たっている
+		bool bColision_Z; //Z軸に当たっている
+
+		float Radius;
+	};
+
 	CModel_Parts();
 	~CModel_Parts();
 	void Unload(); //モデル破棄
@@ -55,6 +64,11 @@ public:
 		m_rot = rot;
 	};
 
+	void SetColisionBlockInfo(ColisionBlockInfo ColisionBlockInfo)
+	{
+		m_ColisionBlockInfo = ColisionBlockInfo;
+	}
+
 	D3DXVECTOR3 GetPos()
 	{
 		return m_pos;
@@ -78,6 +92,11 @@ public:
 	D3DXVECTOR3 GetMax()
 	{
 		return m_maxpos;
+	}
+
+	ColisionBlockInfo& GetColisionBlockInfo()
+	{
+		return m_ColisionBlockInfo;
 	}
 	void SetParent(CModel_Parts*pParent);
 
@@ -103,5 +122,7 @@ private:
 	int m_nNumAll; //モデル総数
 
 	CModel_Parts*m_pParent; //親パーツへのポインタ
+	ColisionBlockInfo m_ColisionBlockInfo; //当たった軸
+
 };
 #endif
