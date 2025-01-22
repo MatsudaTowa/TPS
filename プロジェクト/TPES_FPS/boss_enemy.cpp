@@ -155,9 +155,6 @@ void CBossEnemy::Update()
 			m_HitAxis = NONE;
 		}
 	}
-
-	D3DXVECTOR3 move = GetMove();
-
 }
 
 //=============================================
