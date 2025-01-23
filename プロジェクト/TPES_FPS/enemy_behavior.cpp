@@ -86,8 +86,6 @@ CEnemyGunAttack::~CEnemyGunAttack()
 //=============================================
 void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
 {
-	LookAtPlayer(character);
-
 	CNormalEnemy::Motion_Type Motion;
 	Motion = CNormalEnemy::Motion_Type::MOTION_ATTACK;
 	//ÉÇÅ[ÉVÉáÉìë„ì¸

@@ -40,11 +40,10 @@ class CChaseState : public CBossState
 {
 public:
 	CChaseState();
-	~CChaseState();
+	~CChaseState() override;
 	virtual void Chase(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
 private:
-	static const int HP_LOW = 30;
 	static const int PLAY_TACKLE_FLAME = 300; //タックルを実行するまでのフレーム
 	int m_PlayTackleCnt; //タックルまでの計測用
 };
@@ -69,8 +68,14 @@ private:
 class CWanderingState : public CBossState
 {
 public:
+	CWanderingState();
+	~CWanderingState() override;
 	virtual void Wandering(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
+private:
+	static const int TRANSITION_FRAME = 60;
+	int m_TransitionCnt;
+	bool m_bDamage;
 };
 
 //=============================================
@@ -80,7 +85,7 @@ class CConfusionBossState : public CBossState
 {
 public:
 	CConfusionBossState();
-	~CConfusionBossState();
+	~CConfusionBossState() override;
 	void Start(CBossEnemy* boss) override;
 	virtual void Confusion(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;

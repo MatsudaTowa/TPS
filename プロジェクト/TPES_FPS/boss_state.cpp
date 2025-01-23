@@ -117,17 +117,13 @@ void CChaseState::Chase(CBossEnemy* boss)
 	}
 
 	//TODO:ステートパターンで
-	if (boss->GetLife() < HP_LOW)
-	{//HPが低い状態だったら
+	++m_PlayTackleCnt;
 
-		++m_PlayTackleCnt;
-
-		if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
-		{//タックル実行フレームに到達したら
-			m_PlayTackleCnt = 0;
-			//ステート切り替え
-			boss->ChangeState(new CTackleState);
-		}
+	if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
+	{//タックル実行フレームに到達したら
+		m_PlayTackleCnt = 0;
+		//ステート切り替え
+		boss->ChangeState(new CTackleState);
 	}
 
 	boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
@@ -197,34 +193,64 @@ void CBossStanState::DrawDebug()
 }
 
 //=============================================
+//コンストラクタ
+//=============================================
+CWanderingState::CWanderingState() :
+	m_TransitionCnt(0),
+	m_bDamage(false)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CWanderingState::~CWanderingState()
+{
+}
+
+//=============================================
 //ボスの徘徊状態
 //=============================================
 void CWanderingState::Wandering(CBossEnemy* boss)
 {
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
-		boss->ChangeState(new CChaseState);
-	}
-	if (boss->m_pWandering != nullptr)
-	{
-		boss->m_pWandering->Wandering(boss);
+		m_bDamage = true;
 	}
 
-	//プレイヤーの位置への方向情報
-	D3DXVECTOR3 Vector = boss->GetPos() + boss->GetMove() - boss->GetPos();
 
-	if (boss->PerformRaycast_Player(Vector, boss).hit)
+	if (m_bDamage)
 	{
-		if (boss->PerformRaycast_Block(Vector, boss).hit)
+		++m_TransitionCnt;
+
+		if (m_TransitionCnt > TRANSITION_FRAME)
 		{
-			if (boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
-			{
-				boss->ChangeState(new CChaseState);
-			}
-		}
-		else if (!boss->PerformRaycast_Block(Vector, boss).hit)
-		{
+			m_TransitionCnt = 0;
 			boss->ChangeState(new CChaseState);
+		}
+	}
+	else if(!m_bDamage)
+	{
+		if (boss->m_pWandering != nullptr)
+		{
+			boss->m_pWandering->Wandering(boss);
+			//プレイヤーの位置への方向情報
+			D3DXVECTOR3 Vector = boss->GetPos() + boss->GetMove() - boss->GetPos();
+
+			if (boss->PerformRaycast_Player(Vector, boss).hit)
+			{
+				if (boss->PerformRaycast_Block(Vector, boss).hit)
+				{//ブロックに当たっていたら
+					if (boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
+					{//ブロックより手前にいるときに
+						boss->ChangeState(new CChaseState);
+					}
+				}
+				else if (!boss->PerformRaycast_Block(Vector, boss).hit)
+				{
+					boss->ChangeState(new CChaseState);
+				}
+			}
 		}
 	}
 }

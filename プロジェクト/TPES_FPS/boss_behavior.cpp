@@ -487,7 +487,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 					boss->m_pDashEffect->Uninit();
 					boss->m_pDashEffect = nullptr;
 				}
-				boss->ChangeState(new CWanderingState);
+				boss->ChangeState(new CBossStanState);
 			}
 		}
 

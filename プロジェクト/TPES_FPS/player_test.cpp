@@ -499,6 +499,59 @@ void CPlayer_test::Input()
 
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
+	//移動の方向の単位ベクトル変数
+	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+	if (pKeyboard->GetPress(DIK_W))
+	{
+		vecDirection.z += 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_S))
+	{
+		vecDirection.z -= 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_A))
+	{
+		vecDirection.x -= 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_D))
+	{
+		vecDirection.x += 1.0f;
+	}
+
+	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
+
+	CPlayer_test::Motion_Type Motion;
+
+	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	{ // 動いてない。
+		Motion = CPlayer_test::Motion_Type::MOTION_NEUTRAL;
+	}
+	else
+	{
+		Motion = CPlayer_test::Motion_Type::MOTION_MOVE;
+	}
+
+	D3DXVECTOR3 move = GetMove();
+	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	{ // 動いてない。
+		move.x = 0.0f;
+		move.z = 0.0f;
+	}
+	else
+	{
+		move.x += sinf(rotMoveY) * GetSpeed();
+		move.z += cosf(rotMoveY) * GetSpeed();
+	}
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = GetRot();
+	rot.y = rotMoveY + D3DX_PI;
+	//rotを代入
+	SetRot(rot);
+	//移動量代入
+	SetMove(move);
+	//モーション代入
+	SetMotion(Motion);
+
 	if (pKeyboard->GetPress(DIK_X))
 	{
 		if (m_pUlt != nullptr)
