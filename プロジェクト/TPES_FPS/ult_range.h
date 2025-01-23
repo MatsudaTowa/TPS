@@ -6,6 +6,7 @@
 //=============================================
 #include "main.h"
 #include "objectX.h"
+#include "ult_effect.h"
 
 #ifndef _ULT_RANGE_H_ //‚±‚ê‚ª’è‹`‚³‚ê‚Ä‚È‚¢‚Æ‚«
 
@@ -29,11 +30,13 @@ public:
 		return m_nLife;
 	}
 private:
-	static const int LIFE = 10;
+	static const int LIFE = 30;
 	static const int MAX_DAMAGE =10;
 	static const float RADIUS;
 	D3DXVECTOR3 m_pos;
 	int m_nLife;
+
+	CUltEffect* m_pUltEffect;
 };
 
 #endif

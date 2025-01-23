@@ -14,7 +14,7 @@ const float CUltRange::RADIUS = 20.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CUltRange::CUltRange() :m_nLife(0), m_pos({0.0f,0.0f,0.0f})
+CUltRange::CUltRange() :m_nLife(0), m_pos({0.0f,0.0f,0.0f}), m_pUltEffect(nullptr)
 {
 }
 
@@ -31,6 +31,11 @@ CUltRange::~CUltRange()
 HRESULT CUltRange::Init()
 {
 	m_nLife = LIFE;
+
+	if (m_pUltEffect == nullptr)
+	{
+		m_pUltEffect = CUltEffect::Create({ m_pos.x, 0.5f, m_pos.z }, { 0.0f,0.0f,0.0f });
+	}
 	return S_OK;
 }
 
@@ -39,6 +44,11 @@ HRESULT CUltRange::Init()
 //=============================================
 void CUltRange::Uninit()
 {
+	if (m_pUltEffect != nullptr)
+	{
+		m_pUltEffect->Uninit();
+		m_pUltEffect = nullptr;
+	}
 	delete this;
 }
 
@@ -54,6 +64,16 @@ void CUltRange::Update()
 	}
 
 	--m_nLife;
+
+	if (m_pUltEffect != nullptr)
+	{
+		D3DXVECTOR3 size = m_pUltEffect->GetSize();
+
+		size.x += 20.0f;
+		size.z += 20.0f;
+
+		m_pUltEffect->SetSize(size);
+	}
 
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{

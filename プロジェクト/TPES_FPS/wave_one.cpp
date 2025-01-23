@@ -6,6 +6,7 @@
 //=============================================
 #include "wave_one.h"
 #include "dash_effect.h"
+#include "ult_effect.h"
 
 const std::string CWave_One::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
 const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_data_000.bin";

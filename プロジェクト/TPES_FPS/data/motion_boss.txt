@@ -43,7 +43,7 @@ CHARACTERSET
 	PARTSSET
 		INDEX = 0					# 体
 		PARENT = -1					# (親)NULL
-		POS = 0.0 40.0 0.0
+		POS = 0.0 33.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 

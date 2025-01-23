@@ -245,6 +245,7 @@
     <ClCompile Include="tutorial_UI.cpp" />
     <ClCompile Include="ult.cpp" />
     <ClCompile Include="ult_camera_effect.cpp" />
+    <ClCompile Include="ult_effect.cpp" />
     <ClCompile Include="ult_icon.cpp" />
     <ClCompile Include="ult_icon_effect.cpp" />
     <ClCompile Include="ult_range.cpp" />
@@ -349,6 +350,7 @@
     <ClInclude Include="tutorial_UI.h" />
     <ClInclude Include="ult.h" />
     <ClInclude Include="ult_camera_effect.h" />
+    <ClInclude Include="ult_effect.h" />
     <ClInclude Include="ult_icon.h" />
     <ClInclude Include="ult_icon_effect.h" />
     <ClInclude Include="ult_range.h" />
