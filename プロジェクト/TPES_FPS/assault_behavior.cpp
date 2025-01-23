@@ -44,7 +44,7 @@ bool CAssaultReload::Reload(CGun* gun)
 	
 	nCnt++;
 
-	if (nCnt >= CAssultRifle::DEFAULT_AR_RELOAD_FRAME)
+	if (nCnt >= gun->GetReloadFrame())
 	{
 		nCnt = 0;
 		//Œ»İ‚Ì’e”æ“¾

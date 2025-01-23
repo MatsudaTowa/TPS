@@ -8,6 +8,20 @@
 #include "player_test.h"
 
 //=============================================
+//コンストラクタ
+//=============================================
+CBossState::CBossState()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CBossState::~CBossState()
+{
+}
+
+//=============================================
 //最初に呼ばれる関数
 //=============================================
 void CBossState::Start(CBossEnemy* boss)
@@ -258,10 +272,37 @@ void CTackleState::DrawDebug()
 }
 
 //=============================================
+//コンストラクタ
+//=============================================
+CConfusionBossState::CConfusionBossState()
+{
+	m_pReaction = nullptr;
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CConfusionBossState::~CConfusionBossState()
+{
+	if (m_pReaction != nullptr)
+	{
+		m_pReaction->Uninit();
+		m_pReaction = nullptr;
+	}
+}
+
+//=============================================
 //最初に呼ばれる関数
 //=============================================
 void CConfusionBossState::Start(CBossEnemy* boss)
 {
+	if (m_pReaction == nullptr)
+	{
+		m_pReaction = CEnemy_Reaction_UI::Create({ boss->m_apModel[1]->GetMtxWorld()._41,
+			boss->m_apModel[1]->GetMtxWorld()._42 + 70.0f,
+			boss->m_apModel[1]->GetMtxWorld()._43 }, { 40.0f,40.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_CONFUSION);
+	}
+
 	m_StartRot = boss->GetRot().y;
 	if (m_StartRot < D3DX_PI * 0.5f && m_StartRot > -D3DX_PI * 0.5f)
 	{
@@ -281,6 +322,16 @@ void CConfusionBossState::Confusion(CBossEnemy* boss)
 	if (boss->m_pConfusion != nullptr)
 	{
 		boss->m_pConfusion->Confusion(boss, m_StartRot);
+	}
+
+	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
+	{
+		if (m_pReaction != nullptr)
+		{
+			m_pReaction->Uninit();
+			m_pReaction = nullptr;
+		}
+		boss->ChangeState(new CBossStanState);
 	}
 }
 

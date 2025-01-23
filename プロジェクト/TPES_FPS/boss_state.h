@@ -21,6 +21,8 @@ class CBossEnemy;
 class CBossState
 {
 public:
+	CBossState();
+	virtual ~CBossState();
 	virtual void Start(CBossEnemy* boss);
 	virtual void Chase(CBossEnemy* boss);
 	virtual void Stan(CBossEnemy* boss);
@@ -77,12 +79,15 @@ public:
 class CConfusionBossState : public CBossState
 {
 public:
+	CConfusionBossState();
+	~CConfusionBossState();
 	void Start(CBossEnemy* boss) override;
 	virtual void Confusion(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
 private:
 	float m_StartRot;
 	bool m_isRight; //å©ìnÇ∑(true:âE false:ç∂)
+	CEnemy_Reaction_UI* m_pReaction;
 };
 
 //=============================================

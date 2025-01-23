@@ -111,6 +111,8 @@ private:
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
+	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン

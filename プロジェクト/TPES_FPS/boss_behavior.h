@@ -76,7 +76,6 @@ public:
 private:
 	static constexpr float LOOK_RANGE = 1.57f; //Œ©“n‚·”ÍˆÍ
 	static constexpr int NUM_TURN = 2; //Œ©“n‚·‰ñ”
-	CEnemy_Reaction_UI* m_pReaction;
 	int m_TurnCnt; //‰½‰ñŒ©“n‚µ‚½‚©
 	bool m_isRight; //Œ©“n‚·(true:‰E false:¶)
 };

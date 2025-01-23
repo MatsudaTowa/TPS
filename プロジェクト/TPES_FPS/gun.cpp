@@ -63,6 +63,14 @@ int& CGun::GetLv()
 }
 
 //=============================================
+//ダメージ取得
+//=============================================
+int& CGun::GetDamage()
+{
+	return m_nDamage;
+}
+
+//=============================================
 //リロードフレーム取得
 //=============================================
 int& CGun::GetReloadFrame()
@@ -134,18 +142,14 @@ HRESULT CAssultRifle::Init()
 	nAmmo = DEFAULT_AR_MAG_SIZE;
 	//初期レベル代入
 	nLv = 1;
-	//デフォルトのリロードフレーム代入
-	nReloadFrame = DEFAULT_AR_RELOAD_FRAME;
+
 	//デフォルトの発射レート代入
 	nFireRate = DEFAULT_AR_FIRE_RATE;
 	//デフォルトの弾速代入
 	fBulletSpeed = DEFAULT_AR_BULLET_SPEED;
 
 	//押したらすぐ発射するため
-	m_nRateCnt = DEFAULT_AR_FIRE_RATE;
-
-	//ダメージの代入
-	m_nDamage = DEFAULT_AR_DAMAGE;
+	m_nRateCnt = GetFireRate();
 
 	//サイズの代入
 	m_Size = DEFAULT_AR_SIZE;
@@ -224,7 +228,7 @@ HRESULT CMiniGun::Init()
 	m_nRateCnt = DEFAULT_MINIGUN_FIRE_RATE;
 
 	//ダメージの代入
-	m_nDamage = DEFAULT_MINIGUN_DAMAGE;
+	SetDamage(DEFAULT_MINIGUN_DAMAGE);
 
 	//サイズの代入
 	m_Size = DEFAULT_MINIGUN_SIZE;

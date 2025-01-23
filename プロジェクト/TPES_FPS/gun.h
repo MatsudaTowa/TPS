@@ -46,6 +46,11 @@ public:
 	{
 		m_Lv = Lv;
 	}
+	//ダメージ設定
+	void SetDamage(int Damage)
+	{
+		m_nDamage = Damage;
+	}
 	//リロードフレーム設定
 	void SetReloadFrame(int ReloadFrame)
 	{
@@ -66,6 +71,8 @@ public:
 	int& GetAmmo();
 	//レベル取得
 	int& GetLv();
+	//ダメージ取得
+	int& GetDamage();
 	//リロードフレーム
 	int& GetReloadFrame();
 	//発射レート取得
@@ -78,11 +85,11 @@ public:
 	CShot* m_pShot; //弾発射処理
 	CReload* m_pReload; //リロード処理
 
-	int m_nDamage; //ダメージ
 	D3DXVECTOR3 m_Size; //サイズ
 private:
 	int m_Ammo; //マガジン内の弾数
 	int m_Lv; //銃のレベル
+	int m_nDamage; //ダメージ
 	int m_ReloadFrame; //リロードフレーム
 	int m_FireRate; //発射レート
 	float m_BulletSpeed; //弾速
@@ -96,9 +103,7 @@ class CAssultRifle :public CGun
 {
 public:
 	static const int DEFAULT_AR_MAG_SIZE = 28; //デフォルトのアサルトのマガジンサイズ
-	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_FIRE_RATE = 25; //デフォルトのアサルトの発射レート
-	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 	static const float DEFAULT_AR_BULLET_SPEED; //デフォルトのアサルトの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_AR_SIZE; //デフォルトのアサルトサイズ
 
@@ -116,8 +121,8 @@ class CMiniGun :public CGun
 {
 public:
 	static const int DEFAULT_MINIGUN_MAG_SIZE = 120; //デフォルトのミニガンのマガジンサイズ
-	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 180; //デフォルトのミニガンのリロードフレーム数
-	static const int DEFAULT_MINIGUN_FIRE_RATE = 7; //デフォルトのミニガンの発射レート
+	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 480; //デフォルトのミニガンのリロードフレーム数
+	static const int DEFAULT_MINIGUN_FIRE_RATE = 4; //デフォルトのミニガンの発射レート
 	static const int DEFAULT_MINIGUN_DAMAGE = 5; //デフォルトのミニガンのダメージ
 	static const float DEFAULT_MINIGUN_BULLET_SPEED; //デフォルトのミニガンの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_MINIGUN_SIZE; //デフォルトのミニガンのサイズ

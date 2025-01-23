@@ -101,6 +101,9 @@ HRESULT CPlayer_test::Init()
 	{
 		m_pGun = new CAssultRifle;
 
+		m_pGun->SetReloadFrame(DEFAULT_AR_RELOAD_FRAME);
+		m_pGun->SetDamage(DEFAULT_AR_DAMAGE);
+
 		m_pGun->Init();
 	}
 
