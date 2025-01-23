@@ -110,6 +110,7 @@ private:
 	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
+	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン

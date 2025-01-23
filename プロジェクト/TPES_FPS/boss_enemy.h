@@ -94,6 +94,8 @@ private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 
+	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+
 	void DrawDebug();
 
 	Motion_Type m_Motion; //モーションの種類

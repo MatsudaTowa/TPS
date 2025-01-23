@@ -41,7 +41,7 @@ HRESULT CMask::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.75f);
+	col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.75f);
 
 	//カラーを代入
 	SetColor(col);

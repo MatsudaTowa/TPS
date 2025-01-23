@@ -32,9 +32,6 @@ CField::~CField()
 //=============================================
 HRESULT CField::Init()
 {
-	// 自身のサイズ取得
-	D3DXVECTOR3 sizeThis = GetSize();
-
 	//頂点設定
 	SetVtx(D3DXVECTOR3(0.0f,1.0f,0.0f));
 

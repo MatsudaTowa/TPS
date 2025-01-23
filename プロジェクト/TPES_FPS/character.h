@@ -16,6 +16,7 @@
 #include "character_state.h"
 #include "wall.h"
 #include "block.h"
+#include "shadow.h"
 
 //=============================================
 //前方宣言
@@ -123,11 +124,20 @@ public:
 	{
 		m_bLoopFinish = bFinish;
 	}
+
+	//影のサイズ設定
+	void SetShadowSize(D3DXVECTOR3 shadow_size)
+	{
+		m_ShadowSize = shadow_size;
+	}
 	//移動量取得
 	D3DXVECTOR3& GetMove();
 
 	//過去の位置取得
 	D3DXVECTOR3& GetOldPos();
+
+	//影のサイズ取得
+	D3DXVECTOR3& GetShadowSize();
 
 	//着地してるかどうか取得
 	bool& GetLaunding();
@@ -199,6 +209,9 @@ private:
 	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
+	D3DXVECTOR3 m_ShadowSize; //影のサイズ
+
+	CShadow* m_pShadow; //影
 
 	//キー情報構造体
 	typedef struct

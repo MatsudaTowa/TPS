@@ -32,6 +32,9 @@ const float CPlayer_test::DAMPING_COEFFICIENT = 0.3f;
 //プレイヤーをリスポーンされる座標
 const float CPlayer_test::DEADZONE_Y = -100.0f;
 
+//影のサイズ
+const D3DXVECTOR3 CPlayer_test::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
+
 CAmmo_UI* CPlayer_test::m_pAmmoUI = nullptr;
 CLife_UI* CPlayer_test::m_pLifeUI = nullptr;
 
@@ -168,7 +171,11 @@ HRESULT CPlayer_test::Init()
 	//パーツ読み込み
 	Load_Parts("data\\motion_soldier.txt");
 
+	//初期モーション設定
 	SetMotion(MOTION_NEUTRAL);
+
+	//影のサイズ設定
+	SetShadowSize(SHADOW_SIZE);
 
 	return S_OK;
 }

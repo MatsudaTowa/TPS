@@ -40,7 +40,9 @@ m_MotionSet(),											//モーション設定
 m_pMove(),												//移動する処理
 m_pGunAttack(),											//銃の攻撃
 m_pCharacterState(),									//キャラクターのステートパターンポインタ
-m_nJumpCnt(0)											//ジャンプ数
+m_nJumpCnt(0),											//ジャンプ数
+m_pShadow(),											//影のポインタ
+m_ShadowSize(D3DXVECTOR3(0.0f, 0.0f, 0.0f))				//影のサイズ
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
@@ -93,6 +95,14 @@ HRESULT CCharacter::Init()
 	{
 		m_pCharacterState = new CMoveState;
 	}
+	if (m_pShadow == nullptr)
+	{
+		m_pShadow = CShadow::Create({ GetPos().x,0.5f,GetPos().z }, m_ShadowSize);
+	}
+
+	//影のサイズ設定
+	m_pShadow->SetSize({ m_ShadowSize });
+
 	//最初どのモーションでもない値を代入
 	m_Motion = -1;
 	//ループモーション終わってる判定に
@@ -112,6 +122,12 @@ void CCharacter::Uninit()
 	{
 		delete m_pGun;
 		m_pGun = nullptr;
+	}
+
+	if (m_pShadow != nullptr)
+	{
+		m_pShadow->Uninit();
+		m_pShadow = nullptr;
 	}
 
     CObjectX::Uninit();
@@ -144,6 +160,12 @@ void CCharacter::Update()
 
 	//座標を更新
 	SetPos(pos);
+
+	//影のサイズ設定
+	m_pShadow->SetSize(m_ShadowSize);
+
+	//影の位置設定
+	m_pShadow->SetPos({ GetPos().x,0.5f,GetPos().z });
 
 	//最大最小値取得
 	D3DXVECTOR3 minpos = GetMinPos();
@@ -892,6 +914,14 @@ D3DXVECTOR3& CCharacter::GetMove()
 D3DXVECTOR3& CCharacter::GetOldPos()
 {
     return m_oldpos;
+}
+
+//=============================================
+//影のサイズ取得
+//=============================================
+D3DXVECTOR3& CCharacter::GetShadowSize()
+{
+	return m_ShadowSize;
 }
 
 //=============================================

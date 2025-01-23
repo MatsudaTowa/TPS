@@ -7,6 +7,9 @@
 #include "normal_enemy.h"
 #include "normal_enemy_behavior.h"
 
+//影のサイズ
+const D3DXVECTOR3 CNormalEnemy::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -51,6 +54,10 @@ HRESULT CNormalEnemy::Init()
 	}
 
 	SetLife(DEFAULT_LIFE);
+
+	//影のサイズ設定
+	SetShadowSize(SHADOW_SIZE);
+
 	//親クラスの初期化を呼ぶ
 	CEnemy::Init();
 	return S_OK;
