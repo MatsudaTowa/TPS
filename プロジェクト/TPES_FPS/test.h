@@ -9,7 +9,7 @@
 #define _TEST_H_
 #include "main.h"
 #include "scene.h"
-#include "player_test.h"
+#include "player.h"
 #include "block.h"
 class CTest :public CScene
 {
@@ -37,6 +37,6 @@ private:
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 
 	//プレイヤー
-	CPlayer_test* m_pPlayer;
+	CPlayer* m_pPlayer;
 };
 #endif

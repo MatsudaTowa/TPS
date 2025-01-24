@@ -9,7 +9,7 @@
 #include "manager.h"
 #include "object.h"
 #include "player.h"
-#include "player_test.h"
+#include "player.h"
 
 //通常の移動速度
 const float CCamera::DEFAULT_MOVE = 1.0f;
@@ -374,14 +374,14 @@ void CCamera::ThirdViewCamera()
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 			//タイプ取得
 			CObject::OBJECT_TYPE type = pObj->GetType();
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				m_posR.x = pPlayer->GetPos().x;
 				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;

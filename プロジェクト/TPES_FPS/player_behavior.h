@@ -7,9 +7,9 @@
 #ifndef _PLAYER_BEHAVIOR_
 #define _PLAYER_BEHAVIOR_
 #include "character_behavior.h"
-#include "player_test.h"
+#include "player.h"
 
-class CPlayer_test;
+class CPlayer;
 //=============================================
 //プレイヤーの移動のストラテジー
 //=============================================
@@ -31,7 +31,7 @@ class CPlayerSliding
 public:
 	CPlayerSliding();
 	~CPlayerSliding();
-	void Sliding(CPlayer_test* player);
+	void Sliding(CPlayer* player);
 };
 
 

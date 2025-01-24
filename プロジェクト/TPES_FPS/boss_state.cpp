@@ -5,7 +5,7 @@
 //
 //=============================================
 #include "boss_state.h"
-#include "player_test.h"
+#include "player.h"
 
 //=============================================
 //コンストラクタ
@@ -100,7 +100,7 @@ void CChaseState::Chase(CBossEnemy* boss)
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 			//タイプ取得
@@ -222,7 +222,7 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
-			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 			if (pObj != nullptr)
 			{//ヌルポインタじゃなければ
 				//タイプ取得
@@ -231,10 +231,10 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 				//敵との当たり判定
 				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 				{
-					CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+					CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
 					//プレイヤーとの距離算出
-					D3DXVECTOR3 Distance = pPlayer_test->GetPos() - boss->GetPos();
+					D3DXVECTOR3 Distance = pplayer->GetPos() - boss->GetPos();
 
 					//プレイヤーに向ける角度を算出
 					float fAngle = atan2f(Distance.x, Distance.z);
@@ -469,7 +469,7 @@ void CSearchState::Start(CBossEnemy* boss)
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 		 //タイプ取得
@@ -478,7 +478,7 @@ void CSearchState::Start(CBossEnemy* boss)
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 				m_TargetPos = pPlayer->GetPos();
 			}
 		}

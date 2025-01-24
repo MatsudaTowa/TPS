@@ -11,21 +11,21 @@
 //=============================================
 //デフォルト状態の処理
 //=============================================
-void CPlayerState::Default(CPlayer_test* player)
+void CPlayerState::Default(CPlayer* player)
 {
 }
 
 //=============================================
 //ウルト状態の処理
 //=============================================
-void CPlayerState::Ult(CPlayer_test* player)
+void CPlayerState::Ult(CPlayer* player)
 {
 }
 
 //=============================================
 //デフォルト状態の処理
 //=============================================
-void CDefaultState::Default(CPlayer_test* player)
+void CDefaultState::Default(CPlayer* player)
 {
 	if (player->m_pUlt != nullptr)
 	{
@@ -45,7 +45,7 @@ void CDefaultState::Default(CPlayer_test* player)
 //=============================================
 //ウルト状態の処理
 //=============================================
-void CUltState::Ult(CPlayer_test* player)
+void CUltState::Ult(CPlayer* player)
 {
 	bool isFinish = false;
 	if (player->m_pUlt != nullptr)

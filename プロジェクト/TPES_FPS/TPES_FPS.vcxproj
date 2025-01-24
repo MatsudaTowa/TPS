@@ -214,10 +214,9 @@
     <ClCompile Include="object3D.cpp" />
     <ClCompile Include="objectX.cpp" />
     <ClCompile Include="object_map.cpp" />
-    <ClCompile Include="player.cpp" />
     <ClCompile Include="player_behavior.cpp" />
     <ClCompile Include="player_state.cpp" />
-    <ClCompile Include="player_test.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="player_UI_box.cpp" />
     <ClCompile Include="precompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -322,10 +321,9 @@
     <ClInclude Include="object3D.h" />
     <ClInclude Include="objectX.h" />
     <ClInclude Include="object_map.h" />
-    <ClInclude Include="player.h" />
     <ClInclude Include="player_behavior.h" />
     <ClInclude Include="player_state.h" />
-    <ClInclude Include="player_test.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="player_UI_box.h" />
     <ClInclude Include="precompile.h" />
     <ClInclude Include="renderer.h" />

@@ -45,7 +45,7 @@ CPlayerSliding::~CPlayerSliding()
 //=============================================
 //スライディング
 //=============================================
-void CPlayerSliding::Sliding(CPlayer_test* player)
+void CPlayerSliding::Sliding(CPlayer* player)
 {
 	//スピードがあれば減速
 	//if (move.x > 0.0f)
@@ -92,8 +92,8 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 
 	character->SetMove(character->GetMove() * 0.75f);
 
-	CPlayer_test::Motion_Type Motion;
-	Motion = CPlayer_test::Motion_Type::MOTION_ATTACK;
+	CPlayer::Motion_Type Motion;
+	Motion = CPlayer::Motion_Type::MOTION_ATTACK;
 	//モーション代入
 	character->SetMotion(Motion);
 

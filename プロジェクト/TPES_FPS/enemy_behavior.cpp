@@ -6,7 +6,7 @@
 //=============================================
 #include "enemy_behavior.h"
 #include "manager.h"
-#include "player_test.h"
+#include "player.h"
 #include "object.h"
 #include "normal_enemy.h"
 
@@ -129,7 +129,7 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 			//タイプ取得
@@ -138,10 +138,10 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
 				//プレイヤーとの距離算出
-				D3DXVECTOR3 Distance = pPlayer_test->GetPos() - character->GetPos();
+				D3DXVECTOR3 Distance = pplayer->GetPos() - character->GetPos();
 
 				//プレイヤーに向ける角度を算出
 				float fAngle = atan2f(Distance.x,Distance.z);
@@ -277,7 +277,7 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 		 //タイプ取得
@@ -286,11 +286,11 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
 				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
+				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
 					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);

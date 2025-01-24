@@ -6,7 +6,7 @@
 //=============================================
 #include "life_UI.h"
 #include "manager.h"
-#include "player_test.h"
+#include "player.h"
 //Œ…‚²‚Æ‚É‚¸‚ç‚·
 const float CLife_UI::DIGIT_SHIFT = 18.0f;
 
@@ -115,19 +115,19 @@ void CLife_UI::SetLife_UI(int nLife)
 {
 	SetNumber(nLife);
 
-	float gaugeWidth = (nLife * GAUGE_SIZE.x) / CPlayer_test::PLAYER_LIFE;
+	float gaugeWidth = (nLife * GAUGE_SIZE.x) / CPlayer::PLAYER_LIFE;
 
 	m_pGauge->SetGauge({ gaugeWidth , m_pGauge->GetSize().y});
 
-	if (nLife >= CPlayer_test::PLAYER_LIFE * 0.6f)
+	if (nLife >= CPlayer::PLAYER_LIFE * 0.6f)
 	{
 		m_pGauge->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	}
-	else if (nLife >= CPlayer_test::PLAYER_LIFE * 0.3f && nLife < CPlayer_test::PLAYER_LIFE * 0.6f)
+	else if (nLife >= CPlayer::PLAYER_LIFE * 0.3f && nLife < CPlayer::PLAYER_LIFE * 0.6f)
 	{
 		m_pGauge->SetColor({ 1.0f,1.0f,0.0f,1.0f });
 	}
-	else if (nLife < CPlayer_test::PLAYER_LIFE * 0.3f)
+	else if (nLife < CPlayer::PLAYER_LIFE * 0.3f)
 	{
 		m_pGauge->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	}

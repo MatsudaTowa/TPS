@@ -9,7 +9,7 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
-#include "player_test.h"
+#include "player.h"
 #include "player_UI_box.h"
 
 //=============================================

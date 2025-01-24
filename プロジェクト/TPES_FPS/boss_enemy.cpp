@@ -198,7 +198,7 @@ void CBossEnemy::ColisionPlayer()
 		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
-			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 			if (pObj != nullptr)
 			{//オブジェクトに要素が入っていたら
 				//タイプ取得
@@ -208,7 +208,7 @@ void CBossEnemy::ColisionPlayer()
 				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 				{
 					//安全にダウンキャスト
-					CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 					CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
 				}
@@ -220,7 +220,7 @@ void CBossEnemy::ColisionPlayer()
 //=============================================
 //プレイヤーとの当たり判定チェック
 //=============================================
-void CBossEnemy::CheckColisionPlayer(CPlayer_test* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
 	for (int nPartsCnt = 0; nPartsCnt < pPlayer->GetNumParts(); nPartsCnt++)
 	{

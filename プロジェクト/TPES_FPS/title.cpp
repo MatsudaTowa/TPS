@@ -13,7 +13,7 @@
 #include "player.h"
 #include "colision.h"
 #include "block.h"
-#include"player_test.h"
+#include"player.h"
 #include "field.h"
 #include "manager.h"
 #include "sound.h"
@@ -48,7 +48,7 @@ HRESULT CTitle::Init()
 	//LoadBlock(&CTitle::BLOCK_FILE);
 
 	//ÉvÉåÉCÉÑÅ[ê∂ê¨
-	CPlayer_test* pPlayer_test = CPlayer_test::Create(D3DXVECTOR3(0.0f, 0.5f, -300.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
+	CPlayer* pplayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, -300.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
 
     m_pTitleScreen[0] = CTitle_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f,200.0f,0.0f),D3DXVECTOR2(400.0f,200.0f),CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
 

@@ -9,12 +9,12 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
-#include "player_test.h"
+#include "player.h"
 #include "player_UI_box.h"
 #include "smoke_icon.h"
 #include "keyboard_UI.h"
 
-class CPlayer_test;
+class CPlayer;
 //=============================================
 //残弾数表示クラス
 //=============================================
@@ -23,10 +23,10 @@ class CSmoke_UI
 public:
 	CSmoke_UI();
 	~CSmoke_UI();
-	HRESULT Init(CPlayer_test* player);
+	HRESULT Init(CPlayer* player);
 	void Uninit();
 	void Update();
-	void SetCurrentSmoke_UI(CPlayer_test* player);
+	void SetCurrentSmoke_UI(CPlayer* player);
 
 	void SetNumber(int nParcent);
 

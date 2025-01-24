@@ -7,7 +7,7 @@
 #include "bullet.h"
 #include "manager.h"
 #include "game.h"
-#include "player_test.h"
+#include "player.h"
 
 //テクスチャ初期化
 const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\bullet.png";
@@ -144,13 +144,13 @@ void CBullet::SetHitMaker()
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
-				if (pPlayer_test->m_Raticle != nullptr)
+				if (pplayer->m_Raticle != nullptr)
 				{
-					if (pPlayer_test->m_Raticle->m_pHitMaker != nullptr)
+					if (pplayer->m_Raticle->m_pHitMaker != nullptr)
 					{
-						pPlayer_test->m_Raticle->m_pHitMaker->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+						pplayer->m_Raticle->m_pHitMaker->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 					}
 				}
 			}

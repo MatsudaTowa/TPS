@@ -8,13 +8,13 @@
 #define _PLAYER_STATE_H_
 
 #include "character.h"
-#include "player_test.h"
+#include "player.h"
 #include "ult.h"
 
 //=============================================
 //前方宣言
 //=============================================
-class CPlayer_test;
+class CPlayer;
 
 //=============================================
 //キャラクターのステートクラス
@@ -22,8 +22,8 @@ class CPlayer_test;
 class CPlayerState
 {
 public:
-	virtual void Default(CPlayer_test* player);
-	virtual void Ult(CPlayer_test* player);
+	virtual void Default(CPlayer* player);
+	virtual void Ult(CPlayer* player);
 };
 
 //=============================================
@@ -32,7 +32,7 @@ public:
 class CDefaultState : public CPlayerState
 {
 public:
-	virtual void Default(CPlayer_test* player)override;
+	virtual void Default(CPlayer* player)override;
 };
 
 //=============================================
@@ -41,7 +41,7 @@ public:
 class CUltState : public CPlayerState
 {
 public:
-	virtual void Ult(CPlayer_test* player) override;
+	virtual void Ult(CPlayer* player) override;
 };
 
 #endif // !_PLAYER_STATE_H

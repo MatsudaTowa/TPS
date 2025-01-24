@@ -14,7 +14,7 @@
 #include "field.h"
 #include "manager.h"
 #include "dash_effect.h"
-#include "player_test.h"
+#include "player.h"
 
 const std::string CGame::BLOCK_FILE = "data\\FILE\\block.txt";
 
@@ -183,9 +183,9 @@ void CGame::ApplyDeathPenalty()
 			//“G‚Æ‚Ì“–‚½‚è”»’è
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
-				for (int nCnt = 0; nCnt < pPlayer_test->GetDeathCnt(); nCnt++)
+				for (int nCnt = 0; nCnt < pplayer->GetDeathCnt(); nCnt++)
 				{
 					CScore* pScore = CWave::GetScore();
 

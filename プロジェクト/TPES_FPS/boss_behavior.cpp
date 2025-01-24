@@ -6,7 +6,7 @@
 //=============================================
 #include "boss_behavior.h"
 #include "wave_boss.h"
-#include "player_test.h"
+#include "player.h"
 #include "boss_enemy.h"
 #include "block.h"
 #include "object.h"
@@ -164,10 +164,10 @@ CBossChase::~CBossChase()
 //=============================================
 void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 {
-	CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(obj);
+	CPlayer* pplayer = dynamic_cast<CPlayer*>(obj);
 
 	//プレイヤーの位置への方向情報
-	D3DXVECTOR3 Vector = pPlayer_test->GetPos() - boss->GetPos();
+	D3DXVECTOR3 Vector = pplayer->GetPos() - boss->GetPos();
 	// 目的地との距離を計算
 	float distance = sqrtf(Vector.x * Vector.x + Vector.z * Vector.z);
 
@@ -341,7 +341,7 @@ CCharacter::RayHitInfo CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector,
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 		 //タイプ取得
@@ -350,11 +350,11 @@ CCharacter::RayHitInfo CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector,
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
 				D3DXVECTOR3 StartRay = {boss->GetPos().x - pPlayer->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer_test::NUM_PARTS; nCnt++)
+				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
 					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
@@ -526,7 +526,7 @@ void CBossTackle::LookAtPlayer(CCharacter* character)
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 			//タイプ取得
@@ -535,10 +535,10 @@ void CBossTackle::LookAtPlayer(CCharacter* character)
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
 				//プレイヤーとの距離算出
-				D3DXVECTOR3 Distance = pPlayer_test->GetPos() - character->GetPos();
+				D3DXVECTOR3 Distance = pplayer->GetPos() - character->GetPos();
 
 				//プレイヤーに向ける角度を算出
 				float fAngle = atan2f(Distance.x, Distance.z);
@@ -638,7 +638,7 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
-			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 			if (pObj != nullptr)
 			{//ヌルポインタじゃなければ
 				//タイプ取得
@@ -647,9 +647,9 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 				//敵との当たり判定
 				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 				{
-					CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+					CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 					//プレイヤーの位置への方向情報
-					D3DXVECTOR3 Vector = pPlayer_test->GetPos() - boss->GetPos();
+					D3DXVECTOR3 Vector = pplayer->GetPos() - boss->GetPos();
 
 					if (boss->PerformRaycast_Player(Vector, boss).hit
 						&& boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)

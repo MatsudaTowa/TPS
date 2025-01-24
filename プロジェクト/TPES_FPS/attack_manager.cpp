@@ -11,7 +11,7 @@
 #include "block.h"
 #include "field.h"
 #include"game.h"
-#include "player_test.h"
+#include "player.h"
 //=============================================
 //コンストラクタ
 //=============================================
@@ -146,23 +146,23 @@ bool CAttack_Manager::HitPlayer()
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
 				CColision::COLISION ColisionCheck;
-				for (int nCnt = 0; nCnt < pPlayer_test->NUM_PARTS; nCnt++)
+				for (int nCnt = 0; nCnt < pplayer->NUM_PARTS; nCnt++)
 				{
 					//パーツのオフセットpos
-					D3DXVECTOR3 PartsPos = { pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._41
-					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._42
-					,pPlayer_test->m_apModel[nCnt]->GetMtxWorld()._43 };
+					D3DXVECTOR3 PartsPos = { pplayer->m_apModel[nCnt]->GetMtxWorld()._41
+					,pplayer->m_apModel[nCnt]->GetMtxWorld()._42
+					,pplayer->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer_test->m_apModel[nCnt]->GetMin(), pPlayer_test->m_apModel[nCnt]->GetMax());
+					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pplayer->m_apModel[nCnt]->GetMin(), pplayer->m_apModel[nCnt]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//当たってたら
 
-						pPlayer_test->Damage(m_nDamage);
-						int nCurrentLife = pPlayer_test->GetLife();
+						pplayer->Damage(m_nDamage);
+						int nCurrentLife = pplayer->GetLife();
 						return true;
 					}
 				}

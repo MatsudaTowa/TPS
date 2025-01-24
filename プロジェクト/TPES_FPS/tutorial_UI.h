@@ -13,7 +13,7 @@
 #include "keyboard_UI.h"
 #include "mouse_UI.h"
 
-class CPlayer_test;
+class CPlayer;
 //=============================================
 //チュートリアルUIクラス
 //=============================================

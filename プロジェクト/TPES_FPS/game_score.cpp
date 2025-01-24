@@ -5,7 +5,7 @@
 //
 //=============================================
 #include "game_score.h"
-#include "player_test.h"
+#include "player.h"
 
 const float CGameScore::DIGIT_SHIFT = 40.0f;
 
@@ -118,7 +118,7 @@ void CGameScore::Update()
 	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
 		if (pObj != nullptr)
 		{//ヌルポインタじゃなければ
 		 //タイプ取得
@@ -127,9 +127,9 @@ void CGameScore::Update()
 			//敵との当たり判定
 			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{
-				CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
 
-				SetDeathCntUI(pPlayer_test->GetDeathCnt());
+				SetDeathCntUI(pplayer->GetDeathCnt());
 			}
 		}
 	}

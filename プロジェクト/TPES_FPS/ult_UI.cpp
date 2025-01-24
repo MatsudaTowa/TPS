@@ -33,7 +33,7 @@ CUlt_UI::~CUlt_UI()
 //=============================================
 // 初期化
 //=============================================
-HRESULT CUlt_UI::Init(CPlayer_test* player)
+HRESULT CUlt_UI::Init(CPlayer* player)
 {
 	//UIの枠生成
 	if (m_pIcon == nullptr)
@@ -89,7 +89,7 @@ void CUlt_UI::Update()
 //=============================================
 // UI設定
 //=============================================
-void CUlt_UI::SetCurrentUlt_UI(CPlayer_test* player)
+void CUlt_UI::SetCurrentUlt_UI(CPlayer* player)
 {
 	//割合を出すためにfloatにキャスト
 	int Parcent = ((float)player->m_pUlt->GetCoolTimeCnt() / (float)player->m_pUlt->GetCoolTime()) * 100;

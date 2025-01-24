@@ -6,7 +6,7 @@
 //=============================================
 #include "tutorial.h"
 #include "tutorial_screen.h"
-#include "player_test.h"
+#include "player.h"
 
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
 const std::string CTutorial::BLOCK_FILE = "data\\FILE\\block_data_tutorial.bin";
@@ -33,7 +33,7 @@ HRESULT CTutorial::Init()
 {
 	CScene::Init();
 
-	CPlayer_test* pPlayer_test = CPlayer_test::Create(CPlayer_test::PLAYER_SPAWN_POS, CPlayer_test::PLAYER_SPAWN_ROT, CPlayer_test::PLAYER_LIFE);
+	CPlayer* pplayer = CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
 
 	LoadBlock(&BLOCK_FILE);
 	LoadEnemy(&ENEMY_FILE);

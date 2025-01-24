@@ -9,10 +9,10 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
-#include "player_test.h"
+#include "player.h"
 #include "keyboard_UI.h"
 
-class CPlayer_test;
+class CPlayer;
 class CUltIcon;
 //=============================================
 //残弾数表示クラス
@@ -22,10 +22,10 @@ class CUlt_UI
 public:
 	CUlt_UI();
 	~CUlt_UI();
-	HRESULT Init(CPlayer_test* player);
+	HRESULT Init(CPlayer* player);
 	void Uninit();
 	void Update();
-	void SetCurrentUlt_UI(CPlayer_test* player);
+	void SetCurrentUlt_UI(CPlayer* player);
 
 	void Reset();
 
