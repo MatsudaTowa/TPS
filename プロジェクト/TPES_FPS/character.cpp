@@ -860,7 +860,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCha
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 				//ƒŒƒC‚ðŒ´“_‚©‚ç‚Ì·•ª‚©‚ç”ò‚Î‚·
-				D3DXVECTOR3 StartRay = character->GetPos() - pBlock->GetPos();
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pBlock->GetPos().z };
 				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
 				if (Info.hit == true)
 				{

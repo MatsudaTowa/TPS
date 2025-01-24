@@ -324,5 +324,5 @@ CEnemyStan::~CEnemyStan()
 //=============================================
 void CEnemyStan::Stan(CCharacter* character)
 {
-	character->SetMotion(CNormalEnemy::Motion_Type::MOTION_NEUTRAL);
+	character->SetMotion(CNormalEnemy::Motion_Type::MOTION_STAN);
 }

@@ -9,7 +9,7 @@
 #include "enemy_behavior.h"
 #include "boss_enemy.h"
 #include "move_point.h"
-#include "enemy_reaction_UI.h"2
+#include "enemy_reaction_UI.h"
 
 //=============================================
 //前方宣言
@@ -74,7 +74,7 @@ public:
 	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
 	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector,CBossEnemy* boss);
 private:
-	static constexpr float LOOK_RANGE = 1.57f; //見渡す範囲
+	static constexpr float LOOK_RANGE = 1.6f; //見渡す範囲
 	static constexpr int NUM_TURN = 2; //見渡す回数
 	int m_TurnCnt; //何回見渡したか
 	bool m_isRight; //見渡す(true:右 false:左)
@@ -109,7 +109,7 @@ public:
 	void Tackle(CBossEnemy* boss);
 private:
 	static const int STAY_FLAME = 120; //突進までの待機時間
-	static const int TACKLE_FLAME = 150; //タックル時間
+	static const int TACKLE_FLAME = 120; //タックル時間
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 	int m_StayCnt;
 	int m_TackleCnt;

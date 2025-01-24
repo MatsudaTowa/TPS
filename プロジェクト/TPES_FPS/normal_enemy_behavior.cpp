@@ -198,7 +198,7 @@ void CNormalAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	//Ž©•ª‚Ì•ûŒü‚ðŽæ“¾
 	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), 0.0f, cosf(character->GetRot().y + D3DX_PI) };
 
-	D3DXVec3Normalize(&vec, &vec);
+	//D3DXVec3Normalize(&vec, &vec);
 
 	if (PerformRaycast_Player(vec, character).hit)
 	{

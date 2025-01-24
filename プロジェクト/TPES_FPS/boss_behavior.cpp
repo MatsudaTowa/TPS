@@ -75,6 +75,8 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 			default:
 				break;
 			}
+
+			boss->SetMotion(CBossEnemy::MOTION_MOVE);
 		}
 		else
 		{//到達していたら
@@ -85,6 +87,9 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 
 			//次の移動先の抽選
 			PickNextMovePoint(pMovePoint);
+
+			boss->SetMotion(CBossEnemy::MOTION_NEUTRAL);
+
 		}
 	}
 	else if (!m_isMove)
@@ -178,6 +183,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	if (boss->PerformRaycast_Smoke(Vector, boss).hit)
 	{
 		m_bTargetPlayer = false;
+
 		boss->ChangeState(new CConfusionBossState);
 	}
 	else if (boss->PerformRaycast_Block(Vector, boss).hit
@@ -431,6 +437,9 @@ CBossTackle::~CBossTackle()
 //=============================================
 void CBossTackle::Tackle(CBossEnemy* boss)
 {
+	//リロード
+	boss->m_pGun->Reload();
+
 	if (!m_isTackle)
 	{//タックルしてなかったら
 		LookAtPlayer(boss);
@@ -445,6 +454,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 	if (m_isTackle)
 	{
+		boss->SetMotion(CBossEnemy::MOTION_TACKLE);
+
 		if (boss->m_pDashEffect == nullptr)
 		{
 			float fAngle = atan2f(sinf(boss->GetRot().y), cosf(boss->GetRot().y));
@@ -469,14 +480,26 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			boss->m_pDashEffect->SetPos(boss->GetPos());
 		}
 
+		//自分の方向を取得
+		D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI) };
+
+		if (boss->PerformRaycast_Smoke(vec, boss).hit)
+		{
+			if (boss->m_pDashEffect != nullptr)
+			{//エフェクトがあったら
+				//エフェクト破棄
+				boss->m_pDashEffect->Uninit();
+				boss->m_pDashEffect = nullptr;
+			}
+
+			boss->ChangeState(new CBossStanState);
+		}
+
 		boss->ColisionPlayer();
 
 		for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
 		{
-			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X
-				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Y
-				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
-				|| m_TackleCnt > TACKLE_FLAME)
+			if (m_TackleCnt > TACKLE_FLAME)
 			{//何かに当たるか終了フレームに到達したら
 				m_TackleCnt = 0;
 				m_isTackle = false;
@@ -549,7 +572,6 @@ CBossStan::~CBossStan()
 //=============================================
 void CBossStan::Stan(CBossEnemy* boss)
 {
-	boss->SetMotion(CBossEnemy::Motion_Type::MOTION_NEUTRAL);
 }
 
 //=============================================

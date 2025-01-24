@@ -82,6 +82,7 @@ void CBossState::DrawDebug()
 //=============================================
 CChaseState::CChaseState() : m_PlayTackleCnt(0)
 {
+	m_PlayTackleCnt = 0;
 }
 
 //=============================================
@@ -121,9 +122,9 @@ void CChaseState::Chase(CBossEnemy* boss)
 
 	if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
 	{//タックル実行フレームに到達したら
-		m_PlayTackleCnt = 0;
 		//ステート切り替え
 		boss->ChangeState(new CTackleState);
+		m_PlayTackleCnt = 0;
 	}
 
 	boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
@@ -197,7 +198,8 @@ void CBossStanState::DrawDebug()
 //=============================================
 CWanderingState::CWanderingState() :
 	m_TransitionCnt(0),
-	m_bDamage(false)
+	m_bDamage(false),
+	m_TargetRot({0.0f,0.0f,0.0f})
 {
 }
 
@@ -216,12 +218,59 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
 		m_bDamage = true;
-	}
 
+		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(CPlayer_test::PLAYER_PRIORITY, nCnt);
+			if (pObj != nullptr)
+			{//ヌルポインタじゃなければ
+				//タイプ取得
+				CObject::OBJECT_TYPE type = pObj->GetType();
+
+				//敵との当たり判定
+				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+				{
+					CPlayer_test* pPlayer_test = dynamic_cast<CPlayer_test*>(pObj);
+
+					//プレイヤーとの距離算出
+					D3DXVECTOR3 Distance = pPlayer_test->GetPos() - boss->GetPos();
+
+					//プレイヤーに向ける角度を算出
+					float fAngle = atan2f(Distance.x, Distance.z);
+
+					//親クラスからrotを取得
+					D3DXVECTOR3 rot = boss->GetRot();
+
+					rot.y = fAngle + D3DX_PI;
+
+					m_TargetRot = rot;
+				}
+			}
+		}
+	}
 
 	if (m_bDamage)
 	{
 		++m_TransitionCnt;
+
+		//親クラスからrotを取得
+		D3DXVECTOR3 rot = boss->GetRot();
+
+		//D3DXVECTOR3 RotDistance = m_TargetRot - rot;
+
+		//D3DXVECTOR3 RotMove = RotDistance / TRANSITION_FRAME;
+
+		//if (RotDistance > 0)
+		//{
+		//	rot.y -= RotMove.y;
+		//}
+		//if (RotDistance < 0)
+		//{
+		//	rot.y += RotMove.y;
+		//}
+
+		boss->SetRot(rot);
 
 		if (m_TransitionCnt > TRANSITION_FRAME)
 		{
@@ -356,6 +405,32 @@ void CConfusionBossState::Confusion(CBossEnemy* boss)
 {
 	if (boss->m_pConfusion != nullptr)
 	{
+		//自分の方向を取得
+		D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI) };
+
+		// レイキャストを実行し、障害物があるか判定
+		if (boss->PerformRaycast_Player(vec, boss).hit)
+		{
+			if (boss->PerformRaycast_Block(vec, boss).hit)
+			{//ブロックに当たっていたら
+				if (boss->PerformRaycast_Block(vec, boss).distance > boss->PerformRaycast_Player(vec, boss).distance)
+				{//ブロックより手前にいるときに
+					boss->ChangeState(new CChaseState);
+				}
+			}
+			else if (boss->PerformRaycast_Smoke(vec, boss).hit)
+			{
+				if (boss->PerformRaycast_Smoke(vec, boss).distance > boss->PerformRaycast_Smoke(vec, boss).distance)
+				{//ブロックより手前にいるときに
+					boss->ChangeState(new CChaseState);
+				}
+			}
+			else if (!boss->PerformRaycast_Block(vec, boss).hit && !boss->PerformRaycast_Smoke(vec, boss).hit)
+			{
+				boss->ChangeState(new CChaseState);
+			}
+		}
+
 		boss->m_pConfusion->Confusion(boss, m_StartRot);
 	}
 

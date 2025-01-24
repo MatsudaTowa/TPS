@@ -123,7 +123,7 @@ public:
 	static const int DEFAULT_MINIGUN_MAG_SIZE = 120; //デフォルトのミニガンのマガジンサイズ
 	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 480; //デフォルトのミニガンのリロードフレーム数
 	static const int DEFAULT_MINIGUN_FIRE_RATE = 4; //デフォルトのミニガンの発射レート
-	static const int DEFAULT_MINIGUN_DAMAGE = 5; //デフォルトのミニガンのダメージ
+	static const int DEFAULT_MINIGUN_DAMAGE = 3; //デフォルトのミニガンのダメージ
 	static const float DEFAULT_MINIGUN_BULLET_SPEED; //デフォルトのミニガンの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_MINIGUN_SIZE; //デフォルトのミニガンのサイズ
 

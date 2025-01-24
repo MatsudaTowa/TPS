@@ -15,7 +15,7 @@ class CDashEffect : public CObjectX
 public:
 	static const char* MODEL_NAME;	//ƒ‚ƒfƒ‹‚Ì–¼‘O
 
-	static const int PRIORITY = 9; //•`‰æ‡
+	static const int PRIORITY = 11; //•`‰æ‡
 
 	CDashEffect(int nPriority = PRIORITY);
 	~CDashEffect()override;
