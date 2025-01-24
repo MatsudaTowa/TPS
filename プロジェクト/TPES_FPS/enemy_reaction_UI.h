@@ -14,7 +14,7 @@
 class CEnemy_Reaction_UI : public CBillboard
 {
 public:
-	static const int PRIORITY = 24; //•`‰æ‡
+	static const int PRIORITY = 19; //•`‰æ‡
 
 	enum REACTION
 	{

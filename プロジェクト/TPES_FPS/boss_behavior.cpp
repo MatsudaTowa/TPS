@@ -461,7 +461,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			float fAngle = atan2f(sinf(boss->GetRot().y), cosf(boss->GetRot().y));
 
 			//TODO:位置はモーションつけてから調整
-			boss->m_pDashEffect = CDashEffect::Create(boss->GetPos(), { 0.0f,fAngle,0.0f });
+			boss->m_pDashEffect = CDashEffect::Create({boss->m_apModel[3]->GetMtxWorld()._41,boss->m_apModel[3]->GetMtxWorld()._42 - 100.0f,boss->m_apModel[3]->GetMtxWorld()._43 }
+			, { 0.0f,fAngle,0.0f });
 		}
 
 		++m_TackleCnt;
@@ -477,7 +478,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		if (boss->m_pDashEffect != nullptr)
 		{//エフェクトがあったら
 			//エフェクトを動かす
-			boss->m_pDashEffect->SetPos(boss->GetPos());
+			boss->m_pDashEffect->SetPos({ boss->m_apModel[3]->GetMtxWorld()._41,boss->m_apModel[3]->GetMtxWorld()._42 - 100.0f,boss->m_apModel[3]->GetMtxWorld()._43 });
 		}
 
 		//自分の方向を取得
