@@ -131,6 +131,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _
 		}
 	}
 	pManager->Uninit();
+	//_CrtDumpMemoryLeaks(); // この一行を追加する
 	//ウィンドウクラスの登録を解除
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 	return(int)msg.wParam;

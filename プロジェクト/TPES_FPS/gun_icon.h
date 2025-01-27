@@ -14,7 +14,7 @@
 class CGunIcon : public CObject2D
 {
 public:
-	static const int GUN_ICON_PRIORITY = 80;  //•`‰æ‡
+	static const int GUN_ICON_PRIORITY = 25;  //•`‰æ‡
 
 	enum ICON_TYPE
 	{

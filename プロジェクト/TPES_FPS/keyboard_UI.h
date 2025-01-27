@@ -25,6 +25,7 @@ public:
 		KEY_Q,
 		KEY_X,
 		KEY_R,
+		KEY_LSHIFT,
 		KEY_MAX
 	};
 

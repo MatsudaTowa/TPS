@@ -35,11 +35,11 @@ const float CPlayer::DEADZONE_Y = -100.0f;
 //影のサイズ
 const D3DXVECTOR3 CPlayer::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
 
+//スタミナのサイズ
+const D3DXVECTOR3 CPlayer::STAMINA_GAUGE_SIZE = { 5.0f,20.0f,0.0f };
+
 CAmmo_UI* CPlayer::m_pAmmoUI = nullptr;
 CLife_UI* CPlayer::m_pLifeUI = nullptr;
-
-//テクスチャ初期化
-LPDIRECT3DTEXTURE9 CPlayer::m_pTextureTemp = nullptr;
 
 //=============================================
 //コンストラクタ
@@ -49,6 +49,7 @@ m_Raticle(),				//レティクルのポインタ初期化
 m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
 m_SmokeRecastCnt(0),		//スモーク復活カウントリセット
 m_DeathCnt(0),				//死亡カウントリセット
+m_Stamina(0),				//スタミナ
 m_isRelorad(false),			//リロードしていない状態に
 m_isSmoke(false),			//スモークを使っていない状態に
 m_isEnemyColision(true),	//エネミーと判定をとる状態に
@@ -57,7 +58,9 @@ m_pGunIcon(),				//銃のアイコンのポインタ初期化
 m_pUlt(),					//ウルトのポインタ初期化 
 m_pPlayerState(),			//プレイヤーのステート初期化
 m_pUltUI(),					//ウルトのUI初期化
-m_pSmokeUI()				//スモークのUI初期化
+m_pSmokeUI(),				//スモークのUI初期化
+m_pBlinkUI(),				//ブリンクのUI初期化
+m_pStaminaGauge()			//スタミナのゲージ初期化
 {//イニシャライザーでメンバ変数初期化
 	if (m_pSliding == nullptr)
 	{
@@ -100,6 +103,9 @@ HRESULT CPlayer::Init()
 {
 	CCharacter::Init();
 
+	//スタミナ初期化
+	m_Stamina = PLAYER_STAMINA;
+
 	if (m_pPlayerState == nullptr)
 	{
 		m_pPlayerState = new CDefaultState;
@@ -122,6 +128,8 @@ HRESULT CPlayer::Init()
 		m_pUlt->Init();
 	}
 
+	//カメラ情報取得
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 	//現在のシーンを取得 TODO:シーン参照するな
 	CScene::MODE pScene = CScene::GetSceneMode();
 	if (pScene != CScene::MODE::MODE_TITLE)
@@ -129,6 +137,12 @@ HRESULT CPlayer::Init()
 		if (m_pGunIcon == nullptr)
 		{
 			m_pGunIcon = CGunIcon::Create({ 1150.0f, 665.0f, 0.0f }, { 70.0f,30.0f }, { 1.0f,1.0f,1.0f,1.0f }, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
+		}
+
+		if (m_pStaminaGauge == nullptr)
+		{
+			m_pStaminaGauge = CGauge_3D::Create(D3DXVECTOR3(pCamera->GetPosR().x + 20.0f + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 80.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),
+				STAMINA_GAUGE_SIZE, CGauge_3D::GAUGE_TYPE_STAMINA, { 1.0f,1.0f,0.0f,1.0f });
 		}
 		//残弾数初期化
 		if (m_pAmmoUI == nullptr)
@@ -145,6 +159,13 @@ HRESULT CPlayer::Init()
 			m_pLifeUI = new CLife_UI;
 
 			m_pLifeUI->Init();
+		}
+		//ブリンクUI初期化
+		if (m_pBlinkUI == nullptr)
+		{
+			m_pBlinkUI = new CBlink_UI;
+
+			m_pBlinkUI->Init(this);
 		}
 		//ウルトUI初期化
 		if (m_pUltUI == nullptr)
@@ -171,9 +192,6 @@ HRESULT CPlayer::Init()
 	{
 		CModel* pModel = CManager::GetInstance()->GetModel();
 	}
-
-	//カメラ情報取得
-	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	pCamera->SetRot({0.0f,0.0f,0.0f});
 
@@ -207,10 +225,20 @@ void CPlayer::Uninit()
 		m_pLifeUI->Uninit();
 		m_pLifeUI = nullptr;
 	}
+	if (m_pBlinkUI != nullptr)
+	{
+		m_pBlinkUI->Uninit();
+		m_pBlinkUI = nullptr;
+	}
 	if (m_pUltUI != nullptr)
 	{
 		m_pUltUI->Uninit();
 		m_pUltUI = nullptr;
+	}
+	if (m_pUltUI != nullptr)
+	{
+		m_pStaminaGauge->Uninit();
+		m_pStaminaGauge = nullptr;
 	}
 	if (m_pGunIcon != nullptr)
 	{
@@ -318,6 +346,35 @@ void CPlayer::Update()
 			}
 		}
 
+		if (m_Stamina < PLAYER_STAMINA)
+		{//スタミナが減ってたら
+			if (m_pStaminaGauge != nullptr)
+			{
+				m_pStaminaGauge->SetVisible(true);
+			}
+			++m_StaminaRecoveryCnt;
+			if (m_StaminaRecoveryCnt >= STAMINA_RECOVERY_FRAME)
+			{//カウントが到達したら
+
+				//カウントリセット
+				m_StaminaRecoveryCnt = 0;
+
+				//スタミナ回復
+				m_Stamina += STAMINA_RECOVERY;
+
+				if (m_Stamina >= PLAYER_STAMINA)
+				{//スタミナがデフォルト値に到達したら
+					//スタミナ代入
+					m_Stamina = PLAYER_STAMINA;
+
+					if (m_pStaminaGauge != nullptr)
+					{
+						m_pStaminaGauge->SetVisible(false);
+					}
+				}
+			}
+		}
+
 		//カメラ情報取得
 		CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
@@ -325,6 +382,14 @@ void CPlayer::Update()
 		{
 			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 			m_Raticle->Update();
+		}
+
+		if (m_pStaminaGauge != nullptr)
+		{
+			m_pStaminaGauge->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 70.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+			float gaugeHeight = (m_Stamina * STAMINA_GAUGE_SIZE.y) / PLAYER_STAMINA;
+
+			m_pStaminaGauge->SetSize({ m_pStaminaGauge->GetSize().x , gaugeHeight ,m_pStaminaGauge->GetSize().z});
 		}
 
 		if (m_isRelorad)
@@ -351,6 +416,11 @@ void CPlayer::SetUI()
 	if (m_pLifeUI != nullptr)
 	{
 		m_pLifeUI->SetLife_UI(GetLife());
+	}
+
+	if (m_pBlinkUI != nullptr)
+	{
+		m_pBlinkUI->SetCurrentBlink_UI(this);
 	}
 
 	if (m_pUltUI != nullptr)
@@ -496,6 +566,8 @@ void CPlayer::ReSpawn()
 	SetPos(CPlayer::PLAYER_SPAWN_POS);
 	SetRot(CPlayer::PLAYER_SPAWN_ROT);
 	SetLife(CPlayer::PLAYER_LIFE);
+	SetStamina(CPlayer::PLAYER_STAMINA);
+	m_StaminaRecoveryCnt = 0;
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
 
@@ -568,7 +640,16 @@ void CPlayer::Input()
 
 	if (pKeyboard->GetTrigger(DIK_LSHIFT))
 	{
-		m_pAvoidance->Avoidance(this);
+		if (m_Stamina > AVOIDANCE_COST)
+		{//スタミナがあれば
+			m_pAvoidance->Avoidance(this);
+			m_Stamina -= AVOIDANCE_COST;
+
+			if (m_Stamina <= 0)
+			{//スタミナが0を下回ったら
+				m_Stamina = 0;
+			}
+		}
 	}
 
 	if (pKeyboard->GetPress(DIK_X))

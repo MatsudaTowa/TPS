@@ -17,6 +17,7 @@
 #include "wall.h"
 #include "move_point.h"
 #include "mask.h"
+#include "gauge.h"
 
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
@@ -118,7 +119,7 @@ CWave* CWave::Create(WAVE wave)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer* pplayer = CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
+			CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
 		}
 		else if (wave == WAVE::RESULT)
 		{
@@ -168,7 +169,8 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer* pplayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
+			CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
+			CGauge_3D::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(100.0f, 50.0f, 0.0f), CGauge_3D::GAUGE3D_TYPE::GAUGE_TYPE_STAMINA,{1.0f,1.0f,0.0f,1.0f});
 		}
 		else if (wave == WAVE::RESULT)
 		{

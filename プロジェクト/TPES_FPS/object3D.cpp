@@ -147,7 +147,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor)
 		, -m_size.z);
 
 
-	//rhwの設定
+	//法線の設定
 	pVtx[0].nor =
 	pVtx[1].nor =
 	pVtx[2].nor =
@@ -201,7 +201,7 @@ void CObject3D::SetVtx(D3DXVECTOR3 nor, float fAngle, float fLength)
 		, -m_size.y + cosf(m_rot.z + fAngle) * fLength
 		, -m_size.z);
 
-	//rhwの設定
+	//法線の設定
 	pVtx[0].nor =
 	pVtx[1].nor =
 	pVtx[2].nor =
@@ -254,7 +254,7 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex
 		, -m_size.z);
 
 
-	//rhwの設定
+	//法線の設定
 	pVtx[0].nor =
 		pVtx[1].nor =
 		pVtx[2].nor =
@@ -294,6 +294,60 @@ void CObject3D::SetVtxAnim(D3DXVECTOR3 nor, D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex
 }
 
 //=============================================
+//頂点の設定(ゲージ)
+//=============================================
+void CObject3D::SetGaugeVtx(D3DXVECTOR3 ReferencePos,D3DXVECTOR3 nor)
+{
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+
+	if (m_pVtxBuff == nullptr)
+	{
+		pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	}
+	VERTEX_3D* pVtx;
+
+	//頂点バッファをロックし頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(ReferencePos.x
+		, ReferencePos.y + m_size.y
+		, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(ReferencePos.x + m_size.x
+		, ReferencePos.y + m_size.y
+		, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(ReferencePos.x
+		, ReferencePos.y
+		, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(ReferencePos.x + m_size.x
+		, ReferencePos.y
+
+		, 0.0f);
+
+	//法線の設定
+	pVtx[0].nor =
+		pVtx[1].nor =
+		pVtx[2].nor =
+		pVtx[3].nor = nor;
+
+	//頂点カラーの設定
+	pVtx[0].col =
+		pVtx[1].col =
+		pVtx[2].col =
+		pVtx[3].col = m_col;
+
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//アンロック
+	m_pVtxBuff->Unlock();
+}
+
+//=============================================
 //頂点の設定(pos足元)
 //=============================================
 void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor)
@@ -324,7 +378,7 @@ void CObject3D::SetVtx_FootPos(D3DXVECTOR3 nor)
 		, m_pos.y
 		, 0.0f);
 
-	//rhwの設定
+	//法線の設定
 	pVtx[0].nor =
 		pVtx[1].nor =
 		pVtx[2].nor =

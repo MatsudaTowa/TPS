@@ -258,10 +258,10 @@ void CObject2D::SetGaugeVtx(float rhw)
 		, m_pos.y - m_size.y
 		, 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(m_pos.x
-		, m_pos.y + m_size.y
+		, m_pos.y 
 		, 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(m_pos.x + m_size.x
-		, m_pos.y + m_size.y
+		, m_pos.y
 		, 0.0f);
 
 	//rhwÇÃê›íË

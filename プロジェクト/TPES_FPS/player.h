@@ -21,6 +21,8 @@
 #include "player_state.h"
 #include "ult.h"
 #include "smoke_UI.h"
+#include "gauge.h"
+#include "blink_UI.h"
 
 class CPlayerState;
 class CPlayerSliding;
@@ -29,6 +31,7 @@ class CAmmo_UI;
 class CUlt_UI;
 class CUlt;
 class CSmoke_UI;
+class CBlink_UI;
 
 //プレイヤークラス
 class CPlayer:public CCharacter
@@ -37,6 +40,7 @@ public:
 	static const int NUM_PARTS = 15; //パーツ数
 	static const int MAX_KEY = 20; //キー最大数
 	static const int PLAYER_LIFE = 150; //体力
+	static const int PLAYER_STAMINA = 100; //スタミナ
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
@@ -81,6 +85,11 @@ public:
 		m_DeathCnt = DeathCnt;
 	}
 
+	void SetStamina(int Stamina)
+	{
+		m_Stamina = Stamina;
+	}
+
 	void SetSmoke(bool isSmoke)
 	{
 		m_isSmoke = isSmoke;
@@ -89,6 +98,11 @@ public:
 	int& GetDeathCnt()
 	{
 		return m_DeathCnt;
+	}
+
+	int& GetStamina()
+	{
+		return m_Stamina;
 	}
 
 	bool& GetSmoke()
@@ -114,8 +128,12 @@ private:
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+	static const D3DXVECTOR3 STAMINA_GAUGE_SIZE; //スタミナのサイズ
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
+	static const int AVOIDANCE_COST = 20; //回避アクションのスタミナコスト
+	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
+	static const int STAMINA_RECOVERY_FRAME = 10; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン
@@ -124,8 +142,9 @@ private:
 
 	CUlt_UI* m_pUltUI;
 	CSmoke_UI* m_pSmokeUI;
+	CBlink_UI* m_pBlinkUI;
 
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
+	CGauge_3D* m_pStaminaGauge;
 
 	CGunIcon* m_pGunIcon;
 
@@ -137,7 +156,11 @@ private:
 
 	int m_SmokeRecastCnt;
 
-	int m_DeathCnt;
+	int m_DeathCnt; //死亡数
+
+	int m_Stamina; //スタミナ
+
+	int m_StaminaRecoveryCnt; //スタミナ回復カウント
 
 	bool m_isEnemyColision; //エネミーとの判定をとるか
 

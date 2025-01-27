@@ -19,6 +19,7 @@ const std::string CKeyboard_UI::TEXTURE_NAME[CKeyboard_UI::KEY_MAX]
 	"data\\TEXTURE\\keyboard_Q.png",
 	"data\\TEXTURE\\keyboard_X.png",
 	"data\\TEXTURE\\keyboard_R.png",
+	"data\\TEXTURE\\keyboard_LSHIFT.png",
 };
 
 //=============================================

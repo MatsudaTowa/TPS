@@ -469,8 +469,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 		D3DXVECTOR3 move = boss->GetMove();
 
-		move.x += sinf(boss->GetRot().y) * boss->GetSpeed() * -10.0f;
-		move.z += cosf(boss->GetRot().y) * boss->GetSpeed() * -10.0f;
+		move.x += sinf(boss->GetRot().y) * boss->GetSpeed() * -15.0f;
+		move.z += cosf(boss->GetRot().y) * boss->GetSpeed() * -15.0f;
 
 		//移動量代入
 		boss->SetMove(move);
@@ -483,18 +483,6 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 		//自分の方向を取得
 		D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI) };
-
-		if (boss->PerformRaycast_Smoke(vec, boss).hit)
-		{
-			if (boss->m_pDashEffect != nullptr)
-			{//エフェクトがあったら
-				//エフェクト破棄
-				boss->m_pDashEffect->Uninit();
-				boss->m_pDashEffect = nullptr;
-			}
-
-			boss->ChangeState(new CBossStanState);
-		}
 
 		boss->ColisionPlayer();
 

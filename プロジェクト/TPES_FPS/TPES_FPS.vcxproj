@@ -159,6 +159,8 @@
     <ClCompile Include="assault_behavior.cpp" />
     <ClCompile Include="attack_manager.cpp" />
     <ClCompile Include="billboard.cpp" />
+    <ClCompile Include="blink_icon.cpp" />
+    <ClCompile Include="blink_UI.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="boss_behavior.cpp" />
     <ClCompile Include="boss_enemy.cpp" />
@@ -193,6 +195,7 @@
     <ClCompile Include="hit_camera_effect_mild.cpp" />
     <ClCompile Include="hit_camera_effect_moderate.cpp" />
     <ClCompile Include="hit_camera_effect_severe.cpp" />
+    <ClCompile Include="icon.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="keyboard_UI.cpp" />
     <ClCompile Include="life_UI.cpp" />
@@ -266,6 +269,8 @@
     <ClInclude Include="assault_behavior.h" />
     <ClInclude Include="attack_manager.h" />
     <ClInclude Include="billboard.h" />
+    <ClInclude Include="blink_icon.h" />
+    <ClInclude Include="blink_UI.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="boss_behavior.h" />
     <ClInclude Include="boss_enemy.h" />
@@ -300,6 +305,7 @@
     <ClInclude Include="hit_camera_effect_mild.h" />
     <ClInclude Include="hit_camera_effect_moderate.h" />
     <ClInclude Include="hit_camera_effect_severe.h" />
+    <ClInclude Include="icon.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="keyboard_UI.h" />
     <ClInclude Include="life_UI.h" />

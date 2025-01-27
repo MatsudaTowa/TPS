@@ -12,7 +12,7 @@
 int CObject::m_nNumAll = 0;
 
 //オブジェクトポインタ初期化
-CObject* CObject::m_apObject[MAX_PRIORITY][CObject::MAX_OBJECT] = {};
+CObject* CObject::m_apObject[CObject::PRI_MAX][CObject::MAX_OBJECT] = {};
 
 //=============================================
 //コンストラクタ
@@ -47,7 +47,7 @@ CObject::~CObject()
 //=============================================
 void CObject::ReleaseAll()
 {
-	for (int nCntPri = 0; nCntPri < MAX_PRIORITY; nCntPri++)
+	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
@@ -70,7 +70,7 @@ void CObject::ReleaseAll()
 //=============================================
 void CObject::UpdateAll()
 {
-	for (int nCntPri = 0; nCntPri < MAX_PRIORITY; nCntPri++)
+	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
@@ -88,7 +88,7 @@ void CObject::UpdateAll()
 //=============================================
 void CObject::DrawAll()
 {
-	for (int nCntPri = 0; nCntPri < MAX_PRIORITY; nCntPri++)
+	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{

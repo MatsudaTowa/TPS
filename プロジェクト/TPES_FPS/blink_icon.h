@@ -1,29 +1,29 @@
 //=============================================
 //
-//死亡アイコン[death_icon.h]
+//ブリンクの表記[blink_icon.h]
 //Auther Matsuda Towa
 //
 //=============================================
-#ifndef _DEATH_ICON_H_ //これが定義されてないとき
+#ifndef _BLINK_ICON_H_ //これが定義されてないとき
 
-#define _DEATH_ICON_H_
+#define _BLINK_ICON_H_
 #include "main.h"
 #include "object2D.h"
 
 //スモークの表記クラス
-class CDeathIcon : public CObject2D
+class CBlinkIcon : public CObject2D
 {
 public:
-	static const int PRIORITY = 27;  //描画順
+	static const int ICON_PRIORITY = 21;  //描画順
 
-	CDeathIcon(int nPriority = PRIORITY);
-	~CDeathIcon()override;
+	CBlinkIcon(int nPriority = ICON_PRIORITY);
+	~CBlinkIcon()override;
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	static CDeathIcon* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col);
+	static CBlinkIcon* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col);
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
-#endif#pragma once
+#endif

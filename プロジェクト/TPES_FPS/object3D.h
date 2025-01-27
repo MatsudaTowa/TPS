@@ -89,6 +89,7 @@ public:
 
 	//’¸“_À•W‚Ì‘ã“ü
 	void SetVtxAnim(D3DXVECTOR3 nor,D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
+	void SetGaugeVtx(D3DXVECTOR3 ReferencePos,D3DXVECTOR3 nor);
 	void SetVtx_FootPos(D3DXVECTOR3 nor);
 
 	//F‚Ìæ“¾

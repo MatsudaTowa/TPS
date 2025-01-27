@@ -9,7 +9,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CWave_Result_Screen::CWave_Result_Screen(int nPriority)
+CWave_Result_Screen::CWave_Result_Screen(int nPriority):CObject2D(nPriority)
 {
 }
 
