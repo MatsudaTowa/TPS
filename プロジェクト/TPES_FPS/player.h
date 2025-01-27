@@ -24,6 +24,7 @@
 
 class CPlayerState;
 class CPlayerSliding;
+class CPlayerAvoidance;
 class CAmmo_UI;
 class CUlt_UI;
 class CUlt;
@@ -102,6 +103,8 @@ public:
 	CPlayerSliding* m_pSliding;
 
 	CPlayerState* m_pPlayerState;
+
+	CPlayerAvoidance* m_pAvoidance;
 private:
 
 	//プレイヤーの移動関連

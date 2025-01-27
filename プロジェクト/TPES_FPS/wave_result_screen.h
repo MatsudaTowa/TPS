@@ -14,7 +14,7 @@
 class CWave_Result_Screen : public CObject2D
 {
 public:
-	static const int RESULT_SCREEN_PRIORITY = 90;  //ï`âÊèá
+	static const int RESULT_SCREEN_PRIORITY = 25;  //ï`âÊèá
 	CWave_Result_Screen(int nPriority = RESULT_SCREEN_PRIORITY);
 	~CWave_Result_Screen()override;
 	HRESULT Init()override;

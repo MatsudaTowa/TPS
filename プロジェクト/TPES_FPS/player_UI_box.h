@@ -14,7 +14,7 @@
 class CPlayerUIBox : public CObject2D
 {
 public:
-	static const int UI_BOX_PRIORITY = 30;  //•`‰æ‡
+	static const int UI_BOX_PRIORITY = 20;  //•`‰æ‡
 
 	enum BOX_TYPE
 	{

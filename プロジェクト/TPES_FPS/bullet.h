@@ -16,7 +16,7 @@ class CBullet : public CAttack_Manager
 public:
 	static const std::string BULLET_TEXTURE_NAME;	//テクスチャの名前
 
-	static const int BULLET_PRIORITY = 24; //描画順
+	static const int BULLET_PRIORITY = 10; //描画順
 
 	//敵か自分かの判断する列挙
 	typedef enum

@@ -14,7 +14,7 @@
 class CKeyboard_UI : public CObject2D
 {
 public:
-	static const int PRIORITY = 80;  //•`‰æ‡
+	static const int PRIORITY = 26;  //•`‰æ‡
 
 	enum KEY_TYPE
 	{

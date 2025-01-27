@@ -142,3 +142,64 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
 	}
 }
+
+//=============================================
+//コンストラクタ
+//=============================================
+CPlayerAvoidance::CPlayerAvoidance()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CPlayerAvoidance::~CPlayerAvoidance()
+{
+}
+
+//=============================================
+//回避アクション
+//=============================================
+void CPlayerAvoidance::Avoidance(CCharacter* character)
+{
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+
+	//移動の方向の単位ベクトル変数
+	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+
+	if (pKeyboard->GetPress(DIK_W))
+	{
+		vecDirection.z += 1.0f;
+	}
+	else if (pKeyboard->GetPress(DIK_S))
+	{
+		vecDirection.z -= 1.0f;
+	}
+	else if (pKeyboard->GetPress(DIK_A))
+	{
+		vecDirection.x -= 1.0f;
+	}
+	else if (pKeyboard->GetPress(DIK_D))
+	{
+		vecDirection.x += 1.0f;
+	}
+	else
+	{
+		vecDirection.z -= 1.0f;
+	}
+
+	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
+
+	D3DXVECTOR3 move = character->GetMove();
+
+	move.x += sinf(rotMoveY) * character->GetSpeed() * 20.0f;
+	move.z += cosf(rotMoveY) * character->GetSpeed() * 20.0f;
+	
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = character->GetRot();
+	rot.y = rotMoveY + D3DX_PI;
+	//rotを代入
+	character->SetRot(rot);
+	//移動量代入
+	character->SetMove(move);
+}

@@ -13,7 +13,7 @@
 //=============================================
 //ゲージクラス
 //=============================================
-class CGauge : public CObject2D
+class CGauge_2D : public CObject2D
 {
 public:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
@@ -23,16 +23,16 @@ public:
 		GAUGE_TYPE_LIFE,
 		GAUGE_TYPE_MAX,
 	};
-	static const int GAUGE_PRIORITY = 81;  //描画順
+	static const int GAUGE_PRIORITY = 28;  //描画順
 	static const float MAX_GAUGE_WIDE;  //ゲージの最大値
-	CGauge(int nPriority = GAUGE_PRIORITY);
-	~CGauge()override;
+	CGauge_2D(int nPriority = GAUGE_PRIORITY);
+	~CGauge_2D()override;
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
 	void SetGauge(D3DXVECTOR2 size);
-	static CGauge* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXCOLOR col);
+	static CGauge_2D* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXCOLOR col);
 private:
 	GAUGE_TYPE m_type;
 };
@@ -40,7 +40,7 @@ private:
 //=============================================
 //体力ゲージクラス
 //=============================================
-class CGauge_Life : public CGauge
+class CGauge_Life : public CGauge_2D
 {
 public:
 	CGauge_Life(int nPriority = GAUGE_PRIORITY);

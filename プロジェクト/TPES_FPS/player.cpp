@@ -63,6 +63,10 @@ m_pSmokeUI()				//スモークのUI初期化
 	{
 		m_pSliding = new CPlayerSliding;
 	}
+	if (m_pAvoidance == nullptr)
+	{
+		m_pAvoidance = new CPlayerAvoidance;
+	}
 	if (m_pMove == nullptr)
 	{
 		m_pMove = new CPlayerMove;
@@ -78,6 +82,11 @@ m_pSmokeUI()				//スモークのUI初期化
 //=============================================
 CPlayer::~CPlayer()
 {
+	if (m_pAvoidance != nullptr)
+	{
+		delete m_pAvoidance;
+		m_pAvoidance = nullptr;
+	}
 	if (m_pPlayerState != nullptr)
 	{
 		delete m_pPlayerState;
@@ -222,6 +231,11 @@ void CPlayer::Uninit()
 	{
 		delete m_pSliding;
 		m_pSliding = nullptr;
+	}
+	if (m_pAvoidance != nullptr)
+	{
+		delete m_pAvoidance;
+		m_pAvoidance = nullptr;
 	}
 	if (m_Raticle != nullptr)
 	{
@@ -551,6 +565,11 @@ void CPlayer::Input()
 	SetMove(move);
 	//モーション代入
 	SetMotion(Motion);
+
+	if (pKeyboard->GetTrigger(DIK_LSHIFT))
+	{
+		m_pAvoidance->Avoidance(this);
+	}
 
 	if (pKeyboard->GetPress(DIK_X))
 	{

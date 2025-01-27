@@ -47,4 +47,12 @@ public:
 private:
 	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
 };
+
+class CPlayerAvoidance
+{
+public:
+	CPlayerAvoidance();
+	~CPlayerAvoidance();
+	void Avoidance(CCharacter* character);
+};
 #endif // !_ENEMY_BEHAVIOR_

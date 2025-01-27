@@ -15,7 +15,7 @@ class CUltIconEffect : public CObject2D_Anim
 {
 public:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-	static const int PRIORITY = 40; //描画順
+	static const int PRIORITY = 20; //描画順
 	static const int TEX_SPLIT_X = 4; //テクスチャの分割数
 	static const int TEX_SPLIT_Y = 1; //テクスチャの分割数
 	static const int ANIMATION_FRAME = 10; //アニメーションフレーム数

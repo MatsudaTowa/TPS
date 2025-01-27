@@ -24,6 +24,7 @@ class CPlayerState
 public:
 	virtual void Default(CPlayer* player);
 	virtual void Ult(CPlayer* player);
+	virtual void Avoidance(CPlayer* player);
 };
 
 //=============================================
@@ -42,6 +43,15 @@ class CUltState : public CPlayerState
 {
 public:
 	virtual void Ult(CPlayer* player) override;
+};
+
+//=============================================
+//キャラクターの回避状態
+//=============================================
+class CAvoidanceState : public CPlayerState
+{
+public:
+	virtual void Avoidance(CPlayer* player) override;
 };
 
 #endif // !_PLAYER_STATE_H

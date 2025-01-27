@@ -16,7 +16,7 @@ class CUltCameraEffect :public CObject2D
 {
 public:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-	static const int PRIORITY = 80; //描画順
+	static const int PRIORITY = 25; //描画順
 
 	CUltCameraEffect(int nPriority = PRIORITY);
 	~CUltCameraEffect() override;

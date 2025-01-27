@@ -25,7 +25,7 @@ public:
 	}FADE;
 
 	//static const std::string TEXTURE_NAME;	//テクスチャの名前
-	static const int FADE_PRIORITY = 98;  //描画順
+	static const int FADE_PRIORITY = 29;  //描画順
 	static const float FADE_VALUE;  //アルファ値減衰量
 
 	CFade(int nPriority = FADE_PRIORITY);

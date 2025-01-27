@@ -32,7 +32,7 @@ class CCharacter : public CObjectX
 {
 public:
 	static const int MAX_KEY = 20; //キー最大数
-	static const int CHARACTER_PRIORITY = 20;
+	static const int CHARACTER_PRIORITY = 8;
 	static const int MAX_MOTION = 100;
 	static const int MAX_PARTS = 64; //最大パーツ数
 	static const float  BOSS_FIELD_X; //ボス戦のX座標

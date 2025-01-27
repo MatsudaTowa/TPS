@@ -15,6 +15,8 @@ class CObject
 public:
 	static const int MAX_OBJECT = 256; //オブジェクトの最大数
 
+	static const int PRI_MAX = 30; //プライオリティの最大値
+
 	enum OBJECT_TYPE
 	{
 		OBJECT_TYPE_NONE = 0,
@@ -47,7 +49,7 @@ public:
 		OBJECT_TYPE_MAX,
 	};
 
-	CObject(int nPriority = MAX_PRIORITY);
+	CObject(int nPriority = PRI_MAX);
 
 	virtual ~CObject();
 	virtual HRESULT Init() = 0;

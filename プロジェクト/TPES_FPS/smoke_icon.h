@@ -14,7 +14,7 @@
 class CSmokeIcon : public CObject2D
 {
 public:
-	static const int SMOKE_ICON_PRIORITY = 80;  //ï`âÊèá
+	static const int SMOKE_ICON_PRIORITY = 21;  //ï`âÊèá
 
 	CSmokeIcon(int nPriority = SMOKE_ICON_PRIORITY);
 	~CSmokeIcon()override;

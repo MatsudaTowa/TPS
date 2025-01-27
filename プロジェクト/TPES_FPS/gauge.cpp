@@ -7,26 +7,26 @@
 #include "gauge.h"
 #include "manager.h"
 
-const std::string CGauge::TEXTURE_NAME = "data\\TEXTURE\\gauge.png";
+const std::string CGauge_2D::TEXTURE_NAME = "data\\TEXTURE\\gauge.png";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CGauge::CGauge(int nPriority) :CObject2D(nPriority)
+CGauge_2D::CGauge_2D(int nPriority) :CObject2D(nPriority)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CGauge::~CGauge()
+CGauge_2D::~CGauge_2D()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CGauge::Init()
+HRESULT CGauge_2D::Init()
 {
 	//親クラスの初期化を呼ぶ
 	CObject2D::Init();
@@ -43,7 +43,7 @@ HRESULT CGauge::Init()
 //=============================================
 //終了
 //=============================================
-void CGauge::Uninit()
+void CGauge_2D::Uninit()
 {
 	//親クラスの終了呼ぶ
 	CObject2D::Uninit();
@@ -52,7 +52,7 @@ void CGauge::Uninit()
 //=============================================
 //更新
 //=============================================
-void CGauge::Update()
+void CGauge_2D::Update()
 {
 	//親クラスの更新呼ぶ
 	CObject2D::Update();
@@ -64,7 +64,7 @@ void CGauge::Update()
 //=============================================
 //描画
 //=============================================
-void CGauge::Draw()
+void CGauge_2D::Draw()
 {
 	//親クラスの描画呼ぶ
 	CObject2D::Draw();
@@ -74,7 +74,7 @@ void CGauge::Draw()
 //=============================================
 //ゲージ設定
 //=============================================
-void CGauge::SetGauge(D3DXVECTOR2 size)
+void CGauge_2D::SetGauge(D3DXVECTOR2 size)
 {
 	SetSize(size);
 }
@@ -82,9 +82,9 @@ void CGauge::SetGauge(D3DXVECTOR2 size)
 //=============================================
 //生成
 //=============================================
-CGauge* CGauge::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXCOLOR col)
+CGauge_2D* CGauge_2D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXCOLOR col)
 {
-	CGauge* pGauge = nullptr;
+	CGauge_2D* pGauge = nullptr;
 
 	switch (type)
 	{
@@ -120,7 +120,7 @@ CGauge* CGauge::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE_TYPE type, D3DXC
 //=============================================
 //コンストラクタ
 //=============================================
-CGauge_Life::CGauge_Life(int nPriority) :CGauge(nPriority)
+CGauge_Life::CGauge_Life(int nPriority) :CGauge_2D(nPriority)
 {
 }
 
@@ -137,7 +137,7 @@ CGauge_Life::~CGauge_Life()
 HRESULT CGauge_Life::Init()
 {
 	//親クラスの初期化
-	CGauge::Init();
+	CGauge_2D::Init();
 
 	return S_OK;
 }
@@ -148,7 +148,7 @@ HRESULT CGauge_Life::Init()
 void CGauge_Life::Uninit()
 {
 	//親クラスの終了
-	CGauge::Uninit();
+	CGauge_2D::Uninit();
 }
 
 //=============================================
@@ -157,7 +157,7 @@ void CGauge_Life::Uninit()
 void CGauge_Life::Update()
 {
 	//親クラスの更新
-	CGauge::Update();
+	CGauge_2D::Update();
 }
 
 //=============================================
@@ -166,6 +166,6 @@ void CGauge_Life::Update()
 void CGauge_Life::Draw()
 {
 	//親クラスの描画
-	CGauge::Draw();
+	CGauge_2D::Draw();
 }
 

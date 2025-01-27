@@ -49,7 +49,7 @@ HRESULT CLife_UI::Init()
 	//ëÃóÕÉQÅ[ÉWê∂ê¨
 	if (m_pGauge == nullptr)
 	{
-		m_pGauge = CGauge::Create(GAUGE_POS, GAUGE_SIZE, CGauge::GAUGE_TYPE::GAUGE_TYPE_LIFE,{0.0f,1.0f,0.0f,1.0f});
+		m_pGauge = CGauge_2D::Create(GAUGE_POS, GAUGE_SIZE, CGauge_2D::GAUGE_TYPE::GAUGE_TYPE_LIFE,{0.0f,1.0f,0.0f,1.0f});
 	}
 
 	//êîéöê∂ê¨

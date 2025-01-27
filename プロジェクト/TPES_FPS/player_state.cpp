@@ -23,6 +23,13 @@ void CPlayerState::Ult(CPlayer* player)
 }
 
 //=============================================
+//回避状態の処理
+//=============================================
+void CPlayerState::Avoidance(CPlayer* player)
+{
+}
+
+//=============================================
 //デフォルト状態の処理
 //=============================================
 void CDefaultState::Default(CPlayer* player)
@@ -59,4 +66,12 @@ void CUltState::Ult(CPlayer* player)
 		pCamera->ChangeCameraState(new CThirdView);
 		player->ChangePlayerState(new CDefaultState);
 	}
+}
+
+//=============================================
+//キャラクターの回避状態
+//=============================================
+void CAvoidanceState::Avoidance(CPlayer* player)
+{
+
 }

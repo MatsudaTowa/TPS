@@ -17,7 +17,7 @@ class CNumber_2D:public CObject2D
 {
 public:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-	static const int NUMBER_PRIORITY = 60;  //描画順
+	static const int NUMBER_PRIORITY = 20;  //描画順
 	CNumber_2D(int nPriority = NUMBER_PRIORITY);
 	~CNumber_2D()override;
 	HRESULT Init()override;

@@ -14,7 +14,7 @@
 class CAction_UI : public CObject2D
 {
 public:
-	static const int PRIORITY = 80;  //•`‰æ‡
+	static const int PRIORITY = 20;  //•`‰æ‡
 
 	enum ACTION_TYPE
 	{

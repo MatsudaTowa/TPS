@@ -15,7 +15,7 @@
 class CUltIcon : public CObject2D
 {
 public:
-	static const int ULT_ICON_PRIORITY = 50;  //•`‰æ‡
+	static const int ULT_ICON_PRIORITY = 21;  //•`‰æ‡
 	static const D3DXCOLOR START_COLOR;
 	enum ULT_TYPE
 	{

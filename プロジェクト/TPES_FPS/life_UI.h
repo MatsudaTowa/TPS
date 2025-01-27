@@ -42,7 +42,7 @@ private:
 	static const D3DXVECTOR2 NUM_SIZE; //”š‚ÌƒTƒCƒY
 	CNumber_2D* m_pNumber[NUM_DIGIT];
 	CPlayerUIBox* m_pUIBox;
-	CGauge*m_pGauge;
+	CGauge_2D*m_pGauge;
 	D3DXVECTOR3 m_NumPos;
 };
 

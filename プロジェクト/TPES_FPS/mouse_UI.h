@@ -14,7 +14,7 @@
 class CMouse_UI : public CObject2D
 {
 public:
-	static const int PRIORITY = 80;  //•`‰æ‡
+	static const int PRIORITY = 27;  //•`‰æ‡
 
 	enum MOUSE_TYPE
 	{

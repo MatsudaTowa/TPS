@@ -19,7 +19,7 @@ class CCenterDot : public CBillboard
 public:
 	static const std::string CENTERDOT_TEXTURE_NAME;	//テクスチャの名前
 
-	static const int RETICLE_PRIORITY = 30; //描画順
+	static const int RETICLE_PRIORITY = 19; //描画順
 
 	CCenterDot(int nPriority = RETICLE_PRIORITY);
 	~CCenterDot()override;
