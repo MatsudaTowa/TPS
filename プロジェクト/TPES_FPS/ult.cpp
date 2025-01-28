@@ -57,7 +57,7 @@ void CUlt::Update()
 }
 
 const float CMediumUlt::FLYING_HIGHT = 400.0f;
-const D3DXVECTOR3 CMediumUlt::SPEED = {7.0f,8.0f,7.0f};
+const D3DXVECTOR3 CMediumUlt::SPEED = {14.0f,16.0f,14.0f};
 
 //=============================================
 //コンストラクタ

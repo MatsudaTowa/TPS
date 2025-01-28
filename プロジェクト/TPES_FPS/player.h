@@ -41,6 +41,7 @@ public:
 	static const int MAX_KEY = 20; //キー最大数
 	static const int PLAYER_LIFE = 150; //体力
 	static const int PLAYER_STAMINA = 100; //スタミナ
+	static const int AVOIDANCE_COST = 30; //回避アクションのスタミナコスト
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
@@ -95,6 +96,11 @@ public:
 		m_isSmoke = isSmoke;
 	}
 
+	void SetBlinkCnt(int BlinkCnt)
+	{
+		m_BlinkCnt = BlinkCnt;
+	}
+
 	int& GetDeathCnt()
 	{
 		return m_DeathCnt;
@@ -103,6 +109,11 @@ public:
 	int& GetStamina()
 	{
 		return m_Stamina;
+	}
+
+	int& GetBlinkCnt()
+	{
+		return m_BlinkCnt;
 	}
 
 	bool& GetSmoke()
@@ -131,9 +142,8 @@ private:
 	static const D3DXVECTOR3 STAMINA_GAUGE_SIZE; //スタミナのサイズ
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
-	static const int AVOIDANCE_COST = 20; //回避アクションのスタミナコスト
 	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
-	static const int STAMINA_RECOVERY_FRAME = 10; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
+	static const int STAMINA_RECOVERY_FRAME = 5; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン
@@ -159,6 +169,8 @@ private:
 	int m_DeathCnt; //死亡数
 
 	int m_Stamina; //スタミナ
+
+	int m_BlinkCnt; //ブリンク回数
 
 	int m_StaminaRecoveryCnt; //スタミナ回復カウント
 

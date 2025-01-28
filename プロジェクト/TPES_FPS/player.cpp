@@ -21,10 +21,10 @@ const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
 
 //当たり判定無効フレーム数
-const int CPlayer::IGNORE_COLLISION_FRAME = 300;
+const int CPlayer::IGNORE_COLLISION_FRAME = 150;
 
 //スモーク復活フレーム数
-const int CPlayer::SMOKE_RECAST_FRAME = 1800;
+const int CPlayer::SMOKE_RECAST_FRAME = 900;
 
 //通常の移動抵抗
 const float CPlayer::DAMPING_COEFFICIENT = 0.3f;
@@ -127,6 +127,8 @@ HRESULT CPlayer::Init()
 		m_pUlt = new CMediumUlt;
 		m_pUlt->Init();
 	}
+
+	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
 
 	//カメラ情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
@@ -283,6 +285,8 @@ void CPlayer::Update()
 	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 
+	CCharacter::Update();
+
 	//ダメージステートの切り替えTODO:これもステートパターンで
 	ChangeDamageState();
 
@@ -307,7 +311,7 @@ void CPlayer::Update()
 	{
 		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
 	}
-	CCharacter::Update();
+
 
 	//入力処理
 	Input();
@@ -348,10 +352,7 @@ void CPlayer::Update()
 
 		if (m_Stamina < PLAYER_STAMINA)
 		{//スタミナが減ってたら
-			if (m_pStaminaGauge != nullptr)
-			{
-				m_pStaminaGauge->SetVisible(true);
-			}
+
 			++m_StaminaRecoveryCnt;
 			if (m_StaminaRecoveryCnt >= STAMINA_RECOVERY_FRAME)
 			{//カウントが到達したら
@@ -361,6 +362,12 @@ void CPlayer::Update()
 
 				//スタミナ回復
 				m_Stamina += STAMINA_RECOVERY;
+
+				int nStaminaPer = m_Stamina % AVOIDANCE_COST;
+				if (nStaminaPer == 0)
+				{
+					++m_BlinkCnt;
+				}
 
 				if (m_Stamina >= PLAYER_STAMINA)
 				{//スタミナがデフォルト値に到達したら
@@ -380,7 +387,7 @@ void CPlayer::Update()
 
 		if(m_Raticle != nullptr)
 		{
-			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 20.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 16.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 			m_Raticle->Update();
 		}
 
@@ -640,10 +647,12 @@ void CPlayer::Input()
 
 	if (pKeyboard->GetTrigger(DIK_LSHIFT))
 	{
-		if (m_Stamina > AVOIDANCE_COST)
+		if (m_Stamina >= AVOIDANCE_COST)
 		{//スタミナがあれば
 			m_pAvoidance->Avoidance(this);
 			m_Stamina -= AVOIDANCE_COST;
+
+			--m_BlinkCnt;
 
 			if (m_Stamina <= 0)
 			{//スタミナが0を下回ったら
@@ -716,9 +725,9 @@ void CPlayer::Input()
 		if (pKeyboard->GetTrigger(DIK_Q))
 		{
 			m_isSmoke = true;
-			CSmokeGrenade::Create({ GetPos().x,GetPos().y + 50.0f,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -10.0f,
-					sinf(pCamera->GetRot().x + D3DX_PI) * 10.0f,
-					cosf(pCamera->GetRot().y + D3DX_PI) * -10.0f }, { 0.0f,0.0f,0.0f });
+			CSmokeGrenade::Create({ GetPos().x,GetPos().y + 50.0f,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -20.0f,
+					sinf(pCamera->GetRot().x + D3DX_PI) * 20.0f,
+					cosf(pCamera->GetRot().y + D3DX_PI) * -20.0f }, { 0.0f,0.0f,0.0f });
 		}
 	}
 }
@@ -859,8 +868,8 @@ void CPlayer::DebugPos()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f\n弾数:%d\n体力:%d"
-		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z, GetMove().x, GetMove().y, GetMove().z, m_pGun->GetAmmo(),GetLife());
+	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f\n弾数:%d\n体力:%d\nスタミナ:%d"
+		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z, GetMove().x, GetMove().y, GetMove().z, m_pGun->GetAmmo(),GetLife(),GetStamina());
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG

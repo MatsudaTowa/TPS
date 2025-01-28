@@ -71,7 +71,6 @@ void CTitle::Uninit()
 //=============================================
 void CTitle::Update()
 {
-    CObject::UpdateAll();
     CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();

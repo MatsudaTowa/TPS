@@ -28,7 +28,7 @@ MODEL_FILENAME = data\\MODEL\\player\\Lfoot.x		# [9]左足
 # キャラクター情報
 #------------------------------------------------------------------------------
 CHARACTERSET
-	MOVE = 0.5						# 移動量
+	MOVE = 1.0						# 移動量
 	JUMP = 30.0					# ジャンプ量
 	RADIUS = 20.0					# 半径
 	HEIGHT = 40.0					# 高さ

@@ -159,6 +159,7 @@
     <ClCompile Include="assault_behavior.cpp" />
     <ClCompile Include="attack_manager.cpp" />
     <ClCompile Include="billboard.cpp" />
+    <ClCompile Include="blink_back_UI.cpp" />
     <ClCompile Include="blink_icon.cpp" />
     <ClCompile Include="blink_UI.cpp" />
     <ClCompile Include="block.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="assault_behavior.h" />
     <ClInclude Include="attack_manager.h" />
     <ClInclude Include="billboard.h" />
+    <ClInclude Include="blink_back_UI.h" />
     <ClInclude Include="blink_icon.h" />
     <ClInclude Include="blink_UI.h" />
     <ClInclude Include="block.h" />

@@ -9,16 +9,16 @@
 //Œ…‚²‚Æ‚É‚¸‚ç‚·
 const float CSmoke_UI::DIGIT_SHIFT = 35.0f;
 
-const D3DXVECTOR3 CSmoke_UI::BOX_POS = { 800.0f, 665.0f, 0.0f };
+const D3DXVECTOR3 CSmoke_UI::BOX_POS = { 1150.0f, 565.0f, 0.0f };
 const D3DXVECTOR2 CSmoke_UI::BOX_SIZE = { 50.0f, 50.0f };
 
-const D3DXVECTOR3 CSmoke_UI::ICON_POS = { 800.0f,665.0f,0.0f };
+const D3DXVECTOR3 CSmoke_UI::ICON_POS = { 1150.0f,565.0f,0.0f };
 const D3DXVECTOR2 CSmoke_UI::ICON_SIZE = { 40.0f, 40.0f };
 
-const D3DXVECTOR3 CSmoke_UI::NUMBER_POS = { 1000.0f, 665.0f, 0.0f };
+const D3DXVECTOR3 CSmoke_UI::NUMBER_POS = { 1000.0f, 565.0f, 0.0f };
 const D3DXVECTOR2 CSmoke_UI::NUMBER_SIZE = { 20.0f, 30.0f };
 
-const D3DXVECTOR3 CSmoke_UI::KEY_UI_POS = { 800.0f,700.0f,0.0f };
+const D3DXVECTOR3 CSmoke_UI::KEY_UI_POS = { 1150.0f,600.0f,0.0f };
 const D3DXVECTOR2 CSmoke_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 
 //=============================================

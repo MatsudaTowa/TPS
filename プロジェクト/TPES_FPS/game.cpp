@@ -154,7 +154,6 @@ void CGame::Update()
 	
 	//if (m_bEdit == false)
 	//{
-	CObject::UpdateAll();
 
 
 #ifdef _DEBUG

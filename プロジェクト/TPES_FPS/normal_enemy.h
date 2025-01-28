@@ -46,7 +46,7 @@ private:
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
-	static const int DEFAULT_AR_RELOAD_FRAME = 180; //デフォルトのアサルトのリロードフレーム数
+	static const int DEFAULT_AR_RELOAD_FRAME = 120; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_DAMAGE = 3; //デフォルトのアサルトのダメージ
 
 	Motion_Type m_Motion; //モーションの種類

@@ -91,6 +91,9 @@ CGauge_2D* CGauge_2D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE2D_TYPE typ
 	case GAUGE_TYPE_LIFE:
 		pGauge = new CGauge_Life;
 		break;
+	case GAUGE_TYPE_STAMINA:
+		pGauge = new CGauge_Stamina;
+		break;
 	default:
 		assert(false);
 		break;
@@ -190,7 +193,7 @@ CGauge_3D* CGauge_3D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, GAUGE3D_TYPE typ
 	switch (type)
 	{
 	case GAUGE_TYPE_STAMINA:
-		pGauge = new CGauge_Stamina;
+		//pGauge = new CGauge_Stamina;
 		break;
 	default:
 		assert(false);
@@ -273,7 +276,7 @@ void CGauge_Life::Draw()
 //=============================================
 //コンストラクタ
 //=============================================
-CGauge_Stamina::CGauge_Stamina(int nPriority):CGauge_3D(nPriority)
+CGauge_Stamina::CGauge_Stamina(int nPriority):CGauge_2D(nPriority)
 {
 }
 
@@ -290,7 +293,7 @@ CGauge_Stamina::~CGauge_Stamina()
 HRESULT CGauge_Stamina::Init()
 {
 	//親クラスの初期化
-	CGauge_3D::Init();
+	CGauge_2D::Init();
 	return S_OK;
 }
 
@@ -300,7 +303,7 @@ HRESULT CGauge_Stamina::Init()
 void CGauge_Stamina::Uninit()
 {
 	//親クラスの終了
-	CGauge_3D::Uninit();
+	CGauge_2D::Uninit();
 }
 
 //=============================================
@@ -309,42 +312,7 @@ void CGauge_Stamina::Uninit()
 void CGauge_Stamina::Update()
 {
 	//親クラスの更新
-	CGauge_3D::Update();
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_UP))
-	{
-		D3DXVECTOR3 size = GetSize();
-
-		size.y += 1.0f;
-
-		SetSize(size);
-	}
-
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_DOWN))
-	{
-		D3DXVECTOR3 size = GetSize();
-
-		size.y -= 1.0f;
-
-		SetSize(size);
-	}
-
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_RIGHT))
-	{
-		D3DXVECTOR3 size = GetSize();
-
-		size.x += 1.0f;
-
-		SetSize(size);
-	}
-
-	if (CManager::GetInstance()->GetKeyboard()->GetPress(DIK_LEFT))
-	{
-		D3DXVECTOR3 size = GetSize();
-
-		size.x -= 1.0f;
-
-		SetSize(size);
-	}
+	CGauge_2D::Update();
 }
 
 //=============================================
@@ -352,12 +320,6 @@ void CGauge_Stamina::Update()
 //=============================================
 void CGauge_Stamina::Draw()
 {
-	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
-	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
-	//ライトを無効にする
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//親クラスの描画
-	CGauge_3D::Draw();
-	//ライトを有効に戻す
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);	
+	CGauge_2D::Draw();
 }

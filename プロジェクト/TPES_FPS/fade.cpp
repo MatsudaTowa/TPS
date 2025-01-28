@@ -8,7 +8,7 @@
 #include"manager.h"
 
 //アルファ値減少量
-const float CFade::FADE_VALUE = 0.01f;
+const float CFade::FADE_VALUE = 0.05f;
 
 //=============================================
 //コンストラクタ

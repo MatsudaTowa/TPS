@@ -192,8 +192,8 @@ void CPlayerAvoidance::Avoidance(CCharacter* character)
 
 	D3DXVECTOR3 move = character->GetMove();
 
-	move.x += sinf(rotMoveY) * character->GetSpeed() * 20.0f;
-	move.z += cosf(rotMoveY) * character->GetSpeed() * 20.0f;
+	move.x += sinf(rotMoveY) * character->GetSpeed() * 30.0f;
+	move.z += cosf(rotMoveY) * character->GetSpeed() * 30.0f;
 	
 	//eƒNƒ‰ƒX‚©‚çrot‚ðŽæ“¾
 	D3DXVECTOR3 rot = character->GetRot();

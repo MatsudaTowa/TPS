@@ -70,8 +70,6 @@ void CTutorial::Uninit()
 //=============================================
 void CTutorial::Update()
 {
-	CObject::UpdateAll();
-
 	if (m_pTutorial_UI != nullptr)
 	{
 		m_pTutorial_UI->Update();

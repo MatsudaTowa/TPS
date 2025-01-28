@@ -23,6 +23,7 @@ public:
 	enum GAUGE2D_TYPE
 	{
 		GAUGE_TYPE_LIFE,
+		GAUGE_TYPE_STAMINA,
 		GAUGE_TYPE_MAX,
 	};
 	static const int GAUGE2D_PRIORITY = 28;  //描画順
@@ -91,10 +92,10 @@ public:
 //=============================================
 //スタミナゲージクラス
 //=============================================
-class CGauge_Stamina : public CGauge_3D
+class CGauge_Stamina : public CGauge_2D
 {
 public:
-	CGauge_Stamina(int nPriority = GAUGE3D_PRIORITY);
+	CGauge_Stamina(int nPriority = GAUGE2D_PRIORITY);
 	~CGauge_Stamina()override;
 	HRESULT Init()override;
 	void Uninit()override;

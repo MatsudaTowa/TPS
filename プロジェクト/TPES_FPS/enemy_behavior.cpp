@@ -242,7 +242,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 {
 	if (m_isRight)
 	{
-		rot.y += 0.005f;
+		rot.y += 0.02f;
 
 		if (Rot_Answer_y > LOOK_RANGE)
 		{//”ÍˆÍ‚É“ž’B‚µ‚½‚ç‹t‰ñ“]
@@ -252,7 +252,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 	}
 	if (!m_isRight)
 	{
-		rot.y -= 0.005f;
+		rot.y -= 0.02f;
 
 		if (Rot_Answer_y < -LOOK_RANGE)
 		{//”ÍˆÍ‚É“ž’B‚µ‚½‚ç‹t‰ñ“]

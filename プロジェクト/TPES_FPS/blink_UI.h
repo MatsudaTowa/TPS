@@ -13,6 +13,7 @@
 #include "player_UI_box.h"
 #include "blink_icon.h"
 #include "keyboard_UI.h"
+#include "blink_back_UI.h"
 
 class CPlayer;
 //=============================================
@@ -39,6 +40,9 @@ private:
 	static const D3DXVECTOR3 BOX_POS; //枠の位置
 	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ
 
+	static const D3DXVECTOR3 BLINK_BACK_POS; //ブリンクのナンバーの背景の位置
+	static const D3DXVECTOR2 BLINK_BACK_SIZE; //ブリンクのナンバーの背景のサイズ
+
 	static const D3DXVECTOR3 ICON_POS; //スモークアイコンの位置
 	static const D3DXVECTOR2 ICON_SIZE; //スモークアイコンのサイズ
 
@@ -54,6 +58,7 @@ private:
 	CPlayerUIBox* m_pUIBox;
 	CKeyboard_UI* m_pkeyboard_UI;
 	CNumber_2D* m_pCurrentBlink[NUM_DIGIT];
+	CBlinkBackUI* m_pBlinkBackUI;
 };
 
 #endif // DEBUG

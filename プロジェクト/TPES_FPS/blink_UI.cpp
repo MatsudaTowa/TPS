@@ -9,16 +9,19 @@
 //桁ごとにずらす
 const float CBlink_UI::DIGIT_SHIFT = 35.0f;
 
-const D3DXVECTOR3 CBlink_UI::BOX_POS = { 470.0f, 665.0f, 0.0f };
+const D3DXVECTOR3 CBlink_UI::BOX_POS = { 1010.0f, 565.0f, 0.0f };
 const D3DXVECTOR2 CBlink_UI::BOX_SIZE = { 50.0f, 50.0f };
 
-const D3DXVECTOR3 CBlink_UI::ICON_POS = { 470.0f,665.0f,0.0f };
+const D3DXVECTOR3 CBlink_UI::BLINK_BACK_POS = { 1020.0f, 505.0f, 0.0f };
+const D3DXVECTOR2 CBlink_UI::BLINK_BACK_SIZE = { 25.0f, 25.0f };
+
+const D3DXVECTOR3 CBlink_UI::ICON_POS = { 1010.0f,565.0f,0.0f };
 const D3DXVECTOR2 CBlink_UI::ICON_SIZE = { 40.0f, 40.0f };
 
-const D3DXVECTOR3 CBlink_UI::NUMBER_POS = { 1000.0f, 665.0f, 0.0f };
-const D3DXVECTOR2 CBlink_UI::NUMBER_SIZE = { 20.0f, 30.0f };
+const D3DXVECTOR3 CBlink_UI::NUMBER_POS = { 1020.0f, 505.0f, 0.0f };
+const D3DXVECTOR2 CBlink_UI::NUMBER_SIZE = { 10.0f, 20.0f };
 
-const D3DXVECTOR3 CBlink_UI::KEY_UI_POS = { 470.0f,700.0f,0.0f };
+const D3DXVECTOR3 CBlink_UI::KEY_UI_POS = { 1010.0f,600.0f,0.0f };
 const D3DXVECTOR2 CBlink_UI::KEY_UI_SIZE = { 40.0f, 20.0f };
 
 //=============================================
@@ -30,7 +33,8 @@ m_NumBlink(0),					//ブリンクの数初期化
 m_pCurrentBlink(),				//現在のブリンクの数のポインタ初期化
 m_pUIBox(),						//UIの枠初期化
 m_pIcon(),						//アイコンの初期化
-m_pkeyboard_UI()				//キーボードの初期化
+m_pkeyboard_UI(),				//キーボードの初期化
+m_pBlinkBackUI()				//ブリンクの背景
 {
 }
 
@@ -66,6 +70,11 @@ HRESULT CBlink_UI::Init(CPlayer* player)
 		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CKeyboard_UI::KEY_LSHIFT);
 	}
 
+	if (m_pBlinkBackUI == nullptr)
+	{
+		m_pBlinkBackUI = CBlinkBackUI::Create(BLINK_BACK_POS, BLINK_BACK_SIZE, { 1.0f,1.0f,1.0f,1.0f });
+	}
+
 	//数字生成
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
@@ -89,6 +98,12 @@ void CBlink_UI::Uninit()
 	{
 		m_pUIBox->Uninit();
 		m_pUIBox = nullptr;
+	}
+
+	if (m_pBlinkBackUI != nullptr)
+	{
+		m_pBlinkBackUI->Uninit();
+		m_pBlinkBackUI = nullptr;
 	}
 
 	//キーボードUIのアイコン破棄
@@ -130,14 +145,15 @@ void CBlink_UI::Update()
 //=============================================
 void CBlink_UI::SetCurrentBlink_UI(CPlayer* player)
 {
-	//if (player->GetSmoke())
-	//{//スモークを使っていたら
-	//	m_pIcon->SetColor({ 0.2f,0.2f,0.2f,1.0f });
-	//}
-	//else if (!player->GetSmoke())
-	//{//スモークを使っていなかったら
-	//	m_pIcon->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-	//}
+	if (player->GetSmoke())
+	{//スモークを使っていたら
+		m_pIcon->SetColor({ 0.2f,0.2f,0.2f,1.0f });
+	}
+	else if (!player->GetSmoke())
+	{//スモークを使っていなかったら
+		m_pIcon->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	}
+	SetNumber(player->GetBlinkCnt());
 }
 
 //=============================================
@@ -145,6 +161,31 @@ void CBlink_UI::SetCurrentBlink_UI(CPlayer* player)
 //=============================================
 void CBlink_UI::SetNumber(int nParcent)
 {
+	//テクスチャ座標設定
+	int a_PosTexU[NUM_DIGIT];
+
+	//現在計算してる桁
+	int nDigit = 1;
+	int nCnt;
+	for (nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	{
+		//今の時間から計算
+		a_PosTexU[nCnt] = nParcent / nDigit % 10;
+
+		//桁を進める
+		nDigit *= 10;
+	}
+
+	for (nCnt = NUM_DIGIT - 1; nCnt >= 0; nCnt--)
+	{
+		//テクスチャの座標計算用変数
+		float fMinTexU, fMaxTexU;
+
+		fMinTexU = a_PosTexU[nCnt] * 0.1f;
+		fMaxTexU = fMinTexU + 0.1f;
+
+		m_pCurrentBlink[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+	}
 }
 
 //=============================================
