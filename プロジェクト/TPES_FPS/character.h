@@ -107,6 +107,11 @@ public:
 		m_State = state;
 	}
 
+	void SetStanFrame(int StanFrame)
+	{
+		m_StanFrame = StanFrame;
+	}
+
 	//ステートカウント代入
 	void SetStateCnt(int nStateCnt)
 	{
@@ -162,6 +167,11 @@ public:
 	//ジャンプ回数取得
 	int& GetJumpCnt();
 
+	int& GetStanFrame()
+	{
+		return m_StanFrame;
+	}
+
 	void ChangeState(CCharacterState* state);
 
 	//パーツ
@@ -205,6 +215,7 @@ private:
 	int m_nKeySetCnt; //キー切り替えカウント
 	int m_nJumpCnt; //ジャンプカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
+	int m_StanFrame; //スタンのフレーム数
 	float m_Speed; //スピード
 	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態

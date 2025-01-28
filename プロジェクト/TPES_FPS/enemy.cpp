@@ -59,6 +59,9 @@ HRESULT CEnemy::Init()
 {
 	CCharacter::Init();
 
+	//スタンフレーム数代入
+	SetStanFrame(STAN_FRAME);
+
 	//移動量初期化
 	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 

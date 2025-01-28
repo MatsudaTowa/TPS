@@ -71,6 +71,7 @@ private:
 	static const float DEFAULT_JUMP; //通常時のジャンプ力
 	static const int NUM_MOTION; //モーションの数
 	static const int STENCIL_FLAME; //ステンシルテスト有効
+	static constexpr int STAN_FRAME = 300; //スタン時間
 
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 

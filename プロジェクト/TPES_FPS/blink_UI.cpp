@@ -145,14 +145,6 @@ void CBlink_UI::Update()
 //=============================================
 void CBlink_UI::SetCurrentBlink_UI(CPlayer* player)
 {
-	if (player->GetSmoke())
-	{//スモークを使っていたら
-		m_pIcon->SetColor({ 0.2f,0.2f,0.2f,1.0f });
-	}
-	else if (!player->GetSmoke())
-	{//スモークを使っていなかったら
-		m_pIcon->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-	}
 	SetNumber(player->GetBlinkCnt());
 }
 

@@ -45,7 +45,6 @@ public:
 	void Start(CCharacter* character) override;
 	virtual void Stan(CCharacter* character)override;
 private:
-	static constexpr int STAN_FRAME = 300; //スタン時間
 	int m_StanCnt; //スタン計測カウント
 };
 

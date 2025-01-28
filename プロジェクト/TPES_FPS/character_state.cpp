@@ -75,7 +75,9 @@ void CStanState::Start(CCharacter* character)
 //=============================================
 void CStanState::Stan(CCharacter* character)
 {
-	if (m_StanCnt < STAN_FRAME)
+	const int StanFrame = character->GetStanFrame();
+
+	if (m_StanCnt < StanFrame)
 	{
 		++m_StanCnt;
 
@@ -84,7 +86,7 @@ void CStanState::Stan(CCharacter* character)
 			character->m_pStan->Stan(character);
 		}
 	}
-	if (m_StanCnt >= STAN_FRAME)
+	if (m_StanCnt >= StanFrame)
 	{
 		m_StanCnt = 0;
 

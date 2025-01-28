@@ -235,8 +235,11 @@ void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DX
 
 		if (colision == CColision::COLISION::COLISON_Z || colision == CColision::COLISION::COLISON_X)
 		{
+			D3DXVECTOR3 Playermove = D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * 15.0f,
+				30.0f, cosf(GetRot().y + D3DX_PI) * 15.0f);
 			// XŽ²Õ“ËŽž‚Ìˆ—
-			pPlayer->SetMove({0.0f,20.0f,0.0f});
+			pPlayer->SetMove(Playermove);
+			pPlayer->ChangePlayerState(new CBlownState);
 			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
 		}
 	}

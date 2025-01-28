@@ -14,9 +14,9 @@
 //ボス戦のX座標
 const float CCharacter::BOSS_FIELD_X = 600.0f;
 //重力値
-const float CCharacter::GRAVITY_MOVE = 1.5f;
+const float CCharacter::GRAVITY_MOVE = 2.0f;
 //重力最大値
-const float CCharacter::GRAVITY_MAX = 20.0f;
+const float CCharacter::GRAVITY_MAX = 100.0f;
 
 //=============================================
 //コンストラクタ
@@ -149,8 +149,11 @@ void CCharacter::Update()
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
 
-	//移動量を更新(減速）
-	m_move *= 1.0f - 0.3f;
+	if (m_bLanding)
+	{
+		//移動量を更新(減速）
+		m_move *= 1.0f - 0.3f;
+	}
 
 	//過去の位置に今の位置を代入
 	m_oldpos = pos;

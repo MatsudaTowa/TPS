@@ -103,6 +103,9 @@ HRESULT CPlayer::Init()
 {
 	CCharacter::Init();
 
+	//スタンフレーム数代入
+	SetStanFrame(STAN_FRAME);
+
 	//スタミナ初期化
 	m_Stamina = PLAYER_STAMINA;
 
@@ -294,6 +297,7 @@ void CPlayer::Update()
 	{
 		m_pPlayerState->Default(this);
 		m_pPlayerState->Ult(this);
+		m_pPlayerState->Blown(this);
 	}
 
 	if (m_pHitCameraEffect != nullptr)
@@ -312,9 +316,19 @@ void CPlayer::Update()
 		m_apModel[nCnt]->SetOldPos(m_apModel[nCnt]->GetPos());
 	}
 
-
+	if (!m_isBlown)
+	{//吹っ飛ばし状態じゃなければ
 	//入力処理
-	Input();
+		//Input();
+	}
+	else if (m_isBlown)
+	{
+		if (GetLaunding())
+		{//着地したら
+			//スタン状態に
+			m_isBlown = false;
+		}
+	}
 
 	//敵と判定をとる場合だったらとる
 	//とらない場合はカウントアップ
@@ -373,11 +387,6 @@ void CPlayer::Update()
 				{//スタミナがデフォルト値に到達したら
 					//スタミナ代入
 					m_Stamina = PLAYER_STAMINA;
-
-					if (m_pStaminaGauge != nullptr)
-					{
-						m_pStaminaGauge->SetVisible(false);
-					}
 				}
 			}
 		}
@@ -389,14 +398,6 @@ void CPlayer::Update()
 		{
 			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 16.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 			m_Raticle->Update();
-		}
-
-		if (m_pStaminaGauge != nullptr)
-		{
-			m_pStaminaGauge->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 70.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
-			float gaugeHeight = (m_Stamina * STAMINA_GAUGE_SIZE.y) / PLAYER_STAMINA;
-
-			m_pStaminaGauge->SetSize({ m_pStaminaGauge->GetSize().x , gaugeHeight ,m_pStaminaGauge->GetSize().z});
 		}
 
 		if (m_isRelorad)
@@ -571,6 +572,8 @@ void CPlayer::ReSpawn()
 
 	//スポーン時の設定にもどす
 	SetPos(CPlayer::PLAYER_SPAWN_POS);
+	SetMove({0.0f,0.0f,0.0f});
+	SetBlown(false);
 	SetRot(CPlayer::PLAYER_SPAWN_ROT);
 	SetLife(CPlayer::PLAYER_LIFE);
 	SetStamina(CPlayer::PLAYER_STAMINA);
@@ -642,6 +645,7 @@ void CPlayer::Input()
 	SetRot(rot);
 	//移動量代入
 	SetMove(move);
+
 	//モーション代入
 	SetMotion(Motion);
 

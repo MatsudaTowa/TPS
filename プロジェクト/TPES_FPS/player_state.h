@@ -25,6 +25,7 @@ public:
 	virtual void Default(CPlayer* player);
 	virtual void Ult(CPlayer* player);
 	virtual void Avoidance(CPlayer* player);
+	virtual void Blown(CPlayer* player);
 };
 
 //=============================================
@@ -52,6 +53,18 @@ class CAvoidanceState : public CPlayerState
 {
 public:
 	virtual void Avoidance(CPlayer* player) override;
+};
+
+//=============================================
+//キャラクターの吹っ飛ばされ状態
+//=============================================
+class CBlownState : public CPlayerState
+{
+public:
+	CBlownState();
+	virtual void Blown(CPlayer* player) override;
+private:
+	int m_nStanCnt;
 };
 
 #endif // !_PLAYER_STATE_H

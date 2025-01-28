@@ -30,6 +30,13 @@ void CPlayerState::Avoidance(CPlayer* player)
 }
 
 //=============================================
+//ふっとび状態の処理
+//=============================================
+void CPlayerState::Blown(CPlayer* player)
+{
+}
+
+//=============================================
 //デフォルト状態の処理
 //=============================================
 void CDefaultState::Default(CPlayer* player)
@@ -45,7 +52,7 @@ void CDefaultState::Default(CPlayer* player)
 	}
 
 	{
-		player->m_pCharacterState->Move(player);
+		player->Input();
 	}
 }
 
@@ -74,4 +81,27 @@ void CUltState::Ult(CPlayer* player)
 void CAvoidanceState::Avoidance(CPlayer* player)
 {
 
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CBlownState::CBlownState():m_nStanCnt(0)
+{
+}
+
+//=============================================
+//キャラクターの吹っ飛ばされb状態
+//=============================================
+void CBlownState::Blown(CPlayer* player)
+{
+	if (player->GetLaunding())
+	{//着地したら
+		++m_nStanCnt;
+		if (m_nStanCnt > player->GetStanFrame())
+		{
+			m_nStanCnt = 0;
+			player->ChangePlayerState(new CDefaultState);
+		}
+	}
 }

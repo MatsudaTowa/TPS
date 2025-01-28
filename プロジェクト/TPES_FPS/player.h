@@ -96,6 +96,11 @@ public:
 		m_isSmoke = isSmoke;
 	}
 
+	void SetBlown(bool isBlown)
+	{
+		m_isBlown = isBlown;
+	}
+
 	void SetBlinkCnt(int BlinkCnt)
 	{
 		m_BlinkCnt = BlinkCnt;
@@ -121,6 +126,11 @@ public:
 		return m_isSmoke;
 	}
 
+	bool& GetBlown()
+	{
+		return m_isBlown;
+	}
+
 	CReticle* m_Raticle;
 
 	CUlt* m_pUlt;
@@ -141,6 +151,7 @@ private:
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
 	static const D3DXVECTOR3 STAMINA_GAUGE_SIZE; //スタミナのサイズ
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
+	static const int STAN_FRAME = 120; //スタンフレーム数
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
 	static const int STAMINA_RECOVERY_FRAME = 5; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
@@ -179,5 +190,7 @@ private:
 	bool m_isRelorad; //リロードするかどうか
 
 	bool m_isSmoke; //スモークを使ったか
+
+	bool m_isBlown; //スモークを使ったか
 };
 #endif
