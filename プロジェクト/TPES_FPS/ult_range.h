@@ -30,7 +30,7 @@ public:
 		return m_nLife;
 	}
 private:
-	static const int LIFE = 30;
+	static const int LIFE = 10;
 	static const int MAX_DAMAGE =10;
 	static const float RADIUS;
 	D3DXVECTOR3 m_pos;

@@ -266,11 +266,14 @@ void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 	float angle = atan2f(Vector.x, Vector.z);
 
 	D3DXVECTOR3 move = GetMove();
-
-	//反対方向に吹っ飛ばすのでスピードはマイナス
-	move.x += sinf(angle) * (-GetSpeed() * 20.0f);
-	move.y += GetSpeed() * 10.0f;
-	move.z += cosf(angle) * (-GetSpeed() * 20.0f);
+	
+	if (GetLaunding())
+	{
+		//反対方向に吹っ飛ばすのでスピードはマイナス
+		move.x += sinf(angle) * (-GetSpeed() * 10.0f);
+		move.y += 40.0f;
+		move.z += cosf(angle) * (-GetSpeed() * 10.0f);
+	}
 
 	//移動量代入
 	SetMove(move);
