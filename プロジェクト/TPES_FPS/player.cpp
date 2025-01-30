@@ -579,6 +579,8 @@ void CPlayer::ReSpawn()
 	SetStamina(CPlayer::PLAYER_STAMINA);
 	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
 	m_StaminaRecoveryCnt = 0;
+	m_isSmoke = true; //スモークを使った状態にし死んだ時のデメリットを
+	m_SmokeRecastCnt = 0;
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
 
