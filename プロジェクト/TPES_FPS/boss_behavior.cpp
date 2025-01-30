@@ -491,6 +491,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			if (m_TackleCnt > TACKLE_FLAME)
 			{//何かに当たるか終了フレームに到達したら
 				m_TackleCnt = 0;
+				m_StayCnt = 0;
 				m_isTackle = false;
 
 				if (boss->m_pDashEffect != nullptr)

@@ -243,6 +243,11 @@ void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DX
 			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
 			SetMove({ 0.0f,0.0f,0.0f });
 
+			//ƒ^ƒbƒNƒ‹‚Ì•Ï”‰Šú‰»
+			m_pTackle->SetStayCnt(0);
+			m_pTackle->SetTackleCnt(0);
+			m_pTackle->SetisTackle(false);
+
 			if (m_pDashEffect != nullptr)
 			{
 				m_pDashEffect->Uninit();

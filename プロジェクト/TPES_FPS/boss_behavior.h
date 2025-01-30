@@ -107,6 +107,43 @@ public:
 	CBossTackle();
 	~CBossTackle();
 	void Tackle(CBossEnemy* boss);
+
+	//ステイカウント取得
+	int& GetStayCnt()
+	{
+		return m_TackleCnt;
+	}
+
+	//タックルカウント取得
+	int& GetTackleCnt()
+	{
+		return m_TackleCnt;
+	}
+
+
+	//タックル状態取得
+	bool& GetisTackle()
+	{
+		return m_isTackle;
+	}
+
+	//ステイカウント代入
+	void SetStayCnt(int StayCnt)
+	{
+		m_StayCnt = StayCnt;
+	}
+
+	//タックルカウント代入
+	void SetTackleCnt(int TackleCnt)
+	{
+		m_TackleCnt = TackleCnt;
+	}
+
+	//タックル状態代入
+	void SetisTackle(bool isTackle)
+	{
+		m_isTackle = isTackle;
+	}
 private:
 	static const int STAY_FLAME = 60; //突進までの待機時間
 	static const int TACKLE_FLAME = 60; //タックル時間

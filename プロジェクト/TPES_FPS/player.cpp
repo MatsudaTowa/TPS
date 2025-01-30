@@ -577,6 +577,7 @@ void CPlayer::ReSpawn()
 	SetRot(CPlayer::PLAYER_SPAWN_ROT);
 	SetLife(CPlayer::PLAYER_LIFE);
 	SetStamina(CPlayer::PLAYER_STAMINA);
+	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
 	m_StaminaRecoveryCnt = 0;
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
