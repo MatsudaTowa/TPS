@@ -111,6 +111,7 @@ HRESULT CCharacter::Init()
 	//親クラスの初期化
 	CObjectX::Init();
 
+	//ワールドマトリックス設定
 	ConversionMtxWorld();
     return S_OK;
 }
@@ -597,11 +598,11 @@ void CCharacter::HitBlock(int NumParts)
 					if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
 						|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
 					{
-						if (m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock != nullptr)
-						{
-							m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock->Uninit();
-							m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock = nullptr;
-						}
+						//if (m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock != nullptr)
+						//{
+						//	m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock->Uninit();
+						//	m_apModel[nPartsCnt]->GetColisionBlockInfo().pBlock = nullptr;
+						//}
 						break;
 					}
 				}
@@ -626,7 +627,7 @@ void CCharacter::ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D
 
 		//X軸に当たった
 		Info.bColision_X = true;
-		Info.pBlock = pBlock;
+		//Info.pBlock = pBlock;
 	}
 	else if (Colision == CColision::COLISION::COLISON_NONE)
 	{
@@ -685,7 +686,7 @@ void CCharacter::ColisionBlock_Z(int PartsIdx, D3DXVECTOR3& CharacterPos, const 
 
 		//Z軸に当たった
 		Info.bColision_Z = true;
-		Info.pBlock = pBlock;
+		//Info.pBlock = pBlock;
 		//Info.pBlock->Uninit();
 		
 	}

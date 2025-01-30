@@ -121,7 +121,7 @@ class CMiniGun :public CGun
 {
 public:
 	static const int DEFAULT_MINIGUN_MAG_SIZE = 120; //デフォルトのミニガンのマガジンサイズ
-	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 240; //デフォルトのミニガンのリロードフレーム数
+	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 120; //デフォルトのミニガンのリロードフレーム数
 	static const int DEFAULT_MINIGUN_FIRE_RATE = 2; //デフォルトのミニガンの発射レート
 	static const int DEFAULT_MINIGUN_DAMAGE = 3; //デフォルトのミニガンのダメージ
 	static const float DEFAULT_MINIGUN_BULLET_SPEED; //デフォルトのミニガンの弾のスピード
