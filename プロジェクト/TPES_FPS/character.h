@@ -71,11 +71,12 @@ public:
 	void SetMotion(int Motion); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
 	void Jump(); //ジャンプ処理
-	void HitBlock(int NumParts); //ブロック当たり判定(複数パーツ用)
+	virtual void HitBlock(int NumParts); //ブロック当たり判定(複数パーツ用)
 	void HitField(); //床当たり判定
 	void HitWall(); //壁当たり判定
 	RayHitInfo PerformRaycast_Smoke(D3DXVECTOR3 vector, CCharacter* character);
 	RayHitInfo PerformRaycast_Block(D3DXVECTOR3 vector, CCharacter* character);
+	void ConversionMtxWorld();
 
 	//移動量代入
 	void SetMove(D3DXVECTOR3 move)

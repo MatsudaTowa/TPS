@@ -24,6 +24,5 @@ public:
 	static CResult_Screen* Create(D3DXVECTOR3 pos);
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-	static LPDIRECT3DTEXTURE9 m_pTexture;
 };
 #endif

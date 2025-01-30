@@ -237,7 +237,7 @@ void CWave::LoadBlock(const std::string* pFileName)
 
 	for (int nCnt = 0; nCnt < NumBlock; nCnt++)
 	{
-		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, 1, false);
+		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, 3, true);
 	}
 }
 

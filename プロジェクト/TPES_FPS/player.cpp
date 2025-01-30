@@ -203,9 +203,6 @@ HRESULT CPlayer::Init()
 	//ムーブ値代入
 	SetMove(move);
 
-	//パーツ読み込み
-	Load_Parts("data\\motion_soldier.txt");
-
 	//初期モーション設定
 	SetMotion(MOTION_NEUTRAL);
 
@@ -507,6 +504,9 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 	pPlayer->SetRot(rot); //rot設定
 	pPlayer->SetLife(nLife); //体力代入
 
+		//パーツ読み込み
+	pPlayer->Load_Parts("data\\motion_soldier.txt");
+
 	pPlayer->Init(); //初期化処理
 
 	pPlayer->SetType(OBJECT_TYPE_PLAYER); //タイプ設定
@@ -583,6 +583,7 @@ void CPlayer::ReSpawn()
 	m_SmokeRecastCnt = 0;
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
+	ChangePlayerState(new CDefaultState);
 
 	++m_DeathCnt;
 }

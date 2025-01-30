@@ -256,7 +256,9 @@ void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DX
 				m_pDashEffect->Uninit();
 				m_pDashEffect = nullptr;
 			}
-			ChangeState(new CBossStanState);
+
+			//ボスの状態切り替え
+			ChangeState(new CChaseState);
 		}
 	}
 }
@@ -268,6 +270,31 @@ void CBossEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 	ChangeState(new CBossStanState);
 	//親クラスのヒット処理
 	CEnemy::MediumUltHit(UltPos, nDamage);
+}
+
+//=============================================
+//ブロックとの判定
+//=============================================
+void CBossEnemy::HitBlock(int NumParts)
+{
+	CCharacter::HitBlock(NumParts);
+
+	for (int nPartsCnt = 0; nPartsCnt < NumParts; ++nPartsCnt)
+	{
+		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+		D3DXVECTOR3 oldpos = m_apModel[nPartsCnt]->GetOldPos();
+		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
+		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		{
+			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
+				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
+			{
+				
+				break;
+			}
+		}
+	}
 }
 
 //=============================================

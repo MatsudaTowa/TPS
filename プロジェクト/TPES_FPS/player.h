@@ -53,6 +53,7 @@ public:
 		MOTION_NEUTRAL = 0,
 		MOTION_MOVE,
 		MOTION_ATTACK,
+		MOTION_STAN,
 		MOTION_MAX,
 	}Motion_Type;
 

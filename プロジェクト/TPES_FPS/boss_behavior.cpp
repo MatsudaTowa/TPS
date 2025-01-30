@@ -203,21 +203,15 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 //=============================================
 void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss)
 {
+	//対象物との角度計算
+	float angle = atan2f(Vector.x, Vector.z);
 	// まだ目的地に到達していない場合のみ移動処理を行う
 	if (distance > threshold)
 	{
-		//対象物との角度計算
-		float angle = atan2f(Vector.x, Vector.z);
-
 		D3DXVECTOR3 move = boss->GetMove();
 
 		move.x += sinf(angle) * boss->GetSpeed();
 		move.z += cosf(angle) * boss->GetSpeed();
-		//親クラスからrotを取得
-		D3DXVECTOR3 rot = boss->GetRot();
-		rot.y = angle + D3DX_PI;
-		//rotを代入
-		boss->SetRot(rot);
 		//移動量代入
 		boss->SetMove(move);
 	}
@@ -227,6 +221,12 @@ void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR
 		//移動量代入
 		boss->SetMove(move);
 	}
+
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = boss->GetRot();
+	rot.y = angle + D3DX_PI;
+	//rotを代入
+	boss->SetRot(rot);
 }
 
 //=============================================
@@ -503,7 +503,6 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				boss->ChangeState(new CBossStanState);
 			}
 		}
-
 	}
 }
 

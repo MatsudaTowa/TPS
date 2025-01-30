@@ -44,7 +44,7 @@ public:
 	virtual void Chase(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
 private:
-	static const int PLAY_TACKLE_FLAME = 240; //タックルを実行するまでのフレーム
+	static const int PLAY_TACKLE_FLAME = 300; //タックルを実行するまでのフレーム
 	int m_PlayTackleCnt; //タックルまでの計測用
 };
 

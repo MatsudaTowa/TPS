@@ -62,6 +62,8 @@ public:
 
 	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
 
+	void HitBlock(int NumParts) override; //ブロック当たり判定(複数パーツ用)
+
 	CBossChase* m_pChase; //追跡処理
 
 	CBossWandering* m_pWandering; //徘徊処理

@@ -98,6 +98,7 @@ void CBlownState::Blown(CPlayer* player)
 	if (player->GetLaunding())
 	{//着地したら
 		++m_nStanCnt;
+		player->SetMotion(CPlayer::MOTION_STAN);
 		//スタックしないように当たり判定無効
 		player->SetEnemyColision(true);
 		if (m_nStanCnt > player->GetStanFrame())

@@ -9,6 +9,7 @@
 #define _MODEL_PARTS_H_
 #include "main.h"
 #include "objectX.h"
+#include "block.h"
 
 class CModel_Parts
 {
@@ -31,6 +32,7 @@ public:
 		bool bColision_Z; //Zé≤Ç…ìñÇΩÇ¡ÇƒÇ¢ÇÈ
 
 		float Radius;
+		CBlock* pBlock;
 	};
 
 	CModel_Parts();
@@ -39,6 +41,8 @@ public:
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
 	void Draw();
 	void Draw(D3DXCOLOR col);
+
+	void ConversionMtxWorld();
 
 	//ÉpÅ[Écê∂ê¨
 	static CModel_Parts*Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot,char* pModel_Path);
