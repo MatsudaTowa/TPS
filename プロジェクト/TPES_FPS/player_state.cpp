@@ -91,15 +91,19 @@ CBlownState::CBlownState():m_nStanCnt(0)
 }
 
 //=============================================
-//キャラクターの吹っ飛ばされb状態
+//キャラクターの吹っ飛ばされ状態
 //=============================================
 void CBlownState::Blown(CPlayer* player)
 {
 	if (player->GetLaunding())
 	{//着地したら
 		++m_nStanCnt;
+		//スタックしないように当たり判定無効
+		player->SetEnemyColision(true);
 		if (m_nStanCnt > player->GetStanFrame())
-		{
+		{//スタンが終わったら
+			//当たり判定復活
+			player->SetEnemyColision(false);
 			m_nStanCnt = 0;
 			player->ChangePlayerState(new CDefaultState);
 		}

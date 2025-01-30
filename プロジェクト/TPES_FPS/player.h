@@ -106,6 +106,11 @@ public:
 		m_BlinkCnt = BlinkCnt;
 	}
 
+	void SetEnemyColision(bool isColision)
+	{
+		m_isEnemyColision = isColision;
+	}
+
 	int& GetDeathCnt()
 	{
 		return m_DeathCnt;
@@ -131,6 +136,10 @@ public:
 		return m_isBlown;
 	}
 
+	bool& GetEnemyColision()
+	{
+		return m_isEnemyColision;
+	}
 	CReticle* m_Raticle;
 
 	CUlt* m_pUlt;

@@ -210,7 +210,10 @@ void CBossEnemy::ColisionPlayer()
 					//安全にダウンキャスト
 					CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
-					CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
+					if (pPlayer->GetEnemyColision())
+					{//プレイヤーがエネミーと当たる状態のとき
+						CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
+					}
 				}
 			}
 		}
