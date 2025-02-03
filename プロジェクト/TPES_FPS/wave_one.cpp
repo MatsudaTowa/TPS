@@ -9,7 +9,7 @@
 #include "ult_effect.h"
 
 const std::string CWave_One::WAVE_1_ENEMY_FILE = "data\\FILE\\enemy_000.txt";
-const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_data_000.bin";
+const std::string CWave_One::WAVE_1_BLOCK_FILE = "data\\FILE\\block_data000.bin";
 const std::string CWave_One::WAVE_1_WALL_FILE = "data\\FILE\\wall_000.txt";
 
 //=============================================

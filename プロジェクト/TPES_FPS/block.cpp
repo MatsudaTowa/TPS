@@ -9,7 +9,7 @@
 #include "player.h"
 
 //モデルパス
-const char* CBlock::MODEL_NAME = "data\\MODEL\\c.x";
+const char* CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
 
 //=============================================
 //コンストラクタ

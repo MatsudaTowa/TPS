@@ -64,7 +64,6 @@ void CTest::Update()
 
 	//if (m_bEdit == false)
 	//{
-	CObject::UpdateAll();
 
 	if (pKeyboard->GetTrigger(DIK_RETURN))
 	{
