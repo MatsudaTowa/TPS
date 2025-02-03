@@ -244,21 +244,6 @@ void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DX
 			pPlayer->SetMove(Playermove);
 			pPlayer->ChangePlayerState(new CBlownState);
 			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
-			SetMove({ 0.0f,0.0f,0.0f });
-
-			//タックルの変数初期化
-			m_pTackle->SetStayCnt(0);
-			m_pTackle->SetTackleCnt(0);
-			m_pTackle->SetisTackle(false);
-
-			if (m_pDashEffect != nullptr)
-			{
-				m_pDashEffect->Uninit();
-				m_pDashEffect = nullptr;
-			}
-
-			//ボスの状態切り替え
-			ChangeState(new CChaseState);
 		}
 	}
 }

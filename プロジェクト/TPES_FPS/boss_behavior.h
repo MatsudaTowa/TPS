@@ -146,7 +146,7 @@ public:
 	}
 private:
 	static const int STAY_FLAME = 60; //突進までの待機時間
-	static const int TACKLE_FLAME = 60; //タックル時間
+	static const int TACKLE_FLAME = 30; //タックル時間
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 	int m_StayCnt;
 	int m_TackleCnt;

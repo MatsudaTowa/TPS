@@ -502,6 +502,24 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				}
 				boss->ChangeState(new CBossStanState);
 			}
+
+			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z)
+			{
+				if (boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock != nullptr)
+				{
+					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->Uninit();
+					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock = nullptr;
+				}
+
+				if (boss->m_pDashEffect != nullptr)
+				{//エフェクトがあったら
+					//エフェクト破棄
+					boss->m_pDashEffect->Uninit();
+					boss->m_pDashEffect = nullptr;
+				}
+				boss->ChangeState(new CBossStanState);
+				break;
+			}
 		}
 	}
 }
