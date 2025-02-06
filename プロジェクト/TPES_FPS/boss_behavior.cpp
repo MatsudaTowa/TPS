@@ -449,6 +449,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 	if (m_StayCnt > STAY_FLAME)
 	{//カウントが既定カウントに到達したら
+		//タックルSEを鳴らす
+		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_TACKLE);
 		m_isTackle = true;
 		m_StayCnt = 0;
 	}
@@ -504,7 +506,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				boss->ChangeState(new CBossStanState);
 			}
 
-			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z)
+			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
+				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
 			{
 				if (boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock != nullptr)
 				{
@@ -542,6 +545,7 @@ void CBossTackle::ColisionReset(CBossEnemy* boss)
 {
 	for (int nCntParts = 0; nCntParts < boss->GetNumParts(); nCntParts++)
 	{
+		boss->m_apModel[nCntParts]->GetColisionBlockInfo().bColision_X = false;
 		boss->m_apModel[nCntParts]->GetColisionBlockInfo().bColision_Z = false;
 	}
 }

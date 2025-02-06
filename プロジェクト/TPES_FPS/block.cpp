@@ -69,6 +69,9 @@ void CBlock::Update()
 //=============================================
 void CBlock::CreatePiece()
 {
+	//•ö‚ê‚éSE‚ð–Â‚ç‚·
+	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_BREAK);
+
 	for (int nCnt = 0; nCnt < NUM_SMOKE; nCnt++)
 	{
 		std::random_device seed;

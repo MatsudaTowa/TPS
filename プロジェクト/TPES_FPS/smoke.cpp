@@ -33,6 +33,7 @@ HRESULT CSmoke::Init()
 	m_nLife = SMOKE_LIFE; //ライフ設定
 	//頂点座標
 	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
+
 	return S_OK;
 }
 
@@ -67,6 +68,7 @@ void CSmoke::Update()
 	}
 	else
 	{
+		CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_SE_SMOKE);
 		Uninit();
 	}
 }

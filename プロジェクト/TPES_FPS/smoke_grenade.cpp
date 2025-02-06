@@ -64,6 +64,8 @@ void CSmokeGrenade::Update()
 
 	if (m_bBoot)
 	{//ày—ô‚µ‚½‚ç
+		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SMOKE);
+
 		std::random_device seed;
 		std::mt19937 random(seed());
 		std::uniform_int_distribution<int> number_x(-3, 3);

@@ -657,6 +657,8 @@ void CPlayer::Input()
 	{
 		if (m_Stamina >= AVOIDANCE_COST)
 		{//スタミナがあれば
+			//ブリンクSEを鳴らす
+			CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_BLINK);
 			m_pAvoidance->Avoidance(this);
 			m_Stamina -= AVOIDANCE_COST;
 
