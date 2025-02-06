@@ -108,6 +108,8 @@ public:
 	~CBossTackle();
 	void Tackle(CBossEnemy* boss);
 
+	void ColisionReset(CBossEnemy* boss);
+
 	//ステイカウント取得
 	int& GetStayCnt()
 	{

@@ -163,6 +163,7 @@
     <ClCompile Include="blink_icon.cpp" />
     <ClCompile Include="blink_UI.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="block_piece.cpp" />
     <ClCompile Include="boss_behavior.cpp" />
     <ClCompile Include="boss_enemy.cpp" />
     <ClCompile Include="boss_state.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="blink_icon.h" />
     <ClInclude Include="blink_UI.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="block_piece.h" />
     <ClInclude Include="boss_behavior.h" />
     <ClInclude Include="boss_enemy.h" />
     <ClInclude Include="boss_state.h" />

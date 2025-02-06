@@ -63,7 +63,7 @@ void CSmoke::Update()
 		SetPos(pos);
 
 		//TODO:“–‚½‚è”»’è‚Ícolision‚É‚Ü‚Æ‚ß‚ë
-		ColisionRange();
+		//ColisionRange();
 	}
 	else
 	{
@@ -176,7 +176,7 @@ void CSmoke::Draw()
 //=============================================
 //¶¬
 //=============================================
-CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXVECTOR3 size)
+CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXVECTOR3 size, D3DXCOLOR col)
 {
 	CSmoke* pSmoke = new CSmoke;
 
@@ -186,6 +186,7 @@ CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXV
 	pSmoke->m_move = move;
 	pSmoke->SetRot(rot);
 	pSmoke->SetSize(size);
+	pSmoke->SetColor(col);
 	pSmoke->Init();
 	pSmoke->SetType(OBJECT_TYPE_SMOKE);
 

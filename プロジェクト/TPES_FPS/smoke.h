@@ -28,7 +28,7 @@ public:
 	void Draw()override;
 
 	//ÉXÉÇÅ[ÉNçÏê¨
-	static CSmoke* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot,D3DXVECTOR3 size);
+	static CSmoke* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot,D3DXVECTOR3 size,D3DXCOLOR col);
 
 private:
 	static LPDIRECT3DTEXTURE9 m_pTextureTemp;

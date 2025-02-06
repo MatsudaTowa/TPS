@@ -71,7 +71,7 @@ void CSmokeGrenade::Update()
 		std::uniform_int_distribution<int> number_z(0, 1);
 		for (int nCnt = 0; nCnt < CREATE_SMOKE_NUM; nCnt++)
 		{
-			CSmoke::Create(GetPos(),{ number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f },{0.0f,0.0f,0.0f},{30.0f,30.0f,0.0f});
+			CSmoke::Create(GetPos(), { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f }, { 0.0f,0.0f,0.0f }, { 30.0f,30.0f,0.0f }, {1.0f,1.0f,1.0f,1.0f});
 		}
 		CSmokeRange::Create(GetPos(),{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f});
 		Uninit();

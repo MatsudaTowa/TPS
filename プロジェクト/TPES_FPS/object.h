@@ -13,7 +13,7 @@
 class CObject
 {
 public:
-	static const int MAX_OBJECT = 256; //オブジェクトの最大数
+	static const int MAX_OBJECT = 1024; //オブジェクトの最大数
 
 	static const int PRI_MAX = 30; //プライオリティの最大値
 
@@ -33,6 +33,7 @@ public:
 		OBJECT_TYPE_PLAYER,
 		OBJECT_TYPE_ENEMY,
 		OBJECT_TYPE_BLOCK,
+		OBJECT_TYPE_BLOCK_PIECE,
 		OBJECT_TYPE_MUZZLE_FLUSH,
 		OBJECT_TYPE_FIELD,
 		OBJECT_TYPE_WALL,

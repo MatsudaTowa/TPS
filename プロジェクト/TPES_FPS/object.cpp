@@ -111,6 +111,7 @@ void CObject::Release()
 	int nPri = m_nPriority;
 	if (m_apObject[nPri][nID] != nullptr)
 	{
+
 		delete m_apObject[nPri][nID];
 		m_apObject[nPri][nID] = nullptr;
 	}

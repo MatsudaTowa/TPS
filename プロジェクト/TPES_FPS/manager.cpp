@@ -47,6 +47,7 @@ CManager::~CManager()
 //=============================================
 HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
+	srand((unsigned)time(NULL) * 54321);  // —”Œn—ñ‚ğ‰Šú‰»
 
 	//¶¬•‰Šú‰»
 	if (m_pRenderer == nullptr)

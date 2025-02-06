@@ -7,6 +7,9 @@
 #include "block.h"
 #include "manager.h"
 #include "player.h"
+#include "block_piece.h"
+#include "smoke.h"
+#include "smoke_range.h"
 
 //モデルパス
 const char* CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
@@ -51,6 +54,45 @@ void CBlock::Update()
 {
 	//親クラスの更新処理
 	CObjectX::Update();
+
+#ifdef _DEBUG
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_0))
+	{
+		CreatePiece();
+		Uninit();
+	}
+#endif // _DEBUG
+}
+
+//=============================================
+//ブロックの破片生成
+//=============================================
+void CBlock::CreatePiece()
+{
+	for (int nCnt = 0; nCnt < NUM_SMOKE; nCnt++)
+	{
+		std::random_device seed;
+		std::mt19937 random(seed());
+		std::uniform_int_distribution<int> number_x(-3, 3);
+		std::uniform_int_distribution<int> number_y(0, 5);
+		std::uniform_int_distribution<int> number_z(0, 1);
+		CSmoke::Create({ GetPos().x,10.0f,GetPos().z }, { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f }, { 0.0f,0.0f,0.0f }, { 30.0f,30.0f,0.0f }, {0.1f,0.1f,0.1f,1.0f});
+	}
+
+	for (int nNumCreate = 0; nNumCreate < NUM_PIECE; ++nNumCreate)
+	{
+		std::random_device seed;
+		std::mt19937 random(seed());
+		std::uniform_int_distribution<int> rot(0, 3);
+		CBlock_Piece::Create(GetPos(), { (float)rot(random),0.0f,(float)rot(random) }, { 0.25f,0.25f,0.25f }, false);
+	}
+	for (int nNumCreate = 0; nNumCreate < NUM_PIECE; ++nNumCreate)
+	{
+		std::random_device seed;
+		std::mt19937 random(seed());
+		std::uniform_int_distribution<int> rot(0, 3);
+		CBlock_Piece::Create(GetPos(), { (float)rot(random),0.0f,(float)rot(random) }, { 0.3f,0.3f,0.3f }, true);
+	}
 }
 
 //=============================================

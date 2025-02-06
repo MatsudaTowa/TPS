@@ -11,6 +11,7 @@
 #include "block.h"
 #include "object.h"
 #include "smoke_range.h"
+#include "block_piece.h"
 
 //=============================================
 //コンストラクタ
@@ -460,7 +461,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		{
 			float fAngle = atan2f(sinf(boss->GetRot().y), cosf(boss->GetRot().y));
 
-			//TODO:位置はモーションつけてから調整
+			//ダッシュエフェクト生成
 			boss->m_pDashEffect = CDashEffect::Create({boss->m_apModel[3]->GetMtxWorld()._41,boss->m_apModel[3]->GetMtxWorld()._42 - 100.0f,boss->m_apModel[3]->GetMtxWorld()._43 }
 			, { 0.0f,fAngle,0.0f });
 		}
@@ -507,9 +508,14 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			{
 				if (boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock != nullptr)
 				{
+					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->CreatePiece();
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->Uninit();
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock = nullptr;
+
+					//すべてのパーツを当たってない判定に
+					ColisionReset(boss);
 				}
+
 
 				if (boss->m_pDashEffect != nullptr)
 				{//エフェクトがあったら
@@ -517,10 +523,26 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 					boss->m_pDashEffect->Uninit();
 					boss->m_pDashEffect = nullptr;
 				}
+
+				//タックル情報初期化
+				m_TackleCnt = 0;
+				m_StayCnt = 0;
+				m_isTackle = false;
 				boss->ChangeState(new CBossStanState);
 				break;
 			}
 		}
+	}
+}
+
+//=============================================
+//当たってない判定に
+//=============================================
+void CBossTackle::ColisionReset(CBossEnemy* boss)
+{
+	for (int nCntParts = 0; nCntParts < boss->GetNumParts(); nCntParts++)
+	{
+		boss->m_apModel[nCntParts]->GetColisionBlockInfo().bColision_Z = false;
 	}
 }
 

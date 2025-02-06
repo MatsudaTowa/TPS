@@ -591,14 +591,17 @@ void CCharacter::HitBlock(int NumParts)
 					//安全にダウンキャスト
 					CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-					ColisionBlock_X(nPartsCnt,pos, oldpos, Minpos, Maxpos, pBlock);
-					ColisionBlock_Z(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-					ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-
-					if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
-						|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
+					if (pBlock != nullptr)
 					{
-						break;
+						ColisionBlock_X(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+						ColisionBlock_Z(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+						ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+
+						if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
+							|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
+						{
+							break;
+						}
 					}
 				}
 			}
