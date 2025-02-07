@@ -15,8 +15,7 @@
 スモークやリロード中を狙い敵の意表をつけ
 
 ◆紹介動画
-https://youtu.be/XH_AhydAElc
-
+https://youtu.be/A0fc5FuVJCM
 ◆git
 https://github.com/MatsudaTowa/TPS
 

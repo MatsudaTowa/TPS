@@ -15,7 +15,7 @@ class CShadow : public CObject3D
 {
 public:
 
-	static const int SHADOW_PRIORITY = 21; //•`‰æ‡
+	static const int SHADOW_PRIORITY = 9; //•`‰æ‡
 
 	CShadow(int nPriority = SHADOW_PRIORITY);
 	~CShadow()override;
