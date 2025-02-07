@@ -13,7 +13,7 @@
 class CObject
 {
 public:
-	static const int MAX_OBJECT = 1024; //オブジェクトの最大数
+	static const int MAX_OBJECT = 256; //オブジェクトの最大数
 
 	static const int PRI_MAX = 30; //プライオリティの最大値
 

@@ -41,8 +41,8 @@ public:
 	//ブロック作成
 	static CBlock* Create(BLOCKTYPE type,D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife,bool bBreak);
 private:
-	static const int NUM_PIECE = 10; //壊れた際に生成するピース数
-	static const int NUM_SMOKE = 100; //壊れた際に生成するスモーク数
+	static const int NUM_PIECE = 5; //壊れた際に生成するピース数
+	static const int NUM_SMOKE = 30; //壊れた際に生成するスモーク数
 	BLOCKTYPE m_type;
 	bool m_bBreak; //壊せるかどうか
 	int m_nLife;
