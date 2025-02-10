@@ -27,23 +27,23 @@ public:
 	virtual bool Action(CPlayer* player) = 0;
 
 	//クールタイム代入
-	void SetCoolTime(int CoolTime)
+	inline void SetCoolTime(int CoolTime)
 	{
 		m_CoolTime = CoolTime;
 	}
 
 	//クールタイム代入
-	void SetCoolTimeCnt(int CoolTimeCnt)
+	inline void SetCoolTimeCnt(int CoolTimeCnt)
 	{
 		m_CoolTimeCnt = CoolTimeCnt;
 	}
 
-	int& GetCoolTime()
+	inline int& GetCoolTime()
 	{
 		return m_CoolTime;
 	}
 
-	int& GetCoolTimeCnt()
+	inline int& GetCoolTimeCnt()
 	{
 		return m_CoolTimeCnt;
 	}

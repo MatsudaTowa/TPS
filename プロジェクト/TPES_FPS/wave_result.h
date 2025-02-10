@@ -29,7 +29,7 @@ public:
 	void SetNextWave(CWave::WAVE wave);
 	void LoadScore(const char* pFileName);
 
-	void Create(CWave::WAVE wave, char* pFileName)
+	inline void Create(CWave::WAVE wave, char* pFileName)
 	{
 		SetNextWave(wave);
 	}

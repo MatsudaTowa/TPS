@@ -27,55 +27,55 @@ public:
 
 	//色の取得
 	//色の代入
-	void SetColor(D3DXCOLOR col)
+	inline void SetColor(D3DXCOLOR col)
 	{
 		m_col = col;
 	}
 
 	//posの代入
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	}
 
 	//rotの代入
-	void SetRot(D3DXVECTOR3 rot)
+	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 
 	//サイズの代入
-	void SetSize(D3DXVECTOR3 size)
+	inline void SetSize(D3DXVECTOR3 size)
 	{
 		m_size = size;
 	}
 
 	//テクスチャ座標の代入
-	void SetTexPos(D3DXVECTOR2 tex)
+	inline void SetTexPos(D3DXVECTOR2 tex)
 	{
 		m_tex_pos = tex;
 	}
 
 	//ワールドマトリックスの代入
-	void SetMtxWorld(D3DXMATRIX mtxWorld)
+	inline void SetMtxWorld(D3DXMATRIX mtxWorld)
 	{
 		m_mtxWorld = mtxWorld;
 	}
 
 	//頂点情報の代入
-	void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 vtxBuff)
+	inline void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 vtxBuff)
 	{
 		m_pVtxBuff = vtxBuff;
 	}
 
 	//アニメーションフレーム代入
-	void SetAnimFrame(int nAnimFrame)
+	inline void SetAnimFrame(int nAnimFrame)
 	{
 		m_nAnimFrame = nAnimFrame;
 	}
 
 	//テクスチャ移動量の代入
-	void SetTexMove(D3DXVECTOR2 tex_move)
+	inline void SetTexMove(D3DXVECTOR2 tex_move)
 	{
 		m_tex_move = tex_move;
 	}
@@ -93,34 +93,64 @@ public:
 	void SetVtx_FootPos(D3DXVECTOR3 nor);
 
 	//色の取得
-	D3DXCOLOR& GetColor();
+	inline D3DXCOLOR& GetColor()
+	{
+		return m_col;
+	}
 
 	//posの取得
-	D3DXVECTOR3& GetPos();
+	inline D3DXVECTOR3& GetPos()
+	{
+		return m_pos;
+	}
 
 	//rotの取得
-	D3DXVECTOR3& GetRot();
+	inline D3DXVECTOR3& GetRot()
+	{
+		return m_rot;
+	}
 
 	//サイズの取得
-	D3DXVECTOR3& GetSize();
+	inline D3DXVECTOR3& GetSize()
+	{
+		return m_size;
+	}
 
 	//テクスチャ座標の取得
-	D3DXVECTOR2& GetTexPos();
+	inline D3DXVECTOR2& GetTexPos()
+	{
+		return m_tex_pos;
+	}
 
 	//頂点情報取得
-	LPDIRECT3DVERTEXBUFFER9& GetVtxBuff();
+	inline LPDIRECT3DVERTEXBUFFER9& GetVtxBuff()
+	{
+		return m_pVtxBuff;
+	}
 
 	//テクスチャ情報取得
-	LPDIRECT3DTEXTURE9& GetTexture();
+	inline LPDIRECT3DTEXTURE9& GetTexture()
+	{
+		return m_pTexture;
+	}
 
 	//ワールドマトリックス取得
-	D3DXMATRIX& GetMtxWorld();
+	inline D3DXMATRIX& GetMtxWorld()
+	{
+		return m_mtxWorld;
+	}
 
 	//アニメーションフレーム取得
-	int GetAnimFrame();
+	inline int GetAnimFrame()
+	{
+		return m_nAnimFrame;
+	}
 
 	//テクスチャ移動量取得
-	D3DXVECTOR2& GetTexMove();
+	inline D3DXVECTOR2& GetTexMove()
+	{
+		return m_tex_move;
+	}
 
 private:
 

@@ -102,6 +102,8 @@ private:
 class CTackleState : public CBossState
 {
 public:
+	CTackleState();
+	~CTackleState() override;
 	void Start(CBossEnemy* boss) override;
 	virtual void Tackle(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;

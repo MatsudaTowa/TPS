@@ -346,22 +346,3 @@ CModel_Parts* CModel_Parts::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot,char* pModel
 
 	return pModelParts;
 }
-
-//=============================================
-//親パーツの設定
-//=============================================
-void CModel_Parts::SetParent(CModel_Parts* pParent)
-{
-	m_pParent = pParent;
-}
-
-D3DXMATRIX& CModel_Parts::GetMtxWorld()
-{
-	return m_mtxWorld;
-}
-
-CModel_Parts::MODEL_INFO CModel_Parts::GetModelInfo(int nIdx)
-{
-	return m_ModelInfo[nIdx];
-}
-

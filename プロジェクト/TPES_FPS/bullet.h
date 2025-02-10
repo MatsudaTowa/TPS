@@ -49,26 +49,32 @@ public:
 	D3DXVECTOR3 size,int nLife,int nDamage, BULLET_ALLEGIANCE Allegiance,BULLET_TYPE type);
 
 	//ˆÚ“®—Êİ’è
-	void SetMove(D3DXVECTOR3 move)
+	inline void SetMove(D3DXVECTOR3 move)
 	{
 		m_move = move;
 	}
 
 	//ƒ^ƒCƒvİ’è
-	void SetBulletType(BULLET_TYPE type)
+	inline void SetBulletType(BULLET_TYPE type)
 	{
 		m_type = type;
 	}
 
 	//“G‚©©•ª‚©‚Ìİ’è
-	void SetBulletAllegiance(BULLET_ALLEGIANCE Allegiance)
+	inline void SetBulletAllegiance(BULLET_ALLEGIANCE Allegiance)
 	{
 		m_Allegiance = Allegiance;
 	}
 
-	D3DXVECTOR3 GetMove();
+	inline D3DXVECTOR3 GetMove()
+	{
+		return m_move;
+	}
 
-	BULLET_ALLEGIANCE GetBulletAllegiance();
+	inline BULLET_ALLEGIANCE GetBulletAllegiance()
+	{
+		return m_Allegiance;
+	}
 private:
 	bool PenetrationBlock();
 	BULLET_ALLEGIANCE m_Allegiance; //“G‚©©•ª‚©‚ğ”»’f‚·‚é—ñ‹“Œ^•Ï”

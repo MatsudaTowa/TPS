@@ -25,7 +25,7 @@ public:
 	//ƒEƒ‹ƒg”ÍˆÍì¬
 	static CUltRange* Create(D3DXVECTOR3 pos);
 
-	int& GetLife()
+	inline int& GetLife()
 	{
 		return m_nLife;
 	}

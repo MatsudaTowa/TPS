@@ -33,7 +33,6 @@ public:
 	void Draw()override;
 	static CTitle_Screen* Create(D3DXVECTOR3 pos,D3DXVECTOR2 size,TITLE_UI type);
 private:
-	static LPDIRECT3DTEXTURE9 m_pTexture;
 	TITLE_UI m_UItype;
 };
 #endif

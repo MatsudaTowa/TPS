@@ -124,20 +124,3 @@ CObject* CObject::Getobject(int nPri, int nIdx)
 {
 	return m_apObject[nPri][nIdx];
 }
-
-//=============================================
-//タイプ取得
-//=============================================
-CObject::OBJECT_TYPE CObject::GetType()
-{
-	return m_type;
-}
-
-//=============================================
-//タイプ設定
-//=============================================
-void CObject::SetType(OBJECT_TYPE type)
-{
-	m_type = type;
-}
-

@@ -204,22 +204,6 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3D
 	return pBullet;
 }
 
-//=============================================
-//ˆÚ“®—ÊŽæ“¾
-//=============================================
-D3DXVECTOR3 CBullet::GetMove()
-{
-	return m_move;
-}
-
-//=============================================
-//“G‚©Ž©•ª‚©Žæ“¾
-//=============================================
-CBullet::BULLET_ALLEGIANCE CBullet::GetBulletAllegiance()
-{
-	return m_Allegiance;
-}
-
 bool CBullet::PenetrationBlock()
 {
 	//ˆÊ’uŽæ“¾

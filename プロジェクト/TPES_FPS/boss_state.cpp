@@ -223,30 +223,34 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-			if (pObj != nullptr)
-			{//ヌルポインタじゃなければ
-				//タイプ取得
-				CObject::OBJECT_TYPE type = pObj->GetType();
-
-				//敵との当たり判定
-				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-				{
-					CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
-
-					//プレイヤーとの距離算出
-					D3DXVECTOR3 Distance = pplayer->GetPos() - boss->GetPos();
-
-					//プレイヤーに向ける角度を算出
-					float fAngle = atan2f(Distance.x, Distance.z);
-
-					//親クラスからrotを取得
-					D3DXVECTOR3 rot = boss->GetRot();
-
-					rot.y = fAngle + D3DX_PI;
-
-					m_TargetRot = rot;
-				}
+			if (pObj == nullptr)
+			{//ヌルポインタなら
+				continue;
 			}
+
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//敵との当たり判定
+			if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{//プレイヤーじゃなかったら
+				continue;
+			}
+
+			CPlayer* player = dynamic_cast<CPlayer*>(pObj);
+
+			//プレイヤーとの距離算出
+			D3DXVECTOR3 Distance = player->GetPos() - boss->GetPos();
+
+			//プレイヤーに向ける角度を算出
+			float fAngle = atan2f(Distance.x, Distance.z);
+
+			//親クラスからrotを取得
+			D3DXVECTOR3 rot = boss->GetRot();
+
+			rot.y = fAngle + D3DX_PI;
+
+			m_TargetRot = rot;
 		}
 	}
 
@@ -256,19 +260,6 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 
 		//親クラスからrotを取得
 		D3DXVECTOR3 rot = boss->GetRot();
-
-		//D3DXVECTOR3 RotDistance = m_TargetRot - rot;
-
-		//D3DXVECTOR3 RotMove = RotDistance / TRANSITION_FRAME;
-
-		//if (RotDistance > 0)
-		//{
-		//	rot.y -= RotMove.y;
-		//}
-		//if (RotDistance < 0)
-		//{
-		//	rot.y += RotMove.y;
-		//}
 
 		boss->SetRot(rot);
 
@@ -318,6 +309,21 @@ void CWanderingState::DrawDebug()
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
+}
+
+//=============================================
+//コンストラクタ
+//=============================================
+CTackleState::CTackleState()
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CTackleState::~CTackleState()
+{
+	
 }
 
 //=============================================

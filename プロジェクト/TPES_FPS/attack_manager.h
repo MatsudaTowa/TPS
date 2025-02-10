@@ -29,22 +29,28 @@ public:
 	bool HitGround();
 
 	//寿命の設定
-	void SetLife(int nLife)
+	inline void SetLife(int nLife)
 	{
 		m_nLife = nLife;
 	}
 
 	//ダメージの設定
-	void SetDamage(int nDamage)
+	inline void SetDamage(int nDamage)
 	{
 		m_nDamage = nDamage;
 	}
 
 	//寿命の取得
-	int GetLife();
+	inline int GetLife()
+	{
+		return m_nLife;
+	}
 
 	//ダメージの取得
-	int GetDamage();
+	inline int GetDamage()
+	{
+		return m_nDamage;
+	}
 private:
 
 	int m_nLife; //寿命

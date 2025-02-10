@@ -32,9 +32,24 @@ public:
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
 	void Uninit() override;
 	void Update() override;//端末ごとに
-	bool GetPress(int nKey);
-	bool GetTrigger(int nKey);
-	bool GetRelease(int nKey);
+
+	//プレス情報取得
+	inline bool GetPress(int nKey)
+	{
+		return(m_aKeyState[nKey] & 0x80) != 0;
+	}
+
+	//トリガー情報取得
+	inline bool GetTrigger(int nKey)
+	{
+		return(m_aKeyStateTrigger[nKey] & 0x80) != 0;
+	}
+
+	//リリース情報取得
+	inline bool GetRelease(int nKey)
+	{
+		return(m_aKeyStateRelease[nKey] & 0x80) != 0;
+	}
 private:
 	BYTE m_aKeyStateTrigger[NUM_KEY_MAX]; //キーボードのトリガー情報
 	BYTE m_aKeyStateRelease[NUM_KEY_MAX]; //キーボードのリリース情報
@@ -51,10 +66,31 @@ public:
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
 	void Uninit() override;
 	void Update() override;//端末ごとに
-	bool GetPress(int nKey);
-	bool GetTrigger(int nKey);
-	bool GetRelease(int nKey);
-	D3DXVECTOR3 GetMouseMove(void);
+
+	//プレス情報取得
+	inline bool GetPress(int nKey)
+	{
+		return(m_KeyState.rgbButtons[nKey] & 0x80) != 0;
+	}
+
+	//トリガー情報取得
+	inline bool GetTrigger(int nKey)
+	{
+		return(m_KeyStateTrigger.rgbButtons[nKey] & 0x80) != 0;
+	}
+
+	//リリース情報取得
+	inline bool GetRelease(int nKey)
+	{
+		return(m_KeyStateRelease.rgbButtons[nKey] & 0x80) != 0;
+	}
+
+	//移動量取得
+	inline D3DXVECTOR3 GetMouseMove(void)
+	{
+		return m_MouseMove;
+	}
+
 	void Debug();
 private:
 	DIMOUSESTATE m_KeyStateTrigger; //マウスのトリガー情報
@@ -129,11 +165,37 @@ public:
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
 	void Uninit() override;
 	void Update() override;//端末ごとに
-	bool GetConnet();
-	bool GetPress(JOYKEY Key);
-	bool GetTrigger(JOYKEY Key);
-	bool GetRelease(JOYKEY Key);
-	XINPUT_STATE* GetXInputState(void);
+
+	//接続されているかどうか
+	inline bool GetConnet()
+	{
+		return m_Connect;
+	}
+
+	//プレス情報取得
+	inline bool GetPress(JOYKEY Key)
+	{
+		return (m_joyKeyState & (0x01 << Key)) ? true : false;
+	}
+
+	//トリガー情報取得
+	inline bool GetTrigger(JOYKEY Key)
+	{
+		return (m_joyKeyStateTrigger & (0x01 << Key)) ? true : false;
+	}
+
+	//リリース情報取得
+	inline bool GetRelease(JOYKEY Key)
+	{
+		return(m_ajoyKeyStateRelease & (0x01 << Key)) ? true : false;
+	}
+
+
+	inline XINPUT_STATE* GetXInputState(void)
+	{
+		return &m_XInput;
+	}
+
 	void UpdateStick(XINPUT_STATE state);
 	STICKINPUT GetStick(void);
 	float FindAngle(D3DXVECTOR3 pos, D3DXVECTOR3 TargetPos);

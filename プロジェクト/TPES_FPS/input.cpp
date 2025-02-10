@@ -133,23 +133,6 @@ void CInputKeyboard::Update()
 		m_pDevice->Acquire(); //キーボードのアクセス権を獲得
 	}
 }
-
-//=============================================
-//キーボードの情報を取得
-//=============================================
-bool CInputKeyboard::GetPress(int nKey)
-{
-	return(m_aKeyState[nKey] & 0x80) != 0;
-}
-bool CInputKeyboard::GetTrigger(int nKey)
-{
-	return(m_aKeyStateTrigger[nKey] & 0x80) != 0;
-}
-bool CInputKeyboard::GetRelease(int nKey)
-{
-	return(m_aKeyStateRelease[nKey] & 0x80) != 0;
-}
-
 //↓からマウス
 
 //=============================================
@@ -260,35 +243,6 @@ void CInputMouse::Update()
 	m_MousePos.y = (float)zdiMouseState.lY;*/
 
 	//m_MouseMove.z = m_MousePos.z - OldMousePos.z;
-}
-
-//=============================================
-//マウスの情報を取得
-//=============================================
-bool CInputMouse::GetPress(int nKey)
-{
-	return(m_KeyState.rgbButtons[nKey] & 0x80) != 0;
-}
-//=============================================
-//マウスのトリガー取得
-//=============================================
-bool CInputMouse::GetTrigger(int nKey)
-{
-	return(m_KeyStateTrigger.rgbButtons[nKey] & 0x80) != 0;
-}
-//=============================================
-//マウスのリリース取得
-//=============================================
-bool CInputMouse::GetRelease(int nKey)
-{
-	return(m_KeyStateRelease.rgbButtons[nKey] & 0x80) != 0;
-}
-//=============================================
-//マウスのムーブ値取得
-//=============================================
-D3DXVECTOR3 CInputMouse::GetMouseMove(void)
-{
-	return(m_MouseMove);
 }
 
 //=============================================
@@ -407,46 +361,6 @@ void CInputPad::Update()
 	{
 		m_Connect = false;
 	}
-}
-
-//=============================================
-//接続されてるか取得
-//=============================================
-bool CInputPad::GetConnet()
-{
-	return m_Connect;
-}
-
-//=============================================
-//プレス情報取得
-//=============================================
-bool CInputPad::GetPress(JOYKEY Key)
-{
-	return (m_joyKeyState & (0x01 << Key)) ? true : false;
-}
-
-//=============================================
-//トリガー情報取得
-//=============================================
-bool CInputPad::GetTrigger(JOYKEY Key)
-{
-	return (m_joyKeyStateTrigger & (0x01 << Key)) ? true : false;
-}
-
-//=============================================
-//リリース情報取得
-//=============================================
-bool CInputPad::GetRelease(JOYKEY Key)
-{
-	return(m_ajoyKeyStateRelease & (0x01 << Key)) ? true : false;
-}
-
-//=============================================
-//状態取得
-//=============================================
-XINPUT_STATE* CInputPad::GetXInputState(void)
-{
-	return &m_XInput;
 }
 
 //=============================================

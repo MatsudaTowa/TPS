@@ -24,36 +24,36 @@ public:
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex);
 
 	//posの代入
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	}
 
 	//rotの代入
-	void SetRot(D3DXVECTOR3 rot)
+	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 
 	//サイズの代入
-	void SetSize(D3DXVECTOR2 size)
+	inline void SetSize(D3DXVECTOR2 size)
 	{
 		m_size = size;
 	}
 
 	//テクスチャ座標の代入
-	void SetTexPos(D3DXVECTOR2 tex)
+	inline void SetTexPos(D3DXVECTOR2 tex)
 	{
 		m_tex_pos = tex;
 	}
 
-	void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 Buff)
+	inline void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 Buff)
 	{
 		m_pVtxBuff = Buff;
 	}
 
 	//色の代入
-	void SetColor(D3DXCOLOR col)
+	inline void SetColor(D3DXCOLOR col)
 	{
 		m_col = col;
 	}
@@ -69,21 +69,40 @@ public:
 	void SetVtx_FootPos(float rhw,float fAngle,float fLength);
 
 	//posの取得
-	D3DXVECTOR3& GetPos();
+	inline D3DXVECTOR3& GetPos()
+	{
+		return m_pos;
+	}
 
 	//rotの取得
-	D3DXVECTOR3& GetRot();
+	inline D3DXVECTOR3& GetRot()
+	{
+		return m_rot;
+	}
 
 	//サイズの取得
-	D3DXVECTOR2& GetSize();
+	inline D3DXVECTOR2& GetSize()
+	{
+		return m_size;
+	}
 
 	//テクスチャ座標の取得
-	D3DXVECTOR2& GetTexPos();
+	inline D3DXVECTOR2& GetTexPos()
+	{
+		return m_tex_pos;
+	}
 	
 	//色の取得
-	D3DXCOLOR& GetColor();
+	inline D3DXCOLOR& GetColor()
+	{
+		return m_col;
+	}
 
-	LPDIRECT3DVERTEXBUFFER9& GetVtxBuff();
+	inline LPDIRECT3DVERTEXBUFFER9& GetVtxBuff()
+	{
+		return m_pVtxBuff;
+	}
+
 
 private:
 

@@ -105,19 +105,3 @@ void CObject2D_Anim::AnimationTex(D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move)
 	//tex設定
  	SetTexPos(tex_pos);
 }
-
-//=============================================
-//アニメーションフレーム取得
-//=============================================
-int CObject2D_Anim::GetAnimFrame()
-{
-	return m_nAnimFrame;
-}
-
-//=============================================
-//テクスチャ移動量取得
-//=============================================
-D3DXVECTOR2& CObject2D_Anim::GetTexMove()
-{
-	return m_tex_move;
-}

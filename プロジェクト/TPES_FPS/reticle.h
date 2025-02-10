@@ -26,32 +26,32 @@ public:
 	void Uninit();
 	void Update();
 
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_ReticlePos = pos;
 	}
 
-	void SetSize(D3DXVECTOR3 size)
+	inline void SetSize(D3DXVECTOR3 size)
 	{
 		m_ReticleSize = size;
 	}
 
-	void SetCol(D3DXCOLOR col)
+	inline void SetCol(D3DXCOLOR col)
 	{
 		m_ReticleCol = col;
 	}
 
-	D3DXVECTOR3& GetReticlePos()
+	inline D3DXVECTOR3& GetReticlePos()
 	{
 		return m_ReticlePos;
 	}
 
-	D3DXVECTOR3& GetReticleSize()
+	inline D3DXVECTOR3& GetReticleSize()
 	{
 		return m_ReticleSize;
 	}
 
-	D3DXCOLOR& GetReticleCol()
+	inline D3DXCOLOR& GetReticleCol()
 	{
 		return m_ReticleCol;
 	}

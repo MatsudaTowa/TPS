@@ -79,12 +79,18 @@ public:
 	void LoadWall(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
 
-	void SetWaveScore(int nScore);
+	inline void SetWaveScore(int nScore)
+	{
+		m_nTotalScore = nScore;
+	}
 
-	int GetWaveScore();
+	inline int GetWaveScore()
+	{
+		return m_nTotalScore;
+	}
 
 	//ウェーブのリザルトテンプレートメソッド
-	void WaveResult(const std::string* pFileName)
+	inline void WaveResult(const std::string* pFileName)
 	{
 		m_pScore->ExportScore(pFileName);
 		m_pScore->Reset();

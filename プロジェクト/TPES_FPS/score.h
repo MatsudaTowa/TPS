@@ -29,24 +29,38 @@ public:
 	int m_nScore; //スコアの値
 	void SetScore(int nScore);
 
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	}
 
-	void SetSize(D3DXVECTOR2 size)
+	inline void SetSize(D3DXVECTOR2 size)
 	{
 		m_size = size;
 	}
 
-	void SetDigitShift(float shift)
+	inline void SetDigitShift(float shift)
 	{
 		m_DigitShift = shift;
 	}
 
-	D3DXVECTOR3& GetPos();
-	D3DXVECTOR2& GetSize();
-	float& GetDigitShift();
+	//表示座標取得
+	inline D3DXVECTOR3& GetPos()
+	{
+		return m_pos;
+	}
+
+	//表示サイズ取得
+	inline D3DXVECTOR2& GetSize()
+	{
+		return m_size;
+	}
+
+	//座標をずらす値を取得
+	inline float& GetDigitShift()
+	{
+		return m_DigitShift;
+	}
 private:
 	static const int NUM_DIGIT = 6;  //桁数
 

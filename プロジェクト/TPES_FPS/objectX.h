@@ -28,55 +28,66 @@ public:
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
 
 	//scaleの代入
-	void SetScale(D3DXVECTOR3 scale)
+	inline void SetScale(D3DXVECTOR3 scale)
 	{
 		m_scale = scale;
 	}
 
 	//posの代入
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	}
 
 	//rotの代入
-	void SetRot(D3DXVECTOR3 rot)
+	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 
 	//最小値代入
-	void SetMinPos(D3DXVECTOR3 MinPos)
+	inline void SetMinPos(D3DXVECTOR3 MinPos)
 	{
 		m_minpos = MinPos;
 	}
 
 	//最大値代入
-	void SetMaxPos(D3DXVECTOR3 MaxPos)
+	inline void SetMaxPos(D3DXVECTOR3 MaxPos)
 	{
 		m_maxpos = MaxPos;
 	}
 
 	//ワールドマトリックスの代入
-	void SetMtxWorld(D3DXMATRIX mtxWorld)
+	inline void SetMtxWorld(D3DXMATRIX mtxWorld)
 	{
 		m_mtxWorld = mtxWorld;
 	}
 
 	//カラーの代入
-	void SetColor(D3DXCOLOR col)
+	inline void SetColor(D3DXCOLOR col)
 	{
 		m_col = col;
 	}
+
 	//scaleの取得
-	D3DXVECTOR3& GetScale();
+	inline D3DXVECTOR3& GetScale()
+	{
+		return m_scale;
+	}
 
 	//posの取得
-	D3DXVECTOR3& GetPos();
+	inline D3DXVECTOR3& GetPos()
+	{
+		return m_pos;
+	}
 
 	//rotの取得
-	D3DXVECTOR3& GetRot();
+	inline D3DXVECTOR3& GetRot()
+	{
+		return m_rot;
+	}
 
+	//TODO:中の処理がでかすぎてinline展開できない可能性大
 	//最小値取得
 	D3DXVECTOR3& GetMinPos();
 
@@ -84,19 +95,34 @@ public:
 	D3DXVECTOR3& GetMaxPos();
 
 	//メッシュ情報取得
-	LPD3DXMESH& GetpMesh();
+	inline LPD3DXMESH& GetpMesh()
+	{
+		return m_pMesh;
+	}
 
 	//マテリアル情報取得
-	LPD3DXBUFFER& GetpBuffMat();
+	inline LPD3DXBUFFER& GetpBuffMat()
+	{
+		return m_pBuffMat;
+	}
 
 	//マテリアル数取得
-	DWORD& GetNumMat();
+	inline DWORD& GetNumMat()
+	{
+		return m_dwNumMat;
+	}
 
 	//ワールドマトリックス取得
-	D3DXMATRIX& GetMtxWorld();
+	inline D3DXMATRIX& GetMtxWorld() 
+	{
+		return m_mtxWorld;
+	}
 
 	//カラー取得
-	D3DXCOLOR& GetCol();
+	inline D3DXCOLOR& GetCol()
+	{
+		return m_col;
+	}
 
 private:
 

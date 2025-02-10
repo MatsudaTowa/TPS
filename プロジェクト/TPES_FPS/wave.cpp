@@ -395,13 +395,5 @@ void CWave::LoadEnemy(const std::string* pFileName)
 		}
 	}
 }
-void CWave::SetWaveScore(int nScore)
-{
-	m_nTotalScore = nScore;
-}
 
-int CWave::GetWaveScore()
-{
-	return m_nTotalScore;
-}
 

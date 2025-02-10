@@ -24,22 +24,28 @@ public:
 	//アニメーション処理
 	void AnimationTex(D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
 	//アニメーションフレーム代入
-	void SetAnimFrame(int nAnimFrame)
+	inline void SetAnimFrame(int nAnimFrame)
 	{
 		m_nAnimFrame = nAnimFrame;
 	}
 
 	//テクスチャ移動量の代入
-	void SetTexMove(D3DXVECTOR2 tex_move)
+	inline void SetTexMove(D3DXVECTOR2 tex_move)
 	{
 		m_tex_move = tex_move;
 	}
 
 	//アニメーションフレーム取得
-	int GetAnimFrame();
+	inline int GetAnimFrame()
+	{
+		return m_nAnimFrame;
+	}
 	
 	//テクスチャ移動量取得
-	D3DXVECTOR2& GetTexMove();
+	inline D3DXVECTOR2& GetTexMove()
+	{
+		return m_tex_move;
+	}
 
 private:
 	//アニメーション

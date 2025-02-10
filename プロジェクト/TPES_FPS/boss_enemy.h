@@ -84,13 +84,13 @@ public:
 		MAX,
 	};
 
-	void SethitAxis(COLISION_AXIS axis)
+	inline void SethitAxis(COLISION_AXIS axis)
 	{
 		m_HitAxis = axis;
 	}
 
 
-	COLISION_AXIS& GetAxis()
+	inline COLISION_AXIS& GetAxis()
 	{
 		return m_HitAxis;
 	}

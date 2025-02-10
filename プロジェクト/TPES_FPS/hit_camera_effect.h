@@ -35,7 +35,7 @@ public:
 
 	void SubAlpha();
 
-	float& GetAlpha()
+	inline float& GetAlpha()
 	{
 		return m_alpha;
 	}

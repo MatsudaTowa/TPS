@@ -38,37 +38,50 @@ public:
 	void ChangeCameraState(CCameraState* state);
 
 	//方向取得
-	void SetRot(D3DXVECTOR3 rot)
+	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 	//視点取得
-	void SetPosV(D3DXVECTOR3 posV)
+	inline void SetPosV(D3DXVECTOR3 posV)
 	{
 		m_posV = posV;
 	}
 	//注視点取得
-	void SetPosR(D3DXVECTOR3 posR)
+	inline void SetPosR(D3DXVECTOR3 posR)
 	{
 		m_posR = posR;
 	}
 
-	void SetLength(float length)
+	inline void SetLength(float length)
 	{
 		m_fLength = length;
 	}
 
 	//方向取得
-	D3DXVECTOR3 GetRot();
-	//視点取得
-	D3DXVECTOR3 GetPosV();
-	//注視点取得
-	D3DXVECTOR3 GetPosR();
+	inline D3DXVECTOR3 GetRot()
+	{
+		return m_rot;
+	}
 
-	float& GetLength();
+	//視点取得
+	inline D3DXVECTOR3 GetPosV()
+	{
+		return m_posV;
+	}
+	//注視点取得
+	inline D3DXVECTOR3 GetPosR()
+	{
+		return m_posR;
+	}
+
+	inline float& GetLength()
+	{
+		return m_fLength;
+	}
 
 	//カメラのデバック表示
-	void DebugCameraDraw(); 
+	void DebugCameraDraw();
 
 	void ThirdViewCamera(); //サードパーソンビュー処理
 

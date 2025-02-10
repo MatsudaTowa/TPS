@@ -79,96 +79,130 @@ public:
 	void ConversionMtxWorld();
 
 	//移動量代入
-	void SetMove(D3DXVECTOR3 move)
+	inline void SetMove(D3DXVECTOR3 move)
 	{
 		m_move = move;
 	}
 
 	//oldpos代入
-	void SetOldPos(D3DXVECTOR3 oldpos)
+	inline void SetOldPos(D3DXVECTOR3 oldpos)
 	{
 		m_oldpos = oldpos;
 	}
 
 	//着地してるかどうかを代入
-	void SetLanding(bool bLanding)
+	inline void SetLanding(bool bLanding)
 	{
 		m_bLanding = bLanding;
 	}
 
 	//体力代入
-	void SetLife(int nLife)
+	inline void SetLife(int nLife)
 	{
 		m_nLife = nLife;
 	}
 
 	//状態代入
-	void SetState(CHARACTER_STATE state)
+	inline void SetState(CHARACTER_STATE state)
 	{
 		m_State = state;
 	}
 
-	void SetStanFrame(int StanFrame)
+	inline void SetStanFrame(int StanFrame)
 	{
 		m_StanFrame = StanFrame;
 	}
 
 	//ステートカウント代入
-	void SetStateCnt(int nStateCnt)
+	inline void SetStateCnt(int nStateCnt)
 	{
 		m_nStateCnt = nStateCnt;
 	}
 
 	//ジャンプ数代入
-	void SetJumpCnt(int nJumpCnt)
+	inline void SetJumpCnt(int nJumpCnt)
 	{
 		m_nJumpCnt = nJumpCnt;
 	}
 
 	//終わった判定に
-	void SetFinish(bool bFinish)
+	inline void SetFinish(bool bFinish)
 	{
 		m_bLoopFinish = bFinish;
 	}
 
 	//影のサイズ設定
-	void SetShadowSize(D3DXVECTOR3 shadow_size)
+	inline void SetShadowSize(D3DXVECTOR3 shadow_size)
 	{
 		m_ShadowSize = shadow_size;
 	}
 	//移動量取得
-	D3DXVECTOR3& GetMove();
+	inline D3DXVECTOR3& GetMove()
+	{
+		return m_move;
+	}
 
 	//過去の位置取得
-	D3DXVECTOR3& GetOldPos();
+	inline D3DXVECTOR3& GetOldPos()
+	{
+		return m_oldpos;
+	}
 
 	//影のサイズ取得
-	D3DXVECTOR3& GetShadowSize();
+	inline D3DXVECTOR3& GetShadowSize()
+	{
+		return m_ShadowSize;
+	}
 
 	//着地してるかどうか取得
-	bool& GetLaunding();
+	inline bool& GetLaunding()
+	{
+		return m_bLanding;
+	}
 
 	//終わってるか取得
-	bool& GetFinish();
+	inline bool& GetFinish()
+	{
+		return m_bLoopFinish;
+	}
 
 	//体力取得
-	int& GetLife();
+	inline int& GetLife()
+	{
+		return m_nLife;
+	}
 
 	//パーツ数取得
-	int& GetNumParts();
+	inline int& GetNumParts()
+	{
+		return m_PartsCnt;
+	}
 
-	float& GetSpeed();
+	inline float& GetSpeed()
+	{
+		return m_Speed;
+	}
+
 
 	//状態取得
-	CHARACTER_STATE& GetState();
+	inline CHARACTER_STATE& GetState()
+	{
+		return m_State;
+	}
 
 	//ステートカウント取得
-	int& GetStateCnt();
+	inline int& GetStateCnt()
+	{
+		return m_nStateCnt;
+	}
 
 	//ジャンプ回数取得
-	int& GetJumpCnt();
+	inline int& GetJumpCnt()
+	{
+		return m_nJumpCnt;
+	}
 
-	int& GetStanFrame()
+	inline int& GetStanFrame()
 	{
 		return m_StanFrame;
 	}

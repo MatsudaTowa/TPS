@@ -23,6 +23,7 @@ public:
 	HRESULT Init();
 	void Uninit();
 	void Update();
+	//TODO:’†‚Ìˆ—‚ª‚Å‚©‚·‚¬‚Äinline“WŠJ‚Å‚«‚È‚¢‰Â”\«‘å
 	void SetCurrentAmmo_UI(int nAmmo);
 	void SetDefaultAmmo_UI(int nAmmo);
 

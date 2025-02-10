@@ -66,9 +66,15 @@ public:
 
 	static CObject* Getobject(int nPri,int nIdx);
 
-	OBJECT_TYPE GetType();
+	inline OBJECT_TYPE GetType()
+	{
+		return m_type;
+	}
 
-	void SetType(OBJECT_TYPE type);
+	inline void SetType(OBJECT_TYPE type)
+	{
+		m_type = type;
+	}
 
 	OBJECT_TYPE m_type;
 	

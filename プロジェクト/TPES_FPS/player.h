@@ -82,62 +82,62 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
-	void SetDeathCnt(int DeathCnt)
+	inline void SetDeathCnt(int DeathCnt)
 	{
 		m_DeathCnt = DeathCnt;
 	}
 
-	void SetStamina(int Stamina)
+	inline void SetStamina(int Stamina)
 	{
 		m_Stamina = Stamina;
 	}
 
-	void SetSmoke(bool isSmoke)
+	inline void SetSmoke(bool isSmoke)
 	{
 		m_isSmoke = isSmoke;
 	}
 
-	void SetBlown(bool isBlown)
+	inline void SetBlown(bool isBlown)
 	{
 		m_isBlown = isBlown;
 	}
 
-	void SetBlinkCnt(int BlinkCnt)
+	inline void SetBlinkCnt(int BlinkCnt)
 	{
 		m_BlinkCnt = BlinkCnt;
 	}
 
-	void SetEnemyColision(bool isColision)
+	inline void SetEnemyColision(bool isColision)
 	{
 		m_isEnemyColision = isColision;
 	}
 
-	int& GetDeathCnt()
+	inline int& GetDeathCnt()
 	{
 		return m_DeathCnt;
 	}
 
-	int& GetStamina()
+	inline int& GetStamina()
 	{
 		return m_Stamina;
 	}
 
-	int& GetBlinkCnt()
+	inline int& GetBlinkCnt()
 	{
 		return m_BlinkCnt;
 	}
 
-	bool& GetSmoke()
+	inline bool& GetSmoke()
 	{
 		return m_isSmoke;
 	}
 
-	bool& GetBlown()
+	inline bool& GetBlown()
 	{
 		return m_isBlown;
 	}
 
-	bool& GetEnemyColision()
+	inline bool& GetEnemyColision()
 	{
 		return m_isEnemyColision;
 	}

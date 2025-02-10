@@ -48,66 +48,78 @@ public:
 	static CModel_Parts*Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot,char* pModel_Path);
 
 	//ワールドマトリックスの代入
-	void SetMtxWorld(D3DXMATRIX mtxWorld)
+	inline void SetMtxWorld(D3DXMATRIX mtxWorld)
 	{
 		m_mtxWorld = mtxWorld;
 	}
 
-	void SetPos(D3DXVECTOR3 pos)
+	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	};
 
-	void SetOldPos(D3DXVECTOR3 oldpos)
+	inline void SetOldPos(D3DXVECTOR3 oldpos)
 	{
 		m_oldpos = oldpos;
 	};
 
-	void SetRot(D3DXVECTOR3 rot)
+	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	};
 
-	void SetColisionBlockInfo(ColisionBlockInfo ColisionBlockInfo)
+	inline void SetColisionBlockInfo(ColisionBlockInfo ColisionBlockInfo)
 	{
 		m_ColisionBlockInfo = ColisionBlockInfo;
 	}
 
-	D3DXVECTOR3 GetPos()
+	inline D3DXVECTOR3 GetPos()
 	{
 		return m_pos;
 	};
 
-	D3DXVECTOR3 GetOldPos()
+	inline D3DXVECTOR3 GetOldPos()
 	{
 		return m_oldpos;
 	};
 
-	D3DXVECTOR3 GetRot()
+	inline D3DXVECTOR3 GetRot()
 	{
 		return m_rot;
 	};
 
-	D3DXVECTOR3 GetMin()
+	inline D3DXVECTOR3 GetMin()
 	{
 		return m_minpos;
 	}
 
-	D3DXVECTOR3 GetMax()
+	inline D3DXVECTOR3 GetMax()
 	{
 		return m_maxpos;
 	}
 
-	ColisionBlockInfo& GetColisionBlockInfo()
+	inline ColisionBlockInfo& GetColisionBlockInfo()
 	{
 		return m_ColisionBlockInfo;
 	}
-	void SetParent(CModel_Parts*pParent);
+
+	//親パーツの設定
+	inline void SetParent(CModel_Parts*pParent)
+	{
+		m_pParent = pParent;
+	}
 
 	//ワールドマトリックス取得
-	D3DXMATRIX& GetMtxWorld();
+	inline D3DXMATRIX& GetMtxWorld()
+	{
+		return m_mtxWorld;
+	}
 
-	MODEL_INFO GetModelInfo(int nIdx); //モデル情報取得
+	//モデル情報取得
+	inline MODEL_INFO GetModelInfo(int nIdx)
+	{
+		return m_ModelInfo[nIdx];
+	}
 
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_rot;
