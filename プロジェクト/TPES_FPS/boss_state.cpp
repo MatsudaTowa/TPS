@@ -29,6 +29,13 @@ void CBossState::Start(CBossEnemy* boss)
 }
 
 //=============================================
+//ÅŒã‚ÉŒÄ‚Î‚ê‚éŠÖ”
+//=============================================
+void CBossState::End(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ƒ{ƒX‚Ì’ÇÕó‘Ô(Šî’ê‚Å‚Í‰½‚à‚µ‚È‚¢)
 //=============================================
 void CBossState::Chase(CBossEnemy* boss)
@@ -152,6 +159,13 @@ void CChaseState::DrawDebug()
 void CBossStanState::Start(CBossEnemy* boss)
 {
 	m_StanCnt = 0;
+}
+
+//=============================================
+//ÅŒã‚ÉŒÄ‚Î‚ê‚éŠÖ”
+//=============================================
+void CBossStanState::End(CBossEnemy* boss)
+{
 }
 
 //=============================================
@@ -332,6 +346,15 @@ CTackleState::~CTackleState()
 void CTackleState::Start(CBossEnemy* boss)
 {
 
+}
+
+void CTackleState::End(CBossEnemy* boss)
+{
+	if (boss->m_pDashEffect != nullptr)
+	{
+		boss->m_pDashEffect->Uninit();
+		boss->m_pDashEffect = nullptr;
+	}
 }
 
 //=============================================

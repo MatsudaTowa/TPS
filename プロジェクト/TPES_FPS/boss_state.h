@@ -24,6 +24,7 @@ public:
 	CBossState();
 	virtual ~CBossState();
 	virtual void Start(CBossEnemy* boss);
+	virtual void End(CBossEnemy* boss);
 	virtual void Chase(CBossEnemy* boss);
 	virtual void Stan(CBossEnemy* boss);
 	virtual void Wandering(CBossEnemy* boss);
@@ -55,6 +56,7 @@ class CBossStanState :public CBossState
 {
 public:
 	void Start(CBossEnemy* boss) override;
+	void End(CBossEnemy* boss) override;
 	virtual void Stan(CBossEnemy* boss);
 	virtual void DrawDebug()override;
 private:
@@ -105,6 +107,7 @@ public:
 	CTackleState();
 	~CTackleState() override;
 	void Start(CBossEnemy* boss) override;
+	void End(CBossEnemy* boss) override;
 	virtual void Tackle(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
 };

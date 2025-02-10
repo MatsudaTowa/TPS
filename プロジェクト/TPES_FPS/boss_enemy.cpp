@@ -179,6 +179,7 @@ void CBossEnemy::ChangeState(CBossState* state)
 	//今のステートを消し引数のステートに切り替える
 	if (m_pBossState != nullptr)
 	{
+		m_pBossState->End(this);
 		delete m_pBossState;
 		m_pBossState = state;
 		m_pBossState->Start(this);
