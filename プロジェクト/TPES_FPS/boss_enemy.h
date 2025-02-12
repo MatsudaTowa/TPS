@@ -15,6 +15,7 @@
 #include "boss_state.h"
 #include"player.h"
 #include "dash_effect.h"
+#include "tackle_charge.h"
 
 class CBossChase;
 class CBossWandering;
@@ -74,7 +75,9 @@ public:
 
 	CBossSearch* m_pSearch; //探索処理
 
-	CDashEffect* m_pDashEffect;
+	CDashEffect* m_pDashEffect; //ダッシュエフェクト
+
+	CTackleCharge* m_pTackleCharge; //タックルを行う前のエフェクト
 
 	enum COLISION_AXIS
 	{

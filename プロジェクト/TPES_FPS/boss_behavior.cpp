@@ -12,6 +12,7 @@
 #include "object.h"
 #include "smoke_range.h"
 #include "block_piece.h"
+#include "tackle_charge.h"
 
 //=============================================
 //コンストラクタ
@@ -422,7 +423,7 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 //=============================================
 //コンストラクタ
 //=============================================
-CBossTackle::CBossTackle():m_StayCnt(0), m_TackleCnt(0), m_isTackle(false)
+CBossTackle::CBossTackle():m_StayCnt(0), m_TackleCnt(0), m_effect_reduction(0.0f), m_isTackle(false)
 {
 }
 
@@ -444,13 +445,39 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 	if (!m_isTackle)
 	{//タックルしてなかったら
 		LookAtPlayer(boss);
+		if (boss->m_pTackleCharge == nullptr)
+		{
+			//ダッシュエフェクト生成
+			boss->m_pTackleCharge = CTackleCharge::Create({ {boss->GetPos().x,boss->GetPos().y + 50.0f,boss->GetPos().z}}
+			, boss->m_pTackleCharge->SIZE, {1.0f,0.0f,0.0f,1.0f});
+
+			//タックルのエフェクトの減産量計算
+			m_effect_reduction = boss->m_pTackleCharge->SIZE.x / STAY_FLAME;
+		}
+
+		if (boss->m_pTackleCharge != nullptr)
+		{
+			//サイズ取得
+			D3DXVECTOR3 size = boss->m_pTackleCharge->GetSize();
+
+			size.x -= m_effect_reduction;
+			size.y -= m_effect_reduction;
+
+			boss->m_pTackleCharge->SetSize(size);
+		}
 		++m_StayCnt;
 	}
 
-	if (m_StayCnt > STAY_FLAME)
+	if (m_StayCnt > STAY_FLAME - CORRECTION_FLAME)
 	{//カウントが既定カウントに到達したら
 		//タックルSEを鳴らす
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_TACKLE);
+
+		if (boss->m_pTackleCharge != nullptr)
+		{//エフェクトを破棄
+			boss->m_pTackleCharge->Uninit();
+			boss->m_pTackleCharge = nullptr;
+		}
 		m_isTackle = true;
 		m_StayCnt = 0;
 	}

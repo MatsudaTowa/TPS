@@ -147,12 +147,14 @@ public:
 		m_isTackle = isTackle;
 	}
 private:
-	static const int STAY_FLAME = 60; //突進までの待機時間
+	static const int STAY_FLAME = 180; //突進までの待機時間
+	static const int CORRECTION_FLAME = 15; //エフェクトと合わせるとずれるのでフレームを補正
 	static const int TACKLE_FLAME = 30; //タックル時間
 	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
 	int m_StayCnt;
 	int m_TackleCnt;
 	bool m_isTackle;
+	float m_effect_reduction; //エフェクトのサイズ縮小
 };
 
 //=============================================

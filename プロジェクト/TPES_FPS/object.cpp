@@ -51,7 +51,6 @@ void CObject::ReleaseAll()
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
-
 			if (m_apObject[nCntPri][nCntObj] != nullptr)
 			{
 				if (m_apObject[nCntPri][nCntObj]->m_type != CObject::OBJECT_TYPE::OBJECT_TYPE_FADE)
@@ -74,7 +73,7 @@ void CObject::UpdateAll()
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
-			if (m_apObject[nCntPri][nCntObj] != nullptr)
+			if (m_apObject[nCntPri][nCntObj] == nullptr)
 			{
 				//XVˆ—
 				m_apObject[nCntPri][nCntObj]->Update();

@@ -15,12 +15,15 @@ const D3DXVECTOR3 CBossEnemy::SHADOW_SIZE = { 30.0f, 0.0, 30.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CBossEnemy::CBossEnemy(int nPriority)
+CBossEnemy::CBossEnemy(int nPriority):CEnemy(nPriority),
+m_pChase(nullptr),										//追跡処理
+m_pWandering(nullptr),									//徘徊処理
+m_pConfusion(nullptr),									//混乱処理
+m_pTackle(nullptr),										//タックル処理
+m_pSearch(nullptr),										//探索処理
+m_pDashEffect(nullptr),									//ダッシュエフェクト
+m_pTackleCharge(nullptr)								//タックル前のエフェクト
 {
-	m_pBossState = nullptr;
-
-	m_pDashEffect = nullptr;
-
 	if (m_pWandering == nullptr)
 	{
 		m_pWandering = new CBossWandering;
@@ -84,6 +87,11 @@ CBossEnemy::~CBossEnemy()
 	{
 		m_pDashEffect->Uninit();
 		m_pDashEffect = nullptr;
+	}
+	if (m_pTackleCharge != nullptr)
+	{
+		m_pTackleCharge->Uninit();
+		m_pTackleCharge = nullptr;
 	}
 }
 

@@ -15,6 +15,7 @@ class CTackleCharge : public CBillboard
 {
 public:
 	static const int PRIORITY = 10; //ï`âÊèá
+	static const D3DXVECTOR3 SIZE; //ÉTÉCÉY
 
 	CTackleCharge(int nPriority = PRIORITY);
 	~CTackleCharge()override;

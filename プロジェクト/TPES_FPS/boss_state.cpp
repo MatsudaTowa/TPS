@@ -348,12 +348,20 @@ void CTackleState::Start(CBossEnemy* boss)
 
 }
 
+//=============================================
+//ÅŒã‚Ìˆê‰ñ‚¾‚¯ŒÄ‚Î‚ê‚éŠÖ”
+//=============================================
 void CTackleState::End(CBossEnemy* boss)
 {
 	if (boss->m_pDashEffect != nullptr)
 	{
 		boss->m_pDashEffect->Uninit();
 		boss->m_pDashEffect = nullptr;
+	}
+	if (boss->m_pTackleCharge != nullptr)
+	{
+		boss->m_pTackleCharge->Uninit();
+		boss->m_pTackleCharge = nullptr;
 	}
 }
 
