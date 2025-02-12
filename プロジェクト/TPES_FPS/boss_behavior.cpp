@@ -696,7 +696,7 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 }
 
 //外周のターゲットポイントのIdx
-const int CBossRampage::OUTER_CIRCUMFERENCE[4]
+const int CBossRampage::OUTER_CIRCUMFERENCE[NUM_TARGETPOINT]
 {
 	0,
 	2,
@@ -733,7 +733,7 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 	float distance = sqrtf(point.x * point.x + point.z * point.z);
 
 	// 到達判定用の閾値
-	const float threshold = 2.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
+	const float threshold = 5.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
 
 	//プレイヤーに向ける角度を算出
 	float fAngle = atan2f(point.x, point.z);
@@ -777,17 +777,20 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 		}
 
 		++m_MoveIdx; //位置カウントアップ
-		if (m_MoveIdx > 4)
+		if (m_MoveIdx > NUM_TARGETPOINT)
 		{
+			boss->SetMove({ 0.0f,0.0f,0.0f });
+
 			m_LapCnt++; //周回数カウントアップ
 			m_MoveIdx = 0; //初期位置に
 		}
-		if (m_LapCnt > 2)
+		if (m_LapCnt >= NUM_RAPS)
 		{
 			//メンバ変数リセット
 			m_LapCnt = 0;
 			m_MoveIdx = 0;
 			boss->SetMotion(CBossEnemy::MOTION_NEUTRAL);
+			boss->SetMove({ 0.0f,0.0f,0.0f });
 			boss->ChangeState(new CTackleState);
 		}
 	}

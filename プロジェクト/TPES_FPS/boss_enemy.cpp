@@ -383,15 +383,15 @@ void CBossEnemy::DrawDebug()
 	{
 		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
 		{
-			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:X\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f rot:%.1f,%.1f,%.1f 当たり判定:X", GetLife(), GetMove().x, GetMove().y, GetMove().z, GetRot().x, GetRot().y, GetRot().z);
 		}
 		else if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z)
 		{
-			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:Z\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f rot:%.1f,%.1f,%.1f 当たり判定:Z", GetLife(), GetMove().x, GetMove().y, GetMove().z, GetRot().x, GetRot().y, GetRot().z);
 		}
 		else
 		{
-			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f 当たり判定:当たってない\n0キーでHP10に", GetLife(), GetMove().x, GetMove().y, GetMove().z);
+			sprintf(&aStr[0], "\n\n\n\n\n\nHP:%d move:%.1f,%.1f,%.1f rot:%.1f,%.1f,%.1f 当たり判定:当たってない", GetLife(), GetMove().x, GetMove().y, GetMove().z, GetRot().x, GetRot().y, GetRot().z);
 		}
 	}
 

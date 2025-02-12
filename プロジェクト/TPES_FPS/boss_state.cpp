@@ -194,7 +194,7 @@ void CBossStanState::Stan(CBossEnemy* boss)
 		m_StanCnt = 0;
 
 		//ŽËŒ‚ó‘Ô‚É‘JˆÚ
-		boss->ChangeState(new CChaseState);
+		boss->ChangeState(new CWanderingState);
 	}
 }
 
@@ -236,7 +236,7 @@ CWanderingState::~CWanderingState()
 //=============================================
 void CWanderingState::Wandering(CBossEnemy* boss)
 {
-	if (boss->GetLife() < 500)
+	if (boss->GetLife() < CBossEnemy::LOW_HP)
 	{//‘Ì—Í‚ª­‚È‚©‚Á‚½‚ç
 		//–\‘–ó‘Ô‚É
 		boss->ChangeState(new CRampageState);
@@ -557,6 +557,7 @@ void CSearchState::DrawDebug()
 //=============================================
 void CRampageState::Start(CBossEnemy* boss)
 {
+	boss->SetMove({ 0.0f,0.0f,0.0f });
 }
 
 //=============================================
