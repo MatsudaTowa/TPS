@@ -21,6 +21,7 @@ m_pWandering(nullptr),									//徘徊処理
 m_pConfusion(nullptr),									//混乱処理
 m_pTackle(nullptr),										//タックル処理
 m_pSearch(nullptr),										//探索処理
+m_pRampage(nullptr),									//暴走処理
 m_pDashEffect(nullptr),									//ダッシュエフェクト
 m_pTackleCharge(nullptr)								//タックル前のエフェクト
 {
@@ -47,6 +48,10 @@ m_pTackleCharge(nullptr)								//タックル前のエフェクト
 	if (m_pTackle == nullptr)
 	{
 		m_pTackle = new CBossTackle;
+	}
+	if (m_pRampage == nullptr)
+	{
+		m_pRampage = new CBossRampage;
 	}
 	if (m_pSearch == nullptr)
 	{
@@ -78,6 +83,10 @@ CBossEnemy::~CBossEnemy()
 	if (m_pTackle != nullptr)
 	{
 		delete m_pTackle;
+	}
+	if (m_pRampage != nullptr)
+	{
+		delete m_pRampage;
 	}
 	if (m_pSearch != nullptr)
 	{
@@ -136,19 +145,14 @@ void CBossEnemy::Update()
 {
 	CEnemy::Update();
 
-	m_pBossState->Chase(this);
-
-	m_pBossState->Wandering(this);
-
-	m_pBossState->Stan(this);
-
-	m_pBossState->Confusion(this);
-
-	m_pBossState->Tackle(this);
-
-	m_pBossState->Search(this);
+	ProcessState(); //各ステートの実行処理
 
 	Motion(NUM_PARTS); //モーション処理
+
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_9))
+	{
+		SetLife(300);
+	}
 
 	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
 	{
@@ -167,6 +171,26 @@ void CBossEnemy::Update()
 			m_HitAxis = NONE;
 		}
 	}
+}
+
+//=============================================
+//ステートの実行処理
+//=============================================
+void CBossEnemy::ProcessState()
+{
+	m_pBossState->Chase(this);
+
+	m_pBossState->Wandering(this);
+
+	m_pBossState->Stan(this);
+
+	m_pBossState->Confusion(this);
+
+	m_pBossState->Tackle(this);
+
+	m_pBossState->Search(this);
+
+	m_pBossState->Rampage(this);
 }
 
 //=============================================
@@ -192,6 +216,45 @@ void CBossEnemy::ChangeState(CBossState* state)
 		m_pBossState = state;
 		m_pBossState->Start(this);
 	}
+}
+
+//=============================================
+//タックルの処理
+//=============================================
+void CBossEnemy::TackleAction()
+{
+	SetMotion(CBossEnemy::MOTION_TACKLE);
+
+	if (m_pDashEffect == nullptr)
+	{
+		float fAngle = atan2f(sinf(GetRot().y), cosf(GetRot().y));
+
+		//ダッシュエフェクト生成
+		m_pDashEffect = CDashEffect::Create({m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - 100.0f,m_apModel[3]->GetMtxWorld()._43 }
+		, { 0.0f,fAngle,0.0f });
+	}
+
+	//移動量取得
+	D3DXVECTOR3 move = GetMove();
+
+	//移動量加算
+	move.x += sinf( GetRot().y) *  GetSpeed() * -15.0f;
+	move.z += cosf( GetRot().y) *  GetSpeed() * -15.0f;
+
+	//移動量代入
+	SetMove(move);
+
+	if ( m_pDashEffect != nullptr)
+	{//エフェクトがあったら
+	 //エフェクトを動かす
+		 m_pDashEffect->SetPos({ m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - 100.0f,m_apModel[3]->GetMtxWorld()._43 });
+	}
+
+	//自分の方向を取得
+	D3DXVECTOR3 vec = { sinf( GetRot().y + D3DX_PI), 0.0f, cosf( GetRot().y + D3DX_PI) };
+
+	//プレイヤーとの判定チェック
+	 ColisionPlayer();
 }
 
 //=============================================
@@ -288,6 +351,18 @@ void CBossEnemy::HitBlock(int NumParts)
 				break;
 			}
 		}
+	}
+}
+
+//=============================================
+//当たってない判定に
+//=============================================
+void CBossEnemy::ColisionReset()
+{
+	for (int nCntParts = 0; nCntParts < GetNumParts(); nCntParts++)
+	{
+		m_apModel[nCntParts]->GetColisionBlockInfo().bColision_X = false;
+		m_apModel[nCntParts]->GetColisionBlockInfo().bColision_Z = false;
 	}
 }
 

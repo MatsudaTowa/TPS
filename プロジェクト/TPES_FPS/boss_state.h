@@ -31,6 +31,7 @@ public:
 	virtual void Confusion(CBossEnemy* boss);
 	virtual void Tackle(CBossEnemy* boss);
 	virtual void Search(CBossEnemy* boss);
+	virtual void Rampage(CBossEnemy* boss);
 	virtual void DrawDebug();
 };
 
@@ -123,5 +124,17 @@ public:
 	virtual void DrawDebug()override;
 private:
 	D3DXVECTOR3 m_TargetPos;
+};
+
+//=============================================
+//エネミーの暴走状態
+//=============================================
+class CRampageState : public CBossState
+{
+public:
+	void Start(CBossEnemy* boss) override;
+	void End(CBossEnemy* boss) override;
+	virtual void Rampage(CBossEnemy* boss)override;
+	virtual void DrawDebug()override;
 };
 #endif

@@ -22,6 +22,7 @@ class CBossWandering;
 class CBossConfusion;
 class CBossTackle;
 class CBossSearch;
+class CBossRampage;
 class CBossState;
 
 //ボスのエネミークラス
@@ -57,6 +58,8 @@ public:
 
 	void ChangeState(CBossState* state);
 
+	void TackleAction(); //タックルの実行処理
+
 	void ColisionPlayer(); //プレイヤーとの当たり判定
 
 	void CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
@@ -64,6 +67,8 @@ public:
 	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
 
 	void HitBlock(int NumParts) override; //ブロック当たり判定(複数パーツ用)
+
+	void ColisionReset();
 
 	CBossChase* m_pChase; //追跡処理
 
@@ -74,6 +79,8 @@ public:
 	CBossTackle* m_pTackle; //タックル処理
 
 	CBossSearch* m_pSearch; //探索処理
+
+	CBossRampage* m_pRampage; //暴走処理
 
 	CDashEffect* m_pDashEffect; //ダッシュエフェクト
 
@@ -102,6 +109,8 @@ private:
 	static const float DEFAULT_MOVE; //通常時の移動
 
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+
+	void ProcessState();
 
 	void DrawDebug();
 

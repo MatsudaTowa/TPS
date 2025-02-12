@@ -78,6 +78,13 @@ void CBossState::Search(CBossEnemy* boss)
 }
 
 //=============================================
+//ボスの暴走状態
+//=============================================
+void CBossState::Rampage(CBossEnemy* boss)
+{
+}
+
+//=============================================
 //ボスのデバッグ情報
 //=============================================
 void CBossState::DrawDebug()
@@ -229,6 +236,11 @@ CWanderingState::~CWanderingState()
 //=============================================
 void CWanderingState::Wandering(CBossEnemy* boss)
 {
+	if (boss->GetLife() < 500)
+	{//体力が少なかったら
+		//暴走状態に
+		boss->ChangeState(new CRampageState);
+	}
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
 		m_bDamage = true;
@@ -538,4 +550,50 @@ void CSearchState::Search(CBossEnemy* boss)
 //=============================================
 void CSearchState::DrawDebug()
 {
+}
+
+//=============================================
+//最初の一回だけ呼ばれる関数
+//=============================================
+void CRampageState::Start(CBossEnemy* boss)
+{
+}
+
+//=============================================
+//最後の一回だけ呼ばれる関数
+//=============================================
+void CRampageState::End(CBossEnemy* boss)
+{
+	if (boss->m_pDashEffect != nullptr)
+	{
+		boss->m_pDashEffect->Uninit();
+		boss->m_pDashEffect = nullptr;
+	}
+}
+
+//=============================================
+//ボスの暴走状態
+//=============================================
+void CRampageState::Rampage(CBossEnemy* boss)
+{
+	if (boss->m_pRampage != nullptr)
+	{
+		boss->m_pRampage->Rampage(boss);
+	}
+}
+
+//=============================================
+//ボスの暴走状態デバッグ
+//=============================================
+void CRampageState::DrawDebug()
+{
+#ifdef _DEBUG
+	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
+	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	char aStr[256];
+
+	sprintf(&aStr[0], "\n\n暴走");
+	//テキストの描画
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
+#endif // _DEBUG
 }

@@ -108,8 +108,6 @@ public:
 	~CBossTackle();
 	void Tackle(CBossEnemy* boss);
 
-	void ColisionReset(CBossEnemy* boss);
-
 	//ステイカウント取得
 	int& GetStayCnt()
 	{
@@ -167,5 +165,20 @@ public:
 	~CBossSearch();
 	void Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos);
 private:
+};
+
+//=============================================
+//暴走のストラテジー
+//=============================================
+class CBossRampage
+{
+public:
+	CBossRampage();
+	~CBossRampage();
+	void Rampage(CBossEnemy* boss);
+private:
+	static const int OUTER_CIRCUMFERENCE[4]; //外周の番号
+	int m_MoveIdx; //移動先の番号
+	int m_LapCnt; //何周したかのカウント
 };
 #endif // !_ENEMY_BEHAVIOR_

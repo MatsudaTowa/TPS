@@ -73,7 +73,7 @@ void CObject::UpdateAll()
 	{
 		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
-			if (m_apObject[nCntPri][nCntObj] == nullptr)
+			if (m_apObject[nCntPri][nCntObj] != nullptr)
 			{
 				//XVˆ—
 				m_apObject[nCntPri][nCntObj]->Update();

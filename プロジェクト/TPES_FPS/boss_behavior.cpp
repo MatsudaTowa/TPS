@@ -484,37 +484,10 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 	if (m_isTackle)
 	{
-		boss->SetMotion(CBossEnemy::MOTION_TACKLE);
-
-		if (boss->m_pDashEffect == nullptr)
-		{
-			float fAngle = atan2f(sinf(boss->GetRot().y), cosf(boss->GetRot().y));
-
-			//ダッシュエフェクト生成
-			boss->m_pDashEffect = CDashEffect::Create({boss->m_apModel[3]->GetMtxWorld()._41,boss->m_apModel[3]->GetMtxWorld()._42 - 100.0f,boss->m_apModel[3]->GetMtxWorld()._43 }
-			, { 0.0f,fAngle,0.0f });
-		}
-
 		++m_TackleCnt;
 
-		D3DXVECTOR3 move = boss->GetMove();
-
-		move.x += sinf(boss->GetRot().y) * boss->GetSpeed() * -15.0f;
-		move.z += cosf(boss->GetRot().y) * boss->GetSpeed() * -15.0f;
-
-		//移動量代入
-		boss->SetMove(move);
-
-		if (boss->m_pDashEffect != nullptr)
-		{//エフェクトがあったら
-			//エフェクトを動かす
-			boss->m_pDashEffect->SetPos({ boss->m_apModel[3]->GetMtxWorld()._41,boss->m_apModel[3]->GetMtxWorld()._42 - 100.0f,boss->m_apModel[3]->GetMtxWorld()._43 });
-		}
-
-		//自分の方向を取得
-		D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI) };
-
-		boss->ColisionPlayer();
+		//タックルの実行処理を呼ぶ
+		boss->TackleAction();
 
 		for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
 		{
@@ -543,7 +516,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock = nullptr;
 
 					//すべてのパーツを当たってない判定に
-					ColisionReset(boss);
+					boss->ColisionReset();
 				}
 
 
@@ -562,18 +535,6 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				break;
 			}
 		}
-	}
-}
-
-//=============================================
-//当たってない判定に
-//=============================================
-void CBossTackle::ColisionReset(CBossEnemy* boss)
-{
-	for (int nCntParts = 0; nCntParts < boss->GetNumParts(); nCntParts++)
-	{
-		boss->m_apModel[nCntParts]->GetColisionBlockInfo().bColision_X = false;
-		boss->m_apModel[nCntParts]->GetColisionBlockInfo().bColision_Z = false;
 	}
 }
 
@@ -731,5 +692,103 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		boss->SetMove(move);
 
 		boss->ChangeState(new CConfusionBossState);
+	}
+}
+
+//外周のターゲットポイントのIdx
+const int CBossRampage::OUTER_CIRCUMFERENCE[4]
+{
+	0,
+	2,
+	8,
+	6,
+};
+
+//=============================================
+//コンストラクタ
+//=============================================
+CBossRampage::CBossRampage():m_MoveIdx(0), m_LapCnt(0)
+{
+}
+
+//=============================================
+//デストラクタ
+//=============================================
+CBossRampage::~CBossRampage()
+{
+}
+
+//=============================================
+//暴走状態
+//=============================================
+void CBossRampage::Rampage(CBossEnemy* boss)
+{
+	//移動先の情報取得(引数が移動先のポイントの配列番号)
+	CMovePoint* pMovePoint = CWave_Boss::GetMovePoint(OUTER_CIRCUMFERENCE[m_MoveIdx]);
+
+	//対象の位置への方向情報
+	D3DXVECTOR3 point = { pMovePoint->GetPos().x - boss->GetPos().x,0.0f,pMovePoint->GetPos().z - boss->GetPos().z };
+
+	// 目的地との距離を計算
+	float distance = sqrtf(point.x * point.x + point.z * point.z);
+
+	// 到達判定用の閾値
+	const float threshold = 2.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
+
+	//プレイヤーに向ける角度を算出
+	float fAngle = atan2f(point.x, point.z);
+
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = boss->GetRot();
+
+	rot.y = fAngle + D3DX_PI;
+
+	boss->SetRot(rot);
+
+	for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
+	{
+		if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
+			|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
+		{
+			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock != nullptr)
+			{
+				boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->CreatePiece();
+				boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->Uninit();
+				boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock = nullptr;
+				//すべてのパーツを当たってない判定に
+				boss->ColisionReset();
+			}
+		}
+	}
+
+	// まだ目的地に到達していない場合のみ移動処理を行う
+	if (distance > threshold)
+	{
+		//タックルの実行処理を呼ぶ
+		boss->TackleAction();
+	}
+	else
+	{
+		if (boss->m_pDashEffect != nullptr)
+		{//エフェクトがあったら
+			//エフェクト破棄
+			boss->m_pDashEffect->Uninit();
+			boss->m_pDashEffect = nullptr;
+		}
+
+		++m_MoveIdx; //位置カウントアップ
+		if (m_MoveIdx > 4)
+		{
+			m_LapCnt++; //周回数カウントアップ
+			m_MoveIdx = 0; //初期位置に
+		}
+		if (m_LapCnt > 2)
+		{
+			//メンバ変数リセット
+			m_LapCnt = 0;
+			m_MoveIdx = 0;
+			boss->SetMotion(CBossEnemy::MOTION_NEUTRAL);
+			boss->ChangeState(new CTackleState);
+		}
 	}
 }
