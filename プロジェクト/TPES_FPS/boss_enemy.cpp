@@ -238,8 +238,8 @@ void CBossEnemy::TackleAction()
 	D3DXVECTOR3 move = GetMove();
 
 	//ˆÚ“®—Ê‰ÁŽZ
-	move.x += sinf( GetRot().y) *  GetSpeed() * -15.0f;
-	move.z += cosf( GetRot().y) *  GetSpeed() * -15.0f;
+	move.x += sinf(GetRot().y) *  GetSpeed() * -15.0f;
+	move.z += cosf(GetRot().y) *  GetSpeed() * -15.0f;
 
 	//ˆÚ“®—Ê‘ã“ü
 	SetMove(move);
