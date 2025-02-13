@@ -149,10 +149,13 @@ void CBossEnemy::Update()
 
 	Motion(NUM_PARTS); //ƒ‚[ƒVƒ‡ƒ“ˆ—
 
+#ifdef _DEBUG
 	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_9))
 	{
 		SetLife(300);
 	}
+#endif // _DEBUG
+
 
 	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
 	{
