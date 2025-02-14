@@ -71,7 +71,7 @@ void CObject2D::Update()
 //=============================================
 void CObject2D::Draw()
 {
- 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
@@ -82,7 +82,7 @@ void CObject2D::Draw()
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャの設定
-	pDevice->SetTexture(0,m_pTexture);
+	pDevice->SetTexture(0, m_pTexture);
 	//テクスチャ拡大時に色を近似値にする
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
@@ -93,7 +93,7 @@ void CObject2D::Draw()
 
 	//テクスチャ拡大時の色を線形補間
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-
+	
 }
 
 //=============================================

@@ -71,15 +71,25 @@ public:
 		return m_type;
 	}
 
-	inline void SetType(OBJECT_TYPE type)
+	inline void SetisDraw(bool isDraw)
 	{
-		m_type = type;
+		m_isDraw = isDraw;
 	}
 
 	OBJECT_TYPE m_type;
 	
 protected:
 	void Release(); //自分自身の解放
+
+	inline bool& GetisDraw()
+	{
+		return m_isDraw;
+	}
+
+	inline void SetType(OBJECT_TYPE type)
+	{
+		m_type = type;
+	}
 
 private:
 
@@ -89,6 +99,8 @@ private:
 	int m_nPriority; //描画優先度
 
 	static int m_nNumAll; //総数
+
+	bool m_isDraw;
 
 	int m_nID; //オブジェクトのID
 };
