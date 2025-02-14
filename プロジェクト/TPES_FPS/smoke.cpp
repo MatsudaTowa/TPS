@@ -7,8 +7,14 @@
 #include "smoke.h"
 #include "smoke_range.h"
 #include "manager.h"
+#include "tactical_smoke.h"
+#include "broken_smoke.h"
 
+//テクスチャパス
 const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\effect002.tga";
+
+//スモークのサイズ
+const D3DXVECTOR3 CSmoke::SIZE = { 30.0f,30.0f,0.0f };
 
 //=============================================
 //コンストラクタ
@@ -29,8 +35,26 @@ CSmoke::~CSmoke()
 //=============================================
 HRESULT CSmoke::Init()
 {
+	//親クラスの初期化
 	CObject3D::Init();
-	m_nLife = SMOKE_LIFE; //ライフ設定
+
+	std::random_device seed;
+	std::mt19937 random(seed());
+
+	//それぞれの方向への移動量ランダムで設定
+	std::uniform_int_distribution<int> number_x(MOVE_X_MIN, MOVE_X_MAX);
+	std::uniform_int_distribution<int> number_y(MOVE_Y_MIN, MOVE_Y_MAX);
+	std::uniform_int_distribution<int> number_z(MOVE_Z_MIN, MOVE_Z_MAX);
+
+	//移動量代入
+	m_move = { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f };
+
+	//サイズ代入
+	SetSize(SIZE);
+
+	//ライフ設定
+	m_nLife = SMOKE_LIFE; 
+
 	//頂点座標
 	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
 
@@ -53,7 +77,7 @@ void CSmoke::Update()
 	CObject3D::Update();
 
 	if (m_nLife > 0)
-	{
+	{//ライフが残っていれば
 		--m_nLife;
 		D3DXVECTOR3 pos = GetPos();
 
@@ -62,67 +86,11 @@ void CSmoke::Update()
 		pos += m_move;
 
 		SetPos(pos);
-
-		//TODO:当たり判定はcolisionにまとめろ
-		//ColisionRange();
 	}
 	else
 	{
 		CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_SE_SMOKE);
 		Uninit();
-	}
-}
-
-//=============================================
-//スモーク当たり判定
-//=============================================
-void CSmoke::ColisionRange()
-{
-	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
-		if (pObj == nullptr)
-		{//ヌルポインタなら
-			continue;
-		}
-
-		//タイプ取得
-		CObject::OBJECT_TYPE type = pObj->GetType();
-
-		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
-		{
-			continue;
-		}
-
-		CSmokeRange* pRange = dynamic_cast<CSmokeRange*>(pObj);
-
-		if (GetPos().x - GetSize().x < pRange->GetPos().x + pRange->GetMinPos().x)
-		{
-			m_move.x += 0.01f;
-		}
-		else if (GetPos().x + GetSize().x > pRange->GetPos().x + pRange->GetMaxPos().x)
-		{
-			m_move.x -= 0.01f;
-		}
-
-		if (GetPos().z < pRange->GetPos().z + pRange->GetMinPos().z)
-		{
-			m_move.z += 0.01f;
-		}
-		else if (GetPos().z > pRange->GetPos().z + pRange->GetMaxPos().z)
-		{
-			m_move.z -= 0.01f;
-		}
-
-		if (GetPos().y < pRange->GetPos().y + pRange->GetMinPos().y)
-		{
-			m_move.y += 0.01f;
-		}
-		else if (GetPos().y > pRange->GetPos().y + pRange->GetMaxPos().y)
-		{
-			m_move.y -= 0.01f;
-		}
 	}
 }
 
@@ -178,17 +146,26 @@ void CSmoke::Draw()
 //=============================================
 //生成
 //=============================================
-CSmoke* CSmoke::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXVECTOR3 size, D3DXCOLOR col)
+CSmoke* CSmoke::Create(D3DXVECTOR3 pos, SMOKE_TYPE type)
 {
-	CSmoke* pSmoke = new CSmoke;
+	CSmoke* pSmoke = nullptr;
+
+	switch (type)
+	{
+	case CSmoke::SMOKE_TYPE_TACTICAL:
+		pSmoke = new CTacticalSmoke;
+		break;
+	case CSmoke::SMOKE_TYPE_BROKEN:
+		pSmoke = new CBrokenSmoke;
+		break;
+	default:
+		assert(false);
+		break;
+	}
 
 	if(pSmoke == nullptr) {return nullptr;}
 
 	pSmoke->SetPos(pos);
-	pSmoke->m_move = move;
-	pSmoke->SetRot(rot);
-	pSmoke->SetSize(size);
-	pSmoke->SetColor(col);
 	pSmoke->Init();
 	pSmoke->SetType(OBJECT_TYPE_SMOKE);
 

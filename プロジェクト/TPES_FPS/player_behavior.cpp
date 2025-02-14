@@ -90,7 +90,7 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
-	character->SetMove(character->GetMove() * 0.75f);
+	character->SetMove(character->GetMove() * MOVE_SUBTRACTION);
 
 	CPlayer::Motion_Type Motion;
 	Motion = CPlayer::Motion_Type::MOTION_ATTACK;

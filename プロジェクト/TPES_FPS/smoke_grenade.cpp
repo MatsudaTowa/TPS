@@ -66,14 +66,9 @@ void CSmokeGrenade::Update()
 	{//ày—ô‚µ‚½‚ç
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SMOKE);
 
-		std::random_device seed;
-		std::mt19937 random(seed());
-		std::uniform_int_distribution<int> number_x(-3, 3);
-		std::uniform_int_distribution<int> number_y(0, 3);
-		std::uniform_int_distribution<int> number_z(0, 1);
 		for (int nCnt = 0; nCnt < CREATE_SMOKE_NUM; nCnt++)
 		{
-			CSmoke::Create(GetPos(), { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f }, { 0.0f,0.0f,0.0f }, { 30.0f,30.0f,0.0f }, {1.0f,1.0f,1.0f,1.0f});
+			CSmoke::Create(GetPos(),CSmoke::SMOKE_TYPE_TACTICAL);
 		}
 		CSmokeRange::Create(GetPos(),{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f});
 		Uninit();

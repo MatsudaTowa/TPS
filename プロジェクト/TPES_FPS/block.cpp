@@ -73,13 +73,8 @@ void CBlock::CreatePiece()
 	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_BREAK);
 
 	for (int nCnt = 0; nCnt < NUM_SMOKE; nCnt++)
-	{
-		std::random_device seed;
-		std::mt19937 random(seed());
-		std::uniform_int_distribution<int> number_x(-3, 3);
-		std::uniform_int_distribution<int> number_y(0, 5);
-		std::uniform_int_distribution<int> number_z(0, 1);
-		CSmoke::Create({ GetPos().x,10.0f,GetPos().z }, { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f }, { 0.0f,0.0f,0.0f }, { 30.0f,30.0f,0.0f }, {0.1f,0.1f,0.1f,1.0f});
+	{//îCà”ÇÃêîê∂ê¨
+		CSmoke::Create({ GetPos().x,10.0f,GetPos().z }, CSmoke::SMOKE_TYPE_BROKEN);
 	}
 
 	for (int nNumCreate = 0; nNumCreate < NUM_PIECE; ++nNumCreate)

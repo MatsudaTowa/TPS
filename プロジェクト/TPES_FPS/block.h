@@ -43,6 +43,7 @@ public:
 private:
 	static const int NUM_PIECE = 5; //壊れた際に生成するピース数
 	static const int NUM_SMOKE = 30; //壊れた際に生成するスモーク数
+	static const D3DXCOLOR SMOKE_COLOR; //壊れた際に生成するスモークの色
 	BLOCKTYPE m_type;
 	bool m_bBreak; //壊せるかどうか
 	int m_nLife;
