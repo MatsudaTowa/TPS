@@ -7,8 +7,11 @@
 #include "tactical_smoke.h"
 #include "manager.h"
 
-//カラー面接
+//カラー
 const D3DXCOLOR CTacticalSmoke::COLOR = { 1.0f,1.0f,1.0f,1.0f };
+
+//スモークのサイズ
+const D3DXVECTOR3 CTacticalSmoke::SIZE = { 60.0f,60.0f,0.0f };
 
 //=============================================
 //コンストラクタ
@@ -32,6 +35,24 @@ HRESULT CTacticalSmoke::Init()
 	//親クラスの初期化
 	CSmoke::Init();
 
+	//サイズ代入
+	SetSize(SIZE);
+
+	std::random_device seed;
+	std::mt19937 random(seed());
+
+	//それぞれの方向への移動量ランダムで設定
+	std::uniform_real_distribution<float> number_x(MOVE_X_MIN, MOVE_X_MAX);
+	std::uniform_real_distribution<float> number_y(MOVE_Y_MIN, MOVE_Y_MAX);
+	std::uniform_real_distribution<float> number_z(MOVE_Z_MIN, MOVE_Z_MAX);
+
+	D3DXVECTOR3 move = GetMove();
+	//移動量代入
+	move = { number_x(random) ,number_y(random) ,number_z(random) };
+
+	//移動量設定
+	SetMove(move);
+
 	//色設定
 	SetColor(COLOR);
 
@@ -54,6 +75,21 @@ void CTacticalSmoke::Update()
 {
 	//親クラスの更新
 	CSmoke::Update();
+
+	D3DXVECTOR3 move = GetMove();
+	//移動量代入
+	if (move.x > 0.0f)
+	{
+		move.x -= 0.01f;
+	}
+	if (move.x < 0.0f)
+	{
+		move.x += 0.01f;
+	}
+
+
+	//移動量設定
+	SetMove(move);
 }
 
 //=============================================

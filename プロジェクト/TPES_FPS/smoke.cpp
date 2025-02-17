@@ -13,13 +13,10 @@
 //テクスチャパス
 const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\effect002.tga";
 
-//スモークのサイズ
-const D3DXVECTOR3 CSmoke::SIZE = { 30.0f,30.0f,0.0f };
-
 //=============================================
 //コンストラクタ
 //=============================================
-CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),m_nLife(0),m_move({0.0f,0.0f,0.0f}), m_oldpos({ 0.0f,0.0f,0.0f })
+CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),m_nLife(0),m_move({0.0f,0.0f,0.0f})
 {
 }
 
@@ -37,20 +34,6 @@ HRESULT CSmoke::Init()
 {
 	//親クラスの初期化
 	CObject3D::Init();
-
-	std::random_device seed;
-	std::mt19937 random(seed());
-
-	//それぞれの方向への移動量ランダムで設定
-	std::uniform_int_distribution<int> number_x(MOVE_X_MIN, MOVE_X_MAX);
-	std::uniform_int_distribution<int> number_y(MOVE_Y_MIN, MOVE_Y_MAX);
-	std::uniform_int_distribution<int> number_z(MOVE_Z_MIN, MOVE_Z_MAX);
-
-	//移動量代入
-	m_move = { number_x(random) * 0.1f,number_y(random) * 0.1f,number_z(random) * 0.1f };
-
-	//サイズ代入
-	SetSize(SIZE);
 
 	//ライフ設定
 	m_nLife = SMOKE_LIFE; 
@@ -74,22 +57,62 @@ void CSmoke::Uninit()
 //=============================================
 void CSmoke::Update()
 {
+	//親クラスのアップデート
 	CObject3D::Update();
+
+	//移動処理
+	Move();
 
 	if (m_nLife > 0)
 	{//ライフが残っていれば
+		//ライフを1減らす
 		--m_nLife;
-		D3DXVECTOR3 pos = GetPos();
-
-		m_oldpos = pos;
-
-		pos += m_move;
-
-		SetPos(pos);
 	}
 	else
-	{
+	{//ライフがなければ
+		//フェードアウト
+		FadeOut();
+	}
+}
+
+//=============================================
+//移動処理
+//=============================================
+void CSmoke::Move()
+{
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	//移動量代入
+	pos += m_move;
+
+	//位置設定
+	SetPos(pos);
+
+	//頂点座標
+	SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
+}
+
+//=============================================
+//フェードアウト
+//=============================================
+void CSmoke::FadeOut()
+{
+	//色取得
+	D3DXCOLOR color = GetColor();
+
+	if (color.a > 0.0f)
+	{//透明度が0より高かったら
+		//減算
+		color.a -= FADE_VALUE;
+		//色代入
+		SetColor(color);
+	}
+	else
+	{//見えなくなったら
+		//SEを止めて
 		CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_SE_SMOKE);
+		//終了
 		Uninit();
 	}
 }

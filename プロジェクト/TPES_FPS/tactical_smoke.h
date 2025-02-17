@@ -21,6 +21,17 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	static constexpr float MOVE_X_MAX = 1.5f; //スモークの移動量の最大値_X
+	static constexpr float MOVE_X_MIN = -1.5f; //スモークの移動量の最小値_X
+
+	static constexpr float MOVE_Y_MAX = 0.35f; //スモークの移動量の最大値_Y
+	static constexpr float MOVE_Y_MIN = 0.0f; //スモークの移動量の最小値_Y
+
+	static constexpr float MOVE_Z_MAX = 0.1f; //スモークの移動量の最大値_Z
+	static constexpr float MOVE_Z_MIN = 0.0f; //スモークの移動量の最小値_Z
+
+	static const D3DXVECTOR3 SIZE; //スモークのサイズ
+
 	static const D3DXCOLOR COLOR;
 };
 
