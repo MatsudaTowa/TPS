@@ -49,19 +49,18 @@ const float CCamera::MIN_TURN_X = -0.15f;
 //コンストラクタ
 //=============================================
 CCamera::CCamera():
-
-m_fAngle(0.0f),
-m_fLength(0.0f),
-m_moveR({0.0f,0.0f,0.0f}),
-m_moveV({0.0f,0.0f,0.0f}),
+m_fAngle(FLOAT_ZERO),
+m_fLength(FLOAT_ZERO),
+m_moveR(VEC3_RESET_ZERO),
+m_moveV(VEC3_RESET_ZERO),
 m_mtxProjection(),
 m_mtxView(),
 m_pCameraState(),
-m_posR({0.0f,0.0f,0.0f}),
-m_posV({0.0f,0.0f,0.0f}),
-m_rot({0.0f,0.0,0.0f}),
-m_rotmove({0.0f,0.0f,0.0f}),
-m_vecU({0.0f,0.0f,0.0f})
+m_posR(VEC3_RESET_ZERO),
+m_posV(VEC3_RESET_ZERO),
+m_rot(VEC3_RESET_ZERO),
+m_rotmove(VEC3_RESET_ZERO),
+m_vecU(VEC3_RESET_ZERO)
 {
 }
 
@@ -82,15 +81,15 @@ HRESULT CCamera::Init()
 		m_pCameraState = new CThirdView;
 	}
 	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
+	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
 
-	m_moveV = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //視点移動量
-	m_moveR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視点移動量
+	m_moveV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点移動量
+	m_moveR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視点移動量
 
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //角度
-	m_rotmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //回転量
+	m_rot = D3DXVECTOR3(VEC3_RESET_ZERO); //角度
+	m_rotmove = D3DXVECTOR3(VEC3_RESET_ZERO); //回転量
 
 	D3DXVECTOR3 vecCamera = m_posR - m_posV;
 	m_fLength = sqrtf(vecCamera.y * vecCamera.y + vecCamera.z * vecCamera.z);
@@ -232,15 +231,15 @@ void CCamera::SetCamera()
 void CCamera::ResetCamera()
 {
 	m_posV = D3DXVECTOR3(0.0f, 30.0f, -180.0f); //視点
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
+	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
 
-	m_moveV = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //視点移動量
-	m_moveR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視点移動量
+	m_moveV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点移動量
+	m_moveR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視点移動量
 
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //角度
-	m_rotmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //回転量
+	m_rot = D3DXVECTOR3(VEC3_RESET_ZERO); //角度
+	m_rotmove = D3DXVECTOR3(VEC3_RESET_ZERO); //回転量
 
 	D3DXVECTOR3 vecCamera = m_posR - m_posV;
 	m_fLength = sqrtf(vecCamera.y * vecCamera.y + vecCamera.z * vecCamera.z);

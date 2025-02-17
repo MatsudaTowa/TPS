@@ -150,7 +150,7 @@ void CBullet::SetHitMaker()
 				{
 					if (pplayer->m_Raticle->m_pHitMaker != nullptr)
 					{
-						pplayer->m_Raticle->m_pHitMaker->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+						pplayer->m_Raticle->m_pHitMaker->SetColor(COLOR_WHITE);
 					}
 				}
 			}
@@ -204,6 +204,9 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3D
 	return pBullet;
 }
 
+//=============================================
+//ブロックに当たったかどうか
+//=============================================
 bool CBullet::PenetrationBlock()
 {
 	//位置取得

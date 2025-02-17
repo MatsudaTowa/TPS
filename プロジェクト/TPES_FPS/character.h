@@ -230,6 +230,8 @@ private:
 
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
+	static const float SHADOW_POS_Y; //影のY座標(地面から少し浮かす)
+	static constexpr float RAY_CORRECTION_VALUE = 20.0f; //レイを飛ばすYの補正値
 
 	void ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);
 	void ColisionBlock_Y(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);

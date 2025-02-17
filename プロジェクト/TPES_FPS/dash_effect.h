@@ -26,5 +26,8 @@ public:
 	//ƒuƒƒbƒNì¬
 	static CDashEffect* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 private:
+	static const D3DXVECTOR3 SCALE;
+	static const D3DXCOLOR COLOR;
+
 };
 #endif

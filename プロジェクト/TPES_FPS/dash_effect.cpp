@@ -7,7 +7,14 @@
 #include "dash_effect.h"
 #include "manager.h"
 
+//xファイルのファイルパス
 const char* CDashEffect::MODEL_NAME = "data\\MODEL\\dash_effect.x";
+
+//スケール
+const D3DXVECTOR3 CDashEffect::SCALE = { 10.0f, 10.0f, 10.0f };
+
+//カラー
+const D3DXCOLOR CDashEffect::COLOR = { 1.0f, 1.0f, 1.0f,0.35f };
 
 //=============================================
 //コンストラクタ
@@ -29,8 +36,8 @@ CDashEffect::~CDashEffect()
 HRESULT CDashEffect::Init()
 {
 	//描画に必要な情報設定
-	SetScale({ 10.0f, 10.0f, 10.0f });
-	SetColor({ 1.0f, 1.0f, 1.0f,0.35f });
+	SetScale(SCALE);
+	SetColor(COLOR);
 	CObjectX::Init();
 	return S_OK;
 }

@@ -35,6 +35,9 @@
 //1/4‰~
 #define QRTR_PI	(D3DX_PI * 0.25f)
 
+//•¶š”Å‘å”
+#define MAX_TXT (256)
+
 //•úËó‚Éƒ‰ƒ“ƒ_ƒ€
 #define CICRLE_RAND  ((float)(rand() % 629 - 314) / 100.0f)
 

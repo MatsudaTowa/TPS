@@ -96,7 +96,6 @@ void CBossState::DrawDebug()
 //=============================================
 CChaseState::CChaseState() : m_PlayTackleCnt(INT_ZERO)
 {
-	m_PlayTackleCnt = INT_ZERO;
 }
 
 //=============================================
@@ -104,6 +103,8 @@ CChaseState::CChaseState() : m_PlayTackleCnt(INT_ZERO)
 //=============================================
 CChaseState::~CChaseState()
 {
+	m_PlayTackleCnt = INT_ZERO;
+
 }
 
 //=============================================

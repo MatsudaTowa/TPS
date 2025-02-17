@@ -101,11 +101,11 @@ void CStanState::Stan(CCharacter* character)
 void CConfusionState::Start(CCharacter* character)
 {
 	m_StartRot = character->GetRot().y;
-	if (m_StartRot < D3DX_PI * 0.5f && m_StartRot > -D3DX_PI * 0.5f)
+	if (m_StartRot < HALF_PI && m_StartRot > -HALF_PI)
 	{
 		m_isRight = false;
 	}
-	else if (m_StartRot > D3DX_PI * 0.5f && m_StartRot < -D3DX_PI * 0.5f)
+	else if (m_StartRot > HALF_PI && m_StartRot < -HALF_PI)
 	{
 		m_isRight = true;
 	}

@@ -181,6 +181,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 		m_bTargetPlayer = false;
 
 		boss->ChangeState(new CConfusionBossState);
+		return;
 	}
 	else if (boss->PerformRaycast_Block(Vector, boss).hit
 		&&boss->PerformRaycast_Player(Vector, boss).distance > boss->PerformRaycast_Block(Vector, boss).distance)

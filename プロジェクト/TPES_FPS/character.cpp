@@ -17,32 +17,34 @@ const float CCharacter::BOSS_FIELD_X = 600.0f;
 const float CCharacter::GRAVITY_MOVE = 2.0f;
 //重力最大値
 const float CCharacter::GRAVITY_MAX = 100.0f;
+//影のY座標
+const float CCharacter::SHADOW_POS_Y = 0.5f;
 
 //=============================================
 //コンストラクタ
 //=============================================
 CCharacter::CCharacter(int nPriority):CObjectX(nPriority),
-m_bLanding(false),										//着地しているか
-m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),					//移動量
-m_nLife(0),												//体力
-m_nStateCnt(0),											//ダメージステートを維持するカウント
-m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),					//過去の位置
-m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), //今の状態
-m_PartsCnt(0),											//パーツ数
-m_nMotionFrameCnt(0),									//モーションのフレーム数
-m_nKeySetCnt(0),										//キーの個数
-m_Motion(0),											//モーション情報
-m_bLoopFinish(),										//ループが終わったか
-m_Speed(),												//スピード
-m_Jump(),												//ジャンプ力
-m_pGun(),												//銃のポインタ
-m_MotionSet(),											//モーション設定
-m_pMove(),												//移動する処理
-m_pGunAttack(),											//銃の攻撃
-m_pCharacterState(),									//キャラクターのステートパターンポインタ
-m_nJumpCnt(0),											//ジャンプ数
-m_pShadow(),											//影のポインタ
-m_ShadowSize(D3DXVECTOR3(0.0f, 0.0f, 0.0f))				//影のサイズ
+m_bLanding(false),												//着地しているか
+m_move(VEC3_RESET_ZERO),										//移動量
+m_nLife(INT_ZERO),												//体力
+m_nStateCnt(INT_ZERO),											//ダメージステートを維持するカウント
+m_oldpos(VEC3_RESET_ZERO),										//過去の位置
+m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL),			 //今の状態
+m_PartsCnt(INT_ZERO),											//パーツ数
+m_nMotionFrameCnt(INT_ZERO),									//モーションのフレーム数
+m_nKeySetCnt(INT_ZERO),											//キーの個数
+m_Motion(INT_ZERO),												//モーション情報
+m_bLoopFinish(),												//ループが終わったか
+m_Speed(),														//スピード
+m_Jump(),														//ジャンプ力
+m_pGun(),														//銃のポインタ
+m_MotionSet(),													//モーション設定
+m_pMove(),														//移動する処理
+m_pGunAttack(),													//銃の攻撃
+m_pCharacterState(),											//キャラクターのステートパターンポインタ
+m_nJumpCnt(INT_ZERO),													//ジャンプ数
+m_pShadow(),													//影のポインタ
+m_ShadowSize(VEC3_RESET_ZERO)						//影のサイズ
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
@@ -171,7 +173,7 @@ void CCharacter::Update()
 	m_pShadow->SetSize(m_ShadowSize);
 
 	//影の位置設定
-	m_pShadow->SetPos({ GetPos().x,0.5f,GetPos().z });
+	m_pShadow->SetPos({ GetPos().x,SHADOW_POS_Y,GetPos().z });
 
 	//最大最小値取得
 	D3DXVECTOR3 minpos = GetMinPos();
@@ -180,7 +182,7 @@ void CCharacter::Update()
 	if (m_bLanding)
 	{//着地してるなら
 		//ジャンプ数リセット
-		m_nJumpCnt = 0;
+		m_nJumpCnt = INT_ZERO;
 	}
 
 	//ブロックとの接触処理
@@ -234,7 +236,7 @@ void CCharacter::MotionDraw()
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &MtxWorld);
 
-	for (int nCnt = 0; nCnt < m_PartsCnt; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < m_PartsCnt; nCnt++)
 	{
 		m_apModel[nCnt]->Draw();
 	}
@@ -245,20 +247,20 @@ void CCharacter::MotionDraw()
 //=============================================
 void CCharacter::Load_Parts(const char* FileName)
 {
-	int nCnt = 0;
-	int nCntName = 0;
-	int nCntKey = 0; //キーを入れるパーツのカウント数
-	int nCntMotion = 0; //キー数のカウント
-	int nCntMotionSet = 0; //モーションの種類のカウント
-	char aDataSearch[256];
-	char aEqual[256]; //[＝]読み込み用
-	char aGets[256]; //モーションのいらないもの読み込み用
-	float speed = 0.0f;//移動量
-	float jump = 0.0f;//ジャンプ力
-	float radius = 0.0f;//半径
-	float height = 0.0f;//高さ
+	int nCnt = INT_ZERO;
+	int nCntName = INT_ZERO;
+	int nCntKey = INT_ZERO; //キーを入れるパーツのカウント数
+	int nCntMotion = INT_ZERO; //キー数のカウント
+	int nCntMotionSet = INT_ZERO; //モーションの種類のカウント
+	char aDataSearch[MAX_TXT];
+	char aEqual[MAX_TXT]; //[＝]読み込み用
+	char aGets[MAX_TXT]; //モーションのいらないもの読み込み用
+	float speed = FLOAT_ZERO;//移動量
+	float jump = FLOAT_ZERO;//ジャンプ力
+	float radius = FLOAT_ZERO;//半径
+	float height = FLOAT_ZERO;//高さ
 
-	char Path[MAX_PARTS][256]; //パーツのパス
+	char Path[MAX_PARTS][MAX_TXT]; //パーツのパス
 
 	//ファイルの読み込み
 	FILE* pFile;
@@ -297,7 +299,7 @@ void CCharacter::Load_Parts(const char* FileName)
 			fscanf(pFile, "%s", &aEqual[0]);
 			fscanf(pFile, "%s", &Path[nCntName][0]);
 			//モデルパーツのクリエイト
-			m_apModel[nCntName] = CModel_Parts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &Path[nCntName][0]);
+			m_apModel[nCntName] = CModel_Parts::Create(VEC3_RESET_ZERO, VEC3_RESET_ZERO, &Path[nCntName][0]);
 
 			nCntName++;
 		}
@@ -524,10 +526,10 @@ void CCharacter::SetMotion(int Motion)
 		m_Motion = Motion;
 
 		//フレームリセット
-		m_nMotionFrameCnt = 0;
+		m_nMotionFrameCnt = INT_ZERO;
 
 		//キーカウントリセット
-		m_nKeySetCnt = 0;
+		m_nKeySetCnt = INT_ZERO;
 
 		if (m_MotionSet[m_Motion].nLoop == 0)
 		{
@@ -535,7 +537,7 @@ void CCharacter::SetMotion(int Motion)
 			m_bLoopFinish = false;
 		}
 
-		for (int nCntParts = 0; nCntParts < m_PartsCnt; nCntParts++)
+		for (int nCntParts = INT_ZERO; nCntParts < m_PartsCnt; nCntParts++)
 		{
 			m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
 			m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
@@ -570,13 +572,13 @@ void CCharacter::Jump()
 //=============================================
 void CCharacter::HitBlock(int NumParts)
 {
-	for (int nPartsCnt = 0; nPartsCnt < NumParts; ++nPartsCnt)
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < NumParts; ++nPartsCnt)
 	{
 		D3DXVECTOR3 pos = {m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43};
 		D3DXVECTOR3 oldpos = m_apModel[nPartsCnt]->GetOldPos();
 		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
-		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
@@ -657,7 +659,7 @@ void CCharacter::ColisionBlock_Y(int PartsIdx, D3DXVECTOR3& CharacterPos, const 
 	if (Colision == CColision::COLISION::COLISON_TOP_Y)
 	{//y(上)方向に当たってたら
 		CharacterPos.y = CharacterOldPos.y;
-		m_move.y = 0.0f;
+		m_move.y = FLOAT_ZERO;
 		m_bLanding = true; //着地
 
 		//Y軸に当たった
@@ -710,7 +712,7 @@ void CCharacter::HitField()
 	D3DXVECTOR3 CharacterMin = GetMinPos();
 	D3DXVECTOR3 CharacterMax = GetMaxPos();
 
-	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CField::FIELD_PRIORITY, nCnt);
@@ -731,7 +733,7 @@ void CCharacter::HitField()
 				if (colision == CColision::COLISION::COLISON_TOP_Y)
 				{//y(上)方向に当たってたら
 					CharacterPos.y = m_oldpos.y;
-					m_move.y = 0.0f;
+					m_move.y = FLOAT_ZERO;
 					m_bLanding = true; //着地
 				}
 				else
@@ -745,28 +747,28 @@ void CCharacter::HitField()
 						&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x + 20.0f)
 					{
 						CharacterPos.x = m_oldpos.x;
-						m_move.x = 0.0f;
+						m_move.x = FLOAT_ZERO;
 					}
 
 					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x - 20.0f
 						&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x - 20.0f)
 					{
 						CharacterPos.x = m_oldpos.x;
-						m_move.x = 0.0f;
+						m_move.x = FLOAT_ZERO;
 					}
 
 					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z + 20.0f
 						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z + 20.0f)
 					{
 						CharacterPos.z = m_oldpos.z;
-						m_move.x = 0.0f;
+						m_move.x = FLOAT_ZERO;
 					}
 
 					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z - 20.0f
 						&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z - 20.0f)
 					{
 						CharacterPos.z = m_oldpos.z;
-						m_move.x = 0.0f;
+						m_move.x = FLOAT_ZERO;
 					}
 					SetPos(CharacterPos);
 
@@ -821,7 +823,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Smoke(D3DXVECTOR3 vector, CCha
 	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
 	Info.hit = false; //当たっていない状態に
 
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
@@ -835,7 +837,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Smoke(D3DXVECTOR3 vector, CCha
 			{
 				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
 				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pSmoke->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pSmoke->GetPos().z };
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pSmoke->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pSmoke->GetPos().z };
 
 				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
 
@@ -862,7 +864,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCha
 	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
 	Info.hit = false; //当たっていない状態に
 
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
@@ -877,7 +879,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCha
 				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 				//レイを原点からの差分から飛ばす
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pBlock->GetPos().z };
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pBlock->GetPos().z };
 				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
 				if (Info.hit == true)
 				{
@@ -916,7 +918,7 @@ void CCharacter::ConversionMtxWorld()
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &MtxWorld);
 
-	for (int nCnt = 0; nCnt < m_PartsCnt; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < m_PartsCnt; nCnt++)
 	{
 		m_apModel[nCnt]->ConversionMtxWorld();
 	}
@@ -932,7 +934,7 @@ void CCharacter::ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& Ch
 	if (Checkcolision_X == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
 		CharacterPos.x = m_oldpos.x;
-		m_move.x = 0.0f;
+		m_move.x = FLOAT_ZERO;
 	}
 }
 
@@ -946,7 +948,7 @@ void CCharacter::ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& Ch
 	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
 	{//z方向に当たってたら
 		CharacterPos.z = m_oldpos.z;
-		m_move.z = 0.0f;
+		m_move.z = FLOAT_ZERO;
 	}
 }
 
