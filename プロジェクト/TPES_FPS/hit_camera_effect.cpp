@@ -33,7 +33,7 @@ HRESULT CHitCameraEffect::Init()
 
 	D3DXVECTOR2 size = GetSize();
 
-	size = D3DXVECTOR2(SCREEN_WIDTH*0.5f, SCREEN_HEIGHT*0.5f);
+	size = D3DXVECTOR2(SCREEN_WIDTH*HALF, SCREEN_HEIGHT* HALF);
 
 	//サイズを代入
 	SetSize(size);
@@ -47,7 +47,7 @@ HRESULT CHitCameraEffect::Init()
 	SetColor(col);
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -78,7 +78,7 @@ void CHitCameraEffect::Update()
 	SetColor(col);
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================

@@ -7,6 +7,7 @@
 #include "object.h"
 #include "object2D.h"
 #include "object3D.h"
+#include  "manager.h"
 
 //‘”‰Šú‰»
 int CObject::m_nNumAll = 0;
@@ -21,7 +22,7 @@ CObject::CObject(int nPriority):m_isDraw(true)
 {
 	m_nPriority = nPriority; //•`‰æ—Dæ“xİ’è
 
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		if (m_apObject[m_nPriority][nCnt] == nullptr)
 		{
@@ -47,9 +48,9 @@ CObject::~CObject()
 //=============================================
 void CObject::ReleaseAll()
 {
-	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
+	for (int nCntPri = INT_ZERO; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
-		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
+		for (int nCntObj = INT_ZERO; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
 			if (m_apObject[nCntPri][nCntObj] != nullptr)
 			{
@@ -69,9 +70,9 @@ void CObject::ReleaseAll()
 //=============================================
 void CObject::UpdateAll()
 {
-	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
+	for (int nCntPri = INT_ZERO; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
-		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
+		for (int nCntObj = INT_ZERO; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
 			if (m_apObject[nCntPri][nCntObj] != nullptr)
 			{
@@ -87,9 +88,9 @@ void CObject::UpdateAll()
 //=============================================
 void CObject::DrawAll()
 {
-	for (int nCntPri = 0; nCntPri < CObject::PRI_MAX; nCntPri++)
+	for (int nCntPri = INT_ZERO; nCntPri < CObject::PRI_MAX; nCntPri++)
 	{
-		for (int nCntObj = 0; nCntObj < CObject::MAX_OBJECT; nCntObj++)
+		for (int nCntObj = INT_ZERO; nCntObj < CObject::MAX_OBJECT; nCntObj++)
 		{
 			if (m_apObject[nCntPri][nCntObj] == nullptr)
 			{

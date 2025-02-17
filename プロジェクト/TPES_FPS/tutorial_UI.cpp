@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "tutorial_UI.h"
+#include "manager.h"
 
 const D3DXVECTOR3 CTutorial_UI::KEY_UI_POS = { 1050.0f,200.0f,0.0f };
 const D3DXVECTOR2 CTutorial_UI::KEY_UI_SIZE = { 30.0f, 30.0f };
@@ -44,32 +45,32 @@ HRESULT CTutorial_UI::Init()
 	//UIÇÃògê∂ê¨
 	if (m_pKeyboardReload_UI == nullptr)
 	{
-		m_pKeyboardReload_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, {1.0f,1.0f,1.0f,1.0f}, CKeyboard_UI::KEY_R);
+		m_pKeyboardReload_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, COLOR_WHITE, CKeyboard_UI::KEY_R);
 	}
 
 	if (m_pReloadUI == nullptr)
 	{
-		m_pReloadUI = CAction_UI::Create(RELOAD_TXT_POS, RELOAD_TXT_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CAction_UI::ACTION_RELOAD);
+		m_pReloadUI = CAction_UI::Create(RELOAD_TXT_POS, RELOAD_TXT_SIZE, COLOR_WHITE, CAction_UI::ACTION_RELOAD);
 	}
 
 	if (m_pShotModeUI == nullptr)
 	{
-		m_pShotModeUI = CAction_UI::Create(SHOT_MODE_TXT_POS, SHOT_MODE_TXT_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CAction_UI::ACTION_SHOTMODE);
+		m_pShotModeUI = CAction_UI::Create(SHOT_MODE_TXT_POS, SHOT_MODE_TXT_SIZE, COLOR_WHITE, CAction_UI::ACTION_SHOTMODE);
 	}
 
 	if (m_pShotUI == nullptr)
 	{
-		m_pShotUI = CAction_UI::Create(SHOT_TXT_POS, SHOT_TXT_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CAction_UI::ACTION_SHOT);
+		m_pShotUI = CAction_UI::Create(SHOT_TXT_POS, SHOT_TXT_SIZE, COLOR_WHITE, CAction_UI::ACTION_SHOT);
 	}
 
 	if (m_pMouseshotmode_UI == nullptr)
 	{
-		m_pMouseshotmode_UI = CMouse_UI::Create(MOUSE_SHOT_MODE_UI_POS, MOUSE_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CMouse_UI::MOUSE_L);
+		m_pMouseshotmode_UI = CMouse_UI::Create(MOUSE_SHOT_MODE_UI_POS, MOUSE_UI_SIZE, COLOR_WHITE, CMouse_UI::MOUSE_L);
 	}
 
 	if (m_pMouseshot_UI == nullptr)
 	{
-		m_pMouseshot_UI = CMouse_UI::Create(MOUSE_SHOT_UI_POS, KEY_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CMouse_UI::MOUSE_R);
+		m_pMouseshot_UI = CMouse_UI::Create(MOUSE_SHOT_UI_POS, KEY_UI_SIZE, COLOR_WHITE, CMouse_UI::MOUSE_R);
 	}
 	return S_OK;
 }

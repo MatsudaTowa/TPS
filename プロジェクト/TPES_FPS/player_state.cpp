@@ -86,7 +86,7 @@ void CAvoidanceState::Avoidance(CPlayer* player)
 //=============================================
 //コンストラクタ
 //=============================================
-CBlownState::CBlownState():m_nStanCnt(0)
+CBlownState::CBlownState():m_nStanCnt(INT_ZERO)
 {
 }
 
@@ -105,7 +105,7 @@ void CBlownState::Blown(CPlayer* player)
 		{//スタンが終わったら
 			//当たり判定復活
 			player->SetEnemyColision(false);
-			m_nStanCnt = 0;
+			m_nStanCnt = INT_ZERO;
 			player->ChangePlayerState(new CDefaultState);
 		}
 	}

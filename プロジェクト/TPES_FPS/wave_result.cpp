@@ -31,7 +31,7 @@ HRESULT CWave_Result::Init()
 
 	if (m_pScreen == nullptr)
 	{
-		m_pScreen = CWave_Result_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+		m_pScreen = CWave_Result_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * HALF, SCREEN_HEIGHT * HALF, 0.0f));
 	}
 
 	LoadScore(m_ResultFile);

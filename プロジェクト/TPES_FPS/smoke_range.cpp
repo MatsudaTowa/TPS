@@ -48,7 +48,7 @@ void CSmokeRange::Uninit()
 void CSmokeRange::Update()
 {
 	CObjectX::Update();
-	if (m_nLife > 0)
+	if (m_nLife > INT_ZERO)
 	{
 		--m_nLife;
 	}

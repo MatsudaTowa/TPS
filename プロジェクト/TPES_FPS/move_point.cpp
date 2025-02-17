@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "move_point.h"
+#include "manager.h"
 
 //何番目の地点か
 int CMovePoint::m_NumPoint = 0;
@@ -32,7 +33,7 @@ CMovePoint::~CMovePoint()
 //=============================================
 HRESULT CMovePoint::Init()
 {
-	SetSize(D3DXVECTOR3(POINT_SIZE,POINT_SIZE,0.0f));
+	SetSize(D3DXVECTOR3(POINT_SIZE,POINT_SIZE,FLOAT_ZERO));
 	//親クラスの初期化
 	CObject3D::Init();
 	//頂点座標

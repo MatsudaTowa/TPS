@@ -12,14 +12,14 @@
 //コンストラクタ
 //=============================================
 CObject3D::CObject3D(int nPriority):CObject(nPriority),
-m_col({1.0f,1.0f,1.0f,1.0f}),
-m_pos({0.0f,0.0f,0.0f}),
-m_rot({0.0f,0.0f,0.0f}),
-m_size({0.0f,0.0f,0.0f}),
-m_tex_pos(0.0f,0.0f),
-m_nAnimFrame(0),
-m_nAnimCnt(0),
-m_tex_move(0.0f,0.0f),
+m_col(COLOR_WHITE),
+m_pos(VEC3_RESET_ZERO),
+m_rot(VEC3_RESET_ZERO),
+m_size(VEC3_RESET_ZERO),
+m_tex_pos(VEC2_RESET_ZERO),
+m_nAnimFrame(INT_ZERO),
+m_nAnimCnt(INT_ZERO),
+m_tex_move(VEC2_RESET_ZERO),
 m_mtxWorld()
 {
 	m_pTexture = nullptr;

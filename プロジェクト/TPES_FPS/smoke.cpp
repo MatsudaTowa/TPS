@@ -16,7 +16,7 @@ const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\effect002.tga";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),m_nLife(0),m_move({0.0f,0.0f,0.0f})
+CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),m_nLife(INT_ZERO),m_move(VEC3_RESET_ZERO)
 {
 }
 
@@ -63,7 +63,7 @@ void CSmoke::Update()
 	//移動処理
 	Move();
 
-	if (m_nLife > 0)
+	if (m_nLife > INT_ZERO)
 	{//ライフが残っていれば
 		//ライフを1減らす
 		--m_nLife;
@@ -101,7 +101,7 @@ void CSmoke::FadeOut()
 	//色取得
 	D3DXCOLOR color = GetColor();
 
-	if (color.a > 0.0f)
+	if (color.a > FLOAT_ZERO)
 	{//透明度が0より高かったら
 		//減算
 		color.a -= FADE_VALUE;

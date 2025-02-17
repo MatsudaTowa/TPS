@@ -13,14 +13,14 @@
 CModel::CModel()
 {
 	//モデル情報初期化
-	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < MAX_MODEL; nCnt++)
 	{
 		m_ModelInfo[nCnt].pBuffMat = nullptr;
 		m_ModelInfo[nCnt].pMesh = nullptr;
-		m_ModelInfo[nCnt].dwNumMat = 0;
+		m_ModelInfo[nCnt].dwNumMat = INT_ZERO;
 	}
 
-	m_nNumAll = 0;
+	m_nNumAll = INT_ZERO;
 }
 
 //=============================================
@@ -35,13 +35,13 @@ CModel::~CModel()
 //=============================================
 void CModel::Unload()
 {
-	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < MAX_MODEL; nCnt++)
 	{
 		if (m_ModelInfo[nCnt].pBuffMat != nullptr)
 		{//マテリアル破棄
 			m_ModelInfo[nCnt].pBuffMat->Release();
 			m_ModelInfo[nCnt].pBuffMat = nullptr;
-			m_ModelInfo[nCnt].dwNumMat = 0;
+			m_ModelInfo[nCnt].dwNumMat = INT_ZERO;
 		}
 		if (m_ModelInfo[nCnt].pMesh != nullptr)
 		{//メッシュ破棄
@@ -62,8 +62,8 @@ void CModel::Unload()
 //=============================================
 int CModel::Regist(const char* pModel)
 {
-	int nIdx = 0;
-	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	int nIdx = INT_ZERO;
+	for (int nCnt = INT_ZERO; nCnt < MAX_MODEL; nCnt++)
 	{
 		if (m_ModelInfo[nCnt].pBuffMat == nullptr
 			&& m_ModelInfo[nCnt].pMesh == nullptr)
@@ -86,7 +86,7 @@ int CModel::Regist(const char* pModel)
 			m_nNumAll++;	//総数のカウントアップ
 			break;
 		}
-		if (strcmp(m_ModelInfo[nCnt].ModelName, pModel) == 0)
+		if (strcmp(m_ModelInfo[nCnt].ModelName, pModel) == INT_ZERO)
 		{//引数のモデルが存在するなら
 		
 			//番号を代入してbreak

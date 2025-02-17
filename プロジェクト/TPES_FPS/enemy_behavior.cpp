@@ -13,7 +13,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyMove::CEnemyMove():m_move_vec({0.0f,0.0f,0.0f})
+CEnemyMove::CEnemyMove():m_move_vec(VEC3_RESET_ZERO)
 {
 }
 
@@ -36,7 +36,7 @@ void CEnemyMove::Move(CCharacter* character)
 
 	CEnemy::Motion_Type Motion;
 
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	if (vecDirection.x == FLOAT_ZERO && vecDirection.z == FLOAT_ZERO)
 	{ // 動いてない。
 		Motion = CEnemy::Motion_Type::MOTION_NEUTRAL;
 	}
@@ -46,10 +46,10 @@ void CEnemyMove::Move(CCharacter* character)
 	}
 
 	D3DXVECTOR3 move = character->GetMove();
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	if (vecDirection.x == FLOAT_ZERO && vecDirection.z == FLOAT_ZERO)
 	{ // 動いてない。
-		move.x = 0.0f;
-		move.z = 0.0f;
+		move.x = FLOAT_ZERO;
+		move.z = FLOAT_ZERO;
 	}
 	else
 	{
@@ -96,12 +96,12 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 	D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
 		0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
 
-	if (character->m_pGun->GetAmmo() > 0)
+	if (character->m_pGun->GetAmmo() > INT_ZERO)
 	{
 		character->m_pGun->m_nRateCnt++;
 		if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
 		{
-			character->m_pGun->m_nRateCnt = 0;
+			character->m_pGun->m_nRateCnt = INT_ZERO;
 			//弾発射
 			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);
 		}
@@ -112,7 +112,7 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 	}
 
 	//自分の方向を取得
-	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), 0.0f, cosf(character->GetRot().y + D3DX_PI) };
+	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), FLOAT_ZERO, cosf(character->GetRot().y + D3DX_PI) };
 
 	// レイキャストを実行し、障害物があるか判定TODO:いったんブロックは除外
 	if (character->PerformRaycast_Smoke(vec, character).hit)
@@ -126,7 +126,7 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 //=============================================
 void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 {
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
@@ -157,10 +157,13 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 	}
 }
 
+//サイズ
+const D3DXVECTOR3 CEnemyConfusion::SIZE = { 20.0f,20.0f,0.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(0), m_pReaction()
+CEnemyConfusion::CEnemyConfusion() : m_isRight(false), m_TurnCnt(INT_ZERO), m_pReaction()
 {	
 }
 
@@ -184,8 +187,8 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 	if (m_pReaction == nullptr)
 	{
 		m_pReaction = CEnemy_Reaction_UI::Create({ character->m_apModel[1]->GetMtxWorld()._41,
-			character->m_apModel[1]->GetMtxWorld()._42 + 40.0f,
-			character->m_apModel[1]->GetMtxWorld()._43 }, { 20.0f,20.0f,0.0f }, CEnemy_Reaction_UI::REACTION::REACTION_CONFUSION);
+			character->m_apModel[1]->GetMtxWorld()._42 + CORRECTION_VALUE,
+			character->m_apModel[1]->GetMtxWorld()._43 }, SIZE,  CEnemy_Reaction_UI::REACTION::REACTION_CONFUSION);
 	}
 	//現在の方向を取得
 	D3DXVECTOR3 rot = character->GetRot();
@@ -197,7 +200,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 	MoveRot(rot, Rot_Answer_y, character);
 
 	//自分の方向を取得
-	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), 0.0f, cosf(character->GetRot().y + D3DX_PI) };
+	D3DXVECTOR3 vec = { sinf(character->GetRot().y + D3DX_PI), FLOAT_ZERO, cosf(character->GetRot().y + D3DX_PI) };
 
 	D3DXVec3Normalize(&vec, &vec);
 
@@ -230,7 +233,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 			m_pReaction->Uninit();
 			m_pReaction = nullptr;
 		}
-		m_TurnCnt = 0;
+		m_TurnCnt = INT_ZERO;
 		character->ChangeState(new CMoveState);
 	}
 }
@@ -242,7 +245,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 {
 	if (m_isRight)
 	{
-		rot.y += 0.02f;
+		rot.y += ROT_MOVE;
 
 		if (Rot_Answer_y > LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -252,7 +255,7 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 	}
 	if (!m_isRight)
 	{
-		rot.y -= 0.02f;
+		rot.y -= ROT_MOVE;
 
 		if (Rot_Answer_y < -LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -289,7 +292,7 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + 20.0f,character->GetPos().z - pPlayer->GetPos().z };
+				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + CORRECTION_VALUE_Y,character->GetPos().z - pPlayer->GetPos().z };
 				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック

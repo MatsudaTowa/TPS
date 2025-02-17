@@ -12,6 +12,15 @@ const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
 const std::string CTutorial::BLOCK_FILE = "data\\FILE\\block_data_tutorial.bin";
 const std::string CTutorial::WALL_FILE = "data\\FILE\\wall_002.txt";
 
+//床のサイズ
+const D3DXVECTOR3 CTutorial::FIELD_SIZE = { 500.0f, 0.0f, 1000.0f };
+
+//UIの位置
+const D3DXVECTOR3 CTutorial::UI_POS = { SCREEN_WIDTH * HALF, 50.0f, 0.0f };
+
+//UIのサイズ
+const D3DXVECTOR2 CTutorial::UI_SIZE = { 200.0f, 100.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -39,9 +48,9 @@ HRESULT CTutorial::Init()
 	LoadEnemy(&ENEMY_FILE);
 	LoadWall(&WALL_FILE);
 	//地面生成
-	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
+	CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
-	CTutorial_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 50.0f, 0.0f), D3DXVECTOR2(200.0f, 100.0f), CTutorial_Screen::TUTORIAL_UI::UI_TUTORIAL_TXT);
+	CTutorial_Screen::Create(UI_POS, UI_SIZE, CTutorial_Screen::TUTORIAL_UI::UI_TUTORIAL_TXT);
 
 	if (m_pTutorial_UI == nullptr)
 	{
@@ -75,7 +84,7 @@ void CTutorial::Update()
 		m_pTutorial_UI->Update();
 	}
 
-	if (CEnemy::m_NumEnemy <= 0)
+	if (CEnemy::m_NumEnemy <= INT_ZERO)
 	{//敵がいなくなったら再スポーン
 		LoadEnemy(&ENEMY_FILE);
 	}
@@ -101,10 +110,10 @@ void CTutorial::Draw()
 void CTutorial::LoadBlock(const std::string* pFileName)
 {
 	//生成するブロック数読み込み用
-	int NumBlock = 0;
+	int NumBlock = INT_ZERO;
 
 	//生成するブロック情報読み込み用
-	LOAD_BLOCK Info[256];
+	LOAD_BLOCK Info[TXT_MAX];
 
 	//ファイルの読み込み
 	FILE* pFile = fopen(pFileName->c_str(), "rb");
@@ -112,7 +121,7 @@ void CTutorial::LoadBlock(const std::string* pFileName)
 	if (pFile != NULL)
 	{
 		//敵の使用してる数の読み込み
-		fread(&NumBlock, sizeof(int), 1, pFile);
+		fread(&NumBlock, sizeof(int), INT_ONE, pFile);
 
 		//敵の使用数分、敵の読み込み
 		fread(&Info[0], sizeof(LOAD_BLOCK), NumBlock, pFile);
@@ -125,9 +134,9 @@ void CTutorial::LoadBlock(const std::string* pFileName)
 		return;
 	}
 
-	for (int nCnt = 0; nCnt < NumBlock; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NumBlock; nCnt++)
 	{
-		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, 1, false);
+		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, INT_ONE, false);
 	}
 }
 

@@ -35,18 +35,18 @@ HRESULT CTutorial_Screen::Init()
 	CObject2D::Init();
 
 	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
+	SetTexPos(VEC2_RESET_ONE);
 
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	col = COLOR_WHITE;
 
 	//カラーを代入
 	SetColor(col);
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 	return S_OK;
 }
 

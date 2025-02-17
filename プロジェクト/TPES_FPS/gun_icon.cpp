@@ -51,7 +51,7 @@ void CGunIcon::Update()
 	//çXêV
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================

@@ -32,8 +32,8 @@ CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 CGame::CGame():m_nResultDelay(0),m_bEdit(false), m_next_wave()
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 	//読み込むブロックの情報初期化
-	m_LoadBlock.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_LoadBlock.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_LoadBlock.pos = VEC3_RESET_ZERO;
+	m_LoadBlock.rot = VEC3_RESET_ZERO;
 	m_LoadBlock.type = CBlock::BLOCKTYPE::BLOCKTYPE_DEFAULT;
 }
 
@@ -96,7 +96,7 @@ void CGame::Update()
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-	if (CEnemy::m_NumEnemy <= 0)
+	if (CEnemy::m_NumEnemy <= INT_ZERO)
 	{//敵がいなくなったらウェーブ遷移
 		switch (CWave::GetCurrentWave())
 		{
@@ -122,9 +122,9 @@ void CGame::Update()
 		if (CWave::GetCurrentWave() != CWave::WAVE::RESULT)
 		{
 			m_nResultDelay++;
-			if (m_nResultDelay > 60)
+			if (m_nResultDelay > DELAY_FLAME)
 			{
-				m_nResultDelay = 0;
+				m_nResultDelay = INT_ZERO;
 
 				//死んだ数分だけスコアマイナス
 				ApplyDeathPenalty();
@@ -188,15 +188,15 @@ void CGame::ApplyDeathPenalty()
 				{
 					CScore* pScore = CWave::GetScore();
 
-					if (pScore->m_nScore > 0)
+					if (pScore->m_nScore > INT_ZERO)
 					{
 						//TODO:ADDやめろ
-						pScore->AddScore(-50);
+						pScore->AddScore(DEATH_PENALTY);
 
-						if (pScore->m_nScore <= 0)
+						if (pScore->m_nScore <= INT_ZERO)
 						{//0を下回ったら
 							//スコア0に
-							pScore->m_nScore = 0;
+							pScore->m_nScore = INT_ZERO;
 						}
 					}
 				}

@@ -38,6 +38,12 @@ const D3DXVECTOR3 CPlayer::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
 //スタミナのサイズ
 const D3DXVECTOR3 CPlayer::STAMINA_GAUGE_SIZE = { 5.0f,20.0f,0.0f };
 
+//銃のUIの位置
+const D3DXVECTOR3 CPlayer::GUN_UI_POS = { 1150.0f, 665.0f, 0.0f };
+
+//銃のUIのサイズ
+const D3DXVECTOR2 CPlayer::GUN_UI_SIZE = { 70.0f,30.0f };
+
 CAmmo_UI* CPlayer::m_pAmmoUI = nullptr;
 CLife_UI* CPlayer::m_pLifeUI = nullptr;
 
@@ -46,10 +52,10 @@ CLife_UI* CPlayer::m_pLifeUI = nullptr;
 //=============================================
 CPlayer::CPlayer(int nPriority) :CCharacter(nPriority),
 m_Raticle(),				//レティクルのポインタ初期化
-m_IgnoreColisionCnt(0),		//当たり判定無効カウントリセット
-m_SmokeRecastCnt(0),		//スモーク復活カウントリセット
-m_DeathCnt(0),				//死亡カウントリセット
-m_Stamina(0),				//スタミナ
+m_IgnoreColisionCnt(INT_ZERO),		//当たり判定無効カウントリセット
+m_SmokeRecastCnt(INT_ZERO),		//スモーク復活カウントリセット
+m_DeathCnt(INT_ZERO),				//死亡カウントリセット
+m_Stamina(INT_ZERO),				//スタミナ
 m_isRelorad(false),			//リロードしていない状態に
 m_isSmoke(false),			//スモークを使っていない状態に
 m_isEnemyColision(true),	//エネミーと判定をとる状態に
@@ -141,13 +147,7 @@ HRESULT CPlayer::Init()
 	{
 		if (m_pGunIcon == nullptr)
 		{
-			m_pGunIcon = CGunIcon::Create({ 1150.0f, 665.0f, 0.0f }, { 70.0f,30.0f }, { 1.0f,1.0f,1.0f,1.0f }, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
-		}
-
-		if (m_pStaminaGauge == nullptr)
-		{
-			m_pStaminaGauge = CGauge_3D::Create(D3DXVECTOR3(pCamera->GetPosR().x + 20.0f + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 80.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)),
-				STAMINA_GAUGE_SIZE, CGauge_3D::GAUGE_TYPE_STAMINA, { 1.0f,1.0f,0.0f,1.0f });
+			m_pGunIcon = CGunIcon::Create(GUN_UI_POS, GUN_UI_SIZE, COLOR_WHITE, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
 		}
 		//残弾数初期化
 		if (m_pAmmoUI == nullptr)
@@ -191,14 +191,14 @@ HRESULT CPlayer::Init()
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 	//移動量初期化
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 move = VEC3_RESET_ZERO;
 
 	for (int nCnt = 0; nCnt < NUM_PARTS; nCnt++)
 	{
 		CModel* pModel = CManager::GetInstance()->GetModel();
 	}
 
-	pCamera->SetRot({0.0f,0.0f,0.0f});
+	pCamera->SetRot(VEC3_RESET_ZERO);
 
 	//ムーブ値代入
 	SetMove(move);
@@ -301,7 +301,7 @@ void CPlayer::Update()
 	{//使われていたら
 		m_pHitCameraEffect->SubAlpha();
 
-		if (m_pHitCameraEffect->GetAlpha() < 0.0f)
+		if (m_pHitCameraEffect->GetAlpha() < FLOAT_ZERO)
 		{
 			m_pHitCameraEffect->Uninit();
 			m_pHitCameraEffect = nullptr;
@@ -356,7 +356,7 @@ void CPlayer::Update()
 			++m_SmokeRecastCnt;
 			if (m_SmokeRecastCnt > SMOKE_RECAST_FRAME)
 			{
-				m_SmokeRecastCnt = 0;
+				m_SmokeRecastCnt = INT_ZERO;
 				m_isSmoke = false;
 			}
 		}
@@ -369,13 +369,13 @@ void CPlayer::Update()
 			{//カウントが到達したら
 
 				//カウントリセット
-				m_StaminaRecoveryCnt = 0;
+				m_StaminaRecoveryCnt = INT_ZERO;
 
 				//スタミナ回復
 				m_Stamina += STAMINA_RECOVERY;
 
 				int nStaminaPer = m_Stamina % AVOIDANCE_COST;
-				if (nStaminaPer == 0)
+				if (nStaminaPer == INT_ZERO)
 				{
 					++m_BlinkCnt;
 				}
@@ -393,7 +393,7 @@ void CPlayer::Update()
 
 		if(m_Raticle != nullptr)
 		{
-			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - 16.0f, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
+			m_Raticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - RETICLE_CORRECTION_VALUE, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 			m_Raticle->Update();
 		}
 
@@ -455,7 +455,7 @@ void CPlayer::CanDetectEnemyCollision()
 		if (m_IgnoreColisionCnt > IGNORE_COLLISION_FRAME)
 		{//フレームに到達したら
 		 //当たり判定をとる状態に
-			m_IgnoreColisionCnt = 0;
+			m_IgnoreColisionCnt = INT_ZERO;
 			m_isEnemyColision = true;
 		}
 	}
@@ -525,22 +525,22 @@ void CPlayer::Damage(int nDamage)
 	//状態を取得
 	CCharacter::CHARACTER_STATE state = GetState();
 
-	if (nLife > 0 && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	if (nLife > INT_ZERO && state != CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
 	{//ダメージ状態以外でHPが残ってたら
 
 		if (m_pHitCameraEffect == nullptr)
 		{
 			if (nLife >= CPlayer::PLAYER_LIFE * 0.6f)
 			{
-				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MILD);
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MILD);
 			}
 			else if (nLife >= CPlayer::PLAYER_LIFE * 0.3f && nLife < CPlayer::PLAYER_LIFE * 0.6f)
 			{
-				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MODERATE);
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::MODERATE);
 			}
 			else if (nLife < CPlayer::PLAYER_LIFE * 0.3f)
 			{
-				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::SEVERE);
+				m_pHitCameraEffect = CHitCameraEffect::Create({ SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF,0.0f }, CHitCameraEffect::HIT_EFFECT_STAGE::SEVERE);
 			}
 		}
 
@@ -555,7 +555,7 @@ void CPlayer::Damage(int nDamage)
 		//体力代入
 		SetLife(nLife);
 	}
-	if (nLife <= 0)
+	if (nLife <= INT_ZERO)
 	{//HPが0以下だったら
 		//リスポーン
 		ReSpawn();
@@ -572,15 +572,15 @@ void CPlayer::ReSpawn()
 
 	//スポーン時の設定にもどす
 	SetPos(CPlayer::PLAYER_SPAWN_POS);
-	SetMove({0.0f,0.0f,0.0f});
+	SetMove(VEC3_RESET_ZERO);
 	SetBlown(false);
 	SetRot(CPlayer::PLAYER_SPAWN_ROT);
 	SetLife(CPlayer::PLAYER_LIFE);
 	SetStamina(CPlayer::PLAYER_STAMINA);
 	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
-	m_StaminaRecoveryCnt = 0;
+	m_StaminaRecoveryCnt = INT_ZERO;
 	m_isSmoke = true; //スモークを使った状態にし死んだ時のデメリットを
-	m_SmokeRecastCnt = 0;
+	m_SmokeRecastCnt = INT_ZERO;
 	//TODO:キャラが違う場合は子クラスで実装
 	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
 	ChangePlayerState(new CDefaultState);
@@ -600,29 +600,29 @@ void CPlayer::Input()
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
 	//移動の方向の単位ベクトル変数
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vecDirection(VEC3_RESET_ZERO);
 	if (pKeyboard->GetPress(DIK_W))
 	{
-		vecDirection.z += 1.0f;
+		vecDirection.z += FLOAT_ONE;
 	}
 	if (pKeyboard->GetPress(DIK_S))
 	{
-		vecDirection.z -= 1.0f;
+		vecDirection.z -= FLOAT_ONE;
 	}
 	if (pKeyboard->GetPress(DIK_A))
 	{
-		vecDirection.x -= 1.0f;
+		vecDirection.x -= FLOAT_ONE;
 	}
 	if (pKeyboard->GetPress(DIK_D))
 	{
-		vecDirection.x += 1.0f;
+		vecDirection.x += FLOAT_ONE;
 	}
 
 	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
 	CPlayer::Motion_Type Motion;
 
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	if (vecDirection.x == FLOAT_ZERO && vecDirection.z == FLOAT_ZERO)
 	{ // 動いてない。
 		Motion = CPlayer::Motion_Type::MOTION_NEUTRAL;
 	}
@@ -632,7 +632,7 @@ void CPlayer::Input()
 	}
 
 	D3DXVECTOR3 move = GetMove();
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	if (vecDirection.x == FLOAT_ZERO && vecDirection.z == FLOAT_ZERO)
 	{ // 動いてない。
 		move.x = 0.0f;
 		move.z = 0.0f;
@@ -664,9 +664,9 @@ void CPlayer::Input()
 
 			--m_BlinkCnt;
 
-			if (m_Stamina <= 0)
+			if (m_Stamina <= INT_ZERO)
 			{//スタミナが0を下回ったら
-				m_Stamina = 0;
+				m_Stamina = INT_ZERO;
 			}
 		}
 	}
@@ -735,9 +735,9 @@ void CPlayer::Input()
 		if (pKeyboard->GetTrigger(DIK_Q))
 		{
 			m_isSmoke = true;
-			CSmokeGrenade::Create({ GetPos().x,GetPos().y + 50.0f,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -20.0f,
-					sinf(pCamera->GetRot().x + D3DX_PI) * 20.0f,
-					cosf(pCamera->GetRot().y + D3DX_PI) * -20.0f }, { 0.0f,0.0f,0.0f });
+			CSmokeGrenade::Create({ GetPos().x,GetPos().y + SMOKE_CORRECTION_VALUE,GetPos().z }, { sinf(pCamera->GetRot().y + D3DX_PI) * -SMOKE_SHOT_SPEED,
+					sinf(pCamera->GetRot().x + D3DX_PI) * SMOKE_SHOT_SPEED,
+					cosf(pCamera->GetRot().y + D3DX_PI) * -SMOKE_SHOT_SPEED }, VEC3_RESET_ZERO);
 		}
 	}
 }
@@ -775,12 +775,12 @@ void CPlayer::ResetRot()
 //=============================================
 void CPlayer::ColisionEnemy()
 {
-	for (int nPartsCnt = 0; nPartsCnt < GetNumParts(); ++nPartsCnt)
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < GetNumParts(); ++nPartsCnt)
 	{
 		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
 		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
-		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
@@ -818,13 +818,13 @@ void CPlayer::ChangeDamageState()
 		//ステート変更カウント進める
 		nStateCnt++;
 
-		if (nStateCnt >= 30)
+		if (nStateCnt >= DAMAGE_FRAME)
 		{
 			//通常に戻す
 			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
 
 			//ステートカウントリセット
-			nStateCnt = 0;
+			nStateCnt = INT_ZERO;
 
 			//状態代入
 			SetState(state);
@@ -839,7 +839,7 @@ void CPlayer::ChangeDamageState()
 //=============================================
 void CPlayer::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
-	for (int nEnemyPartsCnt = 0; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)
+	for (int nEnemyPartsCnt = INT_ZERO; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)
 	{
 		D3DXVECTOR3 Enemypos = { pEnemy->m_apModel[nEnemyPartsCnt]->GetMtxWorld()._41,
 			pEnemy->m_apModel[nEnemyPartsCnt]->GetMtxWorld()._42,

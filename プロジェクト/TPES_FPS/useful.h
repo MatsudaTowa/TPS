@@ -14,8 +14,14 @@
 //0èâä˙âªóp
 #define INT_ZERO (0)
 #define FLOAT_ZERO (0.0f)
+#define INT_ONE (1)
+#define FLOAT_ONE (1.0f)
+
+//îºï™
+#define HALF	(0.5f)
 
 //ÉJÉâÅ[èâä˙âª
+#define COLOR_NONE (D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))
 #define COLOR_BLACK (D3DXCOLOR(0.0f,0.0f,0.0f,1.0f))
 #define COLOR_WHITE (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 #define COLOR_RED (D3DXCOLOR(1.0f,0.0f,0.0f,1.0f))
@@ -31,9 +37,9 @@
 #define VEC2_RESET_ONE (D3DXVECTOR2(1.0f,1.0f))
 
 //îºâ~
-#define HALF_PI	(D3DX_PI * 0.5f)
+#define HALF_PI	(D3DX_PI * HALF)
 //1/4â~
-#define QRTR_PI	(D3DX_PI * 0.25f)
+#define QRTR_PI	(D3DX_PI * (HALF * HALF))
 
 //ï∂éöêîç≈ëÂêî
 #define MAX_TXT (256)

@@ -35,10 +35,10 @@ HRESULT CResult_Screen::Init()
 	//自分自身のサイズ取得
 	D3DXVECTOR2 size = GetSize();
 
-	size = D3DXVECTOR2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);
+	size = D3DXVECTOR2(SCREEN_WIDTH * HALF, SCREEN_HEIGHT * HALF);
 
 	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
+	SetTexPos(VEC2_RESET_ONE);
 
 	//サイズを代入
 	SetSize(size);
@@ -46,13 +46,13 @@ HRESULT CResult_Screen::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	col = COLOR_WHITE;
 
 	//カラーを代入
 	SetColor(col);
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 	return S_OK;
 }
 

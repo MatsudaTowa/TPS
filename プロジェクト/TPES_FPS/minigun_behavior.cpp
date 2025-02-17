@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "minigun_behavior.h"
+#include "manager.h"
 
 //=============================================
 //コンストラクタ
@@ -46,7 +47,7 @@ bool CMiniGunReload::Reload(CGun* gun)
 
 	if (nCnt >= CMiniGun::DEFAULT_MINIGUN_RELOAD_FRAME)
 	{
-		nCnt = 0;
+		nCnt = INT_ZERO;
 		//現在の弾数取得
 		int nAmmo = gun->GetAmmo();
 		//デフォルトのマガジン弾数代入

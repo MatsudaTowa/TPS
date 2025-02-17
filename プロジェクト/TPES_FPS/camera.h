@@ -104,6 +104,8 @@ private:
 	static const float THIRDVIEW_CORRECT_Y; //サードパーソンビュー時の補正値Y
 	static const float THIRDVIEW_CORRECT_Z; //サードパーソンビュー時の補正値Z
 
+	static const float MOUSE_SENS; //デフォルトのマウス感度
+
 	static const float MAX_TURN_X; //サードパーソンビュー時のXの最大可動域
 	static const float MIN_TURN_X; //サードパーソンビュー時のXの最小可動域
 

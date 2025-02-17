@@ -17,6 +17,13 @@ const float CCharacter::BOSS_FIELD_X = 600.0f;
 const float CCharacter::GRAVITY_MOVE = 2.0f;
 //重力最大値
 const float CCharacter::GRAVITY_MAX = 100.0f;
+
+//移動抵抗
+const float CCharacter::MOVE_FRICTION = 0.3f;
+
+//壁の判定のゆとり
+const float CCharacter::COLLISION_SLACK = 20.0f;
+
 //影のY座標
 const float CCharacter::SHADOW_POS_Y = 0.5f;
 
@@ -99,7 +106,7 @@ HRESULT CCharacter::Init()
 	}
 	if (m_pShadow == nullptr)
 	{
-		m_pShadow = CShadow::Create({ GetPos().x,0.5f,GetPos().z }, m_ShadowSize);
+		m_pShadow = CShadow::Create({ GetPos().x,SHADOW_POS_Y,GetPos().z }, m_ShadowSize);
 	}
 
 	//影のサイズ設定
@@ -157,7 +164,7 @@ void CCharacter::Update()
 	if (m_bLanding)
 	{
 		//移動量を更新(減速）
-		m_move *= 1.0f - 0.3f;
+		m_move *= FLOAT_ONE - MOVE_FRICTION;
 	}
 
 	//過去の位置に今の位置を代入
@@ -485,9 +492,9 @@ void CCharacter::Motion(int NumParts)
 	D3DXVECTOR3 MovePos[MAX_PARTS];
 	D3DXVECTOR3 MoveRot[MAX_PARTS];
 
-	int nNextKey = (m_nKeySetCnt + 1) % m_MotionSet[m_Motion].nNumKey;
+	int nNextKey = (m_nKeySetCnt + INT_ONE) % m_MotionSet[m_Motion].nNumKey;
 
-	for (int nMotionCnt = 0; nMotionCnt < m_PartsCnt; nMotionCnt++)
+	for (int nMotionCnt = INT_ZERO; nMotionCnt < m_PartsCnt; nMotionCnt++)
 	{
 		MovePos[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
 		MoveRot[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
@@ -503,12 +510,12 @@ void CCharacter::Motion(int NumParts)
 	if (m_nMotionFrameCnt > m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame)
 	{
 
-		m_nMotionFrameCnt = 0;
-		m_nKeySetCnt = (m_nKeySetCnt + 1) % m_MotionSet[m_Motion].nNumKey;
-		if (m_nKeySetCnt == 0 && m_MotionSet[m_Motion].nLoop == 0)
+		m_nMotionFrameCnt = INT_ZERO;
+		m_nKeySetCnt = (m_nKeySetCnt + INT_ONE) % m_MotionSet[m_Motion].nNumKey;
+		if (m_nKeySetCnt == INT_ZERO && m_MotionSet[m_Motion].nLoop == INT_ZERO)
 		{//キーが終わりループモーションじゃなければ
 			//モーションをニュートラルに
-			SetMotion(0);
+			SetMotion(INT_ZERO);
 			//終わった判定
 			m_bLoopFinish = true;
 		}
@@ -531,7 +538,7 @@ void CCharacter::SetMotion(int Motion)
 		//キーカウントリセット
 		m_nKeySetCnt = INT_ZERO;
 
-		if (m_MotionSet[m_Motion].nLoop == 0)
+		if (m_MotionSet[m_Motion].nLoop == INT_ZERO)
 		{
 			//終わった判定
 			m_bLoopFinish = false;
@@ -743,29 +750,29 @@ void CCharacter::HitField()
 
 				//TODO:壁の当たり判定やったらこれを使う必要なくなる
 				{
-					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x + 20.0f
-						&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x + 20.0f)
+					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK
+						&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK)
 					{
 						CharacterPos.x = m_oldpos.x;
 						m_move.x = FLOAT_ZERO;
 					}
 
-					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x - 20.0f
-						&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x - 20.0f)
+					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK
+						&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK)
 					{
 						CharacterPos.x = m_oldpos.x;
 						m_move.x = FLOAT_ZERO;
 					}
 
-					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z + 20.0f
-						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z + 20.0f)
+					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK
+						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK)
 					{
 						CharacterPos.z = m_oldpos.z;
 						m_move.x = FLOAT_ZERO;
 					}
 
-					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z - 20.0f
-						&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z - 20.0f)
+					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK
+						&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK)
 					{
 						CharacterPos.z = m_oldpos.z;
 						m_move.x = FLOAT_ZERO;

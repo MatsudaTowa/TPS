@@ -35,6 +35,9 @@ const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
 //サイドビュー時のZの距離
 const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
 
+//デフォルトのマウス感度
+const float CCamera::MOUSE_SENS = 0.001f;
+
 //サードビュー時の補正値
 const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
 const float CCamera::THIRDVIEW_CORRECT_Y = 105.0f;
@@ -132,8 +135,8 @@ void CCamera::Update()
 	CScene::MODE pScene = CScene::GetSceneMode();
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
-		m_rot.y += pMouse->GetMouseMove().x * 0.001f;
-		m_rot.x += pMouse->GetMouseMove().y * 0.001f;
+		m_rot.y += pMouse->GetMouseMove().x * MOUSE_SENS;
+		m_rot.x += pMouse->GetMouseMove().y * MOUSE_SENS;
 	}
 
 	m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
@@ -259,21 +262,21 @@ void CCamera::InputMove()
 
 	if (pKeyboard->GetPress(DIK_J) == true)
 	{
-		m_moveV.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.x -= sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x -= sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
 
-		m_moveV.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.z -= cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z -= cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
 
 	}
 
 	if (pKeyboard->GetPress(DIK_L) == true)
 	{
-		m_moveV.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.x += sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x += sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
 
-		m_moveV.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.z += cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z += cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
 
 	}
 

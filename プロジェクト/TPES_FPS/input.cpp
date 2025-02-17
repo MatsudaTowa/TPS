@@ -121,7 +121,7 @@ void CInputKeyboard::Update()
 	//入力デバイスからデータを取得
 	if (SUCCEEDED(m_pDevice->GetDeviceState(sizeof(aKeyState), &aKeyState[0])))
 	{
-		for (nCntKey = 0; nCntKey < NUM_KEY_MAX; nCntKey++)
+		for (nCntKey = INT_ZERO; nCntKey < NUM_KEY_MAX; nCntKey++)
 		{
 			m_aKeyStateRelease[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & ~aKeyState[nCntKey]; //リリース
 			m_aKeyStateTrigger[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & aKeyState[nCntKey];
@@ -176,11 +176,11 @@ HRESULT CInputMouse::Init(HINSTANCE hInstance, HWND hWnd)
 	}
 	// デバイスの設定
 	DIPROPDWORD diprop;
-	m_MousePos = { 0.0f,0.0f,0.0f };
-	m_MouseMove = { 0.0f,0.0f,0.0f };
+	m_MousePos = VEC3_RESET_ZERO;
+	m_MouseMove = VEC3_RESET_ZERO;
 	diprop.diph.dwSize = sizeof(diprop);
 	diprop.diph.dwHeaderSize = sizeof(diprop.diph);
-	diprop.diph.dwObj = 0;
+	diprop.diph.dwObj = INT_ZERO;
 	diprop.diph.dwHow = DIPH_DEVICE;
 	diprop.dwData = DIPROPAXISMODE_REL;
 
@@ -216,7 +216,7 @@ void CInputMouse::Update()
 	//入力デバイスからデータを取得
 	if (SUCCEEDED(m_pDevice->GetDeviceState(sizeof(zdiMouseState), &zdiMouseState)))
 	{
-		for (nCntMouse = 0; nCntMouse < NUM_MOUSE_MAX; nCntMouse++)
+		for (nCntMouse = INT_ZERO; nCntMouse < NUM_MOUSE_MAX; nCntMouse++)
 		{
 			m_KeyStateRelease.rgbButtons[nCntMouse] = (m_KeyState.rgbButtons[nCntMouse] ^ zdiMouseState.rgbButtons[nCntMouse]) & ~zdiMouseState.rgbButtons[nCntMouse];
 			m_KeyStateTrigger.rgbButtons[nCntMouse] = (m_KeyState.rgbButtons[nCntMouse] ^ zdiMouseState.rgbButtons[nCntMouse]) & zdiMouseState.rgbButtons[nCntMouse];
@@ -290,16 +290,16 @@ HRESULT CInputPad::Init(HINSTANCE hInstance, HWND hWnd)
 	XINPUT_STATE joykeyState; //ジョイパッドの入力情報
 
 	//メモリのクリア
-	memset(&m_joyKeyState, 0, sizeof(XINPUT_STATE));
+	memset(&m_joyKeyState, INT_ZERO, sizeof(XINPUT_STATE));
 
 	//メモリのクリア
-	memset(&m_JoypadMotor, 0, sizeof(XINPUT_VIBRATION));
+	memset(&m_JoypadMotor, INT_ZERO, sizeof(XINPUT_VIBRATION));
 
 	//XInputのステートを設定(有効にする)
 	XInputEnable(true);
 
 	//ジョイパッドの状態を取得
-	if (XInputGetState(0, &joykeyState) == ERROR_SUCCESS)
+	if (XInputGetState(INT_ZERO, &joykeyState) == ERROR_SUCCESS)
 	{
 		m_Connect = true;
 	}
@@ -323,7 +323,7 @@ void CInputPad::Update()
 	XINPUT_STATE joykeyState; //ジョイパッドの入力情報
 
 		//ジョイパッドの状態を取得
-	if (XInputGetState(0, &joykeyState) == ERROR_SUCCESS)
+	if (XInputGetState(INT_ZERO, &joykeyState) == ERROR_SUCCESS)
 	{
 		//接続されているかどうか
 		m_Connect = true;
@@ -352,7 +352,7 @@ void CInputPad::Update()
 		else
 		{
 			// キーボードのリピート情報を保存
-			m_joyKeyStateRepeat = 0;
+			m_joyKeyStateRepeat = INT_ZERO;
 		}
 
 		m_joyKeyState = joykeyState.Gamepad.wButtons;                // プレス処理
@@ -385,7 +385,7 @@ void CInputPad::UpdateStick(XINPUT_STATE state)
 		}
 
 		//角度を取得
-		m_stick.afAngle[nCntStick] = FindAngle(D3DXVECTOR3(fX, fY, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f)) * -1;
+		m_stick.afAngle[nCntStick] = FindAngle(D3DXVECTOR3(fX, fY, 0.0f),VEC3_RESET_ZERO) * -1;
 
 		//スティックの倒し具合を取得
 		m_stick.afTplDiameter[nCntStick] = fabsf(fX);

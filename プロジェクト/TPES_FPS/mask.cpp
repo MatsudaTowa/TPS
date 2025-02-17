@@ -28,7 +28,7 @@ HRESULT CMask::Init()
 {
 	CObject2D::Init();
 
-	SetPos({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f });
+	SetPos({ SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF,FLOAT_ZERO });
 
 	//ƒTƒCƒYŽæ“¾
 	D3DXVECTOR2 size = GetSize();

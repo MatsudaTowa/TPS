@@ -35,7 +35,7 @@ HRESULT CMouse_UI::Init()
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME[m_type])));
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 	return S_OK;
 }
 
@@ -56,7 +56,7 @@ void CMouse_UI::Update()
 	//çXêV
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================

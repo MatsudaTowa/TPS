@@ -53,6 +53,11 @@ public:
 	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* character);
 	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
 private:
+	static constexpr float CORRECTION_VALUE = 40.0f; //リアクションのUIを生成する際のYの補正値
+	static const D3DXVECTOR3 SIZE; //リアクションのUIのサイズ
+	static constexpr float ROT_MOVE = 0.02f; //見渡す移動値
+	static constexpr float CORRECTION_VALUE_Y = 20.0f; //レイを飛ばすYの補正値
+
 	static constexpr float LOOK_RANGE = 1.57f; //見渡す範囲
 	static constexpr int NUM_TURN = 2; //見渡す回数
 

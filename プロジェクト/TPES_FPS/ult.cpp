@@ -11,8 +11,8 @@
 //コンストラクタ
 //=============================================
 CUlt::CUlt():
-m_CoolTimeCnt(0),	//カウント0に
-m_CoolTime(0),		//クールタイム0に
+m_CoolTimeCnt(INT_ZERO),	//カウント0に
+m_CoolTime(INT_ZERO),		//クールタイム0に
 m_isFinish(false)	//終わっていない状態に
 {
 }
@@ -62,7 +62,7 @@ const D3DXVECTOR3 CMediumUlt::SPEED = {14.0f,16.0f,14.0f};
 //=============================================
 //コンストラクタ
 //=============================================
-CMediumUlt::CMediumUlt():m_move_y(0.0f), m_pUltRange(), m_pUltCameraEffect()
+CMediumUlt::CMediumUlt():m_move_y(FLOAT_ZERO), m_pUltRange(), m_pUltCameraEffect()
 {
 }
 
@@ -117,7 +117,7 @@ void CMediumUlt::Update()
 	if (m_pUltRange != nullptr)
 	{//ウルトの判定が生成されていれば
 		m_pUltRange->Update();
-		if (m_pUltRange->GetLife() <= 0)
+		if (m_pUltRange->GetLife() <= INT_ZERO)
 		{
 			m_pUltRange->Uninit();
 			m_pUltRange = nullptr;
@@ -138,7 +138,7 @@ bool CMediumUlt::Action(CPlayer* player)
 		{
 			if (m_pUltCameraEffect == nullptr)
 			{
-				m_pUltCameraEffect = CUltCameraEffect::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f,0.0f });
+				m_pUltCameraEffect = CUltCameraEffect::Create({ SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF,0.0f });
 			}
 			player->SetMove({ sinf(rot) * SPEED.x,SPEED.y,cosf(rot) * SPEED.z });
 			m_move_y += SPEED.y;
@@ -160,10 +160,10 @@ bool CMediumUlt::Action(CPlayer* player)
 					}
 				}
 				m_isFinish = true;
-				m_move_y = 0;
+				m_move_y = INT_ZERO;
 
 				//クールタイムリセット
-				SetCoolTimeCnt(0);
+				SetCoolTimeCnt(INT_ZERO);
 			}
 		}
 	}

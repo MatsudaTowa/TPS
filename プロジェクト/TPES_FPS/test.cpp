@@ -40,7 +40,7 @@ HRESULT CTest::Init()
 	//ブロック生成
 	LoadBlock(&CTest::BLOCK_FILE);
 
-	CField::Create({ 0.0f,0.0f,0.0f }, { 1000.0f,0.0f,1000.0f });
+	CField::Create(VEC3_RESET_ZERO, { 1000.0f,0.0f,1000.0f });
 
 	//プレイヤー生成
 	CPlayer* pplayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);

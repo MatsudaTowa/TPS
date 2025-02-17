@@ -25,8 +25,8 @@ const D3DXVECTOR2 CSmoke_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 //コンストラクタ
 //=============================================
 CSmoke_UI::CSmoke_UI():
-m_SmokePos({0.0f,0.0f,0.0f}),	//スモークの位置初期化
-m_NumSmoke(0),					//スモークの数初期化
+m_SmokePos(VEC3_RESET_ZERO),	//スモークの位置初期化
+m_NumSmoke(INT_ZERO),					//スモークの数初期化
 m_pCurrentSmoke(),				//現在のスモークの数のポインタ初期化
 m_pUIBox(),						//UIの枠初期化
 m_pIcon(),						//アイコンの初期化
@@ -51,23 +51,23 @@ HRESULT CSmoke_UI::Init(CPlayer* player)
 	//UIの枠生成
 	if (m_pUIBox == nullptr)
 	{
-		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, COLOR_WHITE, CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
 	}
 
 	//UIの枠生成
 	if (m_pIcon == nullptr)
 	{
-		m_pIcon = CSmokeIcon::Create(ICON_POS, ICON_SIZE, { 1.0f,1.0f,1.0f,1.0f });
+		m_pIcon = CSmokeIcon::Create(ICON_POS, ICON_SIZE, COLOR_WHITE);
 	}
 
 	//キーボードUIの枠生成
 	if (m_pkeyboard_UI == nullptr)
 	{
-		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CKeyboard_UI::KEY_Q);
+		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, COLOR_WHITE, CKeyboard_UI::KEY_Q);
 	}
 
 	//数字生成
-	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pCurrentSmoke[nCnt] == nullptr)
 		{
@@ -136,7 +136,7 @@ void CSmoke_UI::SetCurrentSmoke_UI(CPlayer* player)
 	}
 	else if (!player->GetSmoke())
 	{//スモークを使っていなかったら
-		m_pIcon->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+		m_pIcon->SetColor(COLOR_WHITE);
 	}
 }
 

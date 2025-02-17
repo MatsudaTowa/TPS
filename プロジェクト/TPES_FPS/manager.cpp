@@ -136,7 +136,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//Å‰‚ÌƒV[ƒ“Ý’è
 	if (m_pFade == nullptr)
 	{
-		m_pFade = CFade::Create(D3DXVECTOR3(0.0f,0.0f,0.0f));
+		m_pFade = CFade::Create(VEC3_RESET_ZERO);
 	}
 
 	//m_pFade->SetFade(CScene::MODE::MODE_TITLE);

@@ -54,6 +54,10 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
+	static const D3DXVECTOR3 FIELD_SIZE; //床のサイズ
+	static const D3DXVECTOR3 UI_POS; //UIの位置
+	static const D3DXVECTOR2 UI_SIZE; //UIのサイズ
+
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	LOAD_WALL m_LoadWall; //読み込むときに必要な壁の情報

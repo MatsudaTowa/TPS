@@ -36,7 +36,7 @@ public:
 
 
 //=============================================
-//プレイヤーの攻撃のストラテジー
+//プレイヤーの回避のストラテジー
 //=============================================
 class CPlayerAttack : public CGunAttack
 {
@@ -56,5 +56,8 @@ public:
 	CPlayerAvoidance();
 	~CPlayerAvoidance();
 	void Avoidance(CCharacter* character);
+private:
+	static constexpr float PLAYER_AVOIDANCE_SPEED = 30.0f; //ブリンクのスピード
+
 };
 #endif // !_ENEMY_BEHAVIOR_

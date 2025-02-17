@@ -13,7 +13,7 @@ const D3DXVECTOR2 CScore::NUM_SIZE = { 20.0f, 30.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CScore::CScore():m_nScore(0),m_pos(D3DXVECTOR3(0.0f,0.0f,0.0f)),m_size({0.0f,0.0f})
+CScore::CScore():m_nScore(0),m_pos(VEC3_RESET_ZERO),m_size(VEC2_RESET_ZERO)
 {//イニシャライザーでメンバ変数初期化
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
@@ -34,7 +34,7 @@ CScore::~CScore()
 //=============================================
 HRESULT CScore::Init()
 {
-	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
@@ -51,7 +51,7 @@ HRESULT CScore::Init()
 //=============================================
 void CScore::Uninit()
 {
-	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] != nullptr)
 		{
@@ -87,7 +87,7 @@ void CScore::ExportScore(const std::string* pFileName)
 
 	if (pFile != NULL)
 	{
-		fwrite(&m_nScore, sizeof(int), 1, pFile);
+		fwrite(&m_nScore, sizeof(int), INT_ONE, pFile);
 		fclose(pFile);
 	}
 }
@@ -97,7 +97,7 @@ void CScore::ExportScore(const std::string* pFileName)
 //=============================================
 void CScore::Reset()
 {
-	m_nScore = 0;
+	m_nScore = INT_ZERO;
 }
 
 //=============================================
@@ -109,9 +109,9 @@ void CScore::SetScore(int nScore)
 	int a_PosTexU[NUM_DIGIT];
 
 	//現在計算してる桁
-	int nDigit = 1;
+	int nDigit = INT_ONE;
 	int nCnt;
-	for (nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		//今の時間から計算
 		a_PosTexU[nCnt] = m_nScore / nDigit % 10;
@@ -120,7 +120,7 @@ void CScore::SetScore(int nScore)
 		nDigit *= 10;
 	}
 
-	for (nCnt = NUM_DIGIT - 1; nCnt >= 0; nCnt--)
+	for (nCnt = NUM_DIGIT - 1; nCnt >= INT_ZERO; nCnt--)
 	{
 		//テクスチャの座標計算用変数
 		float fMinTexU, fMaxTexU;
@@ -128,7 +128,7 @@ void CScore::SetScore(int nScore)
 		fMinTexU = a_PosTexU[nCnt] * 0.1f;
 		fMaxTexU = fMinTexU + 0.1f;
 
-		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, COLOR_WHITE);
 	}
 }
 

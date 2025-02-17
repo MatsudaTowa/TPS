@@ -18,7 +18,26 @@
 #include "manager.h"
 #include "sound.h"
 
+//ブロックのファイルパス
 const std::string CTitle::BLOCK_FILE = "data\\FILE\\block.txt";
+
+//床のサイズ
+const D3DXVECTOR3 CTitle::LOGO_POS = { SCREEN_WIDTH * HALF,200.0f,0.0f };
+
+//床のサイズ
+const D3DXVECTOR3 CTitle::UI_POS = { SCREEN_WIDTH * HALF, 600.0f, 0.0f };
+
+//床のサイズ
+const D3DXVECTOR3 CTitle::FIELD_SIZE = { 1000.0f,0.0f,1000.0f };
+
+//ロゴのサイズ
+const D3DXVECTOR2 CTitle::LOGO_SIZE = { 400.0f,200.0f };
+
+//UIのサイズ
+const D3DXVECTOR2 CTitle::UI_SIZE = { 200.0f, 50.0f };
+
+const D3DXVECTOR3 CTitle::PLAYER_SPAWN = { 0.0f, 0.5f, -300.0f }; //スポーン位置
+
 
 
 //=============================================
@@ -42,17 +61,17 @@ HRESULT CTitle::Init()
 {
 	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
     //地面生成
-    CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f));
+    CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
 	//ブロック生成
 	//LoadBlock(&CTitle::BLOCK_FILE);
 
 	//プレイヤー生成
-	CPlayer* pplayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, -300.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
+	CPlayer* pplayer = CPlayer::Create(PLAYER_SPAWN, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), CPlayer::PLAYER_LIFE);
 
-    m_pTitleScreen[0] = CTitle_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f,200.0f,0.0f),D3DXVECTOR2(400.0f,200.0f),CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
+    m_pTitleScreen[0] = CTitle_Screen::Create(LOGO_POS, LOGO_SIZE,CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
 
-    m_pTitleScreen[1]=CTitle_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 600.0f, 0.0f), D3DXVECTOR2(200.0f, 50.0f), CTitle_Screen::TITLE_UI::UI_TITLE_PRESS_BUTTON);
+    m_pTitleScreen[1]=CTitle_Screen::Create(UI_POS, UI_SIZE, CTitle_Screen::TITLE_UI::UI_TITLE_PRESS_BUTTON);
 
     return S_OK;
 }

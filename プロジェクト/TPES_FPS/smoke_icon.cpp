@@ -35,7 +35,7 @@ HRESULT CSmokeIcon::Init()
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }

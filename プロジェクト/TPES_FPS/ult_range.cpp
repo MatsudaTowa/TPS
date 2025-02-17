@@ -14,7 +14,7 @@ const float CUltRange::RADIUS = 20.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CUltRange::CUltRange() :m_nLife(0), m_pos({0.0f,0.0f,0.0f}), m_pUltEffect(nullptr)
+CUltRange::CUltRange() :m_nLife(INT_ZERO), m_pos(VEC3_RESET_ZERO), m_pUltEffect(nullptr)
 {
 }
 
@@ -34,7 +34,7 @@ HRESULT CUltRange::Init()
 
 	if (m_pUltEffect == nullptr)
 	{
-		m_pUltEffect = CUltEffect::Create({ m_pos.x, 0.5f, m_pos.z }, { 0.0f,0.0f,0.0f });
+		m_pUltEffect = CUltEffect::Create({ m_pos.x, 0.5f, m_pos.z }, VEC3_RESET_ZERO);
 	}
 	return S_OK;
 }
@@ -58,7 +58,7 @@ void CUltRange::Uninit()
 void CUltRange::Update()
 {
 	//すでに体力がないなら関数を抜ける
-	if (m_nLife <= 0)
+	if (m_nLife <= INT_ZERO)
 	{
 		return;
 	}
@@ -75,7 +75,7 @@ void CUltRange::Update()
 		m_pUltEffect->SetSize(size);
 	}
 
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
@@ -98,13 +98,13 @@ void CUltRange::Update()
 
 			if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
 			{
-				if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * 0.5f)
+				if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * HALF)
 				{//近かったらマックスダメージ
 					enemy->MediumUltHit(m_pos, MAX_DAMAGE);
 				}
 				else
 				{
-					enemy->MediumUltHit(m_pos, MAX_DAMAGE * 0.5f);
+					enemy->MediumUltHit(m_pos, MAX_DAMAGE * HALF);
 				}
 			}
 		}

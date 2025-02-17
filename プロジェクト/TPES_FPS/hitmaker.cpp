@@ -14,7 +14,7 @@ const std::string CHitMaker::HITMARKER_DOT_TEXTURE_NAME = "data\\TEXTURE\\hitmar
 //コンストラクタ
 //=============================================
 CHitMaker::CHitMaker(int nPriority):CBillboard(nPriority),
-m_nLife(0)
+m_nLife(INT_ZERO)
 {
 }
 
@@ -56,11 +56,11 @@ void CHitMaker::Update()
 	CBillboard::Update();
 
 	D3DXCOLOR col = GetColor();
-	col.a -= 0.05f;
+	col.a -= FADE_OUT;
 
-	if (col.a <= 0.0f)
+	if (col.a <= FLOAT_ZERO)
 	{
-		col.a = 0.0f;
+		col.a = FLOAT_ZERO;
 	}
 
 	SetColor(col);

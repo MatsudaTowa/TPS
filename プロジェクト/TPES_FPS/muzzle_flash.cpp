@@ -66,9 +66,9 @@ void CMuzzleFlash::Update()
 		//í∏ì_ç¿ïW
 		SetVtx(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
 	}
-	else if(m_nLife <= 0)
+	else if(m_nLife <= INT_ZERO)
 	{
-		m_nLife = 0;
+		m_nLife =INT_ZERO;
 		Uninit();
 	}
 }

@@ -7,10 +7,11 @@
 #include "gun.h"
 #include "assault_behavior.h"
 #include "minigun_behavior.h"
+#include "manager.h"
 //=============================================
 //コンストラクタ
 //=============================================
-CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(0),m_nDamage(0),m_Size(),m_BulletSpeed(0.0f)
+CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(INT_ZERO),m_nDamage(INT_ZERO),m_Size(),m_BulletSpeed(FLOAT_ZERO)
 {
 	m_pShot = nullptr;
 	m_pReload = nullptr;

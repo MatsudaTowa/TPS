@@ -36,22 +36,22 @@ HRESULT CUltIconEffect::Init()
 
 	//テクスチャ移動量取得
 	D3DXVECTOR2 tex_move = GetTexMove();
-	tex_move.x = 1.0f / (float)TEX_SPLIT_X;
-	tex_move.y = 1.0f / (float)TEX_SPLIT_Y;
+	tex_move.x = FLOAT_ONE / (float)TEX_SPLIT_X;
+	tex_move.y = FLOAT_ONE / (float)TEX_SPLIT_Y;
 	//テクスチャ移動量代入
 	SetTexMove(tex_move);
 
 	//テクスチャ座標取得
 	D3DXVECTOR2 tex_pos = GetTexPos();
-	tex_pos.x = 0.0f;
-	tex_pos.y = 0.0f;
+	tex_pos.x = FLOAT_ZERO;
+	tex_pos.y = FLOAT_ZERO;
 	//テクスチャ座標代入
 	SetTexPos(tex_pos);
 
 	//アニメーションフレーム代入
 	SetAnimFrame(ANIMATION_FRAME);
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	//頂点座標
 	AnimationTex(tex_pos, tex_move);
@@ -80,9 +80,9 @@ void CUltIconEffect::Update()
 	//アニメーション後のテクスチャ座標取得
 	tex_pos = GetTexPos();
 	//アニメーションを繰り返す
-	if (tex_pos.x >= 1.0f)
+	if (tex_pos.x >= FLOAT_ONE)
 	{
-		tex_pos.x = 0.0f;
+		tex_pos.x = FLOAT_ZERO;
 	}
 	SetTexPos(tex_pos);
 

@@ -57,6 +57,8 @@ public:
 
 	static void SetWave(CWave::WAVE wave,CWave::WAVE next_wave,const char* ResultFile);
 private:
+	static const int DELAY_FLAME = 60; //ディレイのフレーム数
+	static const int DEATH_PENALTY = -50; //死んだときのペナルティ
 	int m_nResultDelay; //リザルトへのディレイ
 	bool m_bEdit; //エディットしてるかどうか
 	static GAME_STATE m_GameState; //ゲームステート

@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "wave_result_screen.h"
+#include "manager.h"
 
 //=============================================
 //コンストラクタ
@@ -31,10 +32,10 @@ HRESULT CWave_Result_Screen::Init()
 	//自分自身のサイズ取得
 	D3DXVECTOR2 size = GetSize();
 
-	size = D3DXVECTOR2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);
+	size = D3DXVECTOR2(SCREEN_WIDTH * HALF, SCREEN_HEIGHT * HALF);
 
 	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
+	SetTexPos(VEC2_RESET_ONE);
 
 	//サイズを代入
 	SetSize(size);

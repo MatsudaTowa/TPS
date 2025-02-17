@@ -40,7 +40,7 @@ HRESULT CFade::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade);
+	col = D3DXCOLOR(FLOAT_ZERO, FLOAT_ZERO, FLOAT_ZERO, m_colorFade);
 
 	//カラーを代入
 	SetColor(col);
@@ -69,18 +69,18 @@ void CFade::Update()
 		if (m_fade == FADE_IN)
 		{//フェードイン状態
 			m_colorFade -= FADE_VALUE;
-			if (m_colorFade <= 0.0f)
+			if (m_colorFade <= FLOAT_ZERO)
 			{
-				m_colorFade = 0.0f;
+				m_colorFade = FLOAT_ZERO;
 				m_fade = FADE_NONE; //何もしてない状態に
 			}
 		}
 		else if (m_fade == FADE_OUT)
 		{//フェードアウト状態
 			m_colorFade += FADE_VALUE;
-			if (m_colorFade >= 1.0f)
+			if (m_colorFade >= FLOAT_ONE)
 			{
-				m_colorFade = 1.0f;
+				m_colorFade = FLOAT_ONE;
 				m_fade = FADE_IN; //フェードイン状態に
 				CManager::GetInstance()->SetMode(m_fademode);
 			}
@@ -89,13 +89,13 @@ void CFade::Update()
 		//カラー取得
 		D3DXCOLOR col = GetColor();
 
-		col = D3DXCOLOR(0.0f, 0.0f, 0.0f, m_colorFade);
+		col = D3DXCOLOR(FLOAT_ZERO, FLOAT_ZERO, FLOAT_ZERO, m_colorFade);
 
 		//カラーを代入
 		SetColor(col);
 
 		//頂点カラーの設定
-		SetVtx(1.0f);
+		SetVtx(FLOAT_ONE);
 	}
 
 }
@@ -144,7 +144,7 @@ CFade* CFade::Create(D3DXVECTOR3 pos)
 	{
 		pFade->SetPos(pos); //pos設定
 
-		pFade->m_colorFade = 0.0f;
+		pFade->m_colorFade = FLOAT_ZERO;
 
 		pFade->SetType(OBJECT_TYPE_FADE); //タイプ設定
 

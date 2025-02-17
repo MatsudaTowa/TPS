@@ -32,7 +32,7 @@ HRESULT CGauge_2D::Init()
 	CObject2D::Init();
 
 	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
+	SetTexPos(VEC2_RESET_ONE);
 
 	//頂点設定
 	SetGaugeVtx(1.0f);
@@ -58,7 +58,7 @@ void CGauge_2D::Update()
 	CObject2D::Update();
 
 	//頂点設定
-	SetGaugeVtx(1.0f);
+	SetGaugeVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -142,7 +142,7 @@ HRESULT CGauge_3D::Init()
 	CBillboard::Init();
 
 	//テクスチャ座標設定
-	SetTexPos(D3DXVECTOR2(1.0f, 1.0f));
+	SetTexPos(VEC2_RESET_ONE);
 
 	//頂点設定
 	SetGaugeVtx(m_ReferencePos, {0.0f,0.0f,-1.0f});

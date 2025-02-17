@@ -19,7 +19,7 @@
 class CWave
 {
 public:
-	static const int TXT_MAX = 1024; //敵を読み込む際の読み込める最大文字数
+	static const int TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
 	//ウェーブ列挙
 	enum WAVE
 	{
@@ -96,7 +96,8 @@ public:
 		m_pScore->Reset();
 	}
 protected:
-	// メンバ変数
+	static const D3DXVECTOR3 NORMAL_FIELD_SIZE; //通常ウェーブ床のサイズ
+	static const D3DXVECTOR3 BOSS_FIELD_SIZE; //ボスウェーブ床のサイズ
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	LOAD_WALL m_LoadWall; //読み込むときに必要な壁の情報

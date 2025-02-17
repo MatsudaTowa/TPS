@@ -101,7 +101,7 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	{//射撃ボタンが押されたら
 		if (character->m_pGunAttack != nullptr)
 		{
-			if (character->m_pGun->GetAmmo() > 0)
+			if (character->m_pGun->GetAmmo() > INT_ZERO)
 			{
 				++character->m_pGun->m_nRateCnt;
 
@@ -126,7 +126,7 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 {
 	if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
 	{
-		character->m_pGun->m_nRateCnt = 0;
+		character->m_pGun->m_nRateCnt = INT_ZERO;
 		//銃から発射 TODO:銃口と方向がおかしい
 
 		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
@@ -165,35 +165,35 @@ void CPlayerAvoidance::Avoidance(CCharacter* character)
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	//移動の方向の単位ベクトル変数
-	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vecDirection(VEC3_RESET_ZERO);
 
 	if (pKeyboard->GetPress(DIK_W))
 	{
-		vecDirection.z += 1.0f;
+		vecDirection.z += FLOAT_ONE;
 	}
 	else if (pKeyboard->GetPress(DIK_S))
 	{
-		vecDirection.z -= 1.0f;
+		vecDirection.z -= FLOAT_ONE;
 	}
 	else if (pKeyboard->GetPress(DIK_A))
 	{
-		vecDirection.x -= 1.0f;
+		vecDirection.x -= FLOAT_ONE;
 	}
 	else if (pKeyboard->GetPress(DIK_D))
 	{
-		vecDirection.x += 1.0f;
+		vecDirection.x += FLOAT_ONE;
 	}
 	else
 	{
-		vecDirection.z -= 1.0f;
+		vecDirection.z -= FLOAT_ONE;
 	}
 
 	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
 	D3DXVECTOR3 move = character->GetMove();
 
-	move.x += sinf(rotMoveY) * character->GetSpeed() * 30.0f;
-	move.z += cosf(rotMoveY) * character->GetSpeed() * 30.0f;
+	move.x += sinf(rotMoveY) * character->GetSpeed() * PLAYER_AVOIDANCE_SPEED;
+	move.z += cosf(rotMoveY) * character->GetSpeed() * PLAYER_AVOIDANCE_SPEED;
 	
 	//親クラスからrotを取得
 	D3DXVECTOR3 rot = character->GetRot();

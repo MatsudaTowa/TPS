@@ -7,8 +7,6 @@
 #include "boss_enemy.h"
 #include "boss_behavior.h"
 
-const float CBossEnemy::FIND_PLAYER_DISTANCE = 300.0f; //この値までだったら追いかける
-const float CBossEnemy::LOST_PLAYER_DISTANCE = 100.0f; //この値以上だったら見失う
 //影のサイズ
 const D3DXVECTOR3 CBossEnemy::SHADOW_SIZE = { 30.0f, 0.0, 30.0f };
 

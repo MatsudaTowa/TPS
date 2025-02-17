@@ -35,7 +35,7 @@ HRESULT CWave_Two::Init()
 	CWave::LoadEnemy(&WAVE_2_ENEMY_FILE);
 	CWave::LoadWall(&WAVE_2_WALL_FILE);
 	//ínñ ê∂ê¨
-	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 1000.0f));
+	CField::Create(VEC3_RESET_ZERO, NORMAL_FIELD_SIZE);
 	return S_OK;
 }
 

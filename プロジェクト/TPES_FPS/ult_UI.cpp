@@ -19,7 +19,7 @@ const D3DXVECTOR2 CUlt_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 //=============================================
 // コンストラクタ
 //=============================================
-CUlt_UI::CUlt_UI():m_PercentPos({0.0f,0.0f,0.0f}), m_pKeyboard_UI(),m_pIcon()
+CUlt_UI::CUlt_UI():m_PercentPos(VEC3_RESET_ZERO), m_pKeyboard_UI(),m_pIcon()
 {
 }
 
@@ -38,14 +38,14 @@ HRESULT CUlt_UI::Init(CPlayer* player)
 	//UIの枠生成
 	if (m_pIcon == nullptr)
 	{
-		float Addcolor = (1.0 - CUltIcon::START_COLOR.r) / player->m_pUlt->GetCoolTime();
+		float Addcolor = (FLOAT_ONE - CUltIcon::START_COLOR.r) / player->m_pUlt->GetCoolTime();
 
 		m_pIcon = CUltIcon::Create(ICON_POS, ICON_SIZE, Addcolor, CUltIcon::ULT_TYPE::ULT_TYPE_MEDIUM);
 	}
 
 	if (m_pKeyboard_UI == nullptr)
 	{
-		m_pKeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, {1.0f,1.0f,1.0f,1.0f},CKeyboard_UI::KEY_X);
+		m_pKeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, COLOR_WHITE ,CKeyboard_UI::KEY_X);
 	}
 	return S_OK;
 }

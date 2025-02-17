@@ -11,7 +11,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CNormalMove::CNormalMove():m_TransitionCnt(0),m_nStateChangeCnt(0), m_nStayCnt(0), m_bRandom(), m_nLeft(), m_nRight(),m_bDamage(false)
+CNormalMove::CNormalMove():m_TransitionCnt(INT_ZERO),m_nStateChangeCnt(INT_ZERO), m_nStayCnt(INT_ZERO), m_bRandom(), m_nLeft(), m_nRight(),m_bDamage(false)
 {
 	m_nLeft = LEFT_PARCENT;
 	m_nRight = RIGHT_PARCENT;
@@ -35,7 +35,7 @@ void CNormalMove::Move(CCharacter* character)
 		if (m_TransitionCnt > TRANSITION_FRAME)
 		{
 			m_bDamage = false;
-			m_TransitionCnt = 0;
+			m_TransitionCnt = INT_ZERO;
 
 			//射撃状態に
 			character->ChangeState(new CShotState);
@@ -43,15 +43,15 @@ void CNormalMove::Move(CCharacter* character)
 	}
 	if (m_nStateChangeCnt < MOVE_FRAME)
 	{
-		float move_x = 0.0f;
+		float move_x = FLOAT_ZERO;
 
 		if (m_bRandom)
 		{
-			move_x = 1.0f;
+			move_x = FLOAT_ONE;
 		}
 		if (!m_bRandom)
 		{
-			move_x = -1.0f;
+			move_x = -FLOAT_ONE;
 		}
 
 		//横にしか移動しないのでxに値代入
@@ -131,7 +131,7 @@ CCharacter::RayHitInfo CNormalMove::PerformRaycast_Player(D3DXVECTOR3 vector, CC
 //=============================================
 void CNormalMove::Stay(CCharacter* character)
 {
-	character->SetRot({0.0f,0.0f,0.0f});
+	character->SetRot(VEC3_RESET_ZERO);
 
 	if (m_nStayCnt < STAY_FRAME)
 	{
@@ -140,8 +140,8 @@ void CNormalMove::Stay(CCharacter* character)
 	}
 	if (m_nStayCnt >= STAY_FRAME)
 	{
-		m_nStateChangeCnt = 0;
-		m_nStayCnt = 0;
+		m_nStateChangeCnt = INT_ZERO;
+		m_nStayCnt = INT_ZERO;
 		NextMove_X(character);
 	}
 }

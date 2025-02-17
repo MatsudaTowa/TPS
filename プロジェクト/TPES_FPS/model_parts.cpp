@@ -180,7 +180,7 @@ void CModel_Parts::Draw()
 
 		pMat = (D3DXMATERIAL*)m_ModelInfo->pBuffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_ModelInfo->dwNumMat; nCntMat++)
+		for (int nCntMat = INT_ZERO; nCntMat < (int)m_ModelInfo->dwNumMat; nCntMat++)
 		{
 			//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);

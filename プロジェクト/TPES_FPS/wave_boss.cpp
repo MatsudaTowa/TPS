@@ -38,7 +38,7 @@ HRESULT CWave_Boss::Init()
 	CWave::LoadWall(&WAVE_BOSS_WALL_FILE);
 	LoadPoint(&WAVE_BOSS_POINT_FILE);
 	//ínñ ê∂ê¨
-	CField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(900.0f, 0.0f, 900.0f));
+	CField::Create(D3DXVECTOR3(VEC3_RESET_ZERO), CWave::BOSS_FIELD_SIZE);
 	return S_OK;
 }
 

@@ -14,7 +14,7 @@
 CObject2D_Anim::CObject2D_Anim(int nPriority):CObject2D(nPriority)
 {
 	//アニメーションカウント初期化
-	m_nAnimCnt = 0;
+	m_nAnimCnt = INT_ZERO;
 }
 
 //=============================================
@@ -71,7 +71,7 @@ void CObject2D_Anim::AnimationTex(D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move)
 		tex_pos.x += tex_move.x;
 		m_tex_move = tex_move;
 
-		m_nAnimCnt = 0;
+		m_nAnimCnt = INT_ZERO;
 	}
 
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();

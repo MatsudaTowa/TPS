@@ -62,7 +62,7 @@ HRESULT CResult::Init()
 {
     CScene::Init();
 
-    for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
+    for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
     {
         //スコア初期化
         if (m_pScore[nCnt] == nullptr)
@@ -71,7 +71,7 @@ HRESULT CResult::Init()
 
             m_pScore[nCnt]->SetPos(SCORE_POS[nCnt]);
 
-            if (nCnt == 4)
+            if (nCnt == CManager::NUM_RESULT_FILE)
             {//最終スコアだけ大きく表示
                 m_pScore[nCnt]->SetSize(SCORE_SIZE[1]);
                 m_pScore[nCnt]->SetDigitShift(DIGIT_SHIFT[1]);
@@ -87,17 +87,17 @@ HRESULT CResult::Init()
     }
 
     //今までのスコアを読み込み
-    for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
+    for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
     {
         if (m_pScore[nCnt] != nullptr)
         {
             m_pScore[nCnt]->AddScore(LoadScore(WAVE_RESULT_FILE[nCnt]));
         }
 
-        m_pScore[4]->AddScore(LoadScore(WAVE_RESULT_FILE[nCnt]));
+        m_pScore[CManager::NUM_RESULT_FILE]->AddScore(LoadScore(WAVE_RESULT_FILE[nCnt]));
     }
 
-    CResult_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f, 0.0f));
+    CResult_Screen::Create(D3DXVECTOR3(SCREEN_WIDTH * HALF,SCREEN_HEIGHT * HALF, 0.0f));
   
     return S_OK;
 }
@@ -107,11 +107,11 @@ HRESULT CResult::Init()
 //=============================================
 void CResult::Uninit()
 {
-    for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
+    for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE; nCnt++)
     {//今までのデータ削除
         CManager::ExportScoreReset(&CManager::RESULT_SCORE_FILE[nCnt]);
     }
-    for (int nCnt = 0; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
+    for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
     {
         if (m_pScore[nCnt] != nullptr)
         {
@@ -133,7 +133,7 @@ void CResult::Update()
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-    for (int nCnt = 0; nCnt < 5; nCnt++)
+    for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)
     {
         if (m_pScore[nCnt] != nullptr)
         {
@@ -165,7 +165,7 @@ int CResult::LoadScore(const char* FileName)
     //ファイルの読み込み
     FILE* pFile = fopen(FileName, "rb");
 
-    int nScore = 0; //返すスコア
+    int nScore = INT_ZERO; //返すスコア
 
     if (pFile != NULL)
     {

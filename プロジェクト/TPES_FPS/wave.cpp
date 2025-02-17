@@ -19,6 +19,11 @@
 #include "mask.h"
 #include "gauge.h"
 
+//通常の床のサイズ
+const D3DXVECTOR3 CWave::NORMAL_FIELD_SIZE = { 500.0f, 0.0f, 1000.0f };
+
+const D3DXVECTOR3 CWave::BOSS_FIELD_SIZE = { 900.0f, 0.0f, 900.0f };
+
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
 CWave::WAVE CWave::m_next = WAVE::NONE;
 const char* CWave::m_ResultFile = nullptr;
@@ -169,8 +174,7 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 100);
-			CGauge_3D::Create(D3DXVECTOR3(0.0f, 0.5f, -70.0f), D3DXVECTOR3(100.0f, 50.0f, 0.0f), CGauge_3D::GAUGE3D_TYPE::GAUGE_TYPE_STAMINA,{1.0f,1.0f,0.0f,1.0f});
+			CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
 		}
 		else if (wave == WAVE::RESULT)
 		{

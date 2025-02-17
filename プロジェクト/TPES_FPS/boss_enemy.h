@@ -36,8 +36,8 @@ public:
 	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 	static const int DEFAULT_LIFE = 1500; //ライフ
 	static const int LOW_HP = DEFAULT_LIFE / 3; //体力が低い
-	static const float FIND_PLAYER_DISTANCE; //この値までだったら追いかける
-	static const float LOST_PLAYER_DISTANCE; //この値以上だったら見失う
+	static constexpr float FIND_PLAYER_DISTANCE = 300.0f; //この値までだったら追いかける
+	static constexpr float LOST_PLAYER_DISTANCE = 100.0f; //この値以上だったら見失う
 
 	//モーションの種類の列挙
 	enum Motion_Type
@@ -112,7 +112,7 @@ private:
 
 	static constexpr float PLAYER_KNOCKBACK_SPEED = 15.0f; //タックルが当たった時にノックバックさせる際のXとZにかけるスピード
 
-	static constexpr float PLAYER_KNOCKBACK_Y = 30.0f; //タックルが当たった時にノックバックさせる際のXとZにかけるスピード
+	static constexpr float PLAYER_KNOCKBACK_Y = 30.0f; //タックルが当たった時にノックバックさせる際のYに打ち上げる
 
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動

@@ -165,6 +165,12 @@ private:
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
 	static const int STAMINA_RECOVERY_FRAME = 5; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
+	static const int DAMAGE_FRAME = 30; //ダメージフレーム
+	static constexpr float RETICLE_CORRECTION_VALUE = 16.0f; //レティクルのY座標補正
+	static constexpr float SMOKE_CORRECTION_VALUE = 50.0f; //スモークを射出する際の補正値
+	static constexpr float SMOKE_SHOT_SPEED = 20.0f; //スモークを射出するスピード
+	static const D3DXVECTOR3 GUN_UI_POS;//銃のUIの位置
+	static const D3DXVECTOR2 GUN_UI_SIZE;//銃のUIのサイズ
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン

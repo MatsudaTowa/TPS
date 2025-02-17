@@ -28,7 +28,7 @@ CGameScore::CGameScore():
 m_pDeathCnt(),						//死亡数カウント数字ポインタ初期化
 m_pPlayerUIBox(),					//UIボックスのポインタ初期化
 m_pDeathIcon(),						//死亡アイコン初期化
-m_DeathCntPos({0.0f,0.0f,0.0f})		//死亡数の位置
+m_DeathCntPos(VEC3_RESET_ZERO)		//死亡数の位置
 {
 }
 
@@ -49,13 +49,13 @@ HRESULT CGameScore::Init()
 	//Uiの枠生成
 	if (m_pPlayerUIBox == nullptr)
 	{
-		m_pPlayerUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CPlayerUIBox::BOX_TYPE::BOX_TYPE_SCORE);
+		m_pPlayerUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, COLOR_WHITE, CPlayerUIBox::BOX_TYPE::BOX_TYPE_SCORE);
 	}
 
 	//死亡アイコン生成
 	if (m_pDeathIcon == nullptr)
 	{
-		m_pDeathIcon = CDeathIcon::Create(DEATH_ICON_POS, DEATH_ICON_SIZE, { 1.0f,1.0f,1.0f,1.0f });
+		m_pDeathIcon = CDeathIcon::Create(DEATH_ICON_POS, DEATH_ICON_SIZE, COLOR_WHITE);
 	}
 
 	for (int nCnt = 0; nCnt < DEATH_DIGIT; nCnt++)
@@ -163,6 +163,6 @@ void CGameScore::SetDeathCntUI(int nDeathCnt)
 		fMinTexU = a_PosTexU[nCnt] * 0.1f;
 		fMaxTexU = fMinTexU + 0.1f;
 
-		m_pDeathCnt[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		m_pDeathCnt[nCnt]->SetNumber(fMinTexU, fMaxTexU, COLOR_WHITE);
 	}
 }

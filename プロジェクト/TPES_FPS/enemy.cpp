@@ -19,24 +19,10 @@
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
 
-//通常の移動速度
-const float CEnemy::DEFAULT_MOVE = 1.0f;
-//通常の移動速度
-const float CEnemy::DAMPING_COEFFICIENT = 0.3f;
-
-//通常のジャンプ力
-const float CEnemy::DEFAULT_JUMP = 25.0f;
-
-//これより下に行ったら死ぬ座標
-const float CEnemy::DEADZONE_Y = -100.0f;
-
-//ステンシルテスト有効フレーム
-const int CEnemy::STENCIL_FLAME = 300.0f;
-
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type(), m_isStencil(false),m_StencilCnt(0)
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),m_Type(), m_isStencil(false),m_StencilCnt(INT_ZERO)
 {//イニシャライザーでメンバ変数初期化
 
 	//総数追加
@@ -63,7 +49,7 @@ HRESULT CEnemy::Init()
 	SetStanFrame(STAN_FRAME);
 
 	//移動量初期化
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 move = D3DXVECTOR3(VEC3_RESET_ZERO);
 
 	//ムーブ値代入
 	SetMove(move);
@@ -104,7 +90,7 @@ void CEnemy::Update()
 		++m_StencilCnt;
 		if (m_StencilCnt > STENCIL_FLAME)
 		{//フレームに到達していたら
-			m_StencilCnt = 0;
+			m_StencilCnt = INT_ZERO;
 			//ステンシルテストを無効に
 			m_isStencil = false;
 		}
@@ -202,7 +188,7 @@ void CEnemy::Damage(int nDamage)
 	//状態を取得
 	CCharacter::CHARACTER_STATE state = GetState();
 
-	if (nLife > 0)
+	if (nLife > INT_ZERO)
 	{//ダメージ状態以外でHPが残ってたら
 		nLife -= nDamage;
 
@@ -232,15 +218,15 @@ void CEnemy::Damage(int nDamage)
 		{
 			CScore* pScore = CWave::GetScore();
 
-			int nAddScore = 0;
+			int nAddScore = INT_ZERO;
 			//TODO:これもストラテジーでやるべき
 			switch (m_Type)
 			{
 			case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:
-				nAddScore = 300;
+				nAddScore = DEFAULT_SCORE;
 				break;
 			case CEnemy::ENEMY_TYPE::ENEMY_TYPE_BOSS:
-				nAddScore = 1000;
+				nAddScore = BOSS_SCORE;
 				break;
 			default:
 				assert(false);
@@ -270,9 +256,9 @@ void CEnemy::MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)
 	if (GetLaunding())
 	{
 		//反対方向に吹っ飛ばすのでスピードはマイナス
-		move.x += sinf(angle) * (-GetSpeed() * 10.0f);
-		move.y += 40.0f;
-		move.z += cosf(angle) * (-GetSpeed() * 10.0f);
+		move.x += sinf(angle) * (-GetSpeed() * ULT_KNOCKBACK_SPEED);
+		move.y += ULT_KNOCKBACK_Y;
+		move.z += cosf(angle) * (-GetSpeed() * ULT_KNOCKBACK_SPEED);
 	}
 
 	//移動量代入

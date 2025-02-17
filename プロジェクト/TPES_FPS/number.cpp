@@ -13,7 +13,7 @@ const std::string CNumber_2D::TEXTURE_NAME = "data\\TEXTURE\\number_001.png";
 //=============================================
 //コンストラクタ
 //=============================================
-CNumber_2D::CNumber_2D(int nPriority) : CObject2D(nPriority), m_mintex(D3DXVECTOR2(0.0f,0.0f)),m_maxtex(D3DXVECTOR2(0.0f, 0.0f)), m_col(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))
+CNumber_2D::CNumber_2D(int nPriority) : CObject2D(nPriority), m_mintex(VEC2_RESET_ZERO),m_maxtex(VEC2_RESET_ZERO), m_col(COLOR_NONE)
 {
 }
 

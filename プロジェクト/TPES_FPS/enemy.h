@@ -66,14 +66,17 @@ private:
 	//void ColisionUlt(D3DXVECTOR3& enemyPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
 
 	//プレイヤーの移動関連
-	static const float DEFAULT_MOVE; //通常時の移動
-	static const float DAMPING_COEFFICIENT; //移動抵抗
-	static const float DEFAULT_JUMP; //通常時のジャンプ力
-	static const int NUM_MOTION; //モーションの数
-	static const int STENCIL_FLAME; //ステンシルテスト有効
-	static constexpr int STAN_FRAME = 300; //スタン時間
+	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
+	static constexpr float DAMPING_COEFFICIENT = 0.3f; //移動抵抗
+	static constexpr float DEFAULT_JUMP = 25.0f; //通常時のジャンプ力
+	static constexpr float ULT_KNOCKBACK_SPEED = 10.0f; //ULTが当たった時にノックバックさせる際のXとZにかけるスピード
+	static constexpr float ULT_KNOCKBACK_Y = 40.0f; //ULTが当たった時にノックバックさせる際のYに打ち上げる
+	static constexpr float DEADZONE_Y = -100.0f; //これを過ぎたらエネミー破棄
+	static const int STENCIL_FLAME = 300.0f; //ステンシルテスト有効
+	static const int STAN_FRAME = 300; //スタン時間
+	static const int DEFAULT_SCORE = 300; //デフォルトのスコア
+	static const int BOSS_SCORE = 1000; //ボスを倒したら入るスコア
 
-	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 
 	void ReSpawn(); //リスポーン
 

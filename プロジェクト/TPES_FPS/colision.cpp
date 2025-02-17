@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "colision.h"
+#include "manager.h"
 //=============================================
 //コンストラクタ
 //=============================================
@@ -370,12 +371,12 @@ CColision::COLISION CColision::CheckColisionSphere(D3DXVECTOR3 Apos, D3DXVECTOR3
 	float CenterDistance = sqrtf((Length.x * Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
 
 	//パーツの中心を求める
-	D3DXVECTOR3 originA = (AMaxpos - AMinpos) * 0.5f;
+	D3DXVECTOR3 originA = (AMaxpos - AMinpos) * HALF;
 
 	//パーツの中心を求める
-	D3DXVECTOR3 originB = (BMaxpos - BMinpos) * 0.5f;
+	D3DXVECTOR3 originB = (BMaxpos - BMinpos) * HALF;
 
-	float Radius = (originB.x + originA.x) + (originB.y + originA.y) + (originB.z + originA.z) * 0.5f;
+	float Radius = (originB.x + originA.x) + (originB.y + originA.y) + (originB.z + originA.z) * HALF;
 
 	if (CenterDistance <= Radius)
 	{
@@ -439,9 +440,9 @@ CColision::COLISION CColision::CheckPolygonModelColisionSphere(D3DXVECTOR3 Apos,
 	float CenterDistance = sqrtf((Length.x*Length.x) + (Length.y * Length.y) + (Length.z * Length.z));
 
 	//パーツの中心を求める
-	D3DXVECTOR3 origin = (BMaxpos - BMinpos) * 0.5f;
+	D3DXVECTOR3 origin = (BMaxpos - BMinpos) * HALF;
 
-	float Radius = (ASize.x + origin.x) + (ASize.y + origin.y) + (ASize.z + origin.z) * 0.5f;
+	float Radius = (ASize.x + origin.x) + (ASize.y + origin.y) + (ASize.z + origin.z) * HALF;
 
 	if (CenterDistance <= Radius)
 	{

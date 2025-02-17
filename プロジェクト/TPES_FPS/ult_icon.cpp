@@ -66,11 +66,11 @@ void CUltIcon::Update()
 		col.g += m_AddColor;
 		col.b += m_AddColor;
 
-		if (col.r >= 1.0f
-			&& col.g >= 1.0f
-			&& col.b >= 1.0f)
+		if (col.r >= FLOAT_ONE
+			&& col.g >= FLOAT_ONE
+			&& col.b >= FLOAT_ONE)
 		{
-			col = { 1.0f,1.0f,1.0f,1.0f };
+			col = COLOR_WHITE;
 			m_isAddColor = false; //â¡éZèIóπ
 
 			if (m_pIconEffect == nullptr)
@@ -83,7 +83,7 @@ void CUltIcon::Update()
 	SetColor(col);
 
 	//í∏ì_ê∂ê¨
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================

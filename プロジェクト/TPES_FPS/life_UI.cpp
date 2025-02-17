@@ -43,17 +43,17 @@ HRESULT CLife_UI::Init()
 	//UIÇÃògê∂ê¨
 	if (m_pUIBox == nullptr)
 	{
-		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,{ 1.0f,1.0f,1.0f,1.0f },CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE,COLOR_WHITE,CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
 	}
 
 	//ëÃóÕÉQÅ[ÉWê∂ê¨
 	if (m_pGauge == nullptr)
 	{
-		m_pGauge = CGauge_2D::Create(GAUGE_POS, GAUGE_SIZE, CGauge_2D::GAUGE2D_TYPE::GAUGE_TYPE_LIFE,{0.0f,1.0f,0.0f,1.0f});
+		m_pGauge = CGauge_2D::Create(GAUGE_POS, GAUGE_SIZE, CGauge_2D::GAUGE2D_TYPE::GAUGE_TYPE_LIFE,COLOR_GREEN);
 	}
 
 	//êîéöê∂ê¨
-	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
@@ -70,7 +70,7 @@ HRESULT CLife_UI::Init()
 //=============================================
 void CLife_UI::Uninit()
 {
-	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_DIGIT; nCnt++)
 	{
 		if (m_pNumber[nCnt] != nullptr)
 		{
@@ -161,6 +161,6 @@ void CLife_UI::SetNumber(int nLife)
 		fMinTexU = a_PosTexU[nCnt] * 0.1f;
 		fMaxTexU = fMinTexU + 0.1f;
 
-		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		m_pNumber[nCnt]->SetNumber(fMinTexU, fMaxTexU, COLOR_WHITE);
 	}
 }

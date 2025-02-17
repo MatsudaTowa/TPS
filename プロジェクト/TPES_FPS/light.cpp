@@ -41,7 +41,7 @@ HRESULT CLight::Init()
 		m_aLight[nCnt].Type = D3DLIGHT_DIRECTIONAL;
 
 		//ƒ‰ƒCƒg‚ÌŠgUŒõ‚Ìİ’è
-		m_aLight[nCnt].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		m_aLight[nCnt].Diffuse = COLOR_WHITE;
 
 		if (nCnt == 0)
 		{

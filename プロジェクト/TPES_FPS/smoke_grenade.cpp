@@ -15,7 +15,7 @@ const char* CSmokeGrenade::MODEL_NAME = "data\\MODEL\\jett.x";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmokeGrenade::CSmokeGrenade(int nPriority) : CObjectX(nPriority),m_move({0.0f,0.0f,0.0f}), m_oldpos({ 0.0f,0.0f,0.0f }), m_bBoot(false)
+CSmokeGrenade::CSmokeGrenade(int nPriority) : CObjectX(nPriority),m_move(VEC3_RESET_ZERO), m_oldpos(VEC3_RESET_ZERO), m_bBoot(false)
 {
 }
 
@@ -66,11 +66,11 @@ void CSmokeGrenade::Update()
 	{//炸裂したら
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SMOKE);
 
-		for (int nCnt = 0; nCnt < CREATE_SMOKE_NUM; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < CREATE_SMOKE_NUM; nCnt++)
 		{
 			CSmoke::Create(GetPos(),CSmoke::SMOKE_TYPE_TACTICAL);
 		}
-		CSmokeRange::Create(GetPos(),{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f});
+		CSmokeRange::Create(GetPos(),VEC3_RESET_ZERO, VEC3_RESET_ZERO);
 		Uninit();
 	}
 }
@@ -140,7 +140,7 @@ void CSmokeGrenade::HitField()
 				if (colision == CColision::COLISION::COLISON_TOP_Y)
 				{//y(上)方向に当たってたら
 					pos.y = m_oldpos.y;
-					m_move = {0.0f,0.0f,0.0f};
+					m_move = VEC3_RESET_ZERO;
 					m_bBoot = true;
 				}
 
@@ -150,7 +150,7 @@ void CSmokeGrenade::HitField()
 						&& pos.x < pField->GetPos().x - pField->GetSize().x)
 					{
 						pos.x = m_oldpos.x;
-						m_move = { 0.0f,0.0f,0.0f };
+						m_move = VEC3_RESET_ZERO;
 						m_bBoot = true;
 					}
 
@@ -158,7 +158,7 @@ void CSmokeGrenade::HitField()
 						&& pos.x > pField->GetPos().x + pField->GetSize().x)
 					{
 						pos.x = m_oldpos.x;
-						m_move = { 0.0f,0.0f,0.0f };
+						m_move = VEC3_RESET_ZERO;
 						m_bBoot = true;
 					}
 
@@ -166,7 +166,7 @@ void CSmokeGrenade::HitField()
 						&& pos.z < pField->GetPos().z - pField->GetSize().z)
 					{
 						pos.z = m_oldpos.z;
-						m_move = { 0.0f,0.0f,0.0f };
+						m_move = VEC3_RESET_ZERO;
 						m_bBoot = true;
 					}
 
@@ -174,7 +174,7 @@ void CSmokeGrenade::HitField()
 						&& pos.z > pField->GetPos().z + pField->GetSize().z)
 					{
 						pos.z = m_oldpos.z;
-						m_move = { 0.0f,0.0f,0.0f };
+						m_move = VEC3_RESET_ZERO;
 						m_bBoot = true;
 					}
 				}

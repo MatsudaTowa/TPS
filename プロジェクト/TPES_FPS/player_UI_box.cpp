@@ -29,7 +29,7 @@ HRESULT CPlayerUIBox::Init()
 	//親クラスの初期化
 	CObject2D::Init();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 	return S_OK;
 }
 
@@ -50,7 +50,7 @@ void CPlayerUIBox::Update()
 	//親クラスの更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 }
 

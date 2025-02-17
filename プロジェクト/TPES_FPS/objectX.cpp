@@ -11,18 +11,18 @@
 //コンストラクタ
 //=============================================
 CObjectX::CObjectX(int nPriority):CObject(nPriority),
-m_scale({ 1.0f,1.0f,1.0f }),			//スケール初期化
-m_pos({ 0.0f,0.0f,0.0f }),				//位置初期化
-m_rot({ 0.0f,0.0f,0.0f }),				//方向初期化
-m_minpos({ 0.0f,0.0f,0.0f }),			//最小の頂点座標初期化
-m_maxpos({ 0.0f,0.0f,0.0f }),			//最大の頂点座標初期化
+m_scale(VEC3_RESET_ONE),			//スケール初期化
+m_pos(VEC3_RESET_ZERO),				//位置初期化
+m_rot(VEC3_RESET_ZERO),				//方向初期化
+m_minpos(VEC3_RESET_ZERO),			//最小の頂点座標初期化
+m_maxpos(VEC3_RESET_ZERO),			//最大の頂点座標初期化
 m_mtxWorld(),							//ワールドマトリックス初期化
 m_pMesh(),								//メッシュ情報初期化
 m_pBuffMat(),							//マテリアル情報初期化
-m_dwNumMat(0),							//マテリアル数初期化
-m_col(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	//カラー初期化
+m_dwNumMat(INT_ZERO),							//マテリアル数初期化
+m_col(COLOR_WHITE)	//カラー初期化
 {
-	for (int nCnt = 0; nCnt < MAX_TEX; ++nCnt)
+	for (int nCnt = INT_ZERO; nCnt < MAX_TEX; ++nCnt)
 	{
 		m_pTexture[nCnt] = nullptr;
 	}
@@ -63,7 +63,7 @@ void CObjectX::Uninit()
 		m_pBuffMat = nullptr;
 	}
 
-	for (int nCnt = 0; nCnt < MAX_TEX; ++nCnt)
+	for (int nCnt = INT_ZERO; nCnt < MAX_TEX; ++nCnt)
 	{
 		if (m_pTexture[nCnt] != nullptr)
 		{
@@ -185,7 +185,7 @@ void CObjectX::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh
 	{
 		pMat = (D3DXMATERIAL*)pBuffMat->GetBufferPointer();
 
-		for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+		for (int nCntMat = INT_ZERO; nCntMat < (int)m_dwNumMat; nCntMat++)
 		{
 			if (pMat[nCntMat].pTextureFilename != NULL)
 			{
