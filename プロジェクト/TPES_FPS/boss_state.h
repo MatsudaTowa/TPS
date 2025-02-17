@@ -94,6 +94,9 @@ public:
 	virtual void Confusion(CBossEnemy* boss)override;
 	virtual void DrawDebug()override;
 private:
+	static constexpr float CORRECTION_VALUE = 70.0f; //リアクションのUIを生成する際のYの補正値
+	static const D3DXVECTOR3 SIZE; //リアクションのUIのサイズ
+
 	float m_StartRot;
 	bool m_isRight; //見渡す(true:右 false:左)
 	CEnemy_Reaction_UI* m_pReaction;

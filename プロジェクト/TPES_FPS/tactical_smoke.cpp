@@ -78,13 +78,13 @@ void CTacticalSmoke::Update()
 
 	D3DXVECTOR3 move = GetMove();
 	//ˆÚ“®—Ê‘ã“ü
-	if (move.x > 0.0f)
+	if (move.x > FLOAT_ZERO)
 	{
-		move.x -= 0.01f;
+		move.x -= X_DECREASE;
 	}
-	if (move.x < 0.0f)
+	if (move.x < FLOAT_ZERO)
 	{
-		move.x += 0.01f;
+		move.x += X_DECREASE;
 	}
 
 

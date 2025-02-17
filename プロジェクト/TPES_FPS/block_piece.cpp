@@ -95,8 +95,8 @@ CBlock_Piece* CBlock_Piece::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3
 	nType = number(random);
 
 	//元の位置からからどれだけ動かすか
-	std::uniform_int_distribution<int> pos_shift_x(-50, 50);
-	std::uniform_int_distribution<int> pos_shift_z(-50, 50);
+	std::uniform_real_distribution<float> pos_shift_x(SHIFT_X_MIN, SHIFT_X_MAX);
+	std::uniform_real_distribution<float> pos_shift_z(SHIFT_Z_MIN, SHIFT_Z_MIN);
 
 	pPiece->m_type = (CBlock_Piece::PIECE_TYPE)nType;
 	pPiece->SetPos({ pos .x + pos_shift_x(random),0.2f,pos.z + pos_shift_z(random)}); //pos設定
@@ -142,9 +142,9 @@ HRESULT CMove_Piece::Init()
 	float fMove;
 
 	//放射状にランダム
-	fVertex = (float)(rand() % 629 - 314) / 100.0f;
+	fVertex = CICRLE_RAND;
 
-	//移動量1以上2.0以下に
+	//移動ランダム
 	fMove = (float)(rand() % 101) / 10.0f + 5.0f;
 
 	m_nLife = LIFE;
@@ -178,9 +178,9 @@ void CMove_Piece::Update()
 	SetPos(pos);
 
 	--m_nLife;
-	if (m_nLife <= 0)
+	if (m_nLife <= INT_ZERO)
 	{//ライフ切れたら
-		m_nLife = 0;
+		m_nLife = INT_ZERO;
 		//破棄
 		Uninit();
 	}

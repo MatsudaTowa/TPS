@@ -28,8 +28,8 @@ const D3DXVECTOR2 CBlink_UI::KEY_UI_SIZE = { 40.0f, 20.0f };
 //コンストラクタ
 //=============================================
 CBlink_UI::CBlink_UI():
-m_BlinkUIPos({ 0.0f,0.0f,0.0f }),	//ブリンクのUI位置初期化
-m_NumBlink(0),					//ブリンクの数初期化
+m_BlinkUIPos(VEC3_RESET_ONE),	//ブリンクのUI位置初期化
+m_NumBlink(INT_ZERO),					//ブリンクの数初期化
 m_pCurrentBlink(),				//現在のブリンクの数のポインタ初期化
 m_pUIBox(),						//UIの枠初期化
 m_pIcon(),						//アイコンの初期化
@@ -55,24 +55,24 @@ HRESULT CBlink_UI::Init(CPlayer* player)
 	//UIの枠生成
 	if (m_pUIBox == nullptr)
 	{
-		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, COLOR_WHITE, CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
 	}
 
 	//UIの枠生成
 	if (m_pIcon == nullptr)
 	{
-		m_pIcon = CBlinkIcon::Create(ICON_POS, ICON_SIZE, { 1.0f,1.0f,1.0f,1.0f });
+		m_pIcon = CBlinkIcon::Create(ICON_POS, ICON_SIZE, COLOR_WHITE);
 	}
 
 	//キーボードUIの枠生成
 	if (m_pkeyboard_UI == nullptr)
 	{
-		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, { 1.0f,1.0f,1.0f,1.0f }, CKeyboard_UI::KEY_LSHIFT);
+		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, COLOR_WHITE, CKeyboard_UI::KEY_LSHIFT);
 	}
 
 	if (m_pBlinkBackUI == nullptr)
 	{
-		m_pBlinkBackUI = CBlinkBackUI::Create(BLINK_BACK_POS, BLINK_BACK_SIZE, { 1.0f,1.0f,1.0f,1.0f });
+		m_pBlinkBackUI = CBlinkBackUI::Create(BLINK_BACK_POS, BLINK_BACK_SIZE, COLOR_WHITE);
 	}
 
 	//数字生成
@@ -176,7 +176,7 @@ void CBlink_UI::SetNumber(int nParcent)
 		fMinTexU = a_PosTexU[nCnt] * 0.1f;
 		fMaxTexU = fMinTexU + 0.1f;
 
-		m_pCurrentBlink[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+		m_pCurrentBlink[nCnt]->SetNumber(fMinTexU, fMaxTexU, COLOR_BLACK);
 	}
 }
 

@@ -15,8 +15,11 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CAttack_Manager::CAttack_Manager(int nPriority) : CBillboard(nPriority),m_nLife(0),m_nDamage(0),m_nNumkill(0)
-{//イニシャライザーでプライオリティ設定、体力とダメージ初期化
+CAttack_Manager::CAttack_Manager(int nPriority) : CBillboard(nPriority),
+m_nLife(INT_ZERO),					//体力
+m_nDamage(INT_ZERO),				//ダメージ
+m_nNumkill(INT_ZERO)				//キル数
+{
 }
 
 //=============================================

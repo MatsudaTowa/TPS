@@ -106,6 +106,14 @@ public:
 		return m_HitAxis;
 	}
 private:
+	static constexpr float CORRECTION_VALUE_Y = 100.0f; //タックルエフェクトを生成する際のYの補正値
+
+	static constexpr float TACKLE_VALUE = 15.0f; //タックル時のスピード加算
+
+	static constexpr float PLAYER_KNOCKBACK_SPEED = 15.0f; //タックルが当たった時にノックバックさせる際のXとZにかけるスピード
+
+	static constexpr float PLAYER_KNOCKBACK_Y = 30.0f; //タックルが当たった時にノックバックさせる際のXとZにかけるスピード
+
 	//エネミーの移動関連
 	static const float DEFAULT_MOVE; //通常時の移動
 

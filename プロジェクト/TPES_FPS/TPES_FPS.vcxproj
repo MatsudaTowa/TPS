@@ -258,6 +258,7 @@
     <ClCompile Include="ult_icon_effect.cpp" />
     <ClCompile Include="ult_range.cpp" />
     <ClCompile Include="ult_UI.cpp" />
+    <ClCompile Include="useful.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="wave.cpp" />
     <ClCompile Include="wave_boss.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="ult_icon_effect.h" />
     <ClInclude Include="ult_range.h" />
     <ClInclude Include="ult_UI.h" />
+    <ClInclude Include="useful.h" />
     <ClInclude Include="wall.h" />
     <ClInclude Include="wave.h" />
     <ClInclude Include="wave_boss.h" />

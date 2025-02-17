@@ -17,7 +17,7 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CBossWandering::CBossWandering():m_MoveIdx(0), m_StopCnt(0), m_isMove()
+CBossWandering::CBossWandering():m_MoveIdx(INT_ZERO), m_StopCnt(INT_ZERO), m_isMove()
 {
 	m_isMove = true;
 }
@@ -40,16 +40,13 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 		CMovePoint* pMovePoint = CWave_Boss::GetMovePoint(m_MoveIdx);
 
 		//対象の位置への方向情報
-		D3DXVECTOR3 point = { pMovePoint->GetPos().x - boss->GetPos().x,0.0f,pMovePoint->GetPos().z - boss->GetPos().z };
+		D3DXVECTOR3 point = { pMovePoint->GetPos().x - boss->GetPos().x,FLOAT_ZERO,pMovePoint->GetPos().z - boss->GetPos().z };
 
 		// 目的地との距離を計算
 		float distance = sqrtf(point.x * point.x + point.z * point.z);
 
-		// 到達判定用の閾値
-		const float threshold = 0.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
-
 		// まだ目的地に到達していない場合のみ移動処理を行う
-		if (distance > threshold)
+		if (distance > THRESHOLD)
 		{
 			//対象物との角度計算
 			float angle = atan2f(point.x, point.z);
@@ -84,7 +81,7 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 		{//到達していたら
 			m_isMove = false;
 
-			D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
+			D3DXVECTOR3 move = VEC3_RESET_ZERO;
 			boss->SetMove(move);
 
 			//次の移動先の抽選
@@ -109,7 +106,7 @@ void CBossWandering::StopCnt()
 	++m_StopCnt;
 	if (m_StopCnt > STOP_FRAME)
 	{
-		m_StopCnt = 0;
+		m_StopCnt = INT_ZERO;
 		m_isMove = true;
 	}
 }
@@ -121,12 +118,12 @@ void CBossWandering::PickNextMovePoint(CMovePoint* pMovePoint)
 {
 	std::random_device seed;
 	std::mt19937 random(seed());
-	std::uniform_int_distribution<int> number(0, pMovePoint->GetNumPoint());
+	std::uniform_int_distribution<int> number(INT_ZERO, pMovePoint->GetNumPoint());
 	//ランダムで位置指定
   	m_MoveIdx = number(random);
 	if (m_MoveIdx >= pMovePoint->GetNumPoint())
 	{
-		m_MoveIdx = 0;
+		m_MoveIdx = INT_ZERO;
 	}
 }
 
@@ -173,11 +170,8 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 	// 目的地との距離を計算
 	float distance = sqrtf(Vector.x * Vector.x + Vector.z * Vector.z);
 
-	// 到達判定用の閾値
-	const float threshold = 200.0f; // 距離が定数以下なら到達とする 遠距離武器だから近づきすぎないように調整
-
 	//プレイヤーに向かって動かす
-	MovetoPlayer(distance, threshold, Vector, boss);
+	MovetoPlayer(distance, THRESHOLD, Vector, boss);
 
 	D3DXVec3Normalize(&Vector, &Vector);
 
@@ -219,7 +213,7 @@ void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR
 	}
 	else
 	{
-		D3DXVECTOR3 move = {0.0f,0.0f,0.0f};
+		D3DXVECTOR3 move = VEC3_RESET_ZERO;
 		//移動量代入
 		boss->SetMove(move);
 	}
@@ -282,7 +276,7 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 	MoveRot(rot, Rot_Answer_y, boss);
 
 	//自分の方向を取得
-	D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), 0.0f, cosf(boss->GetRot().y + D3DX_PI)};
+	D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), FLOAT_ZERO, cosf(boss->GetRot().y + D3DX_PI)};
 
 	D3DXVec3Normalize(&vec, &vec);
 
@@ -296,7 +290,7 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 	}
 	if (m_TurnCnt >= NUM_TURN)
 	{//上限に達したら
-		m_TurnCnt = 0;
+		m_TurnCnt = INT_ZERO;
 		boss->ChangeState(new CWanderingState);
 	}
 }
@@ -308,7 +302,7 @@ void CBossConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* b
 {
 	if (m_isRight)
 	{
-		rot.y += 0.01f;
+		rot.y += ROT_MOVE;
 
 		if (Rot_Answer_y > LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -318,7 +312,7 @@ void CBossConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* b
 	}
 	if (!m_isRight)
 	{
-		rot.y -= 0.01f;
+		rot.y -= ROT_MOVE;
 
 		if (Rot_Answer_y < -LOOK_RANGE)
 		{//範囲に到達したら逆回転
@@ -355,7 +349,7 @@ CCharacter::RayHitInfo CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector,
 				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
 				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = {boss->GetPos().x - pPlayer->GetPos().x,boss->GetPos().y + 20.0f,boss->GetPos().z - pPlayer->GetPos().z };
+				D3DXVECTOR3 StartRay = {boss->GetPos().x - pPlayer->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z - pPlayer->GetPos().z };
 				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
@@ -394,21 +388,21 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 	Motion = CBossEnemy::Motion_Type::MOTION_ATTACK;
 	//モーション代入
 	character->SetMotion(Motion);
-	if (character->m_pGun->GetAmmo() > 0)
+	if (character->m_pGun->GetAmmo() > INT_ZERO)
 	{
 		if (character->m_pGunAttack != nullptr)
 		{
 			character->m_pGun->m_nRateCnt++;
 			if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
 			{
-				character->m_pGun->m_nRateCnt = 0;
+				character->m_pGun->m_nRateCnt = INT_ZERO;
 				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
 					character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
 
 				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
 					0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
 
-				character->m_pGun->m_nRateCnt = 0;
+				character->m_pGun->m_nRateCnt = INT_ZERO;
 				//弾発射
 				character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->m_Size, character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);					
 			}
@@ -423,7 +417,7 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 //=============================================
 //コンストラクタ
 //=============================================
-CBossTackle::CBossTackle():m_StayCnt(0), m_TackleCnt(0), m_effect_reduction(0.0f), m_isTackle(false)
+CBossTackle::CBossTackle():m_StayCnt(INT_ZERO), m_TackleCnt(INT_ZERO), m_effect_reduction(FLOAT_ZERO), m_isTackle(false)
 {
 }
 
@@ -448,8 +442,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		if (boss->m_pTackleCharge == nullptr)
 		{
 			//ダッシュエフェクト生成
-			boss->m_pTackleCharge = CTackleCharge::Create({ {boss->GetPos().x,boss->GetPos().y + 50.0f,boss->GetPos().z}}
-			, boss->m_pTackleCharge->SIZE, {1.0f,0.0f,0.0f,1.0f});
+			boss->m_pTackleCharge = CTackleCharge::Create({ {boss->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z}}
+			, boss->m_pTackleCharge->SIZE, COLOR_RED);
 
 			//タックルのエフェクトの減産量計算
 			m_effect_reduction = boss->m_pTackleCharge->SIZE.x / STAY_FLAME;
@@ -479,7 +473,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			boss->m_pTackleCharge = nullptr;
 		}
 		m_isTackle = true;
-		m_StayCnt = 0;
+		m_StayCnt = INT_ZERO;
 	}
 
 	if (m_isTackle)
@@ -489,12 +483,12 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		//タックルの実行処理を呼ぶ
 		boss->TackleAction();
 
-		for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < boss->GetNumParts(); nCnt++)
 		{
 			if (m_TackleCnt > TACKLE_FLAME)
 			{//何かに当たるか終了フレームに到達したら
-				m_TackleCnt = 0;
-				m_StayCnt = 0;
+				m_TackleCnt = INT_ZERO;
+				m_StayCnt = INT_ZERO;
 				m_isTackle = false;
 
 				if (boss->m_pDashEffect != nullptr)
@@ -528,8 +522,8 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				}
 
 				//タックル情報初期化
-				m_TackleCnt = 0;
-				m_StayCnt = 0;
+				m_TackleCnt = INT_ZERO;
+				m_StayCnt = INT_ZERO;
 				m_isTackle = false;
 				boss->ChangeState(new CBossStanState);
 				break;
@@ -543,7 +537,7 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 //=============================================
 void CBossTackle::LookAtPlayer(CCharacter* character)
 {
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
@@ -615,16 +609,13 @@ CBossSearch::~CBossSearch()
 void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 {
 	//対象の位置への方向情報
-	D3DXVECTOR3 point = { TargetPos.x - boss->GetPos().x,0.0f,TargetPos.z - boss->GetPos().z };
+	D3DXVECTOR3 point = { TargetPos.x - boss->GetPos().x,FLOAT_ZERO,TargetPos.z - boss->GetPos().z };
 
 	// 目的地との距離を計算
 	float distance = sqrtf(point.x * point.x + point.z * point.z);
 
-	// 到達判定用の閾値
-	const float threshold = 0.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
-
 	// まだ目的地に到達していない場合のみ移動処理を行う
-	if (distance > threshold)
+	if (distance > THRESHOLD)
 	{
 		//対象物との角度計算
 		float angle = atan2f(point.x, point.z);
@@ -655,7 +646,7 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		//移動量代入
 		boss->SetMove(move);
 
-		for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < CObject::MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
@@ -667,9 +658,9 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 				//敵との当たり判定
 				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 				{
-					CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
+					CPlayer* player = dynamic_cast<CPlayer*>(pObj);
 					//プレイヤーの位置への方向情報
-					D3DXVECTOR3 Vector = pplayer->GetPos() - boss->GetPos();
+					D3DXVECTOR3 Vector = player->GetPos() - boss->GetPos();
 
 					if (boss->PerformRaycast_Player(Vector, boss).hit
 						&& boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
@@ -688,7 +679,7 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 	else
 	{//到達していたら
 
-		D3DXVECTOR3 move = { 0.0f, 0.0f, 0.0f };
+		D3DXVECTOR3 move = VEC3_RESET_ZERO;
 		boss->SetMove(move);
 
 		boss->ChangeState(new CConfusionBossState);
@@ -707,7 +698,7 @@ const int CBossRampage::OUTER_CIRCUMFERENCE[NUM_TARGETPOINT]
 //=============================================
 //コンストラクタ
 //=============================================
-CBossRampage::CBossRampage():m_MoveIdx(0), m_LapCnt(0)
+CBossRampage::CBossRampage():m_MoveIdx(INT_ZERO), m_LapCnt(INT_ZERO)
 {
 }
 
@@ -727,13 +718,10 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 	CMovePoint* pMovePoint = CWave_Boss::GetMovePoint(OUTER_CIRCUMFERENCE[m_MoveIdx]);
 
 	//対象の位置への方向情報
-	D3DXVECTOR3 point = { pMovePoint->GetPos().x - boss->GetPos().x,0.0f,pMovePoint->GetPos().z - boss->GetPos().z };
+	D3DXVECTOR3 point = { pMovePoint->GetPos().x - boss->GetPos().x ,FLOAT_ZERO ,pMovePoint->GetPos().z - boss->GetPos().z };
 
 	// 目的地との距離を計算
 	float distance = sqrtf(point.x * point.x + point.z * point.z);
-
-	// 到達判定用の閾値
-	const float threshold = 5.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
 
 	//プレイヤーに向ける角度を算出
 	float fAngle = atan2f(point.x, point.z);
@@ -745,7 +733,7 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 
 	boss->SetRot(rot);
 
-	for (int nCnt = 0; nCnt < boss->GetNumParts(); nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < boss->GetNumParts(); nCnt++)
 	{
 		if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
 			|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
@@ -762,7 +750,7 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 	}
 
 	// まだ目的地に到達していない場合のみ移動処理を行う
-	if (distance > threshold)
+	if (distance > THRESHOLD)
 	{
 		//タックルの実行処理を呼ぶ
 		boss->TackleAction();
@@ -779,18 +767,18 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 		++m_MoveIdx; //位置カウントアップ
 		if (m_MoveIdx > NUM_TARGETPOINT)
 		{
-			boss->SetMove({ 0.0f,0.0f,0.0f });
+			boss->SetMove(VEC3_RESET_ZERO);
 
 			m_LapCnt++; //周回数カウントアップ
-			m_MoveIdx = 0; //初期位置に
+			m_MoveIdx = INT_ZERO; //初期位置に
 		}
 		if (m_LapCnt >= NUM_RAPS)
 		{
 			//メンバ変数リセット
-			m_LapCnt = 0;
-			m_MoveIdx = 0;
+			m_LapCnt = INT_ZERO;
+			m_MoveIdx = INT_ZERO;
 			boss->SetMotion(CBossEnemy::MOTION_NEUTRAL);
-			boss->SetMove({ 0.0f,0.0f,0.0f });
+			boss->SetMove(VEC3_RESET_ZERO);
 			boss->ChangeState(new CTackleState);
 		}
 	}

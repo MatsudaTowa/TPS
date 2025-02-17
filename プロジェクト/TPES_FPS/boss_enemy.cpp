@@ -157,7 +157,7 @@ void CBossEnemy::Update()
 #endif // _DEBUG
 
 
-	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < GetNumParts(); nCnt++)
 	{
 		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
 		{
@@ -233,16 +233,16 @@ void CBossEnemy::TackleAction()
 		float fAngle = atan2f(sinf(GetRot().y), cosf(GetRot().y));
 
 		//ダッシュエフェクト生成
-		m_pDashEffect = CDashEffect::Create({m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - 100.0f,m_apModel[3]->GetMtxWorld()._43 }
-		, { 0.0f,fAngle,0.0f });
+		m_pDashEffect = CDashEffect::Create({m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 }
+		, { FLOAT_ZERO,fAngle,FLOAT_ZERO });
 	}
 
 	//移動量取得
 	D3DXVECTOR3 move = GetMove();
 
 	//移動量加算
-	move.x += sinf(GetRot().y) *  GetSpeed() * -15.0f;
-	move.z += cosf(GetRot().y) *  GetSpeed() * -15.0f;
+	move.x += sinf(GetRot().y) *  GetSpeed() * -TACKLE_VALUE;
+	move.z += cosf(GetRot().y) *  GetSpeed() * -TACKLE_VALUE;
 
 	//移動量代入
 	SetMove(move);
@@ -250,11 +250,11 @@ void CBossEnemy::TackleAction()
 	if ( m_pDashEffect != nullptr)
 	{//エフェクトがあったら
 	 //エフェクトを動かす
-		 m_pDashEffect->SetPos({ m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - 100.0f,m_apModel[3]->GetMtxWorld()._43 });
+		 m_pDashEffect->SetPos({ m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 });
 	}
 
 	//自分の方向を取得
-	D3DXVECTOR3 vec = { sinf( GetRot().y + D3DX_PI), 0.0f, cosf( GetRot().y + D3DX_PI) };
+	D3DXVECTOR3 vec = { sinf( GetRot().y + D3DX_PI), INT_ZERO, cosf( GetRot().y + D3DX_PI) };
 
 	//プレイヤーとの判定チェック
 	 ColisionPlayer();
@@ -265,12 +265,16 @@ void CBossEnemy::TackleAction()
 //=============================================
 void CBossEnemy::ColisionPlayer()
 {
-	for (int nPartsCnt = 0; nPartsCnt < GetNumParts(); ++nPartsCnt)
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < GetNumParts(); ++nPartsCnt)
 	{
+		//位置取得
 		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+		//最小値取得
 		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		//最大値取得
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
-		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
@@ -300,24 +304,32 @@ void CBossEnemy::ColisionPlayer()
 //=============================================
 void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
-	for (int nPartsCnt = 0; nPartsCnt < pPlayer->GetNumParts(); nPartsCnt++)
-	{
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < pPlayer->GetNumParts(); nPartsCnt++)
+	{//パーツ数回す
+		//プレイヤーのワールドマトリックスの位置情報取得
 		D3DXVECTOR3 playerpos = { pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._41,
 			pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._42,
 			pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._43 };
 
+		//最小値取得
 		D3DXVECTOR3 PlayerMinpos = pPlayer->m_apModel[nPartsCnt]->GetMin();
+
+		//最大値取得
 		D3DXVECTOR3 PlayerMaxpos = pPlayer->m_apModel[nPartsCnt]->GetMax();
 		CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColisionSphere(pos, Minpos, Maxpos,
 			playerpos, PlayerMinpos, PlayerMaxpos);
 
 		if (colision == CColision::COLISION::COLISON_Z || colision == CColision::COLISION::COLISON_X)
-		{
-			D3DXVECTOR3 Playermove = D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * 15.0f,
-				30.0f, cosf(GetRot().y + D3DX_PI) * 15.0f);
-			// X軸衝突時の処理
+		{//当たっていたら
+			//プレイヤーを吹っ飛ばす
+			D3DXVECTOR3 Playermove = D3DXVECTOR3(sinf(GetRot().y + D3DX_PI) * PLAYER_KNOCKBACK_SPEED,
+				PLAYER_KNOCKBACK_Y, cosf(GetRot().y + D3DX_PI) * PLAYER_KNOCKBACK_SPEED);
+
+			//移動量を設定
 			pPlayer->SetMove(Playermove);
+			//プレイヤーのステートを吹っ飛ばし状態に
 			pPlayer->ChangePlayerState(new CBlownState);
+			//ダメージを与える
 			pPlayer->Damage(m_pTackle->TACKLE_DAMAGE);
 		}
 	}
@@ -339,18 +351,22 @@ void CBossEnemy::HitBlock(int NumParts)
 {
 	CCharacter::HitBlock(NumParts);
 
-	for (int nPartsCnt = 0; nPartsCnt < NumParts; ++nPartsCnt)
-	{
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < NumParts; ++nPartsCnt)
+	{//パーツ数回す
+		//自分のワールドマトリックスの位置情報取得
 		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
+		//過去の位置取得
 		D3DXVECTOR3 oldpos = m_apModel[nPartsCnt]->GetOldPos();
+		//最小値取得
 		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
+		//最大値取得
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
-		for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
 		{
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
 				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
 			{
-				
 				break;
 			}
 		}
@@ -362,8 +378,9 @@ void CBossEnemy::HitBlock(int NumParts)
 //=============================================
 void CBossEnemy::ColisionReset()
 {
-	for (int nCntParts = 0; nCntParts < GetNumParts(); nCntParts++)
-	{
+	for (int nCntParts = INT_ZERO; nCntParts < GetNumParts(); nCntParts++)
+	{//パーツ数回す
+		//当たっていない状態に
 		m_apModel[nCntParts]->GetColisionBlockInfo().bColision_X = false;
 		m_apModel[nCntParts]->GetColisionBlockInfo().bColision_Z = false;
 	}

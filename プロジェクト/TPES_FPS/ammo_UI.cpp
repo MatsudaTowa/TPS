@@ -46,7 +46,7 @@ HRESULT CAmmo_UI::Init()
 	//UIÇÃògê∂ê¨
 	if (m_pUIBox == nullptr)
 	{
-		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, { 1.0f,1.0f,1.0f,1.0f },CPlayerUIBox::BOX_TYPE::BOX_TYPE_AMMO);
+		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, COLOR_WHITE,CPlayerUIBox::BOX_TYPE::BOX_TYPE_AMMO);
 	}
 
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
@@ -134,11 +134,11 @@ void CAmmo_UI::SetCurrentAmmo_UI(int nAmmo)
 
 		if (nAmmo < m_nDefaultAmmo * 0.3f)
 		{//íeêîè≠Ç»Ç≠Ç»Ç¡ÇΩÇÁê‘êFÇ…
-			m_pCurrentAmmo[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+			m_pCurrentAmmo[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(COLOR_RED));
 		}
 		else
 		{
-			m_pCurrentAmmo[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_pCurrentAmmo[nCnt]->SetNumber(fMinTexU, fMaxTexU, D3DXCOLOR(COLOR_WHITE));
 		}
 	}
 }

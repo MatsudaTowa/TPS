@@ -17,6 +17,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "colision.h"
+#include "useful.h"
 
 class CManager
 {

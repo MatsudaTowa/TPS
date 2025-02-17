@@ -14,6 +14,9 @@
 //モデルパス
 const char* CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
 
+const D3DXVECTOR3 CBlock::MOVE_PIECE_SCALE = { 0.3f,0.3f,0.3f };
+const D3DXVECTOR3 CBlock::STACK_PIECE_SCALE = { 0.25f,0.25f,0.25f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -72,24 +75,24 @@ void CBlock::CreatePiece()
 	//崩れるSEを鳴らす
 	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_BREAK);
 
-	for (int nCnt = 0; nCnt < NUM_SMOKE; nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < NUM_SMOKE; nCnt++)
 	{//任意の数生成
-		CSmoke::Create({ GetPos().x,10.0f,GetPos().z }, CSmoke::SMOKE_TYPE_BROKEN);
+		CSmoke::Create({ GetPos().x,FLOAT_ZERO,GetPos().z }, CSmoke::SMOKE_TYPE_BROKEN);
 	}
 
-	for (int nNumCreate = 0; nNumCreate < NUM_PIECE; ++nNumCreate)
+	for (int nNumCreate = INT_ZERO; nNumCreate < NUM_PIECE; ++nNumCreate)
 	{
 		std::random_device seed;
 		std::mt19937 random(seed());
-		std::uniform_int_distribution<int> rot(0, 3);
-		CBlock_Piece::Create(GetPos(), { (float)rot(random),0.0f,(float)rot(random) }, { 0.25f,0.25f,0.25f }, false);
+		std::uniform_real_distribution<float> rot(PIECE_ROTATION_MIN, PIECE_ROTATION_MAX);
+		CBlock_Piece::Create(GetPos(), { rot(random),FLOAT_ZERO,rot(random) }, STACK_PIECE_SCALE, false);
 	}
-	for (int nNumCreate = 0; nNumCreate < NUM_PIECE; ++nNumCreate)
+	for (int nNumCreate = INT_ZERO; nNumCreate < NUM_PIECE; ++nNumCreate)
 	{
 		std::random_device seed;
 		std::mt19937 random(seed());
-		std::uniform_int_distribution<int> rot(0, 3);
-		CBlock_Piece::Create(GetPos(), { (float)rot(random),0.0f,(float)rot(random) }, { 0.3f,0.3f,0.3f }, true);
+		std::uniform_real_distribution<float> rot(PIECE_ROTATION_MIN, PIECE_ROTATION_MAX);
+		CBlock_Piece::Create(GetPos(), { (float)rot(random),FLOAT_ZERO,(float)rot(random) }, MOVE_PIECE_SCALE, true);
 	}
 }
 

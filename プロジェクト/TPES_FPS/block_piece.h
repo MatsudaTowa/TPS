@@ -35,6 +35,11 @@ public:
 	//ÉuÉçÉbÉNçÏê¨
 	static CBlock_Piece* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot,D3DXVECTOR3 scale,bool isMove);
 private:
+	static constexpr float SHIFT_X_MAX = 50.0f;
+	static constexpr float SHIFT_X_MIN = -50.0f;
+
+	static constexpr float SHIFT_Z_MAX = 50.0f;
+	static constexpr float SHIFT_Z_MIN = -50.0f;
 	PIECE_TYPE m_type;
 };
 
