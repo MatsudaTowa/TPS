@@ -370,7 +370,7 @@ void CInputPad::UpdateStick(XINPUT_STATE state)
 {
 	for (int nCntStick = 0; nCntStick < STICKTYPE_MAX; nCntStick++)
 	{
-		float fX, fY; //スティックのX軸、Y軸
+		float fX, fY = 0.0f; //スティックのX軸、Y軸
 
 		switch (nCntStick)
 		{

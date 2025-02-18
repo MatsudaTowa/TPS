@@ -42,7 +42,7 @@ HRESULT CTutorial::Init()
 {
 	CScene::Init();
 
-	CPlayer* pplayer = CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
+	 CPlayer::Create();
 
 	LoadBlock(&BLOCK_FILE);
 	LoadEnemy(&ENEMY_FILE);

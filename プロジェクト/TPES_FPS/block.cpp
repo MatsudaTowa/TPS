@@ -136,7 +136,6 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	if (pBlock == nullptr) {return nullptr;}
 	
 	CModel* pModel = CManager::GetInstance()->GetModel();
-	CTexture* pTex = CManager::GetInstance()->GetTexture();
 
 	pBlock->m_type = type;
 	pBlock->SetPos(pos); //posİ’è

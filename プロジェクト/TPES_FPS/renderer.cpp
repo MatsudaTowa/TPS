@@ -156,7 +156,6 @@ void CRenderer::Uninit()
 //=============================================
 void CRenderer::Update()
 {
-	CGame::GAME_STATE Game_state = CGame::GetState();
 }
 
 //=============================================

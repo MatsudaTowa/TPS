@@ -67,7 +67,7 @@ HRESULT CTitle::Init()
 	//LoadBlock(&CTitle::BLOCK_FILE);
 
 	//ÉvÉåÉCÉÑÅ[ê∂ê¨
-	CPlayer* pplayer = CPlayer::Create(PLAYER_SPAWN, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), CPlayer::PLAYER_LIFE);
+	CPlayer::Create();
 
     m_pTitleScreen[0] = CTitle_Screen::Create(LOGO_POS, LOGO_SIZE,CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
 

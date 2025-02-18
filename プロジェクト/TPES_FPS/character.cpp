@@ -218,7 +218,6 @@ void CCharacter::MotionDraw()
 	//デバイスの取得
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
-	D3DMATERIAL9 matDef; //現在のマテリアルの保存
 	D3DXMATRIX mtxRot, mtxTrans; //計算用マトリックス
 	D3DXMATRIX MtxWorld = GetMtxWorld();
 
@@ -262,8 +261,6 @@ void CCharacter::Load_Parts(const char* FileName)
 	char aDataSearch[MAX_TXT];
 	char aEqual[MAX_TXT]; //[＝]読み込み用
 	char aGets[MAX_TXT]; //モーションのいらないもの読み込み用
-	float speed = FLOAT_ZERO;//移動量
-	float jump = FLOAT_ZERO;//ジャンプ力
 	float radius = FLOAT_ZERO;//半径
 	float height = FLOAT_ZERO;//高さ
 
@@ -848,7 +845,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Smoke(D3DXVECTOR3 vector, CCha
 
 				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
 
-				if (Info.hit == true)
+				if (Info.hit)
 				{
 					// 障害物が間にある場合
 					return Info;
@@ -888,7 +885,7 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCha
 				//レイを原点からの差分から飛ばす
 				D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pBlock->GetPos().z };
 				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-				if (Info.hit == true)
+				if (Info.hit)
 				{
 					return Info;
 				}

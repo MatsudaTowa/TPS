@@ -109,6 +109,10 @@ HRESULT CPlayer::Init()
 {
 	CCharacter::Init();
 
+	SetPos(PLAYER_SPAWN_POS); //pos設定
+	SetRot(PLAYER_SPAWN_ROT); //rot設定
+	SetLife(PLAYER_LIFE); //体力代入
+
 	//スタンフレーム数代入
 	SetStanFrame(STAN_FRAME);
 
@@ -491,7 +495,7 @@ void CPlayer::Draw()
 //=============================================
 //生成
 //=============================================
-CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
+CPlayer* CPlayer::Create()
 {
 	CModel* pModel = CManager::GetInstance()->GetModel();
 
@@ -499,10 +503,6 @@ CPlayer* CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife)
 
 	// nullならnullを返す
 	if (pPlayer == nullptr) { return nullptr; }
-
-	pPlayer->SetPos(pos); //pos設定
-	pPlayer->SetRot(rot); //rot設定
-	pPlayer->SetLife(nLife); //体力代入
 
 		//パーツ読み込み
 	pPlayer->Load_Parts("data\\motion_soldier.txt");

@@ -124,7 +124,7 @@ CWave* CWave::Create(WAVE wave)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
+			CPlayer::Create();
 		}
 		else if (wave == WAVE::RESULT)
 		{
@@ -174,7 +174,7 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer::Create(CPlayer::PLAYER_SPAWN_POS, CPlayer::PLAYER_SPAWN_ROT, CPlayer::PLAYER_LIFE);
+			CPlayer::Create();
 		}
 		else if (wave == WAVE::RESULT)
 		{

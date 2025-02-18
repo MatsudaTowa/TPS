@@ -72,7 +72,7 @@ private:
 	static constexpr float ULT_KNOCKBACK_SPEED = 10.0f; //ULTが当たった時にノックバックさせる際のXとZにかけるスピード
 	static constexpr float ULT_KNOCKBACK_Y = 40.0f; //ULTが当たった時にノックバックさせる際のYに打ち上げる
 	static constexpr float DEADZONE_Y = -100.0f; //これを過ぎたらエネミー破棄
-	static const int STENCIL_FLAME = 300.0f; //ステンシルテスト有効
+	static const int STENCIL_FLAME = 300; //ステンシルテスト有効
 	static const int STAN_FRAME = 300; //スタン時間
 	static const int DEFAULT_SCORE = 300; //デフォルトのスコア
 	static const int BOSS_SCORE = 1000; //ボスを倒したら入るスコア

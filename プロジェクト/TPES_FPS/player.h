@@ -66,7 +66,7 @@ public:
 	void Draw();
 
 	//ƒvƒŒƒCƒ„[ì¬
-	static CPlayer* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife);
+	static CPlayer* Create();
 
 	void Damage(int nDamage); //“–‚½‚è”»’è
 

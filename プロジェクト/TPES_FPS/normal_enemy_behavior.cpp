@@ -115,7 +115,7 @@ CCharacter::RayHitInfo CNormalMove::PerformRaycast_Player(D3DXVECTOR3 vector, CC
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
 					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit == true)
+					if (Info.hit)
 					{
 						return Info;
 					}
@@ -253,7 +253,7 @@ CCharacter::RayHitInfo CNormalAttack::PerformRaycast_Player(D3DXVECTOR3 vector, 
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
 					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit == true)
+					if (Info.hit)
 					{
 						return Info;
 					}

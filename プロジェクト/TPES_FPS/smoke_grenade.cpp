@@ -70,7 +70,7 @@ void CSmokeGrenade::Update()
 		{
 			CSmoke::Create(GetPos(),CSmoke::SMOKE_TYPE_TACTICAL);
 		}
-		CSmokeRange::Create(GetPos(),VEC3_RESET_ZERO, VEC3_RESET_ZERO);
+		CSmokeRange::Create(GetPos(), VEC3_RESET_ZERO);
 		Uninit();
 	}
 }

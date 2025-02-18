@@ -25,7 +25,7 @@ public:
 	void Draw()override;
 
 	//スモーク範囲作成
-	static CSmokeRange* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR3 rot);
+	static CSmokeRange* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 
 private:
 	static const char* MODEL_NAME;	//モデルの名前

@@ -107,9 +107,6 @@ void CEnemy::Update()
 	//ダメージステートの切り替えTODO:これもステートパターンで
 	ChangeDamageState();
 
-	//ゲームの状態取得
-	CGame::GAME_STATE Game_state = CGame::GetState();
-
 	if (GetPos().y < DEADZONE_Y)
 	{//リスポーン処理
 		ReSpawn();
@@ -295,7 +292,7 @@ CCharacter::RayHitInfo CEnemy::PerformRaycast_Player(D3DXVECTOR3 vector, CCharac
 				{
 					//レイを飛ばしプレイヤーと当たるかチェック
 					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit == true)
+					if (Info.hit)
 					{
 						return Info;
 					}

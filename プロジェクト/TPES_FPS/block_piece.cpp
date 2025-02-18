@@ -84,7 +84,6 @@ CBlock_Piece* CBlock_Piece::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3
 	if (pPiece == nullptr) { return nullptr; }
 
 	CModel* pModel = CManager::GetInstance()->GetModel();
-	CTexture* pTex = CManager::GetInstance()->GetTexture();
 
 	int nType = 0;
 	//pPiece->m_type = type;

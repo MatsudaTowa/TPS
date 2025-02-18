@@ -97,22 +97,22 @@ bool CAttack_Manager::HitEnemy()
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
 
 				CColision::COLISION ColisionCheck;
-				for (int nCnt = 0; nCnt < pEnemy->GetNumParts(); nCnt++)
+				for (int nCntParts = 0; nCntParts < pEnemy->GetNumParts(); nCntParts++)
 				{
 					//パーツのオフセットpos
-					D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCnt]->GetMtxWorld()._41
-					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._42
-					,pEnemy->m_apModel[nCnt]->GetMtxWorld()._43 };
+					D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCntParts]->GetMtxWorld()._41
+					,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._42
+					,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._43 };
 
-					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCnt]->GetMin(), pEnemy->m_apModel[nCnt]->GetMax());
+					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCntParts]->GetMin(), pEnemy->m_apModel[nCntParts]->GetMax());
 
 					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
 					{//当たってたら
-						if (nCnt != 1)
+						if (nCntParts != 1)
 						{
 							pEnemy->Damage(m_nDamage);
 						}
-						else if (nCnt == 1)
+						else if (nCntParts == 1)
 						{
 							pEnemy->Damage(m_nDamage * 2);
 						}
@@ -257,4 +257,5 @@ bool CAttack_Manager::HitGround()
 			}
 		}
 	}
+	return false;
 }

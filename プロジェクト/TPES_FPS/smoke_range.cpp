@@ -73,7 +73,7 @@ void CSmokeRange::Draw()
 //=============================================
 //ê∂ê¨
 //=============================================
-CSmokeRange* CSmokeRange::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR3 rot)
+CSmokeRange* CSmokeRange::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CSmokeRange* pSmokeRange = new CSmokeRange;
 
