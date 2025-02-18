@@ -11,22 +11,6 @@
 #include "colision.h"
 #include "smoke_range.h"
 
-//ボス戦のX座標
-const float CCharacter::BOSS_FIELD_X = 600.0f;
-//重力値
-const float CCharacter::GRAVITY_MOVE = 2.0f;
-//重力最大値
-const float CCharacter::GRAVITY_MAX = 100.0f;
-
-//移動抵抗
-const float CCharacter::MOVE_FRICTION = 0.3f;
-
-//壁の判定のゆとり
-const float CCharacter::COLLISION_SLACK = 20.0f;
-
-//影のY座標
-const float CCharacter::SHADOW_POS_Y = 0.5f;
-
 //=============================================
 //コンストラクタ
 //=============================================

@@ -15,7 +15,6 @@
 class CUltCameraEffect :public CObject2D
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
 	static const int PRIORITY = 25; //描画順
 
 	CUltCameraEffect(int nPriority = PRIORITY);
@@ -33,6 +32,8 @@ public:
 		return m_alpha;
 	}
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 	float m_alpha; //アルファ値
 };
 

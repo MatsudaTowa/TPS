@@ -14,7 +14,9 @@
 //モデルパス
 const char* CBlock::MODEL_NAME = "data\\MODEL\\Container000.x";
 
+//動く破片のサイズ
 const D3DXVECTOR3 CBlock::MOVE_PIECE_SCALE = { 0.3f,0.3f,0.3f };
+//滞在する破片のサイズ
 const D3DXVECTOR3 CBlock::STACK_PIECE_SCALE = { 0.25f,0.25f,0.25f };
 
 //=============================================

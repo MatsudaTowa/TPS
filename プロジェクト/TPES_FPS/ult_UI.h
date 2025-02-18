@@ -30,7 +30,7 @@ public:
 	void Reset();
 
 private:
-	static const float PARCENT_DIGIT_SHIFT;  //桁ごとに座標をずらす
+	static constexpr float PARCENT_DIGIT_SHIFT = 18.0f;  //桁ごとに座標をずらす
 
 	static const D3DXVECTOR3 ICON_POS; //ウルトアイコンの位置
 	static const D3DXVECTOR2 ICON_SIZE; //ウルトアイコンのサイズ

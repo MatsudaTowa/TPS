@@ -13,8 +13,6 @@
 class CDashEffect : public CObjectX
 {
 public:
-	static const char* MODEL_NAME;	//モデルの名前
-
 	static const int PRIORITY = 11; //描画順
 
 	CDashEffect(int nPriority = PRIORITY);
@@ -26,6 +24,7 @@ public:
 	//ブロック作成
 	static CDashEffect* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 private:
+	static const char* MODEL_NAME;	//モデルの名前
 	static const D3DXVECTOR3 SCALE;
 	static const D3DXCOLOR COLOR;
 

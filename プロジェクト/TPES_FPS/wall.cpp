@@ -10,9 +10,6 @@
 //texパス
 const std::string CWall::TEXTURE_NAME = "data\\TEXTURE\\wall.jpg";
 
-//テクスチャ初期化
-LPDIRECT3DTEXTURE9 CWall::m_pTextureTemp = nullptr;
-
 //=============================================
 //コンストラクタ
 //=============================================

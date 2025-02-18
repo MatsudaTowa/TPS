@@ -14,7 +14,6 @@
 class CShadow : public CObject3D
 {
 public:
-
 	static const int SHADOW_PRIORITY = 9; //ï`âÊèá
 
 	CShadow(int nPriority = SHADOW_PRIORITY);

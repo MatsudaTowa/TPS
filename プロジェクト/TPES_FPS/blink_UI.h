@@ -35,7 +35,7 @@ public:
 
 private:
 	static const int NUM_DIGIT = 1;  //桁数
-	static const float DIGIT_SHIFT;  //桁ごとに座標をずらす
+	static constexpr float DIGIT_SHIFT = 35.0f;  //桁ごとに座標をずらす
 
 	static const D3DXVECTOR3 BOX_POS; //枠の位置
 	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ

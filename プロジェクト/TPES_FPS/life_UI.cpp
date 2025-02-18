@@ -7,8 +7,6 @@
 #include "life_UI.h"
 #include "manager.h"
 #include "player.h"
-//Œ…‚²‚Æ‚É‚¸‚ç‚·
-const float CLife_UI::DIGIT_SHIFT = 18.0f;
 
 const D3DXVECTOR3 CLife_UI::BOX_POS ={ 200.0f, 665.0f, 0.0f };
 const D3DXVECTOR2 CLife_UI::BOX_SIZE ={ 180.0f, 50.0f };

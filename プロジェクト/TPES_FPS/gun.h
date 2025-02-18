@@ -104,7 +104,7 @@ class CAssultRifle :public CGun
 public:
 	static const int DEFAULT_AR_MAG_SIZE = 28; //デフォルトのアサルトのマガジンサイズ
 	static const int DEFAULT_AR_FIRE_RATE = 13; //デフォルトのアサルトの発射レート
-	static const float DEFAULT_AR_BULLET_SPEED; //デフォルトのアサルトの弾のスピード
+	static constexpr float DEFAULT_AR_BULLET_SPEED = 100.0f; //デフォルトのアサルトの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_AR_SIZE; //デフォルトのアサルトサイズ
 
 	CAssultRifle();
@@ -124,7 +124,7 @@ public:
 	static const int DEFAULT_MINIGUN_RELOAD_FRAME = 120; //デフォルトのミニガンのリロードフレーム数
 	static const int DEFAULT_MINIGUN_FIRE_RATE = 2; //デフォルトのミニガンの発射レート
 	static const int DEFAULT_MINIGUN_DAMAGE = 3; //デフォルトのミニガンのダメージ
-	static const float DEFAULT_MINIGUN_BULLET_SPEED; //デフォルトのミニガンの弾のスピード
+	static constexpr float DEFAULT_MINIGUN_BULLET_SPEED = 100.0f; //デフォルトのミニガンの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_MINIGUN_SIZE; //デフォルトのミニガンのサイズ
 
 	CMiniGun();

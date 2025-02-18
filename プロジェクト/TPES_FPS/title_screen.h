@@ -13,14 +13,14 @@
 //レンダラークラス
 class CTitle_Screen : public CObject2D
 {
-public:
-	typedef enum
+public: 
+	enum TITLE_UI
 	{
 		UI_NONE = 0,
 		UI_TITLE_ROGO,
 		UI_TITLE_PRESS_BUTTON,
 		UI_TITLE_MAX,
-	}TITLE_UI;
+	};
 	static const std::string ROGO_TEXTURE_NAME;	//テクスチャの名前
 	static const std::string BUTTON_A_TEXTURE_NAME;	//テクスチャの名前
 	static const std::string BUTTON_ENTER_TEXTURE_NAME;	//テクスチャの名前

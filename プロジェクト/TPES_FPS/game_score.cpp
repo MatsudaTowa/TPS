@@ -7,18 +7,24 @@
 #include "game_score.h"
 #include "player.h"
 
-const float CGameScore::DIGIT_SHIFT = 40.0f;
-
+//UIの背景の位置
 const D3DXVECTOR3 CGameScore::BOX_POS = { 650.0f, 60.0f, 0.0f };
+//UIの背景のサイズ
 const D3DXVECTOR2 CGameScore::BOX_SIZE = { 400.0f, 80.0f };
 
+//死亡アイコンの位置
 const D3DXVECTOR3 CGameScore::DEATH_ICON_POS = { 750.0f, 55.0f, 0.0f };
+//死亡アイコンのサイズ
 const D3DXVECTOR2 CGameScore::DEATH_ICON_SIZE = { 50.0f, 30.0f };
 
+//死亡回数の表示位置
 const D3DXVECTOR3 CGameScore::NUM_DEATH_POS = { 845.0f, 55.0f, 0.0f };
+//死亡回数の表示サイズ
 const D3DXVECTOR2 CGameScore::NUM_DEATH_SIZE = { 20.0f, 30.0f };
 
+//スコアの表示位置
 const D3DXVECTOR3 CGameScore::SCORE_POS = { 650.0f, 55.0f, 0.0f };
+//スコアの表示サイズ
 const D3DXVECTOR2 CGameScore::SCORE_SIZE = { 20.0f, 30.0f };
 
 //=============================================

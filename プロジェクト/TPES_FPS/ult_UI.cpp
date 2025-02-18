@@ -7,9 +7,6 @@
 #include "ult_UI.h"
 #include "ult.h"
 
-//Œ…‚²‚Æ‚É‚¸‚ç‚·
-const float CUlt_UI::PARCENT_DIGIT_SHIFT = 18.0f;
-
 const D3DXVECTOR3 CUlt_UI::ICON_POS = { SCREEN_WIDTH * 0.5f,660.0f,0.0f };
 const D3DXVECTOR2 CUlt_UI::ICON_SIZE = { 70.0f, 70.0f };
 

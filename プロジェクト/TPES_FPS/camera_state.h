@@ -33,7 +33,7 @@ class CFreeView : public CCameraState
 public:
 	virtual void FreeView(CCamera* camera)override;
 private:
-	static const float FREEVIEW_LENGTH; //サードパーソンビュー時の距離
+	static constexpr float FREEVIEW_LENGTH = 200.0f; //サードパーソンビュー時の距離
 };
 
 //=============================================
@@ -44,7 +44,7 @@ class CThirdView : public CCameraState
 public:
 	virtual void ThirdView(CCamera* camera)override;
 private:
-	static const float THIRDVIEW_LENGTH; //サードパーソンビュー時の距離
+	static constexpr float THIRDVIEW_LENGTH = 130.0f; //サードパーソンビュー時の距離
 };
 
 //=============================================
@@ -55,7 +55,7 @@ class CUltCameraState : public CCameraState
 public:
 	virtual void Ult(CCamera* camera) override;
 private:
-	static const float ULT_LENGTH; //ウルト時の距離
+	static constexpr float ULT_LENGTH = 200.0f; //ウルト時の距離
 };
 
 #endif // !_PLAYER_STATE_H

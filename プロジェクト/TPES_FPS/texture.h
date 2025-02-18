@@ -12,7 +12,7 @@
 class CTexture
 {
 public:
-	typedef enum
+	enum TEXTURE
 	{
 		EFFECT = 0,
 		FIELD,
@@ -20,7 +20,7 @@ public:
 		RESULT,
 		TITLE,
 		TEXTURE_MAX,
-	}TEXTURE;
+	};
 	static const std::string TEXTURE_NAME[TEXTURE_MAX];
 	static const int MAX_TEX = 256; //テクスチャの数
 	CTexture();

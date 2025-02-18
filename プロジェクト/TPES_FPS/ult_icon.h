@@ -40,13 +40,13 @@ private:
 class CMediumIcon : public CUltIcon
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	CMediumIcon(int nPriority = ULT_ICON_PRIORITY);
 	~CMediumIcon()override;
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
+private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
 #endif

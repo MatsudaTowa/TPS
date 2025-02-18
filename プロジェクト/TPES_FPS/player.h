@@ -43,10 +43,7 @@ public:
 	static const int PLAYER_STAMINA = 100; //スタミナ
 	static const int AVOIDANCE_COST = 30; //回避アクションのスタミナコスト
 	static const int PLAYER_PRIORITY = 8; //描画順
-	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 
-	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
-	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
 	//モーションの種類の列挙
 	typedef enum
 	{
@@ -152,23 +149,26 @@ public:
 	CPlayerAvoidance* m_pAvoidance;
 private:
 
+	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
+	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
+
 	//プレイヤーの移動関連
-	static const float DAMPING_COEFFICIENT; //移動抵抗
-	static const int MAX_JUMPCNT; //ジャンプ回数
-	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
-	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
-	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
-	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
-	static const D3DXVECTOR3 STAMINA_GAUGE_SIZE; //スタミナのサイズ
+	static const int IGNORE_COLLISION_FRAME = 150; //当たり判定無視フレーム
+	static const int SMOKE_RECAST_FRAME = 900; //スモーク復活フレーム
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int STAN_FRAME = 120; //スタンフレーム数
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
 	static const int STAMINA_RECOVERY_FRAME = 5; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
 	static const int DAMAGE_FRAME = 30; //ダメージフレーム
+
+	static constexpr float DEADZONE_Y = -100.0f; //これを過ぎたらプレイヤー破棄
 	static constexpr float RETICLE_CORRECTION_VALUE = 16.0f; //レティクルのY座標補正
 	static constexpr float SMOKE_CORRECTION_VALUE = 50.0f; //スモークを射出する際の補正値
 	static constexpr float SMOKE_SHOT_SPEED = 20.0f; //スモークを射出するスピード
+
+	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+	static const D3DXVECTOR3 STAMINA_GAUGE_SIZE; //スタミナのサイズ
 	static const D3DXVECTOR3 GUN_UI_POS;//銃のUIの位置
 	static const D3DXVECTOR2 GUN_UI_SIZE;//銃のUIのサイズ
 

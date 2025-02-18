@@ -6,22 +6,29 @@
 //=============================================
 #include "blink_UI.h"
 
-//桁ごとにずらす
-const float CBlink_UI::DIGIT_SHIFT = 35.0f;
-
+//UIの背景の位置
 const D3DXVECTOR3 CBlink_UI::BOX_POS = { 1010.0f, 565.0f, 0.0f };
+//UIの背景のサイズ
 const D3DXVECTOR2 CBlink_UI::BOX_SIZE = { 50.0f, 50.0f };
 
+//回数の背景の位置
 const D3DXVECTOR3 CBlink_UI::BLINK_BACK_POS = { 1020.0f, 505.0f, 0.0f };
+//回数の背景のサイズ
 const D3DXVECTOR2 CBlink_UI::BLINK_BACK_SIZE = { 25.0f, 25.0f };
 
+//ブリンクアイコンの位置
 const D3DXVECTOR3 CBlink_UI::ICON_POS = { 1010.0f,565.0f,0.0f };
+//ブリンクアイコンのサイズ
 const D3DXVECTOR2 CBlink_UI::ICON_SIZE = { 40.0f, 40.0f };
 
+//回数の表示位置
 const D3DXVECTOR3 CBlink_UI::NUMBER_POS = { 1020.0f, 505.0f, 0.0f };
+//回数の表示サイズ
 const D3DXVECTOR2 CBlink_UI::NUMBER_SIZE = { 10.0f, 20.0f };
 
+//キーのUI位置
 const D3DXVECTOR3 CBlink_UI::KEY_UI_POS = { 1010.0f,600.0f,0.0f };
+//キーのUIサイズ
 const D3DXVECTOR2 CBlink_UI::KEY_UI_SIZE = { 40.0f, 20.0f };
 
 //=============================================
@@ -29,7 +36,7 @@ const D3DXVECTOR2 CBlink_UI::KEY_UI_SIZE = { 40.0f, 20.0f };
 //=============================================
 CBlink_UI::CBlink_UI():
 m_BlinkUIPos(VEC3_RESET_ONE),	//ブリンクのUI位置初期化
-m_NumBlink(INT_ZERO),					//ブリンクの数初期化
+m_NumBlink(INT_ZERO),			//ブリンクの数初期化
 m_pCurrentBlink(),				//現在のブリンクの数のポインタ初期化
 m_pUIBox(),						//UIの枠初期化
 m_pIcon(),						//アイコンの初期化

@@ -16,7 +16,7 @@
 class CWaveScore : public CScore
 {
 public:
-	static const float DIGIT_SHIFT;
+	static constexpr float DIGIT_SHIFT = 70.0f;
 	CWaveScore();
 	~CWaveScore() override;
 	HRESULT Init() override;

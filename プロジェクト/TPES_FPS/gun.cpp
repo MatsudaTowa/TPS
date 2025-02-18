@@ -95,8 +95,6 @@ float& CGun::GetBulletSpeed()
 	return m_BulletSpeed;
 }
 
-//弾のスピード
-const float CAssultRifle::DEFAULT_AR_BULLET_SPEED = 100.0f;
 //弾のサイズ
 const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {2.0f,2.0f,2.0f};
 
@@ -172,8 +170,6 @@ void CAssultRifle::Uninit()
 {
 }
 
-//弾のスピード
-const float CMiniGun::DEFAULT_MINIGUN_BULLET_SPEED = 100.0f;
 //弾のサイズ
 const D3DXVECTOR3 CMiniGun::DEFAULT_MINIGUN_SIZE = { 1.0f,1.0f,1.0f };
 //=============================================

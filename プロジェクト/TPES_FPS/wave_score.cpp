@@ -6,9 +6,9 @@
 //=============================================
 #include "wave_score.h"
 
-const float CWaveScore::DIGIT_SHIFT = 70.0f;
-
+//数字の表示位置
 const D3DXVECTOR3 CWaveScore::NUM_POS = { 850.0f ,SCREEN_HEIGHT * 0.5f,0.0f };
+//数字の表示サイズ
 const D3DXVECTOR2 CWaveScore::NUM_SIZE = { 40.0f, 50.0f };
 //=============================================
 //コンストラクタ

@@ -29,8 +29,8 @@ public:
 
 private:
 	static const int NUM_DIGIT = 2;  //桁数
-	static const float CURRENT_AMMO_DIGIT_SHIFT;  //桁ごとに座標をずらす
-	static const float DEFAULT_AMMO_DIGIT_SHIFT;  //桁ごとに座標をずらす
+	static constexpr float CURRENT_AMMO_DIGIT_SHIFT = 35.0f;  //桁ごとに座標をずらす
+	static constexpr float DEFAULT_AMMO_DIGIT_SHIFT = 20.0f;  //桁ごとに座標をずらす
 
 	static const D3DXVECTOR3 BOX_POS; //枠の位置
 	static const D3DXVECTOR2 BOX_SIZE; //枠のサイズ

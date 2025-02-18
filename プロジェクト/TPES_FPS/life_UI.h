@@ -19,7 +19,7 @@ class CLife_UI
 {
 public:
 	static const int NUM_DIGIT = 3;  //Œ…”
-	static const float DIGIT_SHIFT;  //Œ…‚²‚Æ‚ÉÀ•W‚ğ‚¸‚ç‚·
+	static constexpr float DIGIT_SHIFT = 18.0f;  //Œ…‚²‚Æ‚ÉÀ•W‚ğ‚¸‚ç‚·
 
 	CLife_UI();
 	~CLife_UI();

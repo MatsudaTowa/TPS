@@ -17,7 +17,7 @@ class CScene
 public:
 
 	//‰æ–Ê‚Ìí—Ş‚Ì—ñ‹“
-	typedef enum
+	enum MODE
 	{
 		MODE_TITLE = 0,
 		MODE_TEST,
@@ -25,7 +25,7 @@ public:
 		MODE_GAME,
 		MODE_RESULT,
 		MODE_MAX,
-	}MODE;
+	};
 
 	// ƒƒ“ƒoŠÖ”
 	CScene();

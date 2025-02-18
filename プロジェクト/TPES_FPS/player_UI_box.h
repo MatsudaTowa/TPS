@@ -38,8 +38,6 @@ private:
 class CLifeUIBox : public CPlayerUIBox
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	CLifeUIBox(int nPriority = UI_BOX_PRIORITY);
 	~CLifeUIBox()override;
 	HRESULT Init()override;
@@ -47,14 +45,14 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 };
 
 //プレイヤーのUIの残弾の枠クラス
 class CAmmoUIBox : public CPlayerUIBox
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	CAmmoUIBox(int nPriority = UI_BOX_PRIORITY);
 	~CAmmoUIBox()override;
 	HRESULT Init()override;
@@ -62,14 +60,13 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
 
 //プレイヤーのUIのスコアの枠クラス
 class CScoreUIBox : public CPlayerUIBox
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	CScoreUIBox(int nPriority = UI_BOX_PRIORITY);
 	~CScoreUIBox()override;
 	HRESULT Init()override;
@@ -77,5 +74,6 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
 #endif

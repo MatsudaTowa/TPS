@@ -35,7 +35,7 @@ public:
 	static const int CHARACTER_PRIORITY = 8;
 	static const int MAX_MOTION = 100;
 	static const int MAX_PARTS = 64; //最大パーツ数
-	static const float  BOSS_FIELD_X; //ボス戦のX座標
+	static constexpr float  BOSS_FIELD_X = 600.0f; //ボス戦のX座標
 
 	struct RayHitInfo
 	{
@@ -228,11 +228,11 @@ public:
 
 private:
 
-	static const float GRAVITY_MOVE; //重力値
-	static const float GRAVITY_MAX; //重力最大値
-	static const float SHADOW_POS_Y; //影のY座標(地面から少し浮かす)
-	static const float MOVE_FRICTION; //移動抵抗
-	static const float COLLISION_SLACK; //壁との判定のゆとり
+	static constexpr float GRAVITY_MOVE = 2.0f; //重力値
+	static constexpr float GRAVITY_MAX = 100.0f; //重力最大値
+	static constexpr float SHADOW_POS_Y = 0.5f; //影のY座標(地面から少し浮かす)
+	static constexpr float MOVE_FRICTION = 0.3f; //移動抵抗
+	static constexpr float COLLISION_SLACK = 20.0f; //壁との判定のゆとり
 	static constexpr float RAY_CORRECTION_VALUE = 20.0f; //レイを飛ばすYの補正値
 
 	void ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock);

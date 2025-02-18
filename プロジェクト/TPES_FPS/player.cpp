@@ -20,18 +20,6 @@ const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
 //スポーン方向
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f};
 
-//当たり判定無効フレーム数
-const int CPlayer::IGNORE_COLLISION_FRAME = 150;
-
-//スモーク復活フレーム数
-const int CPlayer::SMOKE_RECAST_FRAME = 900;
-
-//通常の移動抵抗
-const float CPlayer::DAMPING_COEFFICIENT = 0.3f;
-
-//プレイヤーをリスポーンされる座標
-const float CPlayer::DEADZONE_Y = -100.0f;
-
 //影のサイズ
 const D3DXVECTOR3 CPlayer::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
 

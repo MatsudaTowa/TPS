@@ -15,8 +15,6 @@
 class CHitCameraEffectMild :public CHitCameraEffect
 {
 public:
-	static const std::string TEXTURE_NAME;	//軽度テクスチャの名前
-
 	CHitCameraEffectMild(int nPriority = PRIORITY);
 	~CHitCameraEffectMild() override;
 	HRESULT Init() override;
@@ -25,6 +23,8 @@ public:
 	void Draw() override;
 
 private:
+	static const std::string TEXTURE_NAME;	//軽度テクスチャの名前
+
 };
 
 #endif // _HIT_CAMERA_EFFECT_H_

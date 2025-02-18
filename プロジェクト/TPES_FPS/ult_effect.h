@@ -14,7 +14,6 @@
 class CUltEffect : public CObject3D
 {
 public:
-
 	static const int PRIORITY = 12; //ï`âÊèá
 
 	CUltEffect(int nPriority = PRIORITY);

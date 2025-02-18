@@ -34,13 +34,14 @@ private:
 class CARIcon : public CGunIcon
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	CARIcon(int nPriority = GUN_ICON_PRIORITY);
 	~CARIcon()override;
 	HRESULT Init()override;
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
+private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 };
 #endif

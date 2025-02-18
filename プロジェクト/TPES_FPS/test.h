@@ -18,12 +18,12 @@ public:
 	static const std::string BLOCK_FILE;	//エネミーのファイル
 
 	//読み込むときに必要なブロックの構造体
-	typedef struct
+	struct LOAD_BLOCK
 	{
 		D3DXVECTOR3 pos;
 		D3DXVECTOR3 rot;
 		CBlock::BLOCKTYPE type;
-	}LOAD_BLOCK;
+	};
 
 	CTest();
 	~CTest() override;

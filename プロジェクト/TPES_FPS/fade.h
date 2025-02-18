@@ -16,17 +16,15 @@ class CFade : public CObject2D
 {
 public:
 	//フェードの状態
-	typedef enum
+	enum FADE
 	{
 		FADE_NONE = 0, //何もしていない状態
 		FADE_IN, //フェードイン
 		FADE_OUT, //フェードアウト
 		FADE_MAX,
-	}FADE;
+	};
 
-	//static const std::string TEXTURE_NAME;	//テクスチャの名前
 	static const int FADE_PRIORITY = 29;  //描画順
-	static const float FADE_VALUE;  //アルファ値減衰量
 
 	CFade(int nPriority = FADE_PRIORITY);
 	~CFade()override;
@@ -40,7 +38,7 @@ public:
 	float FadeColor(void);
 	static CFade* Create(D3DXVECTOR3 pos);
 private:
-	//static LPDIRECT3DTEXTURE9 m_pTexture;
+	static constexpr float FADE_VALUE = 0.05f;  //アルファ値減衰量
 	FADE m_fade;
 	CScene::MODE m_fademode;
 	float m_colorFade;

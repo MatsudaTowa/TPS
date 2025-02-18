@@ -6,19 +6,24 @@
 //=============================================
 #include "smoke_UI.h"
 
-//桁ごとにずらす
-const float CSmoke_UI::DIGIT_SHIFT = 35.0f;
-
+//UIの背景の位置
 const D3DXVECTOR3 CSmoke_UI::BOX_POS = { 1150.0f, 565.0f, 0.0f };
+//UIの背景のサイズ
 const D3DXVECTOR2 CSmoke_UI::BOX_SIZE = { 50.0f, 50.0f };
 
+//スモークのアイコンの位置
 const D3DXVECTOR3 CSmoke_UI::ICON_POS = { 1150.0f,565.0f,0.0f };
+//スモークのアイコンのサイズ
 const D3DXVECTOR2 CSmoke_UI::ICON_SIZE = { 40.0f, 40.0f };
 
+//数字の位置
 const D3DXVECTOR3 CSmoke_UI::NUMBER_POS = { 1000.0f, 565.0f, 0.0f };
+//数字のサイズ
 const D3DXVECTOR2 CSmoke_UI::NUMBER_SIZE = { 20.0f, 30.0f };
 
+//キーボードのUIの位置
 const D3DXVECTOR3 CSmoke_UI::KEY_UI_POS = { 1150.0f,600.0f,0.0f };
+//キーボードのUIのサイズ
 const D3DXVECTOR2 CSmoke_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 
 //=============================================
@@ -26,7 +31,7 @@ const D3DXVECTOR2 CSmoke_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 //=============================================
 CSmoke_UI::CSmoke_UI():
 m_SmokePos(VEC3_RESET_ZERO),	//スモークの位置初期化
-m_NumSmoke(INT_ZERO),					//スモークの数初期化
+m_NumSmoke(INT_ZERO),			//スモークの数初期化
 m_pCurrentSmoke(),				//現在のスモークの数のポインタ初期化
 m_pUIBox(),						//UIの枠初期化
 m_pIcon(),						//アイコンの初期化

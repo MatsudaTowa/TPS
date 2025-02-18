@@ -19,21 +19,20 @@ class CGame:public CScene
 {
 public:
 
-	typedef enum
+	enum GAME_STATE
 	{
 		GAME_STATE_NORMAL = 0,
 		GAME_STATE_MAX,
-	}GAME_STATE;
+	};
 
 	//読み込むときに必要なブロックの構造体
-	typedef struct
+	struct LOAD_BLOCK
 	{
 		D3DXVECTOR3 pos;
 		D3DXVECTOR3 rot;
 		CBlock::BLOCKTYPE type;
-	}LOAD_BLOCK;
+	};
 
-	static const std::string BLOCK_FILE;	//エネミーのファイル
 	static const int DELAY_CNT = 30; //リザルトに飛ぶまでのディレイ
 	static const int BLOCK_TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
 	CGame();
@@ -57,6 +56,8 @@ public:
 
 	static void SetWave(CWave::WAVE wave,CWave::WAVE next_wave,const char* ResultFile);
 private:
+	static const std::string BLOCK_FILE;	//エネミーのファイル
+
 	static const int DELAY_FLAME = 60; //ディレイのフレーム数
 	static const int DEATH_PENALTY = -50; //死んだときのペナルティ
 	int m_nResultDelay; //リザルトへのディレイ

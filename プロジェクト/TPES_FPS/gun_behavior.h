@@ -37,9 +37,12 @@ public:
 	virtual ~CReload();
 	virtual bool Reload(CGun* gun) = 0;
 
-	int& GetReloadCnt();
+	inline int& GetReloadCnt() 
+	{
+		return m_nReloadCnt;
+	}
 
-	void SetReloadCnt(int nCnt)
+	inline void SetReloadCnt(int nCnt)
 	{
 		m_nReloadCnt = nCnt;
 	}

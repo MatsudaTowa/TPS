@@ -16,7 +16,6 @@
 class CNumber_2D:public CObject2D
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
 	static const int NUMBER_PRIORITY = 21;  //描画順
 	CNumber_2D(int nPriority = NUMBER_PRIORITY);
 	~CNumber_2D()override;
@@ -33,6 +32,8 @@ public:
 	void NumberVtx();
 
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 	D3DXVECTOR2 m_mintex; //テクスチャの最小座標
 	D3DXVECTOR2 m_maxtex; //テクスチャの最大座標
 	D3DXCOLOR m_col; //カラー
@@ -44,7 +45,6 @@ private:
 class CNumber_3D :public CBillboard
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
 	static const int NUMBER_PRIORITY = 20;  //描画順
 	CNumber_3D(int nPriority = NUMBER_PRIORITY);
 	~CNumber_3D()override;
@@ -61,6 +61,8 @@ public:
 	void NumberVtx();
 
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 	D3DXVECTOR2 m_mintex; //テクスチャの最小座標
 	D3DXVECTOR2 m_maxtex; //テクスチャの最大座標
 	D3DXCOLOR m_col; //カラー

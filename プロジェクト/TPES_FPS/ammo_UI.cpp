@@ -7,17 +7,19 @@
 #include "ammo_UI.h"
 #include "manager.h"
 
-//桁ごとにずらす
-const float CAmmo_UI::CURRENT_AMMO_DIGIT_SHIFT = 35.0f;
-const float CAmmo_UI::DEFAULT_AMMO_DIGIT_SHIFT = 20.0f;
-
+//UIの背景の位置
 const D3DXVECTOR3 CAmmo_UI::BOX_POS = { 1070.0f, 665.0f, 0.0f };
+//UIの背景のサイズ
 const D3DXVECTOR2 CAmmo_UI::BOX_SIZE = { 180.0f, 50.0f };
 
+//弾数の表示位置
 const D3DXVECTOR3 CAmmo_UI::CURRENT_AMMO_POS = { 1000.0f, 665.0f, 0.0f };
+//弾数の表示サイズ
 const D3DXVECTOR2 CAmmo_UI::CURRENT_AMMO_SIZE = { 20.0f, 30.0f };
 
+//マガジンサイズの位置
 const D3DXVECTOR3 CAmmo_UI::DEFAULT_AMMO_POS = { 1065.0f, 670.0f, 0.0f };
+//マガジンサイズのサイズ
 const D3DXVECTOR2 CAmmo_UI::DEFAULT_AMMO_SIZE = { 10.0f, 20.0f };
 
 //=============================================

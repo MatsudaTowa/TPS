@@ -11,43 +11,6 @@
 #include "player.h"
 #include "player.h"
 
-//通常の移動速度
-const float CCamera::DEFAULT_MOVE = 1.0f;
-
-//通常の移動速度
-const float CCamera::DAMPING_COEFFICIENT = 0.2f;
-
-//通常状態のYの距離
-const float CCamera::DEFAULT_LENGTH_Y = 200.0f;
-
-//通常状態のZの距離
-const float CCamera::DEFAULT_LENGTH_Z = 500.0f;
-
-//バードビュー時のYの距離
-const float CCamera::BIRDVIEW_LENGTH_Y = 300.0f;
-
-//サイドビュー時のXの距離
-const float CCamera::SIDEVIEW_LENGTH_X = 20.0f;
-
-//サイドビュー時のYの距離
-const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
-
-//サイドビュー時のZの距離
-const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
-
-//デフォルトのマウス感度
-const float CCamera::MOUSE_SENS = 0.001f;
-
-//サードビュー時の補正値
-const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
-const float CCamera::THIRDVIEW_CORRECT_Y = 105.0f;
-const float CCamera::THIRDVIEW_CORRECT_Z = 20.0f;
-
-//サードパーソンビュー時のXの最大可動域
-const float CCamera::MAX_TURN_X = 0.5f;
-//サードパーソンビュー時のXの最小可動域
-const float CCamera::MIN_TURN_X = -0.15f;
-
 //=============================================
 //コンストラクタ
 //=============================================
@@ -178,13 +141,13 @@ void CCamera::Update()
 	m_posR += m_moveR;
 
 	//移動量を更新(減速）
-	m_moveV.x += (0.0f - m_moveV.x) * DAMPING_COEFFICIENT;
-	m_moveV.y += (0.0f - m_moveV.y) * DAMPING_COEFFICIENT;
-	m_moveV.z += (0.0f - m_moveV.z) * DAMPING_COEFFICIENT;
+	m_moveV.x += (FLOAT_ZERO - m_moveV.x) * DAMPING_COEFFICIENT;
+	m_moveV.y += (FLOAT_ZERO - m_moveV.y) * DAMPING_COEFFICIENT;
+	m_moveV.z += (FLOAT_ZERO - m_moveV.z) * DAMPING_COEFFICIENT;
 
-	m_moveR.x += (0.0f - m_moveR.x) * DAMPING_COEFFICIENT;
-	m_moveR.y += (0.0f - m_moveR.y) * DAMPING_COEFFICIENT;
-	m_moveR.z += (0.0f - m_moveR.z) * DAMPING_COEFFICIENT;
+	m_moveR.x += (FLOAT_ZERO - m_moveR.x) * DAMPING_COEFFICIENT;
+	m_moveR.y += (FLOAT_ZERO - m_moveR.y) * DAMPING_COEFFICIENT;
+	m_moveR.z += (FLOAT_ZERO - m_moveR.z) * DAMPING_COEFFICIENT;
 
 }
 

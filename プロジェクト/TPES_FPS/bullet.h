@@ -14,8 +14,6 @@
 class CBullet : public CAttack_Manager
 {
 public:
-	static const std::string BULLET_TEXTURE_NAME;	//テクスチャの名前
-
 	static const int BULLET_PRIORITY = 10; //描画順
 
 	//敵か自分かの判断する列挙
@@ -76,6 +74,8 @@ public:
 		return m_Allegiance;
 	}
 private:
+	static const std::string BULLET_TEXTURE_NAME;	//テクスチャの名前
+
 	bool PenetrationBlock();
 	BULLET_ALLEGIANCE m_Allegiance; //敵か自分かを判断する列挙型変数
 	BULLET_TYPE m_type; //弾の種類

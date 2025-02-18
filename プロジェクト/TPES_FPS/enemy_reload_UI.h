@@ -14,8 +14,6 @@
 class CEnemy_Reload_UI : public CBillboard
 {
 public:
-	static const std::string TEXTURE_NAME; //テクスチャの名前
-
 	static const int PRIORITY = 24; //描画順
 
 	CEnemy_Reload_UI(int nPriority = PRIORITY);
@@ -28,6 +26,8 @@ public:
 	static CEnemy_Reload_UI* Create(D3DXVECTOR3 pos,D3DXVECTOR3 size);
 
 private:
+	static const std::string TEXTURE_NAME; //テクスチャの名前
+
 };
 
 #endif

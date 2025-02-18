@@ -92,8 +92,6 @@ protected:
 	}
 
 private:
-
-	//TODO:‚â‚Î‚¢
 	static CObject* m_apObject[CObject::PRI_MAX][MAX_OBJECT];
 
 	int m_nPriority; //•`‰æ—Dæ“x

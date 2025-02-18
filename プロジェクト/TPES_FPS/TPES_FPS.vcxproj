@@ -220,7 +220,6 @@
     <ClCompile Include="object2D.cpp" />
     <ClCompile Include="object3D.cpp" />
     <ClCompile Include="objectX.cpp" />
-    <ClCompile Include="object_map.cpp" />
     <ClCompile Include="player_behavior.cpp" />
     <ClCompile Include="player_state.cpp" />
     <ClCompile Include="player.cpp" />
@@ -336,7 +335,6 @@
     <ClInclude Include="object2D.h" />
     <ClInclude Include="object3D.h" />
     <ClInclude Include="objectX.h" />
-    <ClInclude Include="object_map.h" />
     <ClInclude Include="player_behavior.h" />
     <ClInclude Include="player_state.h" />
     <ClInclude Include="player.h" />

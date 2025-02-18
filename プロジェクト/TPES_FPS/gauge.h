@@ -18,8 +18,6 @@
 class CGauge_2D : public CObject2D
 {
 public:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 	enum GAUGE2D_TYPE
 	{
 		GAUGE_TYPE_LIFE,
@@ -27,7 +25,6 @@ public:
 		GAUGE_TYPE_MAX,
 	};
 	static const int GAUGE2D_PRIORITY = 28;  //描画順
-	static const float MAX_GAUGE_WIDE;  //ゲージの最大値
 	CGauge_2D(int nPriority = GAUGE2D_PRIORITY);
 	~CGauge_2D()override;
 	HRESULT Init()override;
@@ -37,6 +34,8 @@ public:
 	void SetGauge(D3DXVECTOR2 size);
 	static CGauge_2D* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE2D_TYPE type, D3DXCOLOR col);
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
+
 	GAUGE2D_TYPE m_type;
 };
 

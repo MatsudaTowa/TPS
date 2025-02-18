@@ -26,7 +26,5 @@ public:
 	static CField* Create(D3DXVECTOR3 pos,D3DXVECTOR3 size);
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
-	static LPDIRECT3DTEXTURE9 m_pTextureTemp;
 };
 #endif

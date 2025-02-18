@@ -52,11 +52,3 @@ CReload::CReload():m_nReloadCnt(INT_ZERO)
 CReload::~CReload()
 {
 }
-
-//=============================================
-//ƒJƒEƒ“ƒgŽæ“¾
-//=============================================
-int& CReload::GetReloadCnt()
-{
-	return m_nReloadCnt;
-}

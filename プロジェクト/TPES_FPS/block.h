@@ -36,17 +36,14 @@ public:
 	static CBlock* Create(BLOCKTYPE type,D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife,bool bBreak);
 private:
 	static const char* MODEL_NAME;	//モデルの名前
-	static const char* WOOD_MODEL_NAME;	//モデルの名前
-	static const char* AZUMAYA_MODEL_NAME;	//モデルの名前
-	static const char* DANGOYA_MODEL_NAME;	//モデルの名前
-	static const char* MESH_MODEL_NAME;	//モデルの名前
 
 	static const int NUM_PIECE = 5; //壊れた際に生成するピース数
 	static const int NUM_SMOKE = 30; //壊れた際に生成するスモーク数
-	static const D3DXCOLOR SMOKE_COLOR; //壊れた際に生成するスモークの色
 
 	static constexpr float PIECE_ROTATION_MAX = 3.0f; //回転範囲最大値
 	static constexpr float PIECE_ROTATION_MIN = 0.0f; //回転範囲最小値
+
+	static const D3DXCOLOR SMOKE_COLOR; //壊れた際に生成するスモークの色
 
 	static const D3DXVECTOR3 MOVE_PIECE_SCALE; //動くピースのスケール
 	static const D3DXVECTOR3 STACK_PIECE_SCALE; //残るピースのスケール

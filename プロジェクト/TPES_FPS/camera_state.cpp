@@ -28,8 +28,6 @@ void CCameraState::Ult(CCamera* camera)
 {
 }
 
-const float CFreeView::FREEVIEW_LENGTH = 200.0f;
-
 //=============================================
 //自由旋回状態
 //=============================================
@@ -47,9 +45,6 @@ void CFreeView::FreeView(CCamera* camera)
 		camera->ChangeCameraState(new CThirdView);
 	}
 }
-
-//サードビュー時の距離
-const float CThirdView::THIRDVIEW_LENGTH = 130.0f;
 
 //=============================================
 //三人称の状態
@@ -72,9 +67,6 @@ void CThirdView::ThirdView(CCamera* camera)
 #endif // _DEBUG
 
 }
-
-//ULT時の距離
-const float CUltCameraState::ULT_LENGTH = 200.0f;
 
 //=============================================
 //ウルトの状態

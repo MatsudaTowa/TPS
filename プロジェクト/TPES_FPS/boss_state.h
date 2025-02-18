@@ -61,7 +61,7 @@ public:
 	virtual void Stan(CBossEnemy* boss);
 	virtual void DrawDebug()override;
 private:
-	static constexpr int STAN_FRAME = 180; //スタン時間
+	static const int STAN_FRAME = 180; //スタン時間
 	int m_StanCnt; //スタン計測カウント
 };
 

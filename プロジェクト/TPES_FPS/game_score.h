@@ -23,7 +23,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 private:
-	static const float DIGIT_SHIFT;
+	static constexpr float DIGIT_SHIFT = 40.0f;
 	static const int DEATH_DIGIT = 2;
 
 	static const D3DXVECTOR3 BOX_POS; //˜g‚ÌˆÊ’u

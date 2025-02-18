@@ -17,13 +17,13 @@ public:
 	static const int MAX_MODEL = 256; //モデルの数
 
 	//モデル情報構造体定義
-	typedef struct
+	struct MODEL_INFO
 	{
 		LPD3DXMESH pMesh; //メッシュ情報
 		LPD3DXBUFFER pBuffMat; //マテリアル情報
 		DWORD dwNumMat; //マテリアル数;
 		char* ModelName; //モデルネーム保存用
-	}MODEL_INFO;
+	};
 
 	struct ColisionBlockInfo
 	{
