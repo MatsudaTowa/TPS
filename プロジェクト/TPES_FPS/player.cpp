@@ -133,6 +133,7 @@ HRESULT CPlayer::Init()
 
 	//カメラ情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+
 	//現在のシーンを取得 TODO:シーン参照するな
 	CScene::MODE pScene = CScene::GetSceneMode();
 	if (pScene != CScene::MODE::MODE_TITLE)

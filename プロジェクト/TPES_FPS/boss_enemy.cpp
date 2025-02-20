@@ -20,41 +20,11 @@ m_pConfusion(nullptr),									//混乱処理
 m_pTackle(nullptr),										//タックル処理
 m_pSearch(nullptr),										//探索処理
 m_pRampage(nullptr),									//暴走処理
-m_pDashEffect(nullptr),									//ダッシュエフェクト
+m_pTackleEffect(nullptr),									//ダッシュエフェクト
 m_pTackleCharge(nullptr)								//タックル前のエフェクト
 {
-	if (m_pWandering == nullptr)
-	{
-		m_pWandering = new CBossWandering;
-	}
-	if (m_pChase == nullptr)
-	{
-		m_pChase = new CBossChase;
-	}
-	if (m_pConfusion == nullptr)
-	{
-		m_pConfusion = new CBossConfusion;
-	}
-	if (m_pStan == nullptr)
-	{
-		m_pStan = new CEnemyStan;
-	}
-	if (m_pGunAttack == nullptr)
-	{
-		m_pGunAttack = new CBossGunAttack;
-	}
-	if (m_pTackle == nullptr)
-	{
-		m_pTackle = new CBossTackle;
-	}
-	if (m_pRampage == nullptr)
-	{
-		m_pRampage = new CBossRampage;
-	}
-	if (m_pSearch == nullptr)
-	{
-		m_pSearch = new CBossSearch;
-	}
+	//各行動を作成
+	CreateBossStrategy();
 }
 
 //=============================================
@@ -62,39 +32,23 @@ m_pTackleCharge(nullptr)								//タックル前のエフェクト
 //=============================================
 CBossEnemy::~CBossEnemy()
 {
+	//ステート破棄
 	if (m_pBossState != nullptr)
 	{
 		delete m_pBossState;
 	}
-	if (m_pWandering != nullptr)
+
+	//各行動の破棄
+	DeleteBossStrategy();
+
+	//タックルエフェクト破棄
+	if (m_pTackleEffect != nullptr)
 	{
-		delete m_pWandering;
+		m_pTackleEffect->Uninit();
+		m_pTackleEffect = nullptr;
 	}
-	if (m_pChase != nullptr)
-	{
-		delete m_pChase;
-	}
-	if (m_pConfusion != nullptr)
-	{
-		delete m_pConfusion;
-	}
-	if (m_pTackle != nullptr)
-	{
-		delete m_pTackle;
-	}
-	if (m_pRampage != nullptr)
-	{
-		delete m_pRampage;
-	}
-	if (m_pSearch != nullptr)
-	{
-		delete m_pSearch;
-	}
-	if (m_pDashEffect != nullptr)
-	{
-		m_pDashEffect->Uninit();
-		m_pDashEffect = nullptr;
-	}
+
+	//タックル前のエフェクト破棄
 	if (m_pTackleCharge != nullptr)
 	{
 		m_pTackleCharge->Uninit();
@@ -103,12 +57,98 @@ CBossEnemy::~CBossEnemy()
 }
 
 //=============================================
+//ボスの行動作成
+//=============================================
+void CBossEnemy::CreateBossStrategy()
+{
+	//ボスの徘徊行動を生成
+	if (m_pWandering == nullptr)
+	{
+		m_pWandering = new CBossWandering;
+	}
+	//ボスの追跡行動を生成
+	if (m_pChase == nullptr)
+	{
+		m_pChase = new CBossChase;
+	}
+	//ボスの混乱行動を生成
+	if (m_pConfusion == nullptr)
+	{
+		m_pConfusion = new CBossConfusion;
+	}
+	//ボスのスタン行動を生成
+	if (m_pStan == nullptr)
+	{
+		m_pStan = new CEnemyStan;
+	}
+	//ボスの射撃行動を生成
+	if (m_pGunAttack == nullptr)
+	{
+		m_pGunAttack = new CBossGunAttack;
+	}
+	//ボスのタックル行動を生成
+	if (m_pTackle == nullptr)
+	{
+		m_pTackle = new CBossTackle;
+	}
+	//ボスの暴走行動を作成
+	if (m_pRampage == nullptr)
+	{
+		m_pRampage = new CBossRampage;
+	}
+	//ボスの捜索行動を作成
+	if (m_pSearch == nullptr)
+	{
+		m_pSearch = new CBossSearch;
+	}
+}
+
+//=============================================
+// 各行動の破棄
+//=============================================
+void CBossEnemy::DeleteBossStrategy()
+{
+	//徘徊行動破棄
+	if (m_pWandering != nullptr)
+	{
+		delete m_pWandering;
+	}
+	//追跡行動破棄
+	if (m_pChase != nullptr)
+	{
+		delete m_pChase;
+	}
+	//混乱行動破棄
+	if (m_pConfusion != nullptr)
+	{
+		delete m_pConfusion;
+	}
+	//タックル行動破棄
+	if (m_pTackle != nullptr)
+	{
+		delete m_pTackle;
+	}
+	//暴走行動破棄
+	if (m_pRampage != nullptr)
+	{
+		delete m_pRampage;
+	}
+	//探索行動破棄
+	if (m_pSearch != nullptr)
+	{
+		delete m_pSearch;
+	}
+}
+
+//=============================================
 //初期化
 //=============================================
 HRESULT CBossEnemy::Init()
 {
+	//ボスのステート生成
 	if (m_pBossState == nullptr)
 	{
+		//最初は徘徊状態
 		m_pBossState = new CWanderingState;
 	}
 	//銃初期化
@@ -119,6 +159,7 @@ HRESULT CBossEnemy::Init()
 		m_pGun->Init();
 	}
 
+	//定数値で決められている初期体力設定
 	SetLife(DEFAULT_LIFE);
 	//影のサイズ設定
 	SetShadowSize(SHADOW_SIZE);
@@ -141,19 +182,12 @@ void CBossEnemy::Uninit()
 //=============================================
 void CBossEnemy::Update()
 {
+	//親クラスの更新処理を呼ぶ
 	CEnemy::Update();
 
 	ProcessState(); //各ステートの実行処理
 
 	Motion(NUM_PARTS); //モーション処理
-
-#ifdef _DEBUG
-	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_9))
-	{
-		SetLife(300);
-	}
-#endif // _DEBUG
-
 
 	for (int nCnt = INT_ZERO; nCnt < GetNumParts(); nCnt++)
 	{
@@ -179,18 +213,25 @@ void CBossEnemy::Update()
 //=============================================
 void CBossEnemy::ProcessState()
 {
-	m_pBossState->Chase(this);
-
+	//現在のステートの徘徊の処理を呼ぶ
 	m_pBossState->Wandering(this);
 
+	//現在のステートの追跡の処理を呼ぶ
+	m_pBossState->Chase(this);
+
+	//現在のステートのスタンの処理を呼ぶ
 	m_pBossState->Stan(this);
 
+	//現在のステートの混乱の処理を呼ぶ
 	m_pBossState->Confusion(this);
 
+	//現在のステートのタックルの処理を呼ぶ
 	m_pBossState->Tackle(this);
 
+	//現在のステートの探索の処理を呼ぶ
 	m_pBossState->Search(this);
 
+	//現在のステートの暴走の処理を呼ぶ
 	m_pBossState->Rampage(this);
 }
 
@@ -201,6 +242,7 @@ void CBossEnemy::Draw()
 {
 	//デバッグ表示
 	DrawDebug();
+	//親クラスの描画処理を呼ぶ
 	CEnemy::Draw();
 }
 
@@ -212,9 +254,11 @@ void CBossEnemy::ChangeState(CBossState* state)
 	//今のステートを消し引数のステートに切り替える
 	if (m_pBossState != nullptr)
 	{
+		//破棄漏れをなくすために破棄する関数を実行
 		m_pBossState->End(this);
 		delete m_pBossState;
 		m_pBossState = state;
+		//最初の一回だけ呼びたい関数を実行
 		m_pBossState->Start(this);
 	}
 }
@@ -226,12 +270,12 @@ void CBossEnemy::TackleAction()
 {
 	SetMotion(CBossEnemy::MOTION_TACKLE);
 
-	if (m_pDashEffect == nullptr)
+	if (m_pTackleEffect == nullptr)
 	{
 		float fAngle = atan2f(sinf(GetRot().y), cosf(GetRot().y));
 
 		//ダッシュエフェクト生成
-		m_pDashEffect = CDashEffect::Create({m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 }
+		m_pTackleEffect = CDashEffect::Create({m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 }
 		, { FLOAT_ZERO,fAngle,FLOAT_ZERO });
 	}
 
@@ -245,10 +289,10 @@ void CBossEnemy::TackleAction()
 	//移動量代入
 	SetMove(move);
 
-	if ( m_pDashEffect != nullptr)
+	if ( m_pTackleEffect != nullptr)
 	{//エフェクトがあったら
 	 //エフェクトを動かす
-		 m_pDashEffect->SetPos({ m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 });
+		 m_pTackleEffect->SetPos({ m_apModel[3]->GetMtxWorld()._41,m_apModel[3]->GetMtxWorld()._42 - CORRECTION_VALUE_Y,m_apModel[3]->GetMtxWorld()._43 });
 	}
 
 	//自分の方向を取得

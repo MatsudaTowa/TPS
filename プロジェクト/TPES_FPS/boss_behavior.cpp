@@ -492,11 +492,11 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				m_StayCnt = INT_ZERO;
 				m_isTackle = false;
 
-				if (boss->m_pDashEffect != nullptr)
+				if (boss->m_pTackleEffect != nullptr)
 				{//エフェクトがあったら
 					//エフェクト破棄
-					boss->m_pDashEffect->Uninit();
-					boss->m_pDashEffect = nullptr;
+					boss->m_pTackleEffect->Uninit();
+					boss->m_pTackleEffect = nullptr;
 				}
 				boss->ChangeState(new CBossStanState);
 			}
@@ -515,11 +515,11 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				}
 
 
-				if (boss->m_pDashEffect != nullptr)
+				if (boss->m_pTackleEffect != nullptr)
 				{//エフェクトがあったら
 					//エフェクト破棄
-					boss->m_pDashEffect->Uninit();
-					boss->m_pDashEffect = nullptr;
+					boss->m_pTackleEffect->Uninit();
+					boss->m_pTackleEffect = nullptr;
 				}
 
 				//タックル情報初期化
@@ -758,11 +758,11 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 	}
 	else
 	{
-		if (boss->m_pDashEffect != nullptr)
+		if (boss->m_pTackleEffect != nullptr)
 		{//エフェクトがあったら
 			//エフェクト破棄
-			boss->m_pDashEffect->Uninit();
-			boss->m_pDashEffect = nullptr;
+			boss->m_pTackleEffect->Uninit();
+			boss->m_pTackleEffect = nullptr;
 		}
 
 		++m_MoveIdx; //位置カウントアップ

@@ -367,10 +367,10 @@ void CTackleState::Start(CBossEnemy* boss)
 //=============================================
 void CTackleState::End(CBossEnemy* boss)
 {
-	if (boss->m_pDashEffect != nullptr)
+	if (boss->m_pTackleEffect != nullptr)
 	{
-		boss->m_pDashEffect->Uninit();
-		boss->m_pDashEffect = nullptr;
+		boss->m_pTackleEffect->Uninit();
+		boss->m_pTackleEffect = nullptr;
 	}
 	if (boss->m_pTackleCharge != nullptr)
 	{
@@ -566,10 +566,10 @@ void CRampageState::Start(CBossEnemy* boss)
 //=============================================
 void CRampageState::End(CBossEnemy* boss)
 {
-	if (boss->m_pDashEffect != nullptr)
+	if (boss->m_pTackleEffect != nullptr)
 	{
-		boss->m_pDashEffect->Uninit();
-		boss->m_pDashEffect = nullptr;
+		boss->m_pTackleEffect->Uninit();
+		boss->m_pTackleEffect = nullptr;
 	}
 }
 
