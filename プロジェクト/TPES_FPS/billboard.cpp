@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[billboard.h]
+//ビルボード処理[billboard.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -53,9 +53,9 @@ void CBillboard::Draw()
 	//ポリゴンの正面をカメラに向ける
 	D3DXMatrixInverse(&mtxWorld, NULL, &mtxView);
 
-	mtxWorld._41 = 0.0f;
-	mtxWorld._42 = 0.0f;
-	mtxWorld._43 = 0.0f;
+	mtxWorld._41 = FLOAT_ZERO;
+	mtxWorld._42 = FLOAT_ZERO;
+	mtxWorld._43 = FLOAT_ZERO;
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
@@ -77,6 +77,6 @@ void CBillboard::Draw()
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 
+	//ワールドマトリックスを設定
 	SetMtxWorld(mtxWorld);
-
 }

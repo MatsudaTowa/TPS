@@ -12,6 +12,7 @@
 #include "field.h"
 #include"game.h"
 #include "player.h"
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -57,7 +58,7 @@ void CAttack_Manager::Update()
 	//親クラスの更新処理
 	CObject3D::Update();
 
-	if (m_nLife > 0)
+	if (m_nLife > INT_ZERO)
 	{//寿命があるなら減らす
 		m_nLife--;
 	}
@@ -86,41 +87,51 @@ bool CAttack_Manager::HitEnemy()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CEnemy::ENEMY_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
-			{
-				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+		{//エネミーじゃなければ
+			//エネミーを探し続ける
+			continue;
+		}
 
-				CColision::COLISION ColisionCheck;
-				for (int nCntParts = 0; nCntParts < pEnemy->GetNumParts(); nCntParts++)
-				{
-					//パーツのオフセットpos
-					D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCntParts]->GetMtxWorld()._41
-					,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._42
-					,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._43 };
+		//敵との当たり判定
+		CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
 
-					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCntParts]->GetMin(), pEnemy->m_apModel[nCntParts]->GetMax());
+		//当たり判定確認変数宣言
+		CColision::COLISION ColisionCheck;
 
-					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
-					{//当たってたら
-						if (nCntParts != 1)
-						{
-							pEnemy->Damage(m_nDamage);
-						}
-						else if (nCntParts == 1)
-						{
-							pEnemy->Damage(m_nDamage * 2);
-						}
-						CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_HIT);
+		for (int nCntParts = 0; nCntParts < pEnemy->GetNumParts(); nCntParts++)
+		{
+			//パーツのオフセットpos
+			D3DXVECTOR3 PartsPos = { pEnemy->m_apModel[nCntParts]->GetMtxWorld()._41
+			,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._42
+			,pEnemy->m_apModel[nCntParts]->GetMtxWorld()._43 };
 
-						return true;
-					}
+			ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pEnemy->m_apModel[nCntParts]->GetMin(), pEnemy->m_apModel[nCntParts]->GetMax());
+
+			if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+			{//当たってたら
+				if (nCntParts != 1)
+				{//頭以外なら
+					pEnemy->Damage(m_nDamage);
 				}
+				else if (nCntParts == 1)
+				{//頭なら
+					//ダメージ二倍
+					pEnemy->Damage(m_nDamage * 2);
+				}
+
+				//HIT音を鳴らす
+				CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_HIT);
+
+				return true;
 			}
 		}
 	}
@@ -141,34 +152,40 @@ bool CAttack_Manager::HitPlayer()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-				CColision::COLISION ColisionCheck;
-				for (int nCnt = 0; nCnt < pplayer->NUM_PARTS; nCnt++)
-				{
-					//パーツのオフセットpos
-					D3DXVECTOR3 PartsPos = { pplayer->m_apModel[nCnt]->GetMtxWorld()._41
-					,pplayer->m_apModel[nCnt]->GetMtxWorld()._42
-					,pplayer->m_apModel[nCnt]->GetMtxWorld()._43 };
 
-					ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pplayer->m_apModel[nCnt]->GetMin(), pplayer->m_apModel[nCnt]->GetMax());
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
 
-					if (ColisionCheck != CColision::COLISION::COLISON_NONE)
-					{//当たってたら
+		//プレイヤーとの当たり判定
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
 
-						pplayer->Damage(m_nDamage);
-						int nCurrentLife = pplayer->GetLife();
-						return true;
-					}
-				}
+		CColision::COLISION ColisionCheck;
+		for (int nCnt = 0; nCnt < pPlayer->NUM_PARTS; nCnt++)
+		{
+			//パーツのオフセットpos
+			D3DXVECTOR3 PartsPos = { pPlayer->m_apModel[nCnt]->GetMtxWorld()._41
+			,pPlayer->m_apModel[nCnt]->GetMtxWorld()._42
+			,pPlayer->m_apModel[nCnt]->GetMtxWorld()._43 };
+
+			ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonModelColisionSphere(Attackpos, Attacksize, PartsPos, pPlayer->m_apModel[nCnt]->GetMin(), pPlayer->m_apModel[nCnt]->GetMax());
+
+			if (ColisionCheck != CColision::COLISION::COLISON_NONE)
+			{//当たってたら
+				//ダメージ処理を呼ぶ
+				pPlayer->Damage(m_nDamage);
+				return true;
 			}
 		}
 	}
@@ -188,25 +205,31 @@ bool CAttack_Manager::HitBlock()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-			{
-				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-				CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_X(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-				CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_Z(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+		{//ブロックじゃなければ
+			//ブロックを探し続ける
+			continue;
+		}
 
-				if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
-				{//当たってたら
-					//攻撃の削除
-					return true;
-				}
-			}
+		//ブロックとの当たり判定
+		CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+		CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_X(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+		CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelColision_Z(Attackpos, Attacksize, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+
+		if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
+		{//当たってたら
+			//攻撃の削除
+			return true;
 		}
 	}
 	return false;
@@ -227,35 +250,41 @@ bool CAttack_Manager::HitGround()
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CField::FIELD_PRIORITY, nCnt);
 		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
-			{
-				CField* pField = dynamic_cast<CField*>(pObj);
-
-				CColision::COLISION ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonFillColision(Attackpos, Attacksize, pField->GetPos(),
-				D3DXVECTOR3(-pField->GetSize().x, -pField->GetSize().y, -pField->GetSize().z), 
-				D3DXVECTOR3(pField->GetSize().x, pField->GetSize().y, pField->GetSize().z));
-
-				if (ColisionCheck == CColision::COLISION::COLISON_TOP_Y)
-				{//当たってたら
-					//埋まってる分を足す
-					Attackpos.y += pField->GetPos().y - (Attackpos.y - Attacksize.y);
-
-					SetPos(Attackpos);
-					return true;
-
-				}
-				else
-				{
-					return false;
-				}
-				break;
-			}
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		//敵との当たり判定
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
+		{//床じゃなければ
+			//床を探し続ける
+			continue;
+		}
+
+		//床との当たり判定
+		CField* pField = dynamic_cast<CField*>(pObj);
+
+		CColision::COLISION ColisionCheck = CManager::GetInstance()->GetColision()->CheckPolygonFillColision(Attackpos, Attacksize, pField->GetPos(),
+		D3DXVECTOR3(-pField->GetSize().x, -pField->GetSize().y, -pField->GetSize().z), 
+		D3DXVECTOR3(pField->GetSize().x, pField->GetSize().y, pField->GetSize().z));
+
+		if (ColisionCheck == CColision::COLISION::COLISON_TOP_Y)
+		{//当たってたら
+			//埋まってる分を足す
+			Attackpos.y += pField->GetPos().y - (Attackpos.y - Attacksize.y);
+
+			SetPos(Attackpos);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		break;
 	}
 	return false;
 }

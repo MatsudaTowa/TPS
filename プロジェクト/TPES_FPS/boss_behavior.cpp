@@ -17,9 +17,11 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CBossWandering::CBossWandering():m_MoveIdx(INT_ZERO), m_StopCnt(INT_ZERO), m_isMove()
+CBossWandering::CBossWandering():
+m_MoveIdx(INT_ZERO),				//移動番号 
+m_StopCnt(INT_ZERO),				//到達した際に止まるカウント
+m_isMove(true)						//移動するかのbool
 {
-	m_isMove = true;
 }
 
 //=============================================
@@ -103,11 +105,11 @@ void CBossWandering::Wandering(CBossEnemy* boss)
 //=============================================
 void CBossWandering::StopCnt()
 {
-	++m_StopCnt;
+	++m_StopCnt;	//止まってる時間計測
 	if (m_StopCnt > STOP_FRAME)
-	{
-		m_StopCnt = INT_ZERO;
-		m_isMove = true;
+	{//一定フレームに到達したら
+		m_StopCnt = INT_ZERO;	//カウントリセット
+		m_isMove = true;		//動くように変更
 	}
 }
 
@@ -147,7 +149,8 @@ void CBossWandering::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossChase::CBossChase():m_bTargetPlayer(true)
+CBossChase::CBossChase():
+m_bTargetPlayer(true)		//追跡を続ける状態に
 {
 }
 
@@ -163,10 +166,10 @@ CBossChase::~CBossChase()
 //=============================================
 void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 {
-	CPlayer* pplayer = dynamic_cast<CPlayer*>(obj);
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(obj);
 
 	//プレイヤーの位置への方向情報
-	D3DXVECTOR3 Vector = pplayer->GetPos() - boss->GetPos();
+	D3DXVECTOR3 Vector = pPlayer->GetPos() - boss->GetPos();
 	// 目的地との距離を計算
 	float distance = sqrtf(Vector.x * Vector.x + Vector.z * Vector.z);
 
@@ -177,20 +180,26 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 
 	// レイキャストを実行し、障害物があるか判定
 	if (boss->PerformRaycast_Smoke(Vector, boss).hit)
-	{
+	{//スモークに当たったら
+		//追跡解除
 		m_bTargetPlayer = false;
 
+		//ステートを混乱に変更
 		boss->ChangeState(new CConfusionBossState);
 		return;
 	}
 	else if (boss->PerformRaycast_Block(Vector, boss).hit
 		&&boss->PerformRaycast_Player(Vector, boss).distance > boss->PerformRaycast_Block(Vector, boss).distance)
-	{
+	{//プレイヤーより前にあるブロックに当たったら
+		//追跡解除
 		m_bTargetPlayer = false;
+
+		//ステートを探索状態に
 		boss->ChangeState(new CSearchState);
 	}
 	else
-	{
+	{//それ以外なら
+		//追跡を続行
 		m_bTargetPlayer = true;
 	}
 }
@@ -251,7 +260,9 @@ void CBossChase::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CBossConfusion::CBossConfusion(): m_isRight(false), m_TurnCnt(0)
+CBossConfusion::CBossConfusion():
+m_isRight(false),				//見渡す回転を左に
+m_TurnCnt(0)					//回転のカウント
 {
 }
 
@@ -279,8 +290,10 @@ void CBossConfusion::Confusion(CBossEnemy* boss, float StartRot_y)
 	//自分の方向を取得
 	D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), FLOAT_ZERO, cosf(boss->GetRot().y + D3DX_PI)};
 
+	//算出した方向ベクトルを正規化
 	D3DXVec3Normalize(&vec, &vec);
 
+	//レイのヒット情報を取得
 	CCharacter::RayHitInfo HitPlayerInfo = PerformRaycast_Player(vec, boss);
 	CCharacter::RayHitInfo HitBlockInfo = boss->PerformRaycast_Block(vec, boss);
 	CCharacter::RayHitInfo HitSmokeInfo = boss->PerformRaycast_Smoke(vec, boss);
@@ -321,6 +334,8 @@ void CBossConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* b
 			++m_TurnCnt;
 		}
 	}
+
+	//方向を代入
 	boss->SetRot(rot);
 }
 
@@ -339,27 +354,32 @@ CCharacter::RayHitInfo CBossConfusion::PerformRaycast_Player(D3DXVECTOR3 vector,
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		//プレイヤーとの当たり判定
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+		D3DXVECTOR3 StartRay = {boss->GetPos().x - pPlayer->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z - pPlayer->GetPos().z };
+		for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
+		{
+			//レイを飛ばしプレイヤーと当たるかチェック
+			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+			if (Info.hit)
 			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = {boss->GetPos().x - pPlayer->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
-				{
-					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit)
-					{
-						return Info;
-					}
-				}
+				return Info;
 			}
 		}
 	}
@@ -418,7 +438,11 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::B
 //=============================================
 //コンストラクタ
 //=============================================
-CBossTackle::CBossTackle():m_StayCnt(INT_ZERO), m_TackleCnt(INT_ZERO), m_effect_reduction(FLOAT_ZERO), m_isTackle(false)
+CBossTackle::CBossTackle():
+m_StayCnt(INT_ZERO),				//タックル前の止まっているカウント
+m_TackleCnt(INT_ZERO),				//タックル持続カウント
+m_effect_reduction(FLOAT_ZERO),		//エフェクトのサイズ縮小値
+m_isTackle(false)					//タックルしていない状態に
 {
 }
 
@@ -455,11 +479,15 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			//サイズ取得
 			D3DXVECTOR3 size = boss->m_pTackleCharge->GetSize();
 
+			//サイズ縮小
 			size.x -= m_effect_reduction;
 			size.y -= m_effect_reduction;
 
+			//サイズ代入
 			boss->m_pTackleCharge->SetSize(size);
 		}
+
+		//止まっているカウント加算
 		++m_StayCnt;
 	}
 
@@ -473,12 +501,14 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 			boss->m_pTackleCharge->Uninit();
 			boss->m_pTackleCharge = nullptr;
 		}
-		m_isTackle = true;
-		m_StayCnt = INT_ZERO;
+
+		m_isTackle = true;		//タックル状態に
+		m_StayCnt = INT_ZERO;	//ステイカウント初期化
 	}
 
 	if (m_isTackle)
 	{
+		//タックル持続時間カウント
 		++m_TackleCnt;
 
 		//タックルの実行処理を呼ぶ
@@ -503,17 +533,19 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 
 			if (boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_Z
 				|| boss->m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
-			{
+			{//ブロックに衝突したら
 				if (boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock != nullptr)
 				{
+					//破片を生成
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->CreatePiece();
+					//終了処理
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock->Uninit();
+					//ブロックにnullポインタ代入
 					boss->m_apModel[nCnt]->GetColisionBlockInfo().pBlock = nullptr;
 
 					//すべてのパーツを当たってない判定に
 					boss->ColisionReset();
 				}
-
 
 				if (boss->m_pTackleEffect != nullptr)
 				{//エフェクトがあったら
@@ -542,30 +574,36 @@ void CBossTackle::LookAtPlayer(CCharacter* character)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
-
-				//プレイヤーとの距離算出
-				D3DXVECTOR3 Distance = pplayer->GetPos() - character->GetPos();
-
-				//プレイヤーに向ける角度を算出
-				float fAngle = atan2f(Distance.x, Distance.z);
-
-				//親クラスからrotを取得
-				D3DXVECTOR3 rot = character->GetRot();
-
-				rot.y = fAngle + D3DX_PI;
-
-				character->SetRot(rot);
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		//プレイヤーを探す
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//プレイヤーとの距離算出
+		D3DXVECTOR3 Distance = pPlayer->GetPos() - character->GetPos();
+
+		//プレイヤーに向ける角度を算出
+		float fAngle = atan2f(Distance.x, Distance.z);
+
+		//親クラスからrotを取得
+		D3DXVECTOR3 rot = character->GetRot();
+
+		rot.y = fAngle + D3DX_PI;
+
+		character->SetRot(rot);
 	}
 }
 
@@ -621,6 +659,7 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		//対象物との角度計算
 		float angle = atan2f(point.x, point.z);
 
+		//移動量取得
 		D3DXVECTOR3 move = boss->GetMove();
 
 		switch (boss->GetAxis())
@@ -651,24 +690,30 @@ void CBossSearch::Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-			if (pObj != nullptr)
+			if (pObj == nullptr)
 			{//ヌルポインタじゃなければ
-				//タイプ取得
-				CObject::OBJECT_TYPE type = pObj->GetType();
+				//オブジェクトを探し続ける
+				continue;
+			}
 
-				//敵との当たり判定
-				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-				{
-					CPlayer* player = dynamic_cast<CPlayer*>(pObj);
-					//プレイヤーの位置への方向情報
-					D3DXVECTOR3 Vector = player->GetPos() - boss->GetPos();
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
 
-					if (boss->PerformRaycast_Player(Vector, boss).hit
-						&& boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
-					{
-						boss->ChangeState(new CChaseState);
-					}
-				}
+			//プレイヤーを探す
+			if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{//プレイヤーじゃなければ
+				//プレイヤーを探し続ける
+				continue;
+			}
+			CPlayer* player = dynamic_cast<CPlayer*>(pObj);
+			//プレイヤーの位置への方向情報
+			D3DXVECTOR3 Vector = player->GetPos() - boss->GetPos();
+
+			if (boss->PerformRaycast_Player(Vector, boss).hit
+				&& boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
+			{//ブロックより前のプレイヤーに当たったら
+				//追跡に
+				boss->ChangeState(new CChaseState);
 			}
 		}
 
@@ -699,7 +744,9 @@ const int CBossRampage::OUTER_CIRCUMFERENCE[NUM_TARGETPOINT]
 //=============================================
 //コンストラクタ
 //=============================================
-CBossRampage::CBossRampage():m_MoveIdx(INT_ZERO), m_LapCnt(INT_ZERO)
+CBossRampage::CBossRampage():
+m_MoveIdx(INT_ZERO),			//移動先の番号
+m_LapCnt(INT_ZERO)				//何周したか
 {
 }
 

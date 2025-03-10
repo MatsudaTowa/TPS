@@ -31,8 +31,6 @@ public:
 
 	void SetNumber(int nParcent);
 
-	void Reset();
-
 private:
 	static const int NUM_DIGIT = 1;  //Œ…”
 	static constexpr float DIGIT_SHIFT = 35.0f;  //Œ…‚²‚Æ‚ÉÀ•W‚ğ‚¸‚ç‚·

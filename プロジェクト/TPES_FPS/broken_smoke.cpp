@@ -29,6 +29,7 @@ CBrokenSmoke::~CBrokenSmoke()
 //=============================================
 HRESULT CBrokenSmoke::Init()
 {
+	//親クラスの初期化
 	CSmoke::Init();
 
 	//サイズ代入
@@ -57,6 +58,7 @@ HRESULT CBrokenSmoke::Init()
 //=============================================
 void CBrokenSmoke::Uninit()
 {
+	//親クラスの終了
 	CSmoke::Uninit();
 }
 
@@ -65,6 +67,7 @@ void CBrokenSmoke::Uninit()
 //=============================================
 void CBrokenSmoke::Update()
 {
+	//親クラスの更新
 	CSmoke::Update();
 }
 
@@ -73,5 +76,6 @@ void CBrokenSmoke::Update()
 //=============================================
 void CBrokenSmoke::Draw()
 {
+	//親クラスの描画
 	CSmoke::Draw();
 }

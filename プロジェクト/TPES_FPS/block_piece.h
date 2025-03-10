@@ -16,15 +16,15 @@ class CBlock_Piece : public CObjectX
 public:
 	static const int BLOCK_PRIORITY = 10; //描画順
 
-	enum PIECE_TYPE
+	enum PIECE_SHAPE
 	{
-		PIECE_TYPE_0 = 0,
-		PIECE_TYPE_1,
-		PIECE_TYPE_2,
-		PIECE_TYPE_MAX,
+		PIECE_SHAPE_0 = 0,
+		PIECE_SHAPE_1,
+		PIECE_SHAPE_2,
+		PIECE_SHAPE_MAX,
 	};
 
-	static const char* MODEL_NAME[PIECE_TYPE_MAX];	//モデルの名前
+	static const char* MODEL_NAME[PIECE_SHAPE_MAX];	//モデルの名前
 
 	CBlock_Piece(int nPriority = BLOCK_PRIORITY);
 	~CBlock_Piece()override;
@@ -40,7 +40,7 @@ private:
 
 	static constexpr float SHIFT_Z_MAX = 50.0f;
 	static constexpr float SHIFT_Z_MIN = -50.0f;
-	PIECE_TYPE m_type;
+	PIECE_SHAPE m_shape;
 };
 
 class CMove_Piece :public CBlock_Piece
@@ -53,7 +53,10 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	static const int LIFE = 120;
+	static const int LIFE = 120;				//寿命
+	static const int RAND_RANGE = 101;			//ランダムの算出範囲
+	static constexpr float MIN_MOVE = 5.0f;		//移動量の最低値
+	static constexpr float MOVE_RANGE = 10.0f;	//移動量の算出範囲
 	D3DXVECTOR3 m_move;
 	int m_nLife;
 };

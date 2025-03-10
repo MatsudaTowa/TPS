@@ -20,7 +20,7 @@ m_pConfusion(nullptr),									//混乱処理
 m_pTackle(nullptr),										//タックル処理
 m_pSearch(nullptr),										//探索処理
 m_pRampage(nullptr),									//暴走処理
-m_pTackleEffect(nullptr),									//ダッシュエフェクト
+m_pTackleEffect(nullptr),								//ダッシュエフェクト
 m_pTackleCharge(nullptr)								//タックル前のエフェクト
 {
 	//各行動を作成
@@ -189,7 +189,7 @@ void CBossEnemy::Update()
 
 	Motion(NUM_PARTS); //モーション処理
 
-	for (int nCnt = INT_ZERO; nCnt < GetNumParts(); nCnt++)
+	for (int nCnt = INT_ZERO; nCnt < GetNumParts(); ++nCnt)
 	{
 		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
 		{
@@ -316,26 +316,31 @@ void CBossEnemy::ColisionPlayer()
 		//最大値取得
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
 
-		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; ++nCnt)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-			if (pObj != nullptr)
-			{//オブジェクトに要素が入っていたら
-				//タイプ取得
-				CObject::OBJECT_TYPE type = pObj->GetType();
+			if (pObj == nullptr)
+			{//ヌルポインタなら
+				//オブジェクトを探し続ける
+				continue;
+			}
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
 
-				//ブロックとの当たり判定
-				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-				{
-					//安全にダウンキャスト
-					CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+			//プレイヤーを探す
+			if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+			{//プレイヤーじゃなければ
+				//プレイヤーを探し続ける
+				continue;
+			}
 
-					if (pPlayer->GetEnemyColision())
-					{//プレイヤーがエネミーと当たる状態のとき
-						CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
-					}
-				}
+			//安全にダウンキャスト
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+			if (pPlayer->GetEnemyColision())
+			{//プレイヤーがエネミーと当たる状態のとき
+				CheckColisionPlayer(pPlayer, nPartsCnt, pos, Minpos, Maxpos);
 			}
 		}
 	}
@@ -346,7 +351,7 @@ void CBossEnemy::ColisionPlayer()
 //=============================================
 void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
-	for (int nPartsCnt = INT_ZERO; nPartsCnt < pPlayer->GetNumParts(); nPartsCnt++)
+	for (int nPartsCnt = INT_ZERO; nPartsCnt < pPlayer->GetNumParts(); ++nPartsCnt)
 	{//パーツ数回す
 		//プレイヤーのワールドマトリックスの位置情報取得
 		D3DXVECTOR3 playerpos = { pPlayer->m_apModel[nPartsCnt]->GetMtxWorld()._41,
@@ -404,7 +409,7 @@ void CBossEnemy::HitBlock(int NumParts)
 		//最大値取得
 		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
 
-		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; nCnt++)
+		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; ++nCnt)
 		{
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
 				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
@@ -420,7 +425,7 @@ void CBossEnemy::HitBlock(int NumParts)
 //=============================================
 void CBossEnemy::ColisionReset()
 {
-	for (int nCntParts = INT_ZERO; nCntParts < GetNumParts(); nCntParts++)
+	for (int nCntParts = INT_ZERO; nCntParts < GetNumParts(); ++nCntParts)
 	{//パーツ数回す
 		//当たっていない状態に
 		m_apModel[nCntParts]->GetColisionBlockInfo().bColision_X = false;
@@ -441,7 +446,7 @@ void CBossEnemy::DrawDebug()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
+	for (int nCnt = 0; nCnt < GetNumParts(); ++nCnt)
 	{
 		if (m_apModel[nCnt]->GetColisionBlockInfo().bColision_X)
 		{

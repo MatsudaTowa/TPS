@@ -29,11 +29,16 @@ CBlinkBackUI::~CBlinkBackUI()
 //=============================================
 HRESULT CBlinkBackUI::Init()
 {
+	//親クラスの初期化
 	CObject2D::Init();
+	//テクスチャ情報取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//テクスチャ登録
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
-	SetVtx(1.0f);
+	//頂点生成
+	SetVtx(FLOAT_ONE);
+
 	return S_OK;
 }
 
@@ -42,6 +47,7 @@ HRESULT CBlinkBackUI::Init()
 //=============================================
 void CBlinkBackUI::Uninit()
 {
+	//親クラスの終了
 	CObject2D::Uninit();
 }
 
@@ -50,8 +56,11 @@ void CBlinkBackUI::Uninit()
 //=============================================
 void CBlinkBackUI::Update()
 {
+	//親クラスの更新
 	CObject2D::Update();
-	SetVtx(1.0f);
+
+	//頂点生成
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -71,10 +80,11 @@ CBlinkBackUI* CBlinkBackUI::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR 
 
 	if (pBlinkBackUI == nullptr) { return nullptr; }
 
-	pBlinkBackUI->SetPos(pos);
-	pBlinkBackUI->SetSize(size);
-	pBlinkBackUI->SetColor(col);
+	pBlinkBackUI->SetPos(pos);		//位置設定
+	pBlinkBackUI->SetSize(size);	//サイズ設定
+	pBlinkBackUI->SetColor(col);	//カラー設定
 
+	//初期化
 	pBlinkBackUI->Init();
 
 	return pBlinkBackUI;

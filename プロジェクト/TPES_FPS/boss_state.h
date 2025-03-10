@@ -77,9 +77,9 @@ public:
 	virtual void DrawDebug()override;
 private:
 	static const int TRANSITION_FRAME = 60;
-	int m_TransitionCnt;
-	bool m_bDamage;
-	D3DXVECTOR3 m_TargetRot;
+	int m_TransitionCnt;		//ステートが移り変わる猶予カウント
+	bool m_bDamage;				//ダメージ食らったか
+	D3DXVECTOR3 m_TargetRot;	//目的の方向
 };
 
 //=============================================

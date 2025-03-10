@@ -136,23 +136,28 @@ void CBullet::SetHitMaker()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		//プレイヤーを探す
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		if (pPlayer->m_Raticle != nullptr)
+		{
+			if (pPlayer->m_Raticle->m_pHitMaker != nullptr)
 			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
-
-				if (pplayer->m_Raticle != nullptr)
-				{
-					if (pplayer->m_Raticle->m_pHitMaker != nullptr)
-					{
-						pplayer->m_Raticle->m_pHitMaker->SetColor(COLOR_WHITE);
-					}
-				}
+				pPlayer->m_Raticle->m_pHitMaker->SetColor(COLOR_WHITE);
 			}
 		}
 	}
@@ -182,7 +187,7 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3D
 
 	pBullet->SetPos(pos); //pos設定
 	pBullet->SetSize(size); //サイズ設定
-	pBullet->SetRot(rot);
+	pBullet->SetRot(rot);	//方向設定
 	pBullet->m_move = move; //移動量代入
 	pBullet->SetLife(nLife); //寿命代入
 	pBullet->SetDamage(nDamage); //威力代入
@@ -218,25 +223,31 @@ bool CBullet::PenetrationBlock()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-			{
-				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+		//ブロックを探す
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+		{//ブロックじゃなければ
+			//ブロックを探し続ける
+			continue;
+		}
 
-				CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_X(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
-				CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_Z(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+		//ブロックとの当たり判定
+		CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
-				if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
-				{//当たってたら
-					//攻撃の削除
-					return true;
-				}
-			}
+		CColision::COLISION ColisionCheck_X = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_X(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+		CColision::COLISION ColisionCheck_Z = CManager::GetInstance()->GetColision()->CheckPolygonModelPenetration_Z(Attackpos - m_move, Attackpos, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
+
+		if (ColisionCheck_X != CColision::COLISION::COLISON_NONE || ColisionCheck_Z != CColision::COLISION::COLISON_NONE)
+		{//当たってたら
+			//攻撃の削除
+			return true;
 		}
 	}
 	return false;

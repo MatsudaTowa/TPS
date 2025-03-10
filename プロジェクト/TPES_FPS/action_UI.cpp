@@ -42,10 +42,15 @@ HRESULT CAction_UI::Init()
 	//初期化
 	CObject2D::Init();
 
+	//テクスチャ情報取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	//テクスチャ登録
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME[m_type])));
 
+	//頂点設定
 	SetVtx(FLOAT_ONE);
+
 	return S_OK;
 }
 
@@ -66,7 +71,8 @@ void CAction_UI::Update()
 	//更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	//頂点設定
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -87,12 +93,12 @@ CAction_UI* CAction_UI::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col,
 
 	if (pAction_UI == nullptr) { return nullptr; }
 
-	pAction_UI->SetPos(pos);
-	pAction_UI->SetSize(size);
-	pAction_UI->SetColor(col);
-	pAction_UI->m_type = type;
+	pAction_UI->SetPos(pos);	//座標設定
+	pAction_UI->SetSize(size);	//サイズ設定
+	pAction_UI->SetColor(col);	//色設定
+	pAction_UI->m_type = type;	//タイプ設定
 
-	pAction_UI->Init();
+	pAction_UI->Init();			//初期化処理
 
 	return pAction_UI;
 }

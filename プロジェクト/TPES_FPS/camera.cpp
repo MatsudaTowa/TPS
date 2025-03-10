@@ -15,18 +15,18 @@
 //コンストラクタ
 //=============================================
 CCamera::CCamera():
-m_fAngle(FLOAT_ZERO),
-m_fLength(FLOAT_ZERO),
-m_moveR(VEC3_RESET_ZERO),
-m_moveV(VEC3_RESET_ZERO),
-m_mtxProjection(),
-m_mtxView(),
-m_pCameraState(),
-m_posR(VEC3_RESET_ZERO),
-m_posV(VEC3_RESET_ZERO),
-m_rot(VEC3_RESET_ZERO),
-m_rotmove(VEC3_RESET_ZERO),
-m_vecU(VEC3_RESET_ZERO)
+m_fAngle(FLOAT_ZERO),		//角度
+m_fLength(FLOAT_ZERO),		//距離
+m_moveR(VEC3_RESET_ZERO),	//注視点の移動量
+m_moveV(VEC3_RESET_ZERO),	//視点の移動量
+m_mtxProjection(),			//プロジェクション行列
+m_mtxView(),				//ビュー行列
+m_pCameraState(),			//カメラステート
+m_posR(VEC3_RESET_ZERO),	//注視点
+m_posV(VEC3_RESET_ZERO),	//視点
+m_rot(VEC3_RESET_ZERO),		//方向
+m_rotmove(VEC3_RESET_ZERO),	//方向の移動量
+m_vecU(VEC3_RESET_ZERO)		//上方向ベクトル
 {
 }
 
@@ -46,7 +46,7 @@ HRESULT CCamera::Init()
 	{
 		m_pCameraState = new CThirdView;
 	}
-	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
+	m_posV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点
 	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
@@ -196,7 +196,7 @@ void CCamera::SetCamera()
 //======================================
 void CCamera::ResetCamera()
 {
-	m_posV = D3DXVECTOR3(0.0f, 30.0f, -180.0f); //視点
+	m_posV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点
 	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
@@ -340,30 +340,34 @@ void CCamera::ThirdViewCamera()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-				m_posR.x = pPlayer->GetPos().x;
-				m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
-				m_posR.z = pPlayer->GetPos().z;
-
-				////カメラをプレイヤーの右にする処理:TODO
-				//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
-				//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
-				//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
-
-				m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
-					m_fLength * sinf(m_rot.x),
-				-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
-
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
-	}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		m_posR.x = pPlayer->GetPos().x;
+		m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
+		m_posR.z = pPlayer->GetPos().z;
+
+		////カメラをプレイヤーの右にする処理:TODO
+		//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
+		//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
+		//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
+
+		m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
+			m_fLength * sinf(m_rot.x),
+		-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
+	}	
 }
 
 //=============================================

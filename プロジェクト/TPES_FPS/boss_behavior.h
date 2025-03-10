@@ -51,7 +51,7 @@ public:
 private:
 	static constexpr float THRESHOLD = 200.0f; // 距離が定数以下なら到達とする（必要に応じて調整）
 
-	BOOL m_bTargetPlayer;
+	BOOL m_bTargetPlayer;		//レイが当たってたらtrueにしプレイヤーを追いかける
 };
 
 //=============================================

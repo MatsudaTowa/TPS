@@ -94,7 +94,8 @@ void CBossState::DrawDebug()
 //=============================================
 //コンストラクタ
 //=============================================
-CChaseState::CChaseState() : m_PlayTackleCnt(INT_ZERO)
+CChaseState::CChaseState() : 
+m_PlayTackleCnt(INT_ZERO)		//タックルに移り変わるまでのカウント
 {
 }
 
@@ -103,8 +104,8 @@ CChaseState::CChaseState() : m_PlayTackleCnt(INT_ZERO)
 //=============================================
 CChaseState::~CChaseState()
 {
+	//タックルに移り変わるまでのカウント初期化
 	m_PlayTackleCnt = INT_ZERO;
-
 }
 
 //=============================================
@@ -116,19 +117,25 @@ void CChaseState::Chase(CBossEnemy* boss)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				if (boss->m_pChase != nullptr)
-				{
-					boss->m_pChase->Chase(boss, pObj);
-				}
-			}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		//プレイヤーを探す
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		if (boss->m_pChase != nullptr)
+		{
+			boss->m_pChase->Chase(boss, pObj);
 		}
 	}
 
@@ -167,6 +174,7 @@ void CChaseState::DrawDebug()
 //=============================================
 void CBossStanState::Start(CBossEnemy* boss)
 {
+	//スタンカウント初期化
 	m_StanCnt = INT_ZERO;
 }
 
@@ -182,15 +190,14 @@ void CBossStanState::End(CBossEnemy* boss)
 //=============================================
 void CBossStanState::Stan(CBossEnemy* boss)
 {
-	if (m_StanCnt < STAN_FRAME)
-	{
-		++m_StanCnt;
+	//スタンカウント加算
+	++m_StanCnt;
 
-		if (boss->m_pStan != nullptr)
-		{
-			boss->m_pStan->Stan(boss);
-		}
+	if (boss->m_pStan != nullptr)
+	{
+		boss->m_pStan->Stan(boss);
 	}
+
 	if (m_StanCnt >= STAN_FRAME)
 	{
 		m_StanCnt = INT_ZERO;
@@ -220,9 +227,9 @@ void CBossStanState::DrawDebug()
 //コンストラクタ
 //=============================================
 CWanderingState::CWanderingState() :
-	m_TransitionCnt(INT_ZERO),
-	m_bDamage(false),
-	m_TargetRot(VEC3_RESET_ZERO)
+m_TransitionCnt(INT_ZERO),			//ステート移り変わり猶予カウント
+m_bDamage(false),					//ダメージを食らっているか
+m_TargetRot(VEC3_RESET_ZERO)		//目的の方向
 {
 }
 
@@ -259,7 +266,7 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 			//タイプ取得
 			CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
+			//プレイヤーを探す
 			if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
 			{//プレイヤーじゃなかったら
 				continue;
@@ -359,7 +366,6 @@ CTackleState::~CTackleState()
 //=============================================
 void CTackleState::Start(CBossEnemy* boss)
 {
-
 }
 
 //=============================================

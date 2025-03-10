@@ -65,7 +65,7 @@ HRESULT CBlink_UI::Init(CPlayer* player)
 		m_pUIBox = CPlayerUIBox::Create(BOX_POS, BOX_SIZE, COLOR_WHITE, CPlayerUIBox::BOX_TYPE::BOX_TYPE_LIFE);
 	}
 
-	//UIの枠生成
+	//ブリンクのアイコン作成
 	if (m_pIcon == nullptr)
 	{
 		m_pIcon = CBlinkIcon::Create(ICON_POS, ICON_SIZE, COLOR_WHITE);
@@ -77,6 +77,7 @@ HRESULT CBlink_UI::Init(CPlayer* player)
 		m_pkeyboard_UI = CKeyboard_UI::Create(KEY_UI_POS, KEY_UI_SIZE, COLOR_WHITE, CKeyboard_UI::KEY_LSHIFT);
 	}
 
+	//ブリンクの数の背景作成
 	if (m_pBlinkBackUI == nullptr)
 	{
 		m_pBlinkBackUI = CBlinkBackUI::Create(BLINK_BACK_POS, BLINK_BACK_SIZE, COLOR_WHITE);
@@ -107,6 +108,7 @@ void CBlink_UI::Uninit()
 		m_pUIBox = nullptr;
 	}
 
+	//ブリンクの数の背景作成
 	if (m_pBlinkBackUI != nullptr)
 	{
 		m_pBlinkBackUI->Uninit();
@@ -152,6 +154,7 @@ void CBlink_UI::Update()
 //=============================================
 void CBlink_UI::SetCurrentBlink_UI(CPlayer* player)
 {
+	//今のブリンク数を代入
 	SetNumber(player->GetBlinkCnt());
 }
 
@@ -185,11 +188,4 @@ void CBlink_UI::SetNumber(int nParcent)
 
 		m_pCurrentBlink[nCnt]->SetNumber(fMinTexU, fMaxTexU, COLOR_BLACK);
 	}
-}
-
-//=============================================
-//リセット
-//=============================================
-void CBlink_UI::Reset()
-{
 }

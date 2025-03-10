@@ -32,10 +32,14 @@ HRESULT CBlinkIcon::Init()
 	//初期化
 	CObject2D::Init();
 
+	//テクスチャ情報取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	//テクスチャ登録
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
-	SetVtx(1.0f);
+	//頂点生成
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -57,7 +61,8 @@ void CBlinkIcon::Update()
 	//更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	//頂点生成
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -78,10 +83,11 @@ CBlinkIcon* CBlinkIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col)
 
 	if (pBlinkIcon == nullptr) { return nullptr; }
 
-	pBlinkIcon->SetPos(pos);
-	pBlinkIcon->SetSize(size);
-	pBlinkIcon->SetColor(col);
+	pBlinkIcon->SetPos(pos);	//座標設定
+	pBlinkIcon->SetSize(size);	//サイズ設定
+	pBlinkIcon->SetColor(col);	//色設定
 
+	//初期化処理
 	pBlinkIcon->Init();
 
 	return pBlinkIcon;
