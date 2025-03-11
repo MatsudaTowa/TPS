@@ -13,7 +13,8 @@ const char* CSmokeRange::MODEL_NAME = "data\\MODEL\\colision.x";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmokeRange::CSmokeRange(int nPriority):CObjectX(nPriority), m_nLife(0)
+CSmokeRange::CSmokeRange(int nPriority):CObjectX(nPriority),
+m_nLife(INT_ZERO)			//寿命
 {
 }
 
@@ -29,8 +30,9 @@ CSmokeRange::~CSmokeRange()
 //=============================================
 HRESULT CSmokeRange::Init()
 {
+	//親クラスの初期化
 	CObjectX::Init();
-	m_nLife = CSmoke::SMOKE_LIFE;
+	m_nLife = CSmoke::SMOKE_LIFE;	//寿命代入
 	return S_OK;
 }
 
@@ -39,6 +41,7 @@ HRESULT CSmokeRange::Init()
 //=============================================
 void CSmokeRange::Uninit()
 {
+	//親クラスの終了
 	CObjectX::Uninit();
 }
 
@@ -47,12 +50,13 @@ void CSmokeRange::Uninit()
 //=============================================
 void CSmokeRange::Update()
 {
+	//親クラスの更新
 	CObjectX::Update();
-	if (m_nLife > INT_ZERO)
-	{
-		--m_nLife;
-	}
-	else
+
+	//寿命減算
+	--m_nLife;
+	
+	if(m_nLife <= 0)
 	{
 		Uninit();
 	}
@@ -81,14 +85,14 @@ CSmokeRange* CSmokeRange::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 
 	CModel* pModel = CManager::GetInstance()->GetModel();
 
-	pSmokeRange->SetPos(pos);
-	pSmokeRange->SetRot(rot);
+	pSmokeRange->SetPos(pos);	//位置設定
+	pSmokeRange->SetRot(rot);	//方向設定
 	//Xファイル読み込み
 	pSmokeRange->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
-	pSmokeRange->SetType(OBJECT_TYPE_SMOKE_RANGE);
-	pSmokeRange->Init();
+	pSmokeRange->SetType(OBJECT_TYPE_SMOKE_RANGE);	//オブジェクトタイプ設定
+	pSmokeRange->Init();	//初期化処理
 
 	return pSmokeRange;
 }

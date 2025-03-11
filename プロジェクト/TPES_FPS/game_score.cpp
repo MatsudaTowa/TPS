@@ -125,19 +125,24 @@ void CGameScore::Update()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
-
-				SetDeathCntUI(pplayer->GetDeathCnt());
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		//プレイヤーを探し続ける
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		SetDeathCntUI(pPlayer->GetDeathCnt());
 	}
 }
 

@@ -1,17 +1,11 @@
 //=============================================
 //
-//3DTemplate[texture.cpp]
+//テクスチャ管理[texture.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
 #include "texture.h"
 #include "manager.h"
-
-//texパス
-const std::string CTexture::TEXTURE_NAME[CTexture::TEXTURE::TEXTURE_MAX] =
-{
-
-};
 
 //=============================================
 //コンストラクタ

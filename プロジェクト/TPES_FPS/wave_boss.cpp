@@ -6,11 +6,16 @@
 //=============================================
 #include "wave_boss.h"
 
+//エネミーファイル
 const std::string CWave_Boss::WAVE_BOSS_ENEMY_FILE = "data\\FILE\\enemy_003.txt";
+//ブロックファイル
 const std::string CWave_Boss::WAVE_BOSS_BLOCK_FILE = "data\\FILE\\block_data_boss.bin";
+//壁ファイル
 const std::string CWave_Boss::WAVE_BOSS_WALL_FILE = "data\\FILE\\wall_003.txt";
+//ボスの移動ポイント
 const std::string CWave_Boss::WAVE_BOSS_POINT_FILE = "data\\FILE\\boss_move_point.txt";
 
+//ムーブポイント
 CMovePoint* CWave_Boss::m_pMovePoint[NUM_POINT] = {};
 //=============================================
 //コンストラクタ
@@ -31,11 +36,17 @@ CWave_Boss::~CWave_Boss()
 //=============================================
 HRESULT CWave_Boss::Init()
 {
+	//初期化
 	CWave::Init();
 
+	//ブロック読み込み
 	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
+	//敵の読み込み
 	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
+	//壁の読み込み
 	CWave::LoadWall(&WAVE_BOSS_WALL_FILE);
+
+	//ポイントの読み込み
 	LoadPoint(&WAVE_BOSS_POINT_FILE);
 	//地面生成
 	CField::Create(D3DXVECTOR3(VEC3_RESET_ZERO), CWave::BOSS_FIELD_SIZE);
@@ -55,6 +66,7 @@ void CWave_Boss::Uninit()
 			m_pMovePoint[nCnt] = nullptr;
 		}
 	}
+	//終了
 	CWave::Uninit();
 }
 
@@ -63,6 +75,7 @@ void CWave_Boss::Uninit()
 //=============================================
 void CWave_Boss::Update()
 {
+	//更新
 	CWave::Update();
 }
 

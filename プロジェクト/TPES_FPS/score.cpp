@@ -1,21 +1,25 @@
 //=============================================
 //
-//スコア処理「scorer.cpp」
+//スコア処理「score.cpp」
 // Author松田永久
 //
 //=============================================
 #include "score.h"
 #include "manager.h"
 
+//座標
 const D3DXVECTOR3 CScore::NUM_POS = { 750.0f, 55.0f, 0.0f };
+//サイズ
 const D3DXVECTOR2 CScore::NUM_SIZE = { 20.0f, 30.0f };
 
 //=============================================
 //コンストラクタ
 //=============================================
-CScore::CScore():m_nScore(0),m_pos(VEC3_RESET_ZERO),m_size(VEC2_RESET_ZERO)
-{//イニシャライザーでメンバ変数初期化
-
+CScore::CScore():
+m_nScore(INT_ZERO),			//スコアの値
+m_pos(VEC3_RESET_ZERO),		//位置
+m_size(VEC2_RESET_ZERO)		//サイズ
+{
 	for (int nCnt = 0; nCnt < NUM_DIGIT; nCnt++)
 	{
 		m_pNumber[nCnt] = nullptr;

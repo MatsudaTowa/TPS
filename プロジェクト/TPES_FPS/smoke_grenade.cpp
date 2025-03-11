@@ -15,7 +15,10 @@ const char* CSmokeGrenade::MODEL_NAME = "data\\MODEL\\jett.x";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmokeGrenade::CSmokeGrenade(int nPriority) : CObjectX(nPriority),m_move(VEC3_RESET_ZERO), m_oldpos(VEC3_RESET_ZERO), m_bBoot(false)
+CSmokeGrenade::CSmokeGrenade(int nPriority) :CObjectX(nPriority),
+m_move(VEC3_RESET_ZERO),		//移動量
+m_oldpos(VEC3_RESET_ZERO),		//過去の位置
+m_bBoot(false)					//炸裂したか
 {
 }
 
@@ -31,7 +34,7 @@ CSmokeGrenade::~CSmokeGrenade()
 //=============================================
 HRESULT CSmokeGrenade::Init()
 {
-	m_bBoot = false;
+	//親クラスの初期化
 	CObjectX::Init();
 	return S_OK;
 }
@@ -41,6 +44,7 @@ HRESULT CSmokeGrenade::Init()
 //=============================================
 void CSmokeGrenade::Uninit()
 {
+	//親クラスの終了
 	CObjectX::Uninit();
 }
 
@@ -49,14 +53,17 @@ void CSmokeGrenade::Uninit()
 //=============================================
 void CSmokeGrenade::Update()
 {
+	//親クラスの更新
 	CObjectX::Update();
 
 	D3DXVECTOR3 pos = GetPos();
 
 	m_oldpos = pos;
 
+	//移動量代入
 	pos += m_move;
 
+	//位置設定
 	SetPos(pos);
 
 	//床との判定
@@ -80,6 +87,7 @@ void CSmokeGrenade::Update()
 //=============================================
 void CSmokeGrenade::Draw()
 {
+	//親クラスの描画
 	CObjectX::Draw();
 }
 
@@ -99,11 +107,11 @@ CSmokeGrenade* CSmokeGrenade::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECT
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).dwNumMat,
 		pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pMesh);
 
-	pSmokeGrenade->SetPos(pos);
-	pSmokeGrenade->m_move = move;
-	pSmokeGrenade->SetRot(rot);
-	pSmokeGrenade->Init();
-	pSmokeGrenade->SetType(OBJECT_TYPE_SMOKE_GRENADE);
+	pSmokeGrenade->SetPos(pos);		//位置代入
+	pSmokeGrenade->m_move = move;	//移動量設定
+	pSmokeGrenade->SetRot(rot);		//方向設定
+	pSmokeGrenade->Init();			//初期化処理
+	pSmokeGrenade->SetType(OBJECT_TYPE_SMOKE_GRENADE);	//タイプ設定
 
 	return pSmokeGrenade;
 }
@@ -123,63 +131,65 @@ void CSmokeGrenade::HitField()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CField::FIELD_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//ブロックとの当たり判定
-			//床との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
-			{
-				CField* pField = dynamic_cast<CField*>(pObj);
-
-				//床のみだけローカルで
-				CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, pos, min, max, pField->GetPos(), pField->GetSize());
-
-				if (colision == CColision::COLISION::COLISON_TOP_Y)
-				{//y(上)方向に当たってたら
-					pos.y = m_oldpos.y;
-					m_move = VEC3_RESET_ZERO;
-					m_bBoot = true;
-				}
-
-				//TODO:壁の当たり判定やったらこれを使う必要なくなる
-				{
-					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x
-						&& pos.x < pField->GetPos().x - pField->GetSize().x)
-					{
-						pos.x = m_oldpos.x;
-						m_move = VEC3_RESET_ZERO;
-						m_bBoot = true;
-					}
-
-					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x
-						&& pos.x > pField->GetPos().x + pField->GetSize().x)
-					{
-						pos.x = m_oldpos.x;
-						m_move = VEC3_RESET_ZERO;
-						m_bBoot = true;
-					}
-
-					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z
-						&& pos.z < pField->GetPos().z - pField->GetSize().z)
-					{
-						pos.z = m_oldpos.z;
-						m_move = VEC3_RESET_ZERO;
-						m_bBoot = true;
-					}
-
-					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z
-						&& pos.z > pField->GetPos().z + pField->GetSize().z)
-					{
-						pos.z = m_oldpos.z;
-						m_move = VEC3_RESET_ZERO;
-						m_bBoot = true;
-					}
-				}
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
+		{//床じゃなければ
+			//床を探し続ける
+			continue;
+		}
+
+		CField* pField = dynamic_cast<CField*>(pObj);
+
+		//床のみだけローカルで
+		CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, pos, min, max, pField->GetPos(), pField->GetSize());
+
+		if (colision == CColision::COLISION::COLISON_TOP_Y)
+		{//y(上)方向に当たってたら
+			pos.y = m_oldpos.y;
+			m_move = VEC3_RESET_ZERO;
+			m_bBoot = true;
+		}
+
+		if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x
+			&& pos.x < pField->GetPos().x - pField->GetSize().x)
+		{
+			pos.x = m_oldpos.x;
+			m_move = VEC3_RESET_ZERO;
+			m_bBoot = true;
+		}
+
+		if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x
+			&& pos.x > pField->GetPos().x + pField->GetSize().x)
+		{
+			pos.x = m_oldpos.x;
+			m_move = VEC3_RESET_ZERO;
+			m_bBoot = true;
+		}
+
+		if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z
+			&& pos.z < pField->GetPos().z - pField->GetSize().z)
+		{
+			pos.z = m_oldpos.z;
+			m_move = VEC3_RESET_ZERO;
+			m_bBoot = true;
+		}
+
+		if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z
+			&& pos.z > pField->GetPos().z + pField->GetSize().z)
+		{
+			pos.z = m_oldpos.z;
+			m_move = VEC3_RESET_ZERO;
+			m_bBoot = true;
+		}
+		
 	}
 	SetPos(pos);
 

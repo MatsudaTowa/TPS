@@ -46,14 +46,7 @@ void CDefaultState::Default(CPlayer* player)
 		player->m_pUlt->Update();
 	}
 
-	if (player->GetFinish())
-	{
-
-	}
-
-	{
-		player->Input();
-	}
+	player->Input();
 }
 
 //=============================================

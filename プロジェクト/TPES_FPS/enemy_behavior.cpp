@@ -130,30 +130,34 @@ void CEnemyGunAttack::LookAtPlayer(CCharacter* character)
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
-
-				//プレイヤーとの距離算出
-				D3DXVECTOR3 Distance = pplayer->GetPos() - character->GetPos();
-
-				//プレイヤーに向ける角度を算出
-				float fAngle = atan2f(Distance.x,Distance.z);
-
-				//親クラスからrotを取得
-				D3DXVECTOR3 rot = character->GetRot();
-
-				rot.y = fAngle + D3DX_PI;
-
-				character->SetRot(rot);
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+			//プレイヤーを探す
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//プレイヤーとの距離算出
+		D3DXVECTOR3 Distance = pPlayer->GetPos() - character->GetPos();
+
+		//プレイヤーに向ける角度を算出
+		float fAngle = atan2f(Distance.x,Distance.z);
+
+		//親クラスからrotを取得
+		D3DXVECTOR3 rot = character->GetRot();
+
+		rot.y = fAngle + D3DX_PI;
+
+		character->SetRot(rot);
 	}
 }
 
@@ -281,27 +285,32 @@ CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+		D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + CORRECTION_VALUE_Y,character->GetPos().z - pPlayer->GetPos().z };
+		for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
+		{
+			//レイを飛ばしプレイヤーと当たるかチェック
+			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+			if (Info.hit)
 			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + CORRECTION_VALUE_Y,character->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
-				{
-					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit)
-					{
-						return Info;
-					}
-				}
+				return Info;
 			}
 		}
 	}

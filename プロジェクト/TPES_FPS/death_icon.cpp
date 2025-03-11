@@ -32,10 +32,11 @@ HRESULT CDeathIcon::Init()
 	//初期化
 	CObject2D::Init();
 
+	//テクスチャ設定
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -58,7 +59,7 @@ void CDeathIcon::Update()
 	//更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -79,11 +80,11 @@ CDeathIcon* CDeathIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col)
 
 	if (pDeathIcon == nullptr) { return nullptr; }
 
-	pDeathIcon->SetPos(pos);
-	pDeathIcon->SetSize(size);
-	pDeathIcon->SetColor(col);
+	pDeathIcon->SetPos(pos);	//座標代入
+	pDeathIcon->SetSize(size);	//サイズ設定
+	pDeathIcon->SetColor(col);	//色設定
 
-	pDeathIcon->Init();
+	pDeathIcon->Init();	//初期化
 
 	return pDeathIcon;
 }

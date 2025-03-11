@@ -12,7 +12,10 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CUltRange::CUltRange() :m_nLife(INT_ZERO), m_pos(VEC3_RESET_ZERO), m_pUltEffect(nullptr)
+CUltRange::CUltRange():
+m_nLife(INT_ZERO),			//体力 
+m_pos(VEC3_RESET_ZERO),		//座標
+m_pUltEffect(nullptr)		//ウルトのエフェクト
 {
 }
 
@@ -28,10 +31,12 @@ CUltRange::~CUltRange()
 //=============================================
 HRESULT CUltRange::Init()
 {
+	//体力代入
 	m_nLife = LIFE;
 
 	if (m_pUltEffect == nullptr)
 	{
+		//エフェクト生成
 		m_pUltEffect = CUltEffect::Create({ m_pos.x, 0.5f, m_pos.z }, VEC3_RESET_ZERO);
 	}
 	return S_OK;
@@ -85,25 +90,29 @@ void CUltRange::Update()
 		//タイプ取得
 		CObject::OBJECT_TYPE type = pObj->GetType();
 
-		//敵との当たり判定
-		if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+		
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_ENEMY)
+		{//エネミーじゃなければ
+			//エネミーを探し続ける
+			continue;
+		}
+		
+		CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
+
+		CColision::CIRCLE ColisionCheck;
+
+		//当たり判定
+		ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos, RADIUS, enemy->GetPos());
+
+		if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
 		{
-			CEnemy* enemy = dynamic_cast<CEnemy*>(pObj);
-
-			CColision::CIRCLE ColisionCheck;
-
-			ColisionCheck = CManager::GetInstance()->GetColision()->CheckColisionCircle(m_pos, RADIUS, enemy->GetPos());
-
-			if (ColisionCheck.colision != CColision::COLISION::COLISON_NONE)
+			if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * HALF)
+			{//近かったらマックスダメージ
+				enemy->MediumUltHit(m_pos, MAX_DAMAGE);
+			}
+			else
 			{
-				if (ColisionCheck.CenterDistance < (RADIUS * RADIUS) * HALF)
-				{//近かったらマックスダメージ
-					enemy->MediumUltHit(m_pos, MAX_DAMAGE);
-				}
-				else
-				{
-					enemy->MediumUltHit(m_pos, MAX_DAMAGE * HALF);
-				}
+				enemy->MediumUltHit(m_pos, MAX_DAMAGE * HALF);
 			}
 		}
 	}

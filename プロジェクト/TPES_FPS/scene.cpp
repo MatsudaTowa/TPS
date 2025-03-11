@@ -13,7 +13,9 @@
 #include "tutorial.h"
 #include "mask.h"
 
+//モード初期化
 CScene::MODE CScene::m_Mode = CScene::MODE::MODE_TITLE;
+
 //=============================================
 //コンストラクタ
 //=============================================

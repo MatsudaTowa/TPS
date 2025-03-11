@@ -33,9 +33,9 @@ m_MotionSet(),													//モーション設定
 m_pMove(),														//移動する処理
 m_pGunAttack(),													//銃の攻撃
 m_pCharacterState(),											//キャラクターのステートパターンポインタ
-m_nJumpCnt(INT_ZERO),													//ジャンプ数
+m_nJumpCnt(INT_ZERO),											//ジャンプ数
 m_pShadow(),													//影のポインタ
-m_ShadowSize(VEC3_RESET_ZERO)						//影のサイズ
+m_ShadowSize(VEC3_RESET_ZERO)									//影のサイズ
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 	m_pMove = nullptr;
 	m_pGunAttack = nullptr;
@@ -570,30 +570,34 @@ void CCharacter::HitBlock(int NumParts)
 		{
 			//オブジェクト取得
 			CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-			if (pObj != nullptr)
-			{//オブジェクトに要素が入っていたら
-				//タイプ取得
-				CObject::OBJECT_TYPE type = pObj->GetType();
+			if (pObj == nullptr)
+			{//ヌルポインタなら
+				//オブジェクトを探し続ける
+				continue;
+			}
 
-				//ブロックとの当たり判定
-				if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-				{
-					//安全にダウンキャスト
-					CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+			//タイプ取得
+			CObject::OBJECT_TYPE type = pObj->GetType();
 
-					if (pBlock != nullptr)
-					{
-						ColisionBlock_X(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-						ColisionBlock_Z(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-						ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+			//ブロックを探す
+			if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+			{//ブロックじゃなければ
+				//ブロックを探し続ける
+				continue;
+			}
 
-						if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
-							|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
-						{
-							break;
-						}
-					}
-				}
+			//安全にダウンキャスト
+			CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+			//ブロックとの当たり判定
+			ColisionBlock_X(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+			ColisionBlock_Z(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+			ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+
+			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
+				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
+			{
+				break;
 			}
 		}
 	}
@@ -611,7 +615,7 @@ void CCharacter::ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D
 	if (Colision == CColision::COLISION::COLISON_X)
 	{//x方向に当たってたら
 
-		SetPos({ m_oldpos.x,GetPos().y,GetPos().z });
+		SetPos({m_oldpos.x,GetPos().y,GetPos().z});
 
 		//X軸に当たった
 		Info.bColision_X = true;
@@ -704,100 +708,65 @@ void CCharacter::HitField()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CField::FIELD_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-
-			//ブロックとの当たり判定
-			//床との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
-			{
-				CField* pField = dynamic_cast<CField*>(pObj);
-
-				//床のみだけローカルで
-				CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
-
-				if (colision == CColision::COLISION::COLISON_TOP_Y)
-				{//y(上)方向に当たってたら
-					CharacterPos.y = m_oldpos.y;
-					m_move.y = FLOAT_ZERO;
-					m_bLanding = true; //着地
-				}
-				else
-				{
-					m_bLanding = false; //着地
-				}
-
-				//TODO:壁の当たり判定やったらこれを使う必要なくなる
-				{
-					if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK
-						&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK)
-					{
-						CharacterPos.x = m_oldpos.x;
-						m_move.x = FLOAT_ZERO;
-					}
-
-					if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK
-						&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK)
-					{
-						CharacterPos.x = m_oldpos.x;
-						m_move.x = FLOAT_ZERO;
-					}
-
-					if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK
-						&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK)
-					{
-						CharacterPos.z = m_oldpos.z;
-						m_move.x = FLOAT_ZERO;
-					}
-
-					if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK
-						&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK)
-					{
-						CharacterPos.z = m_oldpos.z;
-						m_move.x = FLOAT_ZERO;
-					}
-					SetPos(CharacterPos);
-
-				}
-			}
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
 		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_FIELD)
+		{//床じゃなければ
+			//床を探し続ける
+			continue;
+		}
+
+		CField* pField = dynamic_cast<CField*>(pObj);
+
+		//床との当たり判定
+		CColision::COLISION colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pField->GetPos(), pField->GetSize());
+
+		if (colision == CColision::COLISION::COLISON_TOP_Y)
+		{//y(上)方向に当たってたら
+			CharacterPos.y = m_oldpos.y;
+			m_move.y = FLOAT_ZERO;
+			m_bLanding = true; //着地
+		}
+		else
+		{
+			m_bLanding = false; //着地
+		}
+
+		if (m_oldpos.x > pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK
+			&& CharacterPos.x <= pField->GetPos().x - pField->GetSize().x + COLLISION_SLACK)
+		{
+			CharacterPos.x = m_oldpos.x;
+			m_move.x = FLOAT_ZERO;
+		}
+
+		if (m_oldpos.x < pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK
+			&& CharacterPos.x >= pField->GetPos().x + pField->GetSize().x - COLLISION_SLACK)
+		{
+			CharacterPos.x = m_oldpos.x;
+			m_move.x = FLOAT_ZERO;
+		}
+
+		if (m_oldpos.z > pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK
+			&& CharacterPos.z <= pField->GetPos().z - pField->GetSize().z + COLLISION_SLACK)
+		{
+			CharacterPos.z = m_oldpos.z;
+			m_move.x = FLOAT_ZERO;
+		}
+
+		if (m_oldpos.z < pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK
+			&& CharacterPos.z >= pField->GetPos().z + pField->GetSize().z - COLLISION_SLACK)
+		{
+			CharacterPos.z = m_oldpos.z;
+			m_move.x = FLOAT_ZERO;
+		}
+		SetPos(CharacterPos);
 	}
-}
-
-//=============================================
-//壁との接触判定
-//=============================================
-void CCharacter::HitWall()
-{
-	//D3DXVECTOR3 CharacterPos = GetPos();
-
-	////サイズ取得
-	//D3DXVECTOR3 CharacterMin = GetMinPos();
-	//D3DXVECTOR3 CharacterMax = GetMaxPos();
-
-	//for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	//{
-	//	//オブジェクト取得
-	//	CObject* pObj = CObject::Getobject(CWall::WALL_PRIORITY, nCnt);
-	//	if (pObj != nullptr)
-	//	{//ヌルポインタじゃなければ
-	//		//タイプ取得
-	//		CObject::OBJECT_TYPE type = pObj->GetType();
-
-	//		//ブロックとの当たり判定
-	//		//床との当たり判定
-	//		if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_WALL)
-	//		{
-	//			CWall* pWall = dynamic_cast<CWall*>(pObj);
-
-	//			ColisionWall_X(CharacterPos, CharacterMin, CharacterMax, pWall);
-	//			ColisionWall_Z(CharacterPos, CharacterMin, CharacterMax, pWall);
-	//		}
-	//	}
-	//}
-	//SetPos(CharacterPos);
 }
 
 //=============================================
@@ -815,26 +784,31 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Smoke(D3DXVECTOR3 vector, CCha
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CSmokeRange::SMOKE_RANGE_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
-			{
-				CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pSmoke->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pSmoke->GetPos().z };
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-				D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_SMOKE_RANGE)
+		{//スモークじゃなければ
+			//スモークを探し続ける
+			continue;
+		}
 
-				if (Info.hit)
-				{
-					// 障害物が間にある場合
-					return Info;
-				}
-			}
+		CSmokeRange* pSmoke = dynamic_cast<CSmokeRange*>(pObj);
+		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+		D3DXVECTOR3 StartRay = { character->GetPos().x - pSmoke->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pSmoke->GetPos().z };
+
+		D3DXIntersect(pSmoke->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+
+		if (Info.hit)
+		{
+			// 障害物が間にある場合
+			return Info;
 		}
 	}
 	// 障害物がなく、プレイヤーまでレイが到達する場合
@@ -856,24 +830,29 @@ CCharacter::RayHitInfo CCharacter::PerformRaycast_Block(D3DXVECTOR3 vector, CCha
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CBlock::BLOCK_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
-			{
-				CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-				//レイを原点からの差分から飛ばす
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pBlock->GetPos().z };
-				D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-				if (Info.hit)
-				{
-					return Info;
-				}
-			}
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_BLOCK)
+		{//ブロックじゃなければ
+			//ブロックを探し続ける
+			continue;
+		}
+
+		CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
+
+		//レイを原点からの差分から飛ばす
+		D3DXVECTOR3 StartRay = { character->GetPos().x - pBlock->GetPos().x,character->GetPos().y + RAY_CORRECTION_VALUE,character->GetPos().z - pBlock->GetPos().z };
+		D3DXIntersect(pBlock->GetpMesh(), &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+		if (Info.hit)
+		{
+			return Info;
 		}
 	}
 	return Info;

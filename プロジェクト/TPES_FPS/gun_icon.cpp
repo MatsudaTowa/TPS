@@ -29,7 +29,7 @@ HRESULT CGunIcon::Init()
 	//初期化
 	CObject2D::Init();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -90,7 +90,7 @@ CGunIcon* CGunIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, ICO
 	return pGunIcon;
 }
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CARIcon::TEXTURE_NAME = "data\\TEXTURE\\ak.png";
 //=============================================
 //コンストラクタ
@@ -111,6 +111,7 @@ CARIcon::~CARIcon()
 //=============================================
 HRESULT CARIcon::Init()
 {
+	//テクスチャ設定
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 

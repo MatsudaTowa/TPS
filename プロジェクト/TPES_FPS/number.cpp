@@ -13,7 +13,10 @@ const std::string CNumber_2D::TEXTURE_NAME = "data\\TEXTURE\\number_001.png";
 //=============================================
 //コンストラクタ
 //=============================================
-CNumber_2D::CNumber_2D(int nPriority) : CObject2D(nPriority), m_mintex(VEC2_RESET_ZERO),m_maxtex(VEC2_RESET_ZERO), m_col(COLOR_NONE)
+CNumber_2D::CNumber_2D(int nPriority) : CObject2D(nPriority),
+m_mintex(VEC2_RESET_ZERO),			//テクスチャの最小座標
+m_maxtex(VEC2_RESET_ZERO),			//テクスチャの最大座標
+m_col(COLOR_NONE)					//カラーの値
 {
 }
 
@@ -99,7 +102,7 @@ void CNumber_2D::SetNumber(float fNumPos1, float fNumPos2, D3DXCOLOR col)
 {
 	m_mintex.x = fNumPos1;
 	m_maxtex.x = fNumPos2;
-	m_col =col;
+	m_col = col;
 }
 
 //=============================================

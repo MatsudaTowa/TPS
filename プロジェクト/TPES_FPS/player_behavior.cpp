@@ -25,7 +25,6 @@ CPlayerMove::~CPlayerMove()
 //=============================================
 void CPlayerMove::Move(CCharacter* character)
 {
-
 }
 
 //=============================================
@@ -47,24 +46,6 @@ CPlayerSliding::~CPlayerSliding()
 //=============================================
 void CPlayerSliding::Sliding(CPlayer* player)
 {
-	//スピードがあれば減速
-	//if (move.x > 0.0f)
-	//{
-	//	move.x -= 0.001f;
-	//}
-	//else if (move.x < 0.0f)
-	//{
-	//	move.x += 0.001f;
-	//}
-	//if (move.z > 0.0f)
-	//{
-	//	move.z -= 0.001f;
-	//}
-	//else if (move.z < 0.0f)
-	//{
-	//	move.z += 0.001f;
-	//}
-	//player->SetMove(move);
 }
 
 //=============================================

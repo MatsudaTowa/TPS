@@ -7,6 +7,9 @@
 #include "wave_result_screen.h"
 #include "manager.h"
 
+//色
+const D3DXCOLOR CWave_Result_Screen::COLOR = { 0.0f, 0.0f, 0.0f, 0.85f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -46,7 +49,7 @@ HRESULT CWave_Result_Screen::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.85f);
+	col = COLOR;
 
 	//カラーを代入
 	SetColor(col);
@@ -88,7 +91,6 @@ void CWave_Result_Screen::Draw()
 //=============================================
 CWave_Result_Screen* CWave_Result_Screen::Create(D3DXVECTOR3 pos)
 {
-	//CTexture* pTexture = CManager::GetTexture();
 	CWave_Result_Screen* pWave_Result_Screen = new CWave_Result_Screen;
 
 	//nullならnullを返す
@@ -97,8 +99,6 @@ CWave_Result_Screen* CWave_Result_Screen::Create(D3DXVECTOR3 pos)
 	pWave_Result_Screen->SetPos(pos); //pos設定
 
 	pWave_Result_Screen->SetType(OBJECT_TYPE_RESULT); //タイプ設定
-
-	//pResult_Screen->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
 	pWave_Result_Screen->Init();
 

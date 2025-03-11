@@ -7,6 +7,7 @@
 #include "ult_icon_effect.h"
 #include "manager.h"
 
+//texパス
 const std::string CUltIconEffect::TEXTURE_NAME = "data\\TEXTURE\\ult_icon_effect_anim.png";
 
 //=============================================
@@ -86,7 +87,7 @@ void CUltIconEffect::Update()
 	}
 	SetTexPos(tex_pos);
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	//頂点座標
 	AnimationTex(tex_pos, tex_move);
@@ -97,6 +98,7 @@ void CUltIconEffect::Update()
 //=============================================
 void CUltIconEffect::Draw()
 {
+	//描画
 	CObject2D_Anim::Draw();
 }
 
@@ -110,11 +112,11 @@ CUltIconEffect* CUltIconEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCO
 	//中身がないなら代入の前にreturn
 	if(pIconEffect == nullptr) {return nullptr;}
 
-	pIconEffect->SetPos(pos);
-	pIconEffect->SetSize(size);
-	pIconEffect->SetColor(col);
+	pIconEffect->SetPos(pos);	//位置設定
+	pIconEffect->SetSize(size);	//サイズ設定
+	pIconEffect->SetColor(col);	//色設定
 
-	pIconEffect->Init();
+	pIconEffect->Init();		//初期化
 
 	return pIconEffect;
 }

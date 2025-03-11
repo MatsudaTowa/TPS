@@ -18,14 +18,23 @@ const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MA
 	{"data/SOUND/SE/smoke.wav", 0,0.4f},         //スモークSE
 };
 
+//=============================================
+//コンストラクタ
+//=============================================
 CSound::CSound()
 {
 }
 
+//=============================================
+//デストラクタ
+//=============================================
 CSound::~CSound()
 {
 }
 
+//=============================================
+//初期化
+//=============================================
 HRESULT CSound::InitSound(HWND hWnd)
 {
 	HRESULT hr;
@@ -164,6 +173,9 @@ HRESULT CSound::InitSound(HWND hWnd)
 	return S_OK;
 }
 
+//=============================================
+//終了
+//=============================================
 void CSound::UninitSound(void)
 {
 	// 一時停止
@@ -199,6 +211,9 @@ void CSound::UninitSound(void)
 	CoUninitialize();
 }
 
+//=============================================
+//サウンド再生
+//=============================================
 HRESULT CSound::PlaySound(SOUND_LABEL label)
 {
 	XAUDIO2_VOICE_STATE xa2state;
@@ -253,6 +268,9 @@ void CSound::StopSound(SOUND_LABEL label)
 	}
 }
 
+//=============================================
+//サウンド停止
+//=============================================
 void CSound::StopSound(void)
 {
 	// 一時停止
@@ -266,6 +284,9 @@ void CSound::StopSound(void)
 	}
 }
 
+//=============================================
+//チャンクのチェック
+//=============================================
 HRESULT CSound::CheckChunk(HANDLE hFile, DWORD format, DWORD* pChunkSize, DWORD* pChunkDataPosition)
 {
 	HRESULT hr = S_OK;
@@ -331,6 +352,9 @@ HRESULT CSound::CheckChunk(HANDLE hFile, DWORD format, DWORD* pChunkSize, DWORD*
 	return S_OK;
 }
 
+//=============================================
+//チャンクデータ読み込み
+//=============================================
 HRESULT CSound::ReadChunkData(HANDLE hFile, void* pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset)
 {
 	DWORD dwRead;

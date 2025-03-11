@@ -8,10 +8,18 @@
 #include "assault_behavior.h"
 #include "minigun_behavior.h"
 #include "manager.h"
+
 //=============================================
 //コンストラクタ
 //=============================================
-CGun::CGun():m_Ammo(),m_Lv(),m_ReloadFrame(),m_FireRate(), m_nRateCnt(INT_ZERO),m_nDamage(INT_ZERO),m_Size(),m_BulletSpeed(FLOAT_ZERO)
+CGun::CGun():
+m_Ammo(),					//弾数
+m_ReloadFrame(),			//リロードのフレーム
+m_FireRate(),				//発射レート
+m_nRateCnt(INT_ZERO),		//レート計測
+m_nDamage(INT_ZERO),		//ダメージ
+m_Size(),					//弾のサイズ
+m_BulletSpeed(FLOAT_ZERO)	//弾のスピード
 {
 	m_pShot = nullptr;
 	m_pReload = nullptr;
@@ -47,54 +55,6 @@ bool CGun::Reload()
 	return bReload;
 }
 
-//=============================================
-//弾数取得
-//=============================================
-int& CGun::GetAmmo()
-{
-	return m_Ammo;
-}
-
-//=============================================
-//レベル取得
-//=============================================
-int& CGun::GetLv()
-{
-	return m_Lv;
-}
-
-//=============================================
-//ダメージ取得
-//=============================================
-int& CGun::GetDamage()
-{
-	return m_nDamage;
-}
-
-//=============================================
-//リロードフレーム取得
-//=============================================
-int& CGun::GetReloadFrame()
-{
-	return m_ReloadFrame;
-}
-
-//=============================================
-//発射レート取得
-//=============================================
-int& CGun::GetFireRate()
-{
-	return m_FireRate;
-}
-
-//=============================================
-//弾速取得
-//=============================================
-float& CGun::GetBulletSpeed()
-{
-	return m_BulletSpeed;
-}
-
 //弾のサイズ
 const D3DXVECTOR3 CAssultRifle::DEFAULT_AR_SIZE = {2.0f,2.0f,2.0f};
 
@@ -128,8 +88,6 @@ HRESULT CAssultRifle::Init()
 {
 	//現在の弾数取得
 	int nAmmo = GetAmmo();
-	//現在のレベル取得
-	int nLv = GetLv();
 	//現在のリロードフレーム取得
 	int nReloadFrame = GetReloadFrame();
 	//現在の発射レート取得
@@ -139,8 +97,6 @@ HRESULT CAssultRifle::Init()
 
 	//デフォルトのマガジン弾数代入
 	nAmmo = DEFAULT_AR_MAG_SIZE;
-	//初期レベル代入
-	nLv = 1;
 
 	//デフォルトの発射レート代入
 	nFireRate = DEFAULT_AR_FIRE_RATE;
@@ -155,7 +111,6 @@ HRESULT CAssultRifle::Init()
 
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);
-	SetLv(nLv);
 	SetReloadFrame(nReloadFrame);
 	SetFireRate(nFireRate);
 	SetBulletSpeed(fBulletSpeed);
@@ -201,8 +156,6 @@ HRESULT CMiniGun::Init()
 {
 	//現在の弾数取得
 	int nAmmo = GetAmmo();
-	//現在のレベル取得
-	int nLv = GetLv();
 	//現在のリロードフレーム取得
 	int nReloadFrame = GetReloadFrame();
 	//現在の発射レート取得
@@ -212,8 +165,7 @@ HRESULT CMiniGun::Init()
 
 	//デフォルトのマガジン弾数代入
 	nAmmo = DEFAULT_MINIGUN_MAG_SIZE;
-	//初期レベル代入
-	nLv = 1;
+
 	//デフォルトのリロードフレーム代入
 	nReloadFrame = DEFAULT_MINIGUN_RELOAD_FRAME;
 	//デフォルトの発射レート代入
@@ -232,7 +184,6 @@ HRESULT CMiniGun::Init()
 
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);
-	SetLv(nLv);
 	SetReloadFrame(nReloadFrame);
 	SetFireRate(nFireRate);
 	SetBulletSpeed(fBulletSpeed);

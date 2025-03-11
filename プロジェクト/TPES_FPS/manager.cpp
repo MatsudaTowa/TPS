@@ -19,18 +19,19 @@ const std::string CManager::RESULT_SCORE_FILE[NUM_RESULT_FILE] =
 //=============================================
 //コンストラクタ
 //=============================================
-CManager::CManager():m_pCamera(nullptr),
-	m_pColision(nullptr),
-	m_pFade(nullptr),
-	m_pKeyboard(nullptr),
-	m_pLight(nullptr),
-	m_pModel(nullptr),
-	m_pMouse(nullptr),
-	m_pPad(nullptr),
-	m_pRenderer(nullptr),
-	m_pScene(nullptr),
-	m_pSound(nullptr),
-	m_pTexture(nullptr)
+CManager::CManager():
+m_pCamera(nullptr),		//カメラのポインタ	
+m_pColision(nullptr),	//コリジョンのポインタ
+m_pFade(nullptr),		//フェードのポインタ
+m_pKeyboard(nullptr),	//キーボードのポインタ
+m_pLight(nullptr),		//ライトのポインタ
+m_pModel(nullptr),		//モデルポインタ
+m_pMouse(nullptr),		//マウスのポインタ
+m_pPad(nullptr),		//padのポインタ
+m_pRenderer(nullptr),	//レンダラーポインタ
+m_pScene(nullptr),		//シーンポインタ
+m_pSound(nullptr),		//サウンドポインタ
+m_pTexture(nullptr)		//テクスチャ管理ポインタ
 {
 	
 }

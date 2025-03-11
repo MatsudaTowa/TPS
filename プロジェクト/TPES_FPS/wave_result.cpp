@@ -11,7 +11,9 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CWave_Result::CWave_Result(): m_pScreen(),m_nScore()
+CWave_Result::CWave_Result():
+m_pScreen(),	//スクリーン
+m_nScore()		//スコア
 {
 }
 

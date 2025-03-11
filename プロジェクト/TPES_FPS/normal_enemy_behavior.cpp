@@ -11,7 +11,14 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CNormalMove::CNormalMove():m_TransitionCnt(INT_ZERO),m_nStateChangeCnt(INT_ZERO), m_nStayCnt(INT_ZERO), m_bRandom(), m_nLeft(), m_nRight(),m_bDamage(false)
+CNormalMove::CNormalMove():
+m_TransitionCnt(INT_ZERO),		
+m_nStateChangeCnt(INT_ZERO),
+m_nStayCnt(INT_ZERO), 
+m_bRandom(), 
+m_nLeft(),
+m_nRight(),
+m_bDamage(false)
 {
 	m_nLeft = LEFT_PARCENT;
 	m_nRight = RIGHT_PARCENT;
@@ -99,27 +106,31 @@ CCharacter::RayHitInfo CNormalMove::PerformRaycast_Player(D3DXVECTOR3 vector, CC
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+		D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
+		for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
+		{
+			//レイを飛ばしプレイヤーと当たるかチェック
+			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+			if (Info.hit)
 			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
-				{
-					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit)
-					{
-						return Info;
-					}
-				}
+				return Info;
 			}
 		}
 	}
@@ -237,27 +248,31 @@ CCharacter::RayHitInfo CNormalAttack::PerformRaycast_Player(D3DXVECTOR3 vector, 
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなければ
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
+		D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
+		for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
+		{
+			//レイを飛ばしプレイヤーと当たるかチェック
+			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
+			if (Info.hit)
 			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-				//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-				D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
-				for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
-				{
-					//レイを飛ばしプレイヤーと当たるかチェック
-					D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-					if (Info.hit)
-					{
-						return Info;
-					}
-				}
+				return Info;
 			}
 		}
 	}

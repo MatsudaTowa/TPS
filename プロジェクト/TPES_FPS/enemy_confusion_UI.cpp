@@ -7,6 +7,7 @@
 #include "enemy_confusion_UI.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CEnemy_Confusion_UI::TEXTURE_NAME = "data\\TEXTURE\\wandering_UI.png";
 
 //=============================================

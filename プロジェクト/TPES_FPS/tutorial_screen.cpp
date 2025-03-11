@@ -6,6 +6,7 @@
 //=============================================
 #include "tutorial_screen.h"
 #include "manager.h"
+
 //texパス
 const std::string CTutorial_Screen::TXT_TEXTURE_NAME = "data\\TEXTURE\\tutorial.png";
 const std::string CTutorial_Screen::BUTTON_A_TEXTURE_NAME = "data\\TEXTURE\\press_enter.png";
@@ -14,7 +15,8 @@ const std::string CTutorial_Screen::BUTTON_ENTER_TEXTURE_NAME = "data\\TEXTURE\\
 //=============================================
 //コンストラクタ
 //=============================================
-CTutorial_Screen::CTutorial_Screen(int nPriority) :CObject2D(nPriority), m_UItype(CTutorial_Screen::TUTORIAL_UI::UI_NONE)
+CTutorial_Screen::CTutorial_Screen(int nPriority) :CObject2D(nPriority), 
+m_UItype(CTutorial_Screen::TUTORIAL_UI::UI_NONE)		//UIのタイプ設定
 {
 }
 
@@ -30,7 +32,6 @@ CTutorial_Screen::~CTutorial_Screen()
 //=============================================
 HRESULT CTutorial_Screen::Init()
 {
-
 	//親クラスの初期化を呼ぶ
 	CObject2D::Init();
 
@@ -115,7 +116,7 @@ CTutorial_Screen* CTutorial_Screen::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TU
 
 	pTutorialScreen->SetSize(size); //size設定
 
-	pTutorialScreen->m_UItype = type;
+	pTutorialScreen->m_UItype = type;	//タイプ代入
 
 	CInputPad* pPad = CManager::GetInstance()->GetPad();
 
@@ -138,9 +139,9 @@ CTutorial_Screen* CTutorial_Screen::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, TU
 		break;
 	}
 
-	pTutorialScreen->SetType(OBJECT_TYPE_TITLE); //タイプ設定
+	pTutorialScreen->SetType(OBJECT_TYPE_TITLE); //オブジェクトタイプ設定
 
-	pTutorialScreen->Init();
+	pTutorialScreen->Init();	//初期化
 
 	return pTutorialScreen;
 }

@@ -29,8 +29,10 @@ CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame():m_nResultDelay(0),m_bEdit(false), m_next_wave()
-{//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
+CGame::CGame():
+m_nResultDelay(INT_ZERO),	//リザルトの遷移ディレイ
+m_next_wave()				//次のウェーブ格納変数
+{
 	//読み込むブロックの情報初期化
 	m_LoadBlock.pos = VEC3_RESET_ZERO;
 	m_LoadBlock.rot = VEC3_RESET_ZERO;
@@ -113,7 +115,6 @@ void CGame::Update()
 			m_next_wave = CWave::WAVE::NONE;
 			break;
 		case CWave::WAVE::NONE:
-
 			break;
 		default:
 			break;
@@ -143,7 +144,6 @@ void CGame::Update()
 
 		SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 	}
-
 #endif // _DEBUG
 
 	
@@ -174,31 +174,36 @@ void CGame::ApplyDeathPenalty()
 	{
 		//オブジェクト取得
 		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-		 //タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
+		if (pObj == nullptr)
+		{//ヌルポインタなら
+			//オブジェクトを探し続ける
+			continue;
+		}
 
-			//敵との当たり判定
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		//タイプ取得
+		CObject::OBJECT_TYPE type = pObj->GetType();
+			
+		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		{//プレイヤーじゃなかったら
+			//プレイヤーを探し続ける
+			continue;
+		}
+
+		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+
+		for (int nCnt = 0; nCnt < pPlayer->GetDeathCnt(); nCnt++)
+		{
+			CScore* pScore = CWave::GetScore();
+
+			if (pScore->m_nScore > INT_ZERO)
 			{
-				CPlayer* pplayer = dynamic_cast<CPlayer*>(pObj);
+				//TODO:ADDやめろ
+				pScore->AddScore(DEATH_PENALTY);
 
-				for (int nCnt = 0; nCnt < pplayer->GetDeathCnt(); nCnt++)
-				{
-					CScore* pScore = CWave::GetScore();
-
-					if (pScore->m_nScore > INT_ZERO)
-					{
-						//TODO:ADDやめろ
-						pScore->AddScore(DEATH_PENALTY);
-
-						if (pScore->m_nScore <= INT_ZERO)
-						{//0を下回ったら
-							//スコア0に
-							pScore->m_nScore = INT_ZERO;
-						}
-					}
+				if (pScore->m_nScore <= INT_ZERO)
+				{//0を下回ったら
+					//スコア0に
+					pScore->m_nScore = INT_ZERO;
 				}
 			}
 		}

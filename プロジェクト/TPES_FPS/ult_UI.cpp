@@ -7,16 +7,23 @@
 #include "ult_UI.h"
 #include "ult.h"
 
+//アイコンの位置
 const D3DXVECTOR3 CUlt_UI::ICON_POS = { SCREEN_WIDTH * 0.5f,660.0f,0.0f };
+//アイコンのサイズ
 const D3DXVECTOR2 CUlt_UI::ICON_SIZE = { 70.0f, 70.0f };
 
+//キーボードのUI位置
 const D3DXVECTOR3 CUlt_UI::KEY_UI_POS = { SCREEN_WIDTH * 0.5f,700.0f,0.0f};
+//キーボードのサイズ
 const D3DXVECTOR2 CUlt_UI::KEY_UI_SIZE = { 18.0f, 18.0f };
 
 //=============================================
 // コンストラクタ
 //=============================================
-CUlt_UI::CUlt_UI():m_PercentPos(VEC3_RESET_ZERO), m_pKeyboard_UI(),m_pIcon()
+CUlt_UI::CUlt_UI():
+m_PercentPos(VEC3_RESET_ZERO),	//パーセントの位置
+m_pKeyboard_UI(),				//キーボードのUI
+m_pIcon()						//アイコン
 {
 }
 

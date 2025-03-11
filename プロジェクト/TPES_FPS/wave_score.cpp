@@ -29,10 +29,10 @@ CWaveScore::~CWaveScore()
 //=============================================
 HRESULT CWaveScore::Init()
 {
-	CScore::SetPos(NUM_POS);
-	CScore::SetSize(NUM_SIZE);
-	CScore::SetDigitShift(DIGIT_SHIFT);
-	CScore::Init();
+	CScore::SetPos(NUM_POS);	//位置設定
+	CScore::SetSize(NUM_SIZE);	//サイズ設定
+	CScore::SetDigitShift(DIGIT_SHIFT);	//桁ずらし座標
+	CScore::Init();	//初期化
 	return S_OK;
 }
 
@@ -41,6 +41,7 @@ HRESULT CWaveScore::Init()
 //=============================================
 void CWaveScore::Uninit()
 {
+	//終了
 	CScore::Uninit();
 }
 
@@ -49,5 +50,6 @@ void CWaveScore::Uninit()
 //=============================================
 void CWaveScore::Update()
 {
+	//更新
 	CScore::Update();
 }

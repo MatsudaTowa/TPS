@@ -7,9 +7,6 @@
 #include "tactical_smoke.h"
 #include "manager.h"
 
-//カラー
-const D3DXCOLOR CTacticalSmoke::COLOR = { 1.0f,1.0f,1.0f,1.0f };
-
 //スモークのサイズ
 const D3DXVECTOR3 CTacticalSmoke::SIZE = { 60.0f,60.0f,0.0f };
 
@@ -54,7 +51,7 @@ HRESULT CTacticalSmoke::Init()
 	SetMove(move);
 
 	//色設定
-	SetColor(COLOR);
+	SetColor(COLOR_WHITE);
 
 	return S_OK;
 }
@@ -86,7 +83,6 @@ void CTacticalSmoke::Update()
 	{
 		move.x += X_DECREASE;
 	}
-
 
 	//移動量設定
 	SetMove(move);

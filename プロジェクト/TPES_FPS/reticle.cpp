@@ -15,7 +15,7 @@ m_pCrosshair(nullptr),				//クロスヘアのポインター
 m_pCenterDot(nullptr),				//センタードットのポインター
 m_pHitMaker(nullptr),				//ヒットマーカーのポインター
 m_ReticlePos(VEC3_RESET_ZERO),		//レティクルの位置
-m_ReticleSize(VEC3_RESET_ZERO),	//レティクルのサイズ
+m_ReticleSize(VEC3_RESET_ZERO),		//レティクルのサイズ
 m_ReticleCol({0.0f,1.0f,1.0f,1.0f})	//レティクルの色
 {
 }
@@ -110,6 +110,5 @@ void CReticle::Update()
 	if (m_pHitMaker != nullptr)
 	{
 		m_pHitMaker->SetPos(m_ReticlePos);
-
 	}
 }

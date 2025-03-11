@@ -16,7 +16,9 @@ const std::string CSmoke::SMOKE_TEXTURE_NAME = "data\\TEXTURE\\effect002.tga";
 //=============================================
 //コンストラクタ
 //=============================================
-CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),m_nLife(INT_ZERO),m_move(VEC3_RESET_ZERO)
+CSmoke::CSmoke(int nPriority) : CBillboard(nPriority),
+m_nLife(INT_ZERO),			//体力
+m_move(VEC3_RESET_ZERO)		//移動量
 {
 }
 
@@ -49,6 +51,7 @@ HRESULT CSmoke::Init()
 //=============================================
 void CSmoke::Uninit()
 {
+	//親クラスの終了
 	CObject3D::Uninit();
 }
 

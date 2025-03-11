@@ -7,6 +7,7 @@
 #include "centerdot.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CCenterDot::CENTERDOT_TEXTURE_NAME = "data\\TEXTURE\\crosshair001.png";
 
 //=============================================

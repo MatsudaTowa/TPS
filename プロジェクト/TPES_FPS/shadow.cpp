@@ -1,12 +1,13 @@
 //=============================================
 //
-//影「shadow.h」
+//影「shadow.cpp」
 // Author松田永久
 //
 //=============================================
 #include "shadow.h"
 #include "manager.h"
 
+//texパス
 const std::string CShadow::TEXTURE_NAME = "data\\TEXTURE\\effect000.jpg";
 
 //=============================================
@@ -28,6 +29,7 @@ CShadow::~CShadow()
 //=============================================
 HRESULT CShadow::Init()
 {
+	//初期化
 	CObject3D::Init();
 	//頂点設定
 	SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
@@ -39,6 +41,7 @@ HRESULT CShadow::Init()
 //=============================================
 void CShadow::Uninit()
 {
+	//終了
 	CObject3D::Uninit();
 }
 
@@ -47,6 +50,7 @@ void CShadow::Uninit()
 //=============================================
 void CShadow::Update()
 {
+	//更新
 	CObject3D::Update();
 	//頂点設定
 	SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));

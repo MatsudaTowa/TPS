@@ -14,7 +14,7 @@ const std::string CHitMaker::HITMARKER_DOT_TEXTURE_NAME = "data\\TEXTURE\\hitmar
 //コンストラクタ
 //=============================================
 CHitMaker::CHitMaker(int nPriority):CBillboard(nPriority),
-m_nLife(INT_ZERO)
+m_nLife(INT_ZERO)		//寿命
 {
 }
 
@@ -106,11 +106,11 @@ CHitMaker* CHitMaker::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size,
 
 	pHitMaker->SetPos(pos); //pos設定
 	pHitMaker->SetSize(size); //サイズ設定
-	pHitMaker->SetRot(rot);
-	pHitMaker->SetColor(col);
+	pHitMaker->SetRot(rot);	//方向設定
+	pHitMaker->SetColor(col); //カラー設定
 
 	pHitMaker->SetType(OBJECT_TYPE_RETICLE); //タイプ設定
-	pHitMaker->Init();
+	pHitMaker->Init();	//初期化
 
 	return pHitMaker;
 }

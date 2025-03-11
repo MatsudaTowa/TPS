@@ -7,7 +7,7 @@
 #include "smoke_icon.h"
 #include "manager.h"
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CSmokeIcon::TEXTURE_NAME = "data\\TEXTURE\\smoke_UI.png";
 
 //=============================================
@@ -32,6 +32,7 @@ HRESULT CSmokeIcon::Init()
 	//初期化
 	CObject2D::Init();
 
+	//テクスチャ登録
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
@@ -57,7 +58,7 @@ void CSmokeIcon::Update()
 	//更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -78,11 +79,11 @@ CSmokeIcon* CSmokeIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col)
 
 	if (pSmokeIcon == nullptr) { return nullptr; }
 
-	pSmokeIcon->SetPos(pos);
-	pSmokeIcon->SetSize(size);
-	pSmokeIcon->SetColor(col);
+	pSmokeIcon->SetPos(pos);	//位置設定
+	pSmokeIcon->SetSize(size);	//サイズ設定
+	pSmokeIcon->SetColor(col);	//カラー設定
 
-	pSmokeIcon->Init();
+	pSmokeIcon->Init();	//初期化設定
 
 	return pSmokeIcon;
 }

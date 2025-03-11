@@ -9,6 +9,8 @@
 
 //読み込むブロック情報のファイル
 const std::string CTackleCharge::TEXTURE_NAME = "data\\TEXTURE\\ult_effect.png";
+
+//エフェクトのサイズ
 const D3DXVECTOR3 CTackleCharge::SIZE = {180.0f,180.0f,0.0f};
 
 //=============================================
@@ -103,12 +105,12 @@ CTackleCharge* CTackleCharge::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXCOLO
 
 	if (pTackleCharge == nullptr) { return nullptr; }
 
-	pTackleCharge->SetPos(pos);
-	pTackleCharge->SetSize(size);
-	pTackleCharge->SetColor(col);
-	pTackleCharge->SetType(OBJECT_TYPE_EFFECT);
+	pTackleCharge->SetPos(pos);		//位置設定
+	pTackleCharge->SetSize(size);	//サイズ設定
+	pTackleCharge->SetColor(col);	//カラー設定
+	pTackleCharge->SetType(OBJECT_TYPE_EFFECT);	//オブジェクトタイプ設定
 
-	pTackleCharge->Init();
+	pTackleCharge->Init();	//初期化処理
 
 	return pTackleCharge;
 }

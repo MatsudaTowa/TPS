@@ -23,7 +23,6 @@ public:
 	void Draw()override;
 	static CWave_Result_Screen* Create(D3DXVECTOR3 pos);
 private:
-	//static const std::string TEXTURE_NAME;	//テクスチャの名前
-	//static LPDIRECT3DTEXTURE9 m_pTexture;
+	static const D3DXCOLOR COLOR;
 };
 #endif

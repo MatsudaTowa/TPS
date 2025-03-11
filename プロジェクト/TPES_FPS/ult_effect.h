@@ -25,5 +25,6 @@ public:
 	static CUltEffect* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
+	static const D3DXCOLOR COLOR;	//色
 };
 #endif

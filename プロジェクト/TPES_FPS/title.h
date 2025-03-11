@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[title.h]
+//タイトル処理[title.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -41,7 +41,6 @@ private:
 	static const D3DXVECTOR2 UI_SIZE; //UIサイズ
 
 	static const D3DXVECTOR3 PLAYER_SPAWN; //スポーン位置
-	void LoadBlock(const std::string* pFileName);
 
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 

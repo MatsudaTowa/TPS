@@ -40,6 +40,8 @@ public:
 	}
 private:
 	static const std::string TEXTURE_NAME_SEVERE;	//重症テクスチャの名前
+	static const D3DXCOLOR COLOR;					//初期色
+	static constexpr float SUB_ALPHA = 0.01f;		//アルファ値減算
 
 	float m_alpha; //アルファ値
 };

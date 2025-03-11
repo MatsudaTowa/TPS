@@ -103,6 +103,7 @@ CPlayerUIBox* CPlayerUIBox::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR 
 	return pUIBox;
 }
 
+//texパス
 const std::string CLifeUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_000.png";
 
 //=============================================
@@ -124,8 +125,10 @@ CLifeUIBox::~CLifeUIBox()
 //=============================================
 HRESULT CLifeUIBox::Init()
 {
+	//テクスチャ代入
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	//初期化
 	CPlayerUIBox::Init();
 	return S_OK;
 }
@@ -135,6 +138,7 @@ HRESULT CLifeUIBox::Init()
 //=============================================
 void CLifeUIBox::Uninit()
 {
+	//終了
 	CPlayerUIBox::Uninit();
 }
 
@@ -143,6 +147,7 @@ void CLifeUIBox::Uninit()
 //=============================================
 void CLifeUIBox::Update()
 {
+	//更新
 	CPlayerUIBox::Update();
 }
 
@@ -151,9 +156,12 @@ void CLifeUIBox::Update()
 //=============================================
 void CLifeUIBox::Draw()
 {
+	//描画
 	CPlayerUIBox::Draw();
 }
 
+
+//texパス
 const std::string CAmmoUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_001.png";
 
 //=============================================
@@ -175,8 +183,10 @@ CAmmoUIBox::~CAmmoUIBox()
 //=============================================
 HRESULT CAmmoUIBox::Init()
 {
+	//テクスチャ設定
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	//初期化
 	CPlayerUIBox::Init();
 	return S_OK;
 }
@@ -186,6 +196,7 @@ HRESULT CAmmoUIBox::Init()
 //=============================================
 void CAmmoUIBox::Uninit()
 {
+	//終了
 	CPlayerUIBox::Uninit();
 }
 
@@ -194,6 +205,7 @@ void CAmmoUIBox::Uninit()
 //=============================================
 void CAmmoUIBox::Update()
 {
+	//更新
 	CPlayerUIBox::Update();
 }
 
@@ -202,9 +214,11 @@ void CAmmoUIBox::Update()
 //=============================================
 void CAmmoUIBox::Draw()
 {
+	//描画
 	CPlayerUIBox::Draw();
 }
 
+//texパス
 const std::string CScoreUIBox::TEXTURE_NAME = "data\\TEXTURE\\UI_box_002.png";
 
 //=============================================
@@ -226,8 +240,11 @@ CScoreUIBox::~CScoreUIBox()
 //=============================================
 HRESULT CScoreUIBox::Init()
 {
+	//テクスチャ設定
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	
+	//初期化
 	CPlayerUIBox::Init();
 	return S_OK;
 }
@@ -237,6 +254,7 @@ HRESULT CScoreUIBox::Init()
 //=============================================
 void CScoreUIBox::Uninit()
 {
+	//終了
 	CPlayerUIBox::Uninit();
 }
 
@@ -245,6 +263,7 @@ void CScoreUIBox::Uninit()
 //=============================================
 void CScoreUIBox::Update()
 {
+	//更新
 	CPlayerUIBox::Update();
 }
 
@@ -253,5 +272,6 @@ void CScoreUIBox::Update()
 //=============================================
 void CScoreUIBox::Draw()
 {
+	//描画
 	CPlayerUIBox::Draw();
 }

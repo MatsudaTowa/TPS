@@ -28,12 +28,14 @@ const D3DXVECTOR3 CResult::SCORE_POS[CManager::NUM_RESULT_FILE + 1]
     {1100.0f,620.0f,0.0f}, 
 };
 
+//スコアサイズ
 const D3DXVECTOR2 CResult::SCORE_SIZE[2]
 {
     { 40.0f, 50.0f },
     { 60.0f, 70.0f },
 };
 
+//桁ずらし
 const float CResult::DIGIT_SHIFT[2]
 {
     60.0f,
@@ -44,7 +46,7 @@ const float CResult::DIGIT_SHIFT[2]
 //コンストラクタ
 //=============================================
 CResult::CResult():
-m_pScore()
+m_pScore()      //スコアのポインター
 {
 }
 
@@ -60,6 +62,7 @@ CResult::~CResult()
 //=============================================
 HRESULT CResult::Init()
 {
+    //初期化
     CScene::Init();
 
     for (int nCnt = INT_ZERO; nCnt < CManager::NUM_RESULT_FILE + 1; nCnt++)

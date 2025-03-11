@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[title.cpp]
+//タイトル処理[title.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -36,9 +36,8 @@ const D3DXVECTOR2 CTitle::LOGO_SIZE = { 400.0f,200.0f };
 //UIのサイズ
 const D3DXVECTOR2 CTitle::UI_SIZE = { 200.0f, 50.0f };
 
-const D3DXVECTOR3 CTitle::PLAYER_SPAWN = { 0.0f, 0.5f, -300.0f }; //スポーン位置
-
-
+//スポーン位置
+const D3DXVECTOR3 CTitle::PLAYER_SPAWN = { 0.0f, 0.5f, -300.0f }; 
 
 //=============================================
 //コンストラクタ
@@ -63,12 +62,10 @@ HRESULT CTitle::Init()
     //地面生成
     CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
-	//ブロック生成
-	//LoadBlock(&CTitle::BLOCK_FILE);
-
 	//プレイヤー生成
 	CPlayer::Create();
 
+	//タイトルUI生成
     m_pTitleScreen[0] = CTitle_Screen::Create(LOGO_POS, LOGO_SIZE,CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);
 
     m_pTitleScreen[1]=CTitle_Screen::Create(UI_POS, UI_SIZE, CTitle_Screen::TITLE_UI::UI_TITLE_PRESS_BUTTON);
@@ -81,7 +78,10 @@ HRESULT CTitle::Init()
 //=============================================
 void CTitle::Uninit()
 {
+	//サウンドを止める
 	CManager::GetInstance()->GetSound()->StopSound();
+
+	//オブジェクトを破棄
     CObject::ReleaseAll();
 }
 
@@ -90,12 +90,14 @@ void CTitle::Uninit()
 //=============================================
 void CTitle::Update()
 {
+	//インプット取得
     CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
     if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A) || pMouse->GetTrigger(0))
     {
+		//チュートリアルに遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TUTORIAL);
     }
 }
@@ -105,80 +107,4 @@ void CTitle::Update()
 //=============================================
 void CTitle::Draw()
 {
-}
-
-//=============================================
-//ブロック読み込み
-//=============================================
-void CTitle::LoadBlock(const std::string* pFileName)
-{
-	char aDataSearch[BLOCK_TXT_MAX];
-	char aEqual[BLOCK_TXT_MAX]; //[＝]読み込み用
-	int nNumBlock; //ブロックの数
-
-	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName->c_str(), "r");
-
-	if (pFile == NULL)
-	{//種類の情報のデータファイルが開けなかった場合
-		//処理を終了する
-		return;
-	}
-	//ENDが見つかるまで読み込みを繰り返す
-	while (1)
-	{
-		fscanf(pFile, "%s", aDataSearch); //検索
-
-		if (!strcmp(aDataSearch, "END"))
-		{//読み込みを終了
-			fclose(pFile);
-			break;
-		}
-		if (aDataSearch[0] == '#')
-		{
-			continue;
-		}
-
-		if (!strcmp(aDataSearch, "NUM_BLOCK"))
-		{//モデル数読み込み
-			fscanf(pFile, "%s", &aEqual[0]);
-			fscanf(pFile, "%d", &nNumBlock);
-		}
-		if (!strcmp(aDataSearch, "BLOCKSET"))
-		{
-			//項目ごとのデータを代入
-			while (1)
-			{
-				fscanf(pFile, "%s", aDataSearch); //検索
-
-				if (!strcmp(aDataSearch, "END_BLOCKSET"))
-				{
-					//エネミー生成
-					CBlock::Create(m_LoadBlock.type, m_LoadBlock.pos, m_LoadBlock.rot, 1, false);
-					break;
-				}
-				else if (!strcmp(aDataSearch, "POS"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f %f %f",
-						&m_LoadBlock.pos.x,
-						&m_LoadBlock.pos.y,
-						&m_LoadBlock.pos.z);
-				}
-				else if (!strcmp(aDataSearch, "ROT"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f %f %f",
-						&m_LoadBlock.rot.x,
-						&m_LoadBlock.rot.y,
-						&m_LoadBlock.rot.z);
-				}
-				else if (!strcmp(aDataSearch, "TYPE"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%d", &m_LoadBlock.type);
-				}
-			}
-		}
-	}
 }

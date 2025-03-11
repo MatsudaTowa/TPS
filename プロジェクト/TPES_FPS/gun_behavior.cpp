@@ -28,12 +28,16 @@ void CShot::Shot(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamag
 {
 	//Œ»Ý‚Ì’e”Žæ“¾
 	int nAmmo = gun->GetAmmo();
-	if (nAmmo > 0)
-	{
+	if (nAmmo > INT_ZERO)
+	{//ƒ}ƒKƒWƒ““à‚É’e‚ª‚ ‚ê‚Î
+		//’e‚ð¶¬
 		CBullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), move,
-			VEC3_RESET_ZERO, D3DXVECTOR3(size.x, size.y, 0.0f), LIFE, nDamage, Allegiance, type);
+			VEC3_RESET_ZERO, D3DXVECTOR3(size.x, size.y, FLOAT_ZERO), LIFE, nDamage, Allegiance, type);
 
+		//ƒ}ƒYƒ‹ƒtƒ‰ƒbƒVƒ…‚ð¶¬
 		CMuzzleFlash::Create(pos);
+
+		//’e”‚ðŒ¸‚ç‚·
 		--nAmmo;
 	}
 	gun->SetAmmo(nAmmo);

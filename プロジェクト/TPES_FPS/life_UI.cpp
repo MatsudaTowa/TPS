@@ -20,7 +20,12 @@ const D3DXVECTOR2 CLife_UI::NUM_SIZE = { 10.0f, 18.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CLife_UI::CLife_UI() :m_nLife(0), m_pNumber(), m_pUIBox(), m_NumPos(), m_pGauge()
+CLife_UI::CLife_UI() :
+m_nLife(INT_ZERO),		//寿命
+m_pNumber(),			//数字のポインタ
+m_pUIBox(),				//UIボックスのポインタ
+m_NumPos(),				//数字の位置
+m_pGauge()				//ゲージのポインタ
 {
 }
 
@@ -119,15 +124,15 @@ void CLife_UI::SetLife_UI(int nLife)
 
 	if (nLife >= CPlayer::PLAYER_LIFE * 0.6f)
 	{
-		m_pGauge->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+		m_pGauge->SetColor(COLOR_GREEN);
 	}
 	else if (nLife >= CPlayer::PLAYER_LIFE * 0.3f && nLife < CPlayer::PLAYER_LIFE * 0.6f)
 	{
-		m_pGauge->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+		m_pGauge->SetColor(COLOR_YELLOW);
 	}
 	else if (nLife < CPlayer::PLAYER_LIFE * 0.3f)
 	{
-		m_pGauge->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+		m_pGauge->SetColor(COLOR_RED);
 	}
 }
 

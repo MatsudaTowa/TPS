@@ -56,7 +56,7 @@ void CModel_Parts::Unload()
 		CManager::GetInstance()->GetModel()->Unload();
 	}
 	
-	m_nNumAll = 0;
+	m_nNumAll = INT_ZERO;
 }
 
 //=============================================
@@ -64,7 +64,6 @@ void CModel_Parts::Unload()
 //=============================================
 void CModel_Parts::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh)
 {
-
 	pBuffMat->AddRef();
 	pMesh->AddRef();
 

@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[title_Screen.h]
+//タイトルのUI[title_Screen.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -32,7 +32,6 @@ CTitle_Screen::~CTitle_Screen()
 //=============================================
 HRESULT CTitle_Screen::Init()
 {
-
 	//親クラスの初期化を呼ぶ
 	CObject2D::Init();
 

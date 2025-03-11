@@ -13,7 +13,7 @@
 CUlt::CUlt():
 m_CoolTimeCnt(INT_ZERO),	//カウント0に
 m_CoolTime(INT_ZERO),		//クールタイム0に
-m_isFinish(false)	//終わっていない状態に
+m_isFinish(false)			//終わっていない状態に
 {
 }
 

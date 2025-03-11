@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[title_screen.h]
+//タイトルのUI[title_screen.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -10,7 +10,6 @@
 #include "main.h"
 #include "object2D.h"
 
-//レンダラークラス
 class CTitle_Screen : public CObject2D
 {
 public: 

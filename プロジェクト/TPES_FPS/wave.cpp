@@ -22,10 +22,14 @@
 //通常の床のサイズ
 const D3DXVECTOR3 CWave::NORMAL_FIELD_SIZE = { 500.0f, 0.0f, 1000.0f };
 
+//boss戦の床のサイズ
 const D3DXVECTOR3 CWave::BOSS_FIELD_SIZE = { 900.0f, 0.0f, 900.0f };
 
+//現在のウェーブ
 CWave::WAVE CWave::m_CurrentWave = WAVE::NONE;
+//次のウェーブ
 CWave::WAVE CWave::m_next = WAVE::NONE;
+//リザルトのファイル
 const char* CWave::m_ResultFile = nullptr;
 //スコア
 CScore* CWave::m_pScore = nullptr;

@@ -33,8 +33,6 @@ private:
 	static constexpr float X_DECREASE = 0.01f; //Xの移動量減少定数
 
 	static const D3DXVECTOR3 SIZE; //スモークのサイズ
-
-	static const D3DXCOLOR COLOR;
 };
 
 #endif

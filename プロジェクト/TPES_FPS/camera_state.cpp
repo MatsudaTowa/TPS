@@ -55,7 +55,6 @@ void CThirdView::ThirdView(CCamera* camera)
 
 	camera->ThirdViewCamera();
 
-
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 

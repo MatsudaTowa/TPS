@@ -37,48 +37,56 @@ public:
 	virtual bool Reload();
 
 	//弾数設定
-	void SetAmmo(int Ammo)
+	inline void SetAmmo(int Ammo)
 	{
 		m_Ammo = Ammo;
 	}
-	//レベル設定
-	void SetLv(int Lv)
-	{
-		m_Lv = Lv;
-	}
 	//ダメージ設定
-	void SetDamage(int Damage)
+	inline void SetDamage(int Damage)
 	{
 		m_nDamage = Damage;
 	}
 	//リロードフレーム設定
-	void SetReloadFrame(int ReloadFrame)
+	inline void SetReloadFrame(int ReloadFrame)
 	{
 		m_ReloadFrame = ReloadFrame;
 	}
 	//発射レート設定
-	void SetFireRate(int FireRate)
+	inline void SetFireRate(int FireRate)
 	{
 		m_FireRate = FireRate;
 	}
 	//発射レート設定
-	void SetBulletSpeed(float BulletSpeed)
+	inline void SetBulletSpeed(float BulletSpeed)
 	{
 		m_BulletSpeed = BulletSpeed;
 	}
 	
 	//弾数取得
-	int& GetAmmo();
-	//レベル取得
-	int& GetLv();
+	inline int& GetAmmo()
+	{
+		return m_Ammo;
+	}
 	//ダメージ取得
-	int& GetDamage();
+	inline int& GetDamage()
+	{
+		return m_nDamage;
+	}
 	//リロードフレーム
-	int& GetReloadFrame();
+	inline int& GetReloadFrame()
+	{
+		return m_ReloadFrame;
+	}
 	//発射レート取得
-	int& GetFireRate();
+	inline int& GetFireRate()
+	{
+		return m_FireRate;
+	}
 	//弾速取得
-	float& GetBulletSpeed();
+	inline float& GetBulletSpeed()
+	{
+		return m_BulletSpeed;
+	}
 
 	int m_nRateCnt;//レートカウント
 
@@ -88,7 +96,6 @@ public:
 	D3DXVECTOR3 m_Size; //サイズ
 private:
 	int m_Ammo; //マガジン内の弾数
-	int m_Lv; //銃のレベル
 	int m_nDamage; //ダメージ
 	int m_ReloadFrame; //リロードフレーム
 	int m_FireRate; //発射レート

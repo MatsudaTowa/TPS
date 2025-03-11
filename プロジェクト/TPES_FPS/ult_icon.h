@@ -32,6 +32,8 @@ public:
 
 	void Reset();
 private:
+	static const D3DXVECTOR2 EFFECT_SIZE;
+	static const D3DXCOLOR EFFECT_COLOR;
 	bool m_isAddColor; //ウルトが溜まったらfalseに
 	float m_AddColor; //色加算の値
 	CUltIconEffect* m_pIconEffect;

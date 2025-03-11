@@ -7,7 +7,11 @@
 #include "ult_camera_effect.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CUltCameraEffect::TEXTURE_NAME = "data\\TEXTURE\\syutyu90.png";
+
+//初期色
+const D3DXCOLOR CUltCameraEffect::COLOR = { 0.5f, 0.0f, 0.0f, 0.8f };
 
 //=============================================
 //コンストラクタ
@@ -40,7 +44,7 @@ HRESULT CUltCameraEffect::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
+	col = D3DXCOLOR(COLOR);
 
 	//カラーを代入
 	SetColor(col);
@@ -50,7 +54,7 @@ HRESULT CUltCameraEffect::Init()
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -75,7 +79,7 @@ void CUltCameraEffect::Update()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
+	col = D3DXCOLOR(COLOR.r, COLOR.g, COLOR.b, m_alpha);
 
 	//カラーを代入
 	SetColor(col);
@@ -105,7 +109,7 @@ CUltCameraEffect* CUltCameraEffect::Create(D3DXVECTOR3 pos)
 
 	pUltCameraEffect->SetPos(pos); //pos設定
 
-	pUltCameraEffect->m_alpha = 0.8f;
+	pUltCameraEffect->m_alpha = COLOR.a;
 
 	pUltCameraEffect->SetType(OBJECT_TYPE_ULT_CAMERA_EFFECT); //タイプ設定
 
@@ -119,5 +123,5 @@ CUltCameraEffect* CUltCameraEffect::Create(D3DXVECTOR3 pos)
 //=============================================
 void CUltCameraEffect::SubAlpha()
 {
-	m_alpha -= 0.01f;
+	m_alpha -= SUB_ALPHA;
 }

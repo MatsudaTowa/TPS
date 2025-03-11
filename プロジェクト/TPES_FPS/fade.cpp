@@ -10,7 +10,8 @@
 //=============================================
 //コンストラクタ
 //=============================================
-CFade::CFade(int nPriority):CObject2D(nPriority),m_fademode()
+CFade::CFade(int nPriority):CObject2D(nPriority),
+m_fademode()			//フェード状態
 {
 }
 
@@ -43,7 +44,7 @@ HRESULT CFade::Init()
 	SetColor(col);
 
 	//頂点設定
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 
 	return S_OK;
 }

@@ -7,7 +7,12 @@
 #include "ult_effect.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CUltEffect::TEXTURE_NAME = "data\\TEXTURE\\ult_effect.png";
+
+//色
+const D3DXCOLOR CUltEffect::COLOR = { 1.0f,0.0f,0.0f, 0.75f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -27,8 +32,9 @@ CUltEffect::~CUltEffect()
 //=============================================
 HRESULT CUltEffect::Init()
 {
+	//親クラスの初期化
 	CObject3D::Init();
-	SetColor({ 1.0f,0.0f,0.0f, 0.75f });
+	SetColor(COLOR);
 	//頂点設定
 	SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	return S_OK;
@@ -39,6 +45,7 @@ HRESULT CUltEffect::Init()
 //=============================================
 void CUltEffect::Uninit()
 {
+	//親クラスの終了
 	CObject3D::Uninit();
 }
 
@@ -47,6 +54,7 @@ void CUltEffect::Uninit()
 //=============================================
 void CUltEffect::Update()
 {
+	//親クラスの更新
 	CObject3D::Update();
 	//頂点設定
 	SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
@@ -65,6 +73,7 @@ void CUltEffect::Draw()
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
+	//親クラスの描画
 	CObject3D::Draw();
 
 	//αブレンディングを元に戻す

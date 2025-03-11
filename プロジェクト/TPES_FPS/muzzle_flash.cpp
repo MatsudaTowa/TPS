@@ -58,7 +58,7 @@ void CMuzzleFlash::Update()
 {
 
 	--m_nLife; //‘Ì—ÍŒ¸­
-	if (m_nLife > 0)
+	if (m_nLife > INT_ZERO)
 	{
 		//e‚ÌXV
 		CBillboard::Update();

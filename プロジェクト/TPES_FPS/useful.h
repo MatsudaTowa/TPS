@@ -27,6 +27,7 @@
 #define COLOR_RED (D3DXCOLOR(1.0f,0.0f,0.0f,1.0f))
 #define COLOR_GREEN (D3DXCOLOR(0.0f,1.0f,0.0f,1.0f))
 #define COLOR_BLUE (D3DXCOLOR(0.0f,0.0f,1.0f,1.0f))
+#define COLOR_YELLOW (D3DXCOLOR(1.0f,1.0f,0.0f,1.0f))
 
 //í∏ì_3Dèâä˙âª
 #define VEC3_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f,0.0f))

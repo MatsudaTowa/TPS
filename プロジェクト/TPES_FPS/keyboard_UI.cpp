@@ -44,10 +44,11 @@ HRESULT CKeyboard_UI::Init()
 	//初期化
 	CObject2D::Init();
 
+	//テクスチャ設定
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME[m_type])));
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 	return S_OK;
 }
 
@@ -68,7 +69,7 @@ void CKeyboard_UI::Update()
 	//更新
 	CObject2D::Update();
 
-	SetVtx(1.0f);
+	SetVtx(FLOAT_ONE);
 }
 
 //=============================================
@@ -89,11 +90,12 @@ CKeyboard_UI* CKeyboard_UI::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR 
 
 	if (pKeyboard_UI == nullptr) { return nullptr; }
 
-	pKeyboard_UI->SetPos(pos);
-	pKeyboard_UI->SetSize(size);
-	pKeyboard_UI->SetColor(col);
-	pKeyboard_UI->m_type = key;
+	pKeyboard_UI->SetPos(pos);		//座標設定
+	pKeyboard_UI->SetSize(size);	//サイズ設定
+	pKeyboard_UI->SetColor(col);	//カラー設定
+	pKeyboard_UI->m_type = key;		//キー設定
 
+	//初期化
 	pKeyboard_UI->Init();
 
 	return pKeyboard_UI;

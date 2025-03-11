@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[tutorial.cpp]
+//チュートリアル処理[tutorial.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -8,8 +8,11 @@
 #include "tutorial_screen.h"
 #include "player.h"
 
+//エネミーファイル
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
+//ブロックファイル
 const std::string CTutorial::BLOCK_FILE = "data\\FILE\\block_data_tutorial.bin";
+//壁ファイル
 const std::string CTutorial::WALL_FILE = "data\\FILE\\wall_002.txt";
 
 //床のサイズ
@@ -40,16 +43,23 @@ CTutorial::~CTutorial()
 //=============================================
 HRESULT CTutorial::Init()
 {
+	//初期化
 	CScene::Init();
 
-	 CPlayer::Create();
+	//プレイヤー生成
+	CPlayer::Create();
 
+	//ブロック読み込み
 	LoadBlock(&BLOCK_FILE);
+	//敵の読み込み
 	LoadEnemy(&ENEMY_FILE);
+	//壁の読み込み
 	LoadWall(&WALL_FILE);
+
 	//地面生成
 	CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
+	//チュートリアルの画像生成
 	CTutorial_Screen::Create(UI_POS, UI_SIZE, CTutorial_Screen::TUTORIAL_UI::UI_TUTORIAL_TXT);
 
 	if (m_pTutorial_UI == nullptr)

@@ -10,6 +10,8 @@
 #include "hit_camera_effect_severe.h"
 #include "manager.h"
 
+const D3DXCOLOR CHitCameraEffect::COLOR = { 0.5f, 0.0f, 0.0f, 0.8f };
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -38,13 +40,8 @@ HRESULT CHitCameraEffect::Init()
 	//サイズを代入
 	SetSize(size);
 
-	//カラー取得
-	D3DXCOLOR col = GetColor();
-
-	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
-
 	//カラーを代入
-	SetColor(col);
+	SetColor(COLOR);
 
 	//頂点設定
 	SetVtx(FLOAT_ONE);
@@ -72,7 +69,7 @@ void CHitCameraEffect::Update()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(0.5f, 0.0f, 0.0f, m_alpha);
+	col = D3DXCOLOR(COLOR.r, COLOR.g, COLOR.b, m_alpha);
 
 	//カラーを代入
 	SetColor(col);
@@ -117,7 +114,7 @@ CHitCameraEffect* CHitCameraEffect::Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE sta
 
 	pHitCameraEffect->SetPos(pos); //pos設定
 
-	pHitCameraEffect->m_alpha = 0.8f;
+	pHitCameraEffect->m_alpha = COLOR.a;
 
 	pHitCameraEffect->SetType(OBJECT_TYPE_HIT_CAMERA_EFFECT); //タイプ設定
 
@@ -131,5 +128,5 @@ CHitCameraEffect* CHitCameraEffect::Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE sta
 //=============================================
 void CHitCameraEffect::SubAlpha()
 {
-	m_alpha -= 0.01f;
+	m_alpha -= SUB_ALPHA;
 }

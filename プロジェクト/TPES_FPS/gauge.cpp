@@ -7,6 +7,7 @@
 #include "gauge.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CGauge_2D::TEXTURE_NAME = "data\\TEXTURE\\gauge.png";
 
 //=============================================
@@ -35,7 +36,7 @@ HRESULT CGauge_2D::Init()
 	SetTexPos(VEC2_RESET_ONE);
 
 	//頂点設定
-	SetGaugeVtx(1.0f);
+	SetGaugeVtx(FLOAT_ONE);
 
 	return S_OK;
 }
@@ -106,7 +107,7 @@ CGauge_2D* CGauge_2D::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, GAUGE2D_TYPE typ
 
 	pGauge->SetSize(size); //size設定
 
-	pGauge->SetColor(col);
+	pGauge->SetColor(col); //色設定
 
 	pGauge->m_type = type; //ゲージのタイプ設定
 
