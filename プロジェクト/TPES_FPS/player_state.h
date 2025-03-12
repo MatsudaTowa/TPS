@@ -8,7 +8,6 @@
 #define _PLAYER_STATE_H_
 
 #include "character.h"
-#include "player.h"
 #include "ult.h"
 
 //=============================================

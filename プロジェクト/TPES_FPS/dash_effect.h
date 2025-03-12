@@ -10,6 +10,9 @@
 #include "main.h"
 #include "objectX.h"
 
+//=============================================
+//タックルエフェクトクラス
+//=============================================
 class CDashEffect : public CObjectX
 {
 public:

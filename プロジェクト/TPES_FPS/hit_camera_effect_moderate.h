@@ -27,4 +27,4 @@ private:
 
 };
 
-#endif // _HIT_CAMERA_EFFECT_H_
+#endif // _HIT_CAMERA_EFFECT_MODERATE_H_

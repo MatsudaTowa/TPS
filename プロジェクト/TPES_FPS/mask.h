@@ -11,7 +11,9 @@
 #include "scene.h"
 #include "object2D.h"
 
+//=============================================
 //マスククラス
+//=============================================
 class CMask : public CObject2D
 {
 public:

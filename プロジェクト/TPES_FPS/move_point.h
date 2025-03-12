@@ -10,6 +10,9 @@
 #include "main.h"
 #include "billboard.h"
 
+//=============================================
+// 探索ポイントクラス
+//=============================================
 class CMovePoint : public CBillboard
 {
 public:

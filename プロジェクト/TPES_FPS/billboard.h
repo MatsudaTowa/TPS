@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[billboard.h]
+//ビルボード[billboard.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -10,6 +10,9 @@
 #include "main.h"
 #include "object3D.h"
 
+//=============================================
+//ビルボードクラス
+//=============================================
 class CBillboard : public CObject3D
 {
 public:
@@ -17,6 +20,4 @@ public:
 	~CBillboard()override;
 	void Draw()override;
 };
-
-
 #endif

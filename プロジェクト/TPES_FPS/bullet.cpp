@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[bullet.cpp]
+//弾[bullet.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -9,7 +9,7 @@
 #include "game.h"
 #include "player.h"
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\bullet.png";
 
 //=============================================

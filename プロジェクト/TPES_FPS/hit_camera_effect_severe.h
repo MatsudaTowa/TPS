@@ -24,7 +24,6 @@ public:
 
 private:
 	static const std::string TEXTURE_NAME;	//軽度テクスチャの名前
-
 };
 
-#endif // _HIT_CAMERA_EFFECT_H_
+#endif // _HIT_CAMERA_EFFECT_SEVERE_H_

@@ -31,12 +31,12 @@ public:
 	//*****************************************************************************
 	// サウンド情報の構造体定義
 	//*****************************************************************************
-	typedef struct
+	struct SOUNDINFO
 	{
 		const char* pFilename;	// ファイル名
 		int nCntLoop;			// ループカウント
 		float fVolume;
-	} SOUNDINFO;
+	};
 
 	static const SOUNDINFO m_aSoundInfo[SOUND_LABEL_MAX];
 	CSound();

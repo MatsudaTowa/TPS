@@ -11,6 +11,9 @@
 
 #define _ENEMY_REACTION_UI_H_
 
+//=============================================
+// エネミーのリアクションUIクラス
+//=============================================
 class CEnemy_Reaction_UI : public CBillboard
 {
 public:

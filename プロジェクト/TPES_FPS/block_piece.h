@@ -11,6 +11,9 @@
 #include "objectX.h"
 #include "manager.h"
 
+//=============================================
+//ブロックの破片クラス
+//=============================================
 class CBlock_Piece : public CObjectX
 {
 public:
@@ -43,6 +46,9 @@ private:
 	PIECE_SHAPE m_shape;
 };
 
+//=============================================
+//ブロックの動かす破片クラス
+//=============================================
 class CMove_Piece :public CBlock_Piece
 {
 public:
@@ -61,6 +67,9 @@ private:
 	int m_nLife;
 };
 
+//=============================================
+//ブロックの動かさない破片クラス
+//=============================================
 class CStack_Piece :public CBlock_Piece
 {
 public:

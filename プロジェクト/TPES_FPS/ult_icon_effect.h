@@ -11,6 +11,9 @@
 
 #define _ULT_ICON_EFFECT_H_
 
+//=============================================
+// ULTのアイコンエフェクトクラス
+//=============================================
 class CUltIconEffect : public CObject2D_Anim
 {
 public:

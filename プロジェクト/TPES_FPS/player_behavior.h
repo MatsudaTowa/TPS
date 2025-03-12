@@ -9,7 +9,6 @@
 #include "character_behavior.h"
 #include "player.h"
 
-class CPlayer;
 //=============================================
 //プレイヤーの移動のストラテジー
 //=============================================
@@ -24,19 +23,7 @@ public:
 };
 
 //=============================================
-//プレイヤーの移動のストラテジー
-//=============================================
-class CPlayerSliding
-{
-public:
-	CPlayerSliding();
-	~CPlayerSliding();
-	void Sliding(CPlayer* player);
-};
-
-
-//=============================================
-//プレイヤーの回避のストラテジー
+//プレイヤーの攻撃のストラテジー
 //=============================================
 class CPlayerAttack : public CGunAttack
 {
@@ -50,6 +37,9 @@ private:
 	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
 };
 
+//=============================================
+//プレイヤーの回避のストラテジー
+//=============================================
 class CPlayerAvoidance
 {
 public:

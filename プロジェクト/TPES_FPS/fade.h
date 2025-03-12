@@ -11,7 +11,9 @@
 #include "scene.h"
 #include "object2D.h"
 
+//=============================================
 //fadeƒNƒ‰ƒX
+//=============================================
 class CFade : public CObject2D
 {
 public:

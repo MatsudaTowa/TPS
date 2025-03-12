@@ -12,7 +12,7 @@
 #define _CENTERDOT_H_
 
 //=============================================
-//クロスヘアクラス
+//センタードットクラス
 //=============================================
 class CCenterDot : public CBillboard
 {
@@ -26,7 +26,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	//クロスヘア作成
+	//センタードット作成
 	static CCenterDot* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, D3DXCOLOR col);
 private:
 	static const std::string CENTERDOT_TEXTURE_NAME;	//テクスチャの名前

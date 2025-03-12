@@ -12,7 +12,9 @@
 #include "enemy.h"
 #include "enemy_behavior.h"
 
+//=============================================
 //通常のエネミークラス
+//=============================================
 class CNormalEnemy :public CEnemy
 {
 public:

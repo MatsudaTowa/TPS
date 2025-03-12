@@ -11,7 +11,9 @@
 #include "object2D.h"
 #include "ult_icon_effect.h"
 
+//=============================================
 //ウルト表記クラス
+//=============================================
 class CUltIcon : public CObject2D
 {
 public:
@@ -39,6 +41,9 @@ private:
 	CUltIconEffect* m_pIconEffect;
 };
 
+//=============================================
+//通常キャラのウルトのアイコンクラス
+//=============================================
 class CMediumIcon : public CUltIcon
 {
 public:

@@ -7,7 +7,7 @@
 #include "blink_back_UI.h"
 #include "manager.h"
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CBlinkBackUI::TEXTURE_NAME = "data\\TEXTURE\\blink_back.png";
 
 //=============================================

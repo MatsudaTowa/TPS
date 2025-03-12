@@ -32,16 +32,13 @@ m_pGun(),														//銃のポインタ
 m_MotionSet(),													//モーション設定
 m_pMove(),														//移動する処理
 m_pGunAttack(),													//銃の攻撃
+m_pStan(),														//スタン処理
+m_pConfusion(),													//混乱処理
 m_pCharacterState(),											//キャラクターのステートパターンポインタ
 m_nJumpCnt(INT_ZERO),											//ジャンプ数
 m_pShadow(),													//影のポインタ
 m_ShadowSize(VEC3_RESET_ZERO)									//影のサイズ
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
-	m_pMove = nullptr;
-	m_pGunAttack = nullptr;
-	m_pCharacterState = nullptr;
-	m_pStan = nullptr;
-	m_pConfusion = nullptr;
 }
 
 //=============================================
@@ -70,7 +67,7 @@ CCharacter::~CCharacter()
 		delete m_pConfusion;
 	}
 
-	for (int i = 0; i < 64; i++)
+	for (int i = INT_ZERO; i < MAX_PARTS; i++)
 	{
 		if (m_apModel[i] != nullptr)
 		{
@@ -181,9 +178,6 @@ void CCharacter::Update()
 
 	//床との接触処理
 	HitField();
-
-	////壁との接触処理
-	//HitWall();
 }
 
 //=============================================

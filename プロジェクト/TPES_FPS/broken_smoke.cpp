@@ -6,6 +6,7 @@
 //=============================================
 #include "broken_smoke.h"
 
+//スモークのカラー
 const D3DXCOLOR CBrokenSmoke::COLOR = { 0.1f,0.1f,0.1f,1.0f };
 
 //スモークのサイズ
@@ -44,12 +45,16 @@ HRESULT CBrokenSmoke::Init()
 	std::uniform_real_distribution<float> number_z(MOVE_Z_MIN, MOVE_Z_MAX);
 
 	D3DXVECTOR3 move = GetMove();
+
 	//移動量代入
 	move = { number_x(random),number_y(random),number_z(random)};
 
+	//移動量設定
 	SetMove(move);
 
+	//色設定
 	SetColor(COLOR);
+
 	return S_OK;
 }
 

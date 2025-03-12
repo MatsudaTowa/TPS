@@ -10,7 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
+//=============================================
 //銃の表記クラス
+//=============================================
 class CGunIcon : public CObject2D
 {
 public:
@@ -31,6 +33,9 @@ public:
 private:
 };
 
+//=============================================
+//アサルトのアイコン
+//=============================================
 class CARIcon : public CGunIcon
 {
 public:
@@ -42,6 +47,5 @@ public:
 	void Draw()override;
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
-
 };
 #endif

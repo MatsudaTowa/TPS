@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[maneger.h]
+//マネージャー[maneger.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -19,6 +19,9 @@
 #include "colision.h"
 #include "useful.h"
 
+//=============================================
+//マネージャークラス
+//=============================================
 class CManager
 {
 public:
@@ -72,8 +75,7 @@ public:
 
 private:
 
-	CScene* m_pScene; //現在のシーン
-	//static CFade* m_pFade;
+	CScene* m_pScene;
 	CRenderer* m_pRenderer;
 	CInputKeyboard* m_pKeyboard;
 	CInputMouse* m_pMouse;

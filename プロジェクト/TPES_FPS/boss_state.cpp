@@ -312,19 +312,22 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 			//プレイヤーの位置への方向情報
 			D3DXVECTOR3 Vector = boss->GetPos() + boss->GetMove() - boss->GetPos();
 
-			if (boss->PerformRaycast_Player(Vector, boss).hit)
-			{
-				if (boss->PerformRaycast_Block(Vector, boss).hit)
-				{//ブロックに当たっていたら
-					if (boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
-					{//ブロックより手前にいるときに
-						boss->ChangeState(new CChaseState);
-					}
-				}
-				else if (!boss->PerformRaycast_Block(Vector, boss).hit)
-				{
+			if (!boss->PerformRaycast_Player(Vector, boss).hit)
+			{//プレイヤーにレイが当たっていなかったら
+				//この関数を抜ける
+				return;
+			}
+
+			if (boss->PerformRaycast_Block(Vector, boss).hit)
+			{//ブロックに当たっていたら
+				if (boss->PerformRaycast_Block(Vector, boss).distance > boss->PerformRaycast_Player(Vector, boss).distance)
+				{//ブロックより手前にいるときに
 					boss->ChangeState(new CChaseState);
 				}
+			}
+			else if (!boss->PerformRaycast_Block(Vector, boss).hit)
+			{
+				boss->ChangeState(new CChaseState);
 			}
 		}
 	}

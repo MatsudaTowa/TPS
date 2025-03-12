@@ -18,22 +18,22 @@
 #pragma comment(lib,"xinput.lib")
 
 //頂点情報(2D)の構造体を定義
-typedef struct
+struct VERTEX_2D
 {
 	D3DXVECTOR3 pos; //頂点座標
 	float rhw; //座標変換用係数（1.0f）
 	D3DCOLOR col; //頂点カラー
 	D3DXVECTOR2 tex; //テクスチャ
-}VERTEX_2D;
+};
 
 //頂点情報(3D)の構造体を定義
-typedef struct
+struct VERTEX_3D
 {
 	D3DXVECTOR3 pos; //頂点座標
 	D3DXVECTOR3 nor; //法線ベクトル
 	D3DCOLOR col; //頂点カラー
 	D3DXVECTOR2 tex; //テクスチャ
-}VERTEX_3D;
+};
 
 int GetFps();//fps取得
 #endif // !_MAIN_H_ //これが定義されてないとき

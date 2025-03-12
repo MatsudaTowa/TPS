@@ -10,6 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
+//=============================================
+// タイトル画面クラス
+//=============================================
 class CTitle_Screen : public CObject2D
 {
 public: 

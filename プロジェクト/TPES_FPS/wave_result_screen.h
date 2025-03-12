@@ -10,7 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
+//=============================================
 //ウェーブリザルト
+//=============================================
 class CWave_Result_Screen : public CObject2D
 {
 public:

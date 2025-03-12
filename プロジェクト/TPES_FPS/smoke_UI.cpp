@@ -135,11 +135,11 @@ void CSmoke_UI::Update()
 //=============================================
 void CSmoke_UI::SetCurrentSmoke_UI(CPlayer* player)
 {
-	if (player->GetSmoke())
+	if (player->GetIsSmoke())
 	{//スモークを使っていたら
 		m_pIcon->SetColor({ 0.2f,0.2f,0.2f,1.0f });
 	}
-	else if (!player->GetSmoke())
+	else if (!player->GetIsSmoke())
 	{//スモークを使っていなかったら
 		m_pIcon->SetColor(COLOR_WHITE);
 	}

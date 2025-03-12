@@ -10,6 +10,9 @@
 #include "main.h"
 #include "billboard.h"
 
+//=============================================
+// マズルフラッシュクラス
+//=============================================
 class CMuzzleFlash : public CBillboard
 {
 public:

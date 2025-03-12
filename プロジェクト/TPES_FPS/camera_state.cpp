@@ -33,6 +33,7 @@ void CCameraState::Ult(CCamera* camera)
 //=============================================
 void CFreeView::FreeView(CCamera* camera)
 {
+	//ƒJƒƒ‰‚Æ‚Ì‹——£Ý’è
 	camera->SetLength(FREEVIEW_LENGTH);
 
 	//“ü—Í

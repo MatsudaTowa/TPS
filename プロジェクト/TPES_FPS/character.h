@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[character.h]
+//キャラクター処理[character.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -27,7 +27,9 @@ class CStan;
 class CConfusion;
 class CCharacterState;
 
-//プレイヤークラス
+//=============================================
+//キャラクタークラス
+//=============================================
 class CCharacter : public CObjectX
 {
 public:
@@ -73,7 +75,6 @@ public:
 	void Jump(); //ジャンプ処理
 	virtual void HitBlock(int NumParts); //ブロック当たり判定(複数パーツ用)
 	void HitField(); //床当たり判定
-	void HitWall(); //壁当たり判定
 	RayHitInfo PerformRaycast_Smoke(D3DXVECTOR3 vector, CCharacter* character);
 	RayHitInfo PerformRaycast_Block(D3DXVECTOR3 vector, CCharacter* character);
 	void ConversionMtxWorld();
@@ -264,27 +265,27 @@ private:
 	CShadow* m_pShadow; //影
 
 	//キー情報構造体
-	typedef struct
+	struct Key
 	{
 		D3DXVECTOR3 pos;
 		D3DXVECTOR3 rot;
 		D3DXVECTOR3 Trot;
-	}Key;
+	};
 
 	//キー設定構造体
-	typedef struct
+	struct KeySet
 	{
 		int nFrame; //フレーム数
 		Key key[MAX_KEY];
-	}KeySet;
+	};
 
 	//モーション設定構造体
-	typedef struct
+	struct MotionSet
 	{
 		int nLoop; //ループするかどうか
 		int nNumKey; //キー数
 		KeySet keySet[MAX_PARTS];
-	}MotionSet;
+	};
 
 	MotionSet m_MotionSet[MAX_MOTION]; //モーション設定
 };

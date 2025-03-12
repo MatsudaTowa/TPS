@@ -24,7 +24,7 @@ public:
 	virtual ~CShot();
 	virtual void Shot(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 size, int nDamage, CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type,CGun*gun);
 private:
-	static const int LIFE = 600;
+	static const int LIFE = 600;	//Žõ–½ 
 };
 
 //=============================================

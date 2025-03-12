@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[scene.h]
+//シーン[scene.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -10,7 +10,7 @@
 #include "main.h"
 
 //=============================================
-//  クラス定義
+// シーンクラス
 //=============================================
 class CScene
 {
@@ -27,7 +27,6 @@ public:
 		MODE_MAX,
 	};
 
-	// メンバ関数
 	CScene();
 	virtual ~CScene();
 
@@ -39,8 +38,6 @@ public:
 	static CScene* Create(MODE mode);
 	static MODE GetSceneMode();
 private:
-
-	// メンバ変数
 	static MODE m_Mode; //現在のモード
 };
 #endif

@@ -32,9 +32,6 @@ const D3DXVECTOR3 CPlayer::GUN_UI_POS = { 1150.0f, 665.0f, 0.0f };
 //銃のUIのサイズ
 const D3DXVECTOR2 CPlayer::GUN_UI_SIZE = { 70.0f,30.0f };
 
-CAmmo_UI* CPlayer::m_pAmmoUI = nullptr;
-CLife_UI* CPlayer::m_pLifeUI = nullptr;
-
 //=============================================
 //コンストラクタ
 //=============================================
@@ -51,15 +48,12 @@ m_pHitCameraEffect(),		//カメラのエフェクトのポインタ初期化
 m_pGunIcon(),				//銃のアイコンのポインタ初期化
 m_pUlt(),					//ウルトのポインタ初期化 
 m_pPlayerState(),			//プレイヤーのステート初期化
+m_pAmmoUI(),				//残弾数UIの初期化
+m_pLifeUI(),				//体力UIの初期化
 m_pUltUI(),					//ウルトのUI初期化
 m_pSmokeUI(),				//スモークのUI初期化
-m_pBlinkUI(),				//ブリンクのUI初期化
-m_pStaminaGauge()			//スタミナのゲージ初期化
-{//イニシャライザーでメンバ変数初期化
-	if (m_pSliding == nullptr)
-	{
-		m_pSliding = new CPlayerSliding;
-	}
+m_pBlinkUI()				//ブリンクのUI初期化
+{
 	if (m_pAvoidance == nullptr)
 	{
 		m_pAvoidance = new CPlayerAvoidance;
@@ -230,11 +224,6 @@ void CPlayer::Uninit()
 		m_pUltUI->Uninit();
 		m_pUltUI = nullptr;
 	}
-	if (m_pUltUI != nullptr)
-	{
-		m_pStaminaGauge->Uninit();
-		m_pStaminaGauge = nullptr;
-	}
 	if (m_pGunIcon != nullptr)
 	{
 		m_pGunIcon->Uninit();
@@ -249,11 +238,6 @@ void CPlayer::Uninit()
 	{
 		m_pSmokeUI->Uninit();
 		m_pSmokeUI = nullptr;
-	}
-	if (m_pSliding != nullptr)
-	{
-		delete m_pSliding;
-		m_pSliding = nullptr;
 	}
 	if (m_pAvoidance != nullptr)
 	{

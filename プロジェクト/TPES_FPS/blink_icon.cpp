@@ -7,7 +7,7 @@
 #include "blink_icon.h"
 #include "manager.h"
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CBlinkIcon::TEXTURE_NAME = "data\\TEXTURE\\blink.png";
 
 //=============================================

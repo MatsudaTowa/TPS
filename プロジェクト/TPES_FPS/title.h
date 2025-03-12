@@ -12,6 +12,10 @@
 #include "player.h"
 #include "block.h"
 #include "title_screen.h"
+
+//=============================================
+//タイトルクラス
+//=============================================
 class CTitle :public CScene
 {
 public:

@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[player.h]
+//プレイヤー[player.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -24,8 +24,10 @@
 #include "gauge.h"
 #include "blink_UI.h"
 
+//=============================================
+// 前方宣言
+//=============================================
 class CPlayerState;
-class CPlayerSliding;
 class CPlayerAvoidance;
 class CAmmo_UI;
 class CUlt_UI;
@@ -33,7 +35,9 @@ class CUlt;
 class CSmoke_UI;
 class CBlink_UI;
 
+//=============================================
 //プレイヤークラス
+//=============================================
 class CPlayer:public CCharacter
 {
 public:
@@ -45,14 +49,14 @@ public:
 	static const int PLAYER_PRIORITY = 8; //描画順
 
 	//モーションの種類の列挙
-	typedef enum
+	enum Motion_Type
 	{
 		MOTION_NEUTRAL = 0,
 		MOTION_MOVE,
 		MOTION_ATTACK,
 		MOTION_STAN,
 		MOTION_MAX,
-	}Motion_Type;
+	};
 
 	CPlayer(int nPriority = PLAYER_PRIORITY);
 	~CPlayer();
@@ -77,82 +81,92 @@ public:
 
 	void Input(); //プレイヤー入力処理
 
-	void ChangePlayerState(CPlayerState* state);
+	void ChangePlayerState(CPlayerState* state); //プレイヤーのステート切り替え
 
+	//死んだ回数設定
 	inline void SetDeathCnt(int DeathCnt)
 	{
 		m_DeathCnt = DeathCnt;
 	}
 
+	//スタミナ設定
 	inline void SetStamina(int Stamina)
 	{
 		m_Stamina = Stamina;
 	}
 
-	inline void SetSmoke(bool isSmoke)
+	//スモークが使えるかを設定
+	inline void SetIsSmoke(bool isSmoke)
 	{
 		m_isSmoke = isSmoke;
 	}
 
+	//吹っ飛ばされているか設定
 	inline void SetBlown(bool isBlown)
 	{
 		m_isBlown = isBlown;
 	}
 
+	//ブリンクの使える回数設定
 	inline void SetBlinkCnt(int BlinkCnt)
 	{
 		m_BlinkCnt = BlinkCnt;
 	}
 
+	//エネミーとの当たり判定設定
 	inline void SetEnemyColision(bool isColision)
 	{
 		m_isEnemyColision = isColision;
 	}
 
+	//死んだ回数取得
 	inline int& GetDeathCnt()
 	{
 		return m_DeathCnt;
 	}
 
+	//スタミナ取得
 	inline int& GetStamina()
 	{
 		return m_Stamina;
 	}
 
+	//ブリンクが使える回数取得
 	inline int& GetBlinkCnt()
 	{
 		return m_BlinkCnt;
 	}
 
-	inline bool& GetSmoke()
+	//スモークが使えるか取得
+	inline bool& GetIsSmoke()
 	{
 		return m_isSmoke;
 	}
 
+	//吹っ飛ばされているか取得
 	inline bool& GetBlown()
 	{
 		return m_isBlown;
 	}
 
+	//エネミーとの当たり判定取得
 	inline bool& GetEnemyColision()
 	{
 		return m_isEnemyColision;
 	}
-	CReticle* m_Raticle;
 
-	CUlt* m_pUlt;
+	CReticle* m_Raticle;	//レティクルポインタ
 
-	CPlayerSliding* m_pSliding;
+	CUlt* m_pUlt;			//ウルトポインタ
 
-	CPlayerState* m_pPlayerState;
+	CPlayerState* m_pPlayerState;	//プレイヤーの状態
 
-	CPlayerAvoidance* m_pAvoidance;
+	CPlayerAvoidance* m_pAvoidance;	//回避行動
 private:
 
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
 
-	//プレイヤーの移動関連
 	static const int IGNORE_COLLISION_FRAME = 150; //当たり判定無視フレーム
 	static const int SMOKE_RECAST_FRAME = 900; //スモーク復活フレーム
 	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
@@ -174,24 +188,26 @@ private:
 
 	void SetUI(); //UI設定
 	void ReSpawn(); //リスポーン
-	static CAmmo_UI* m_pAmmoUI;
-	static CLife_UI* m_pLifeUI;
 
-	CUlt_UI* m_pUltUI;
-	CSmoke_UI* m_pSmokeUI;
-	CBlink_UI* m_pBlinkUI;
+	CAmmo_UI* m_pAmmoUI;	//残弾UI
 
-	CGauge_3D* m_pStaminaGauge;
+	CLife_UI* m_pLifeUI;	//体力UI
 
-	CGunIcon* m_pGunIcon;
+	CUlt_UI* m_pUltUI;		//ウルトUI
 
-	CHitCameraEffect* m_pHitCameraEffect;
+	CSmoke_UI* m_pSmokeUI;	//スモークUI
 
-	void DebugPos();
+	CBlink_UI* m_pBlinkUI;	//ブリンクUI
 
-	int m_IgnoreColisionCnt;
+	CGunIcon* m_pGunIcon;	//銃のアイコン
 
-	int m_SmokeRecastCnt;
+	CHitCameraEffect* m_pHitCameraEffect;	//ヒット時のカメラエフェクト
+
+	void DebugPos();	//デバッグ時位置情報表示
+
+	int m_IgnoreColisionCnt;	//敵との当たり判定無効カウント
+
+	int m_SmokeRecastCnt;		//スモークのクールタイムカウント
 
 	int m_DeathCnt; //死亡数
 
@@ -207,6 +223,6 @@ private:
 
 	bool m_isSmoke; //スモークを使ったか
 
-	bool m_isBlown; //スモークを使ったか
+	bool m_isBlown; //ふっとばされてるか
 };
 #endif

@@ -11,6 +11,10 @@
 #include "scene.h"
 #include "player.h"
 #include "block.h"
+
+//=============================================
+// テストクラス
+//=============================================
 class CTest :public CScene
 {
 public:

@@ -12,10 +12,12 @@
 
 #define _ULT_RANGE_H_
 
+//=============================================
+// ウルトの範囲クラス
+//=============================================
 class CUltRange
 {
 public:
-
 	CUltRange();
 	~CUltRange();
 	HRESULT Init();

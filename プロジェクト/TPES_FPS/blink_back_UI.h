@@ -10,7 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
-//スモークの表記クラス
+//=============================================
+//ブリンクUIの背景クラス
+//=============================================
 class CBlinkBackUI : public CObject2D
 {
 public:

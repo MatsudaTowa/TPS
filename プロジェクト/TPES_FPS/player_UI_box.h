@@ -10,7 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
+//=============================================
 //プレイヤーのUIの枠クラス
+//=============================================
 class CPlayerUIBox : public CObject2D
 {
 public:
@@ -33,8 +35,9 @@ public:
 private:
 };
 
-
+//=============================================
 //プレイヤーのUIの体力の枠クラス
+//=============================================
 class CLifeUIBox : public CPlayerUIBox
 {
 public:
@@ -49,7 +52,9 @@ private:
 
 };
 
+//=============================================
 //プレイヤーのUIの残弾の枠クラス
+//=============================================
 class CAmmoUIBox : public CPlayerUIBox
 {
 public:
@@ -63,7 +68,9 @@ private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
 
+//=============================================
 //プレイヤーのUIのスコアの枠クラス
+//=============================================
 class CScoreUIBox : public CPlayerUIBox
 {
 public:

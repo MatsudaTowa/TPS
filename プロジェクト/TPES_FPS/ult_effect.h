@@ -10,7 +10,9 @@
 #include "main.h"
 #include "object3D.h"
 
+//=============================================
 //ウルトエフェクトクラス
+//=============================================
 class CUltEffect : public CObject3D
 {
 public:

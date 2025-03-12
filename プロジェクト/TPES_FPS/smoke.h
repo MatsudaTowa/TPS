@@ -11,6 +11,9 @@
 
 #define _SMOKE_H_
 
+//=============================================
+// スモーククラス
+//=============================================
 class CSmoke : public CBillboard
 {
 public:
@@ -35,11 +38,13 @@ public:
 	//スモーク作成
 	static CSmoke* Create(D3DXVECTOR3 pos, SMOKE_TYPE type);
 
+	//移動量設定
 	inline void SetMove(D3DXVECTOR3 move)
 	{
 		m_move = move;
 	}
 
+	//移動量取得
 	inline D3DXVECTOR3& GetMove()
 	{
 		return m_move;

@@ -11,6 +11,9 @@
 
 #define _ENEMY_RELOAD_UI_H_
 
+//=============================================
+// リロードの際に表示するUIクラス
+//=============================================
 class CEnemy_Reload_UI : public CBillboard
 {
 public:

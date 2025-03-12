@@ -10,6 +10,9 @@
 #include "main.h"
 #include "object2D.h"
 
+//=============================================
+// チュートリアル画面クラス
+//=============================================
 class CTutorial_Screen : public CObject2D
 {
 public:

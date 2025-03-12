@@ -14,9 +14,8 @@
 #include "smoke_icon.h"
 #include "keyboard_UI.h"
 
-class CPlayer;
 //=============================================
-//残弾数表示クラス
+//スモークUIクラス
 //=============================================
 class CSmoke_UI
 {

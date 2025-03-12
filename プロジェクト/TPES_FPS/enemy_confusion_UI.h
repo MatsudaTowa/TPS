@@ -12,6 +12,9 @@
 
 #define _ENEMY_WANDERING_UI_H_
 
+//=============================================
+//¬—ó‘Ô‚ÌUIƒNƒ‰ƒX
+//=============================================
 class CEnemy_Confusion_UI : public CEnemy_Reaction_UI
 {
 public:

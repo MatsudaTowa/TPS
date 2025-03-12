@@ -17,6 +17,9 @@
 #include "dash_effect.h"
 #include "tackle_charge.h"
 
+//=============================================
+//前方宣言
+//=============================================
 class CBossChase;
 class CBossWandering;
 class CBossConfusion;
@@ -25,7 +28,9 @@ class CBossSearch;
 class CBossRampage;
 class CBossState;
 
+//=============================================
 //ボスのエネミークラス
+//=============================================
 class CBossEnemy :public CEnemy
 {
 public:

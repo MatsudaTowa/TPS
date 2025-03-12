@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[bullet.h]
+//íe[bullet.h]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -11,25 +11,28 @@
 
 #define _BULLET_H_
 
+//=============================================
+//íeÉNÉâÉX
+//=============================================
 class CBullet : public CAttack_Manager
 {
 public:
 	static const int BULLET_PRIORITY = 10; //ï`âÊèá
 
 	//ìGÇ©é©ï™Ç©ÇÃîªífÇ∑ÇÈóÒãì
-	typedef enum
+	enum BULLET_ALLEGIANCE
 	{
 		BULLET_ALLEGIANCE_PLAYER = 0,
 		BULLET_ALLEGIANCE_ENEMY,
 		BULLET_ALLEGIANCE_MAX,
-	}BULLET_ALLEGIANCE;
+	};
 
 	//íeÇÃéÌóﬁ
-	typedef enum
+	enum BULLET_TYPE
 	{
 		BULLET_TYPE_NORMAL = 0,
 		BULLET_TYPE_MAX,
-	}BULLET_TYPE;
+	};
 
 	CBullet(int nPriority = BULLET_PRIORITY);
 	~CBullet()override;
