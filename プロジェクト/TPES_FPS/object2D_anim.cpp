@@ -1,12 +1,11 @@
 //=============================================
 //
-//2DTemplate[move_texture.cpp]
+//アニメーション2D[object2D_anim.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
 #include "object2D_anim.h"
 #include "manager.h"
-
 
 //=============================================
 //コンストラクタ

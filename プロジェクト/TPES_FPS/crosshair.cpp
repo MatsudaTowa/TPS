@@ -7,6 +7,7 @@
 #include "crosshair.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CCrossHair::CROSSHAIR_TEXTURE_NAME = "data\\TEXTURE\\crosshair000.png";
 
 //=============================================

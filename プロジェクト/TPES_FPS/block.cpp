@@ -147,7 +147,6 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	pBlock->SetRot(rot); //posÝ’è
 	pBlock->m_nLife = nLife; //Žõ–½‘ã“ü
 	pBlock->m_bBreak = bBreak; //‰ó‚¹‚é‚©‚Ç‚¤‚©
-	//pBlock->BindTexture(m_pTextureTemp);
 
 	//Xƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ý
 	pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,

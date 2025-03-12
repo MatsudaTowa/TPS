@@ -115,14 +115,6 @@ void CFade::SetFade(CScene::MODE modeNext)
     m_fade = FADE_OUT;
 }
 
-////=============================================
-////フェードの情報取得
-////=============================================
-////CFade::FADE CFade::GetFade(void)
-////{
-////    return m_fade;
-////}
-
 //=============================================
 //フェードの色取得(主にアルファ値)
 //=============================================
@@ -145,8 +137,6 @@ CFade* CFade::Create(D3DXVECTOR3 pos)
 		pFade->m_colorFade = FLOAT_ZERO;
 
 		pFade->SetType(OBJECT_TYPE_FADE); //タイプ設定
-
-		//pResult_Screen->BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 
 		pFade->Init();
 	}

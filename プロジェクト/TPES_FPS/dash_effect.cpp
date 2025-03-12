@@ -74,9 +74,9 @@ CDashEffect* CDashEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	CDashEffect* pEffect = new CDashEffect;
 	if (pEffect == nullptr) { return nullptr; }
 
-	pEffect->SetPos(pos);
+	pEffect->SetPos(pos);	//位置設定
 
-	pEffect->SetRot(rot);
+	pEffect->SetRot(rot);	//方向設定
 
 	CModel* pModel = CManager::GetInstance()->GetModel();
 
@@ -87,7 +87,7 @@ CDashEffect* CDashEffect::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 
 	pEffect->SetType(OBJECT_TYPE_DUSH_EFFECT); //タイプ設定
 
-	pEffect->Init();
+	pEffect->Init();	//初期化設定
 
 	return pEffect;
 }

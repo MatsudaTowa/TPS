@@ -113,6 +113,8 @@ private:
 
 	static constexpr float MOUSE_SENS = 0.001f; //デフォルトのマウス感度
 
+	static constexpr float TURN_SPEED = 0.02f; //カメラの回転スピード
+
 	static constexpr float MAX_TURN_X = 0.5f; //サードパーソンビュー時のXの最大可動域
 	static constexpr float MIN_TURN_X = -0.15f; //サードパーソンビュー時のXの最小可動域
 

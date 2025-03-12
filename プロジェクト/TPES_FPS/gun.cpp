@@ -19,10 +19,10 @@ m_FireRate(),				//発射レート
 m_nRateCnt(INT_ZERO),		//レート計測
 m_nDamage(INT_ZERO),		//ダメージ
 m_Size(),					//弾のサイズ
+m_pShot(),					//発射処理
+m_pReload(),				//リロード処理
 m_BulletSpeed(FLOAT_ZERO)	//弾のスピード
 {
-	m_pShot = nullptr;
-	m_pReload = nullptr;
 }
 
 //=============================================
@@ -78,7 +78,6 @@ CAssultRifle::CAssultRifle()
 //=============================================
 CAssultRifle::~CAssultRifle()
 {
-
 }
 
 //=============================================

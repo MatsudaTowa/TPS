@@ -118,7 +118,6 @@ void CCamera::Update()
 	if (m_rot.y > D3DX_PI)
 	{
 		m_rot.y = -D3DX_PI;
-		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
 	if (m_rot.y < -D3DX_PI)
@@ -129,7 +128,6 @@ void CCamera::Update()
 	if (m_rot.x > D3DX_PI)
 	{
 		m_rot.x = -D3DX_PI;
-		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
 	if (m_rot.x < -D3DX_PI)
@@ -298,7 +296,7 @@ void CCamera::CameraTurn()
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	if (pKeyboard->GetPress(DIK_Q) == true)
 	{
-		m_rot.y -= 0.02f;
+		m_rot.y -= TURN_SPEED;
 
 		m_posR.x = m_posV.x + sinf(m_rot.y) * m_fLength;
 		m_posR.z = m_posV.z + cosf(m_rot.y) * m_fLength;
@@ -307,14 +305,14 @@ void CCamera::CameraTurn()
 
 	if (pKeyboard->GetPress(DIK_E) == true)
 	{
-		m_rot.y += 0.02f;
+		m_rot.y += TURN_SPEED;
 		m_posR.x = m_posV.x + sinf(m_rot.y) * m_fLength;
 		m_posR.z = m_posV.z + cosf(m_rot.y) * m_fLength;
 	}
 
 	if (pKeyboard->GetPress(DIK_U) == true)
 	{
-		m_rot.y -= 0.02f;
+		m_rot.y -= TURN_SPEED;
 
 		m_posV.x = m_posR.x - sinf(m_rot.y) * m_fLength;
 
@@ -323,7 +321,7 @@ void CCamera::CameraTurn()
 
 	if (pKeyboard->GetPress(DIK_O) == true)
 	{
-		m_rot.y += 0.02f;
+		m_rot.y += TURN_SPEED;
 
 		m_posV.x = m_posR.x - sinf(m_rot.y) * m_fLength;
 
@@ -358,11 +356,6 @@ void CCamera::ThirdViewCamera()
 		m_posR.x = pPlayer->GetPos().x;
 		m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
 		m_posR.z = pPlayer->GetPos().z;
-
-		////カメラをプレイヤーの右にする処理:TODO
-		//m_posR.x = pPlayer->GetPos().x + THIRDVIEW_CORRECT_X;
-		//m_posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
-		//m_posR.z = pPlayer->GetPos().z + THIRDVIEW_CORRECT_Z;
 
 		m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
 			m_fLength * sinf(m_rot.x),

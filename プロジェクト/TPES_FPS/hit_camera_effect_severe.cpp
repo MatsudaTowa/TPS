@@ -7,6 +7,7 @@
 #include "hit_camera_effect_severe.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CHitCameraEffectSevere::TEXTURE_NAME = "data\\TEXTURE\\hit_camera_effect002.png";
 
 //=============================================

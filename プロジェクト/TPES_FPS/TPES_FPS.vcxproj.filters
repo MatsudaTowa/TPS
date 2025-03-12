@@ -189,9 +189,6 @@
     <ClCompile Include="boss_enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="enemy_state.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="move_point.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

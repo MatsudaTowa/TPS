@@ -71,7 +71,5 @@ private:
 	static CWave* m_pWave;
 
 	CWave::WAVE m_next_wave;
-
-	void LoadBlock(const std::string* pFileName);
 };
 #endif

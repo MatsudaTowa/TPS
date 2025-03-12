@@ -183,7 +183,6 @@
     <ClCompile Include="enemy_behavior.cpp" />
     <ClCompile Include="enemy_reaction_UI.cpp" />
     <ClCompile Include="enemy_reload_UI.cpp" />
-    <ClCompile Include="enemy_state.cpp" />
     <ClCompile Include="enemy_confusion_UI.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />

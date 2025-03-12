@@ -1,6 +1,6 @@
 //=============================================
 //
-//3DTemplate[character.cpp]
+//キャラクター処理[character.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
@@ -476,8 +476,6 @@ void CCharacter::Motion(int NumParts)
 
 		m_apModel[nMotionCnt]->m_pos += MovePos[nMotionCnt];
 		m_apModel[nMotionCnt]->m_rot += MoveRot[nMotionCnt];
-		//Pos.x += MovePos[nMotionCnt].x;
-		//SetPos(Pos);
 	}
 
 	m_nMotionFrameCnt++;
@@ -493,8 +491,7 @@ void CCharacter::Motion(int NumParts)
 			SetMotion(INT_ZERO);
 			//終わった判定
 			m_bLoopFinish = true;
-		}
-		
+		}	
 	}
 }
 
@@ -503,28 +500,31 @@ void CCharacter::Motion(int NumParts)
 //=====================================
 void CCharacter::SetMotion(int Motion)
 {
-	if (m_Motion != Motion)
+	if (m_Motion == Motion)
+	{//今のモーションと一致していたら
+		//この関数を抜ける
+		return;
+	}
+
+	m_Motion = Motion;
+
+	//フレームリセット
+	m_nMotionFrameCnt = INT_ZERO;
+
+	//キーカウントリセット
+	m_nKeySetCnt = INT_ZERO;
+
+	if (m_MotionSet[m_Motion].nLoop == INT_ZERO)
 	{
-		m_Motion = Motion;
+		//終わった判定
+		m_bLoopFinish = false;
+	}
 
-		//フレームリセット
-		m_nMotionFrameCnt = INT_ZERO;
-
-		//キーカウントリセット
-		m_nKeySetCnt = INT_ZERO;
-
-		if (m_MotionSet[m_Motion].nLoop == INT_ZERO)
-		{
-			//終わった判定
-			m_bLoopFinish = false;
-		}
-
-		for (int nCntParts = INT_ZERO; nCntParts < m_PartsCnt; nCntParts++)
-		{
-			m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
-			m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
-			m_apModel[nCntParts]->m_rot = m_MotionSet[Motion].keySet[0].key[nCntParts].rot;
-		}
+	for (int nCntParts = INT_ZERO; nCntParts < m_PartsCnt; nCntParts++)
+	{
+		m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
+		m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
+		m_apModel[nCntParts]->m_rot = m_MotionSet[Motion].keySet[0].key[nCntParts].rot;
 	}
 }
 

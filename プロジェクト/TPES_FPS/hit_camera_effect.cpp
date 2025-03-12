@@ -10,6 +10,7 @@
 #include "hit_camera_effect_severe.h"
 #include "manager.h"
 
+//色
 const D3DXCOLOR CHitCameraEffect::COLOR = { 0.5f, 0.0f, 0.0f, 0.8f };
 
 //=============================================
@@ -114,7 +115,7 @@ CHitCameraEffect* CHitCameraEffect::Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE sta
 
 	pHitCameraEffect->SetPos(pos); //pos設定
 
-	pHitCameraEffect->m_alpha = COLOR.a;
+	pHitCameraEffect->m_alpha = COLOR.a;	//アルファ値設定
 
 	pHitCameraEffect->SetType(OBJECT_TYPE_HIT_CAMERA_EFFECT); //タイプ設定
 

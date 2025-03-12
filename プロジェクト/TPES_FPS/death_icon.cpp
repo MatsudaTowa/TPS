@@ -7,7 +7,7 @@
 #include "death_icon.h"
 #include "manager.h"
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CDeathIcon::TEXTURE_NAME = "data\\TEXTURE\\death_icon.png";
 
 //=============================================

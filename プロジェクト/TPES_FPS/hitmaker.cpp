@@ -7,8 +7,8 @@
 #include "hitmaker.h"
 #include "manager.h"
 
+//テクスチャパス
 const std::string CHitMaker::HITMARKER_DOT_TEXTURE_NAME = "data\\TEXTURE\\hitmarker.png";
-
 
 //=============================================
 //コンストラクタ
