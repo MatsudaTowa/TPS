@@ -67,7 +67,7 @@ private:
 
 	CTutorial_UI* m_pTutorial_UI;
 
-	void LoadBlock(const std::string* pFileName);
+	void LoadBlock(const std::string& pFileName);
 	void LoadWall(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
 };

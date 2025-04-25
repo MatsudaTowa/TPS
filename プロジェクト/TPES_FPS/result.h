@@ -24,10 +24,10 @@ public:
 	void Uninit() override;
 	void Update() override;
 	void Draw() override;
-	int LoadScore(const char* FileName);
+	int LoadScore(const std::string& FileName);
 
 private:
-	static const char* WAVE_RESULT_FILE[CManager::NUM_RESULT_FILE];
+	static const std::string WAVE_RESULT_FILE[CManager::NUM_RESULT_FILE];
 	static const D3DXVECTOR3 SCORE_POS[CManager::NUM_RESULT_FILE + 1];
 	static const D3DXVECTOR2 SCORE_SIZE[2];
 	static const float DIGIT_SHIFT[2];

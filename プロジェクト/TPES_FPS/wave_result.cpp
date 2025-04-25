@@ -89,28 +89,18 @@ void CWave_Result::SetNextWave(CWave::WAVE wave)
 //=============================================
 //スコアロード
 //=============================================
-void CWave_Result::LoadScore(const char* pFileName)
+void CWave_Result::LoadScore(const std::string& pFileName)
 {
 	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName, "rb");
+	std::ifstream File(pFileName, std::ios::binary);
 
-	int nScore = 0; //返すスコア
-
-	if (pFile != NULL)
-	{
-		//スコアの読み込み
-		fread(&nScore, sizeof(int), 1, pFile);
-
-		//ファイルを閉じる
-		fclose(pFile);
-	}
-
-	else
+	//ファイルが開かなかったら関数を抜ける
+	if (!File.is_open())
 	{
 		return;
 	}
 
-	m_nScore = nScore;
+	File.read(reinterpret_cast<char*>(&m_nScore), sizeof(int));
 
 	m_pScore->AddScore(m_nScore);
 }

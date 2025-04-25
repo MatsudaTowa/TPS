@@ -33,7 +33,7 @@ class CFreeView : public CCameraState
 public:
 	virtual void FreeView(CCamera* camera)override;
 private:
-	static constexpr float FREEVIEW_LENGTH = 200.0f; //サードパーソンビュー時の距離
+	static constexpr float FREEVIEW_LENGTH = 200.0f; //自由視点時の距離
 };
 
 //=============================================

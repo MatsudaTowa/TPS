@@ -40,7 +40,7 @@ HRESULT CWave_Boss::Init()
 	CWave::Init();
 
 	//ƒuƒƒbƒN“Ç‚İ‚İ
-	CWave::LoadBlock(&WAVE_BOSS_BLOCK_FILE);
+	CWave::LoadBlock(WAVE_BOSS_BLOCK_FILE);
 	//“G‚Ì“Ç‚İ‚İ
 	CWave::LoadEnemy(&WAVE_BOSS_ENEMY_FILE);
 	//•Ç‚Ì“Ç‚İ‚İ

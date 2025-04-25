@@ -36,11 +36,12 @@ public:
 	void CreatePiece();
 	void Draw()override;
 	//ブロック作成
-	static CBlock* Create(BLOCKTYPE type,D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife,bool bBreak);
+	static CBlock* Create(BLOCKTYPE type,D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 private:
 	static const char* MODEL_NAME;	//モデルの名前
 
 	static const int NUM_PIECE = 5; //壊れた際に生成するピース数
+	static const int LIFE = 3;		//ブロックライフ
 	static const int NUM_SMOKE = 30; //壊れた際に生成するスモーク数
 
 	static constexpr float PIECE_ROTATION_MAX = 3.0f; //回転範囲最大値

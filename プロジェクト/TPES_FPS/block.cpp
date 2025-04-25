@@ -38,6 +38,8 @@ CBlock::~CBlock()
 //=============================================
 HRESULT CBlock::Init()
 {
+	m_nLife = LIFE; //寿命代入
+	m_bBreak = true; //デフォルトは壊せる設定に
 	//親クラスの初期化処理
 	CObjectX::Init();
 	return S_OK;
@@ -133,7 +135,7 @@ void CBlock::Draw()
 //=============================================
 //ブロック生成
 //=============================================
-CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLife, bool bBreak)
+CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CBlock* pBlock = new CBlock;
 
@@ -145,8 +147,7 @@ CBlock* CBlock::Create(BLOCKTYPE type, D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nLi
 	pBlock->m_type = type; //タイプ設定
 	pBlock->SetPos(pos); //pos設定
 	pBlock->SetRot(rot); //pos設定
-	pBlock->m_nLife = nLife; //寿命代入
-	pBlock->m_bBreak = bBreak; //壊せるかどうか
+
 
 	//Xファイル読み込み
 	pBlock->BindXFile(pModel->GetModelInfo(pModel->Regist(MODEL_NAME)).pBuffMat,

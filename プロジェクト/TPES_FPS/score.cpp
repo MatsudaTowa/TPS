@@ -84,16 +84,17 @@ void CScore::AddScore(int nValue)
 //=============================================
 //スコア書き出し
 //=============================================
-void CScore::ExportScore(const std::string* pFileName)
+void CScore::ExportScore(const std::string& FileName)
 {
-	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName->c_str(), "wb");
+	std::ofstream File(FileName,std::ios::binary);
 
-	if (pFile != NULL)
+	if (!File.is_open())
 	{
-		fwrite(&m_nScore, sizeof(int), INT_ONE, pFile);
-		fclose(pFile);
+		return;
 	}
+
+	File.write(reinterpret_cast<const char*>(&m_nScore), sizeof(int));
+	File.close();
 }
 
 //=============================================

@@ -129,7 +129,7 @@ void CGame::Update()
 				ApplyDeathPenalty();
 
 				//現在のスコアを書き出し
-				m_pWave->WaveResult(&CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
+				m_pWave->WaveResult(CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
 				SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 			}
 		}

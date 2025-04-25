@@ -76,10 +76,10 @@ void CMask::Draw()
 	// ステンシルテストを有効にする
 	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 	// 比較参照値を設定する
-	pDevice->SetRenderState(D3DRS_STENCILREF, 2);
+	pDevice->SetRenderState(D3DRS_STENCILREF, REFARENCE_VALUE);
 	// ステンシルマスクを指定する
 	pDevice->SetRenderState(D3DRS_STENCILMASK, 255);
-	// ステンシル比較関数を指定する TODO:以上にするとおかしくなる
+	// ステンシル比較関数を指定する
 	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 	// ステンシル結果に対しての反映設定
 	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);	// Zテスト・ステンシルテスト成功

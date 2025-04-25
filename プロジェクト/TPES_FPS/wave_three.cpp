@@ -36,7 +36,7 @@ HRESULT CWave_Three::Init()
 	CWave::Init();
 
 	//ï«ì«Ç›çûÇ›
-	CWave::LoadBlock(&WAVE_3_BLOCK_FILE);
+	CWave::LoadBlock(WAVE_3_BLOCK_FILE);
 	//ìGì«Ç›çûÇ›
 	CWave::LoadEnemy(&WAVE_3_ENEMY_FILE);
 	//ï«ì«Ç›çûÇ›

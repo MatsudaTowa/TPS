@@ -36,7 +36,7 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
-	void LoadBlock(const std::string* pFileName);
+	void LoadBlock(const std::string& pFileName);
 
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 

@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <crtdbg.h>
+#include <fstream>
 //#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 #define DIRECTINPUT_VERSION (0x0800) //Œx‘Îˆ—p

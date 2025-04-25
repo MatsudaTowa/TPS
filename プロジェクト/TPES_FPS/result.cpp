@@ -10,7 +10,7 @@
 #include "game.h"
 
 //リザルトファイルパス
-const char* CResult::WAVE_RESULT_FILE[CManager::NUM_RESULT_FILE]
+const std::string CResult::WAVE_RESULT_FILE[CManager::NUM_RESULT_FILE]
 {
     "data\\FILE\\score\\wave_one_score.bin",
     "data\\FILE\\score\\wave_two_score.bin",
@@ -163,26 +163,20 @@ void CResult::Draw()
 //=============================================
 //スコア読み込み
 //=============================================
-int CResult::LoadScore(const char* FileName)
+int CResult::LoadScore(const std::string& FileName)
 {
-    //ファイルの読み込み
-    FILE* pFile = fopen(FileName, "rb");
-
     int nScore = INT_ZERO; //返すスコア
 
-    if (pFile != NULL)
-    {
-        //スコアの読み込み
-        fread(&nScore, sizeof(int), 1, pFile);
+    //ファイルの読み込み
+    std::ifstream File(FileName, std::ios::binary);
 
-        //ファイルを閉じる
-        fclose(pFile);
-    }
-
-    else
+    //ファイルが開かなかったら関数を抜ける
+    if (!File.is_open())
     {
         return 0;
     }
+
+    File.read(reinterpret_cast<char*>(&nScore), sizeof(int));
 
     return nScore;
 }

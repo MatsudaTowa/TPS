@@ -18,6 +18,7 @@ class CMask : public CObject2D
 {
 public:
 	static const int MASK_PRIORITY = 12;  //•`‰æ‡
+	static const int REFARENCE_VALUE = 2;  //•`‰æQÆ’l
 
 	CMask(int nPriority = MASK_PRIORITY);
 	~CMask()override;

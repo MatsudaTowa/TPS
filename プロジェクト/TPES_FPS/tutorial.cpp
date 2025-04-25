@@ -50,7 +50,7 @@ HRESULT CTutorial::Init()
 	CPlayer::Create();
 
 	//ブロック読み込み
-	LoadBlock(&BLOCK_FILE);
+	LoadBlock(BLOCK_FILE);
 	//敵の読み込み
 	LoadEnemy(&ENEMY_FILE);
 	//壁の読み込み
@@ -117,37 +117,38 @@ void CTutorial::Draw()
 //=============================================
 //ブロック読み込み
 //=============================================
-void CTutorial::LoadBlock(const std::string* pFileName)
+void CTutorial::LoadBlock(const std::string& pFileName)
 {
-	//生成するブロック数読み込み用
-	int NumBlock = INT_ZERO;
-
-	//生成するブロック情報読み込み用
-	LOAD_BLOCK Info[TXT_MAX];
-
 	//ファイルの読み込み
-	FILE* pFile = fopen(pFileName->c_str(), "rb");
+	std::ifstream File(pFileName, std::ios::binary);
 
-	if (pFile != NULL)
-	{
-		//敵の使用してる数の読み込み
-		fread(&NumBlock, sizeof(int), INT_ONE, pFile);
-
-		//敵の使用数分、敵の読み込み
-		fread(&Info[0], sizeof(LOAD_BLOCK), NumBlock, pFile);
-
-		//ファイルを閉じる
-		fclose(pFile);
-	}
-	else
+	//ファイルが開かなかったら関数を抜ける
+	if (!File.is_open())
 	{
 		return;
 	}
 
-	for (int nCnt = INT_ZERO; nCnt < NumBlock; nCnt++)
+	//生成するブロック数読み込み用
+	int NumBlock = 0;
+
+	File.read(reinterpret_cast<char*>(&NumBlock), sizeof(int));
+
+	if (NumBlock > 0)
 	{
-		CBlock::Create(Info[nCnt].type, Info[nCnt].pos, Info[nCnt].rot, INT_ONE, false);
+		//生成するブロックの情報を持つ変数
+		std::vector<LOAD_BLOCK> info(NumBlock);
+
+		//ファイルから読み込んだデータを格納
+		File.read(reinterpret_cast<char*>(info.data()), sizeof(LOAD_BLOCK) * NumBlock);
+
+		//イテレータで回して生成
+		for (auto& itr : info)
+		{
+			CBlock::Create(itr.type, itr.pos, itr.rot);
+		}
 	}
+
+	File.close();
 }
 
 //=============================================

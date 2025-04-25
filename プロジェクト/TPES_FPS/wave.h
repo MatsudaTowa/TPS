@@ -75,7 +75,7 @@ public:
 	static WAVE GetCurrentWave();
 	static CScore* GetScore();
 
-	void LoadBlock(const std::string* pFileName);
+	void LoadBlock(const std::string& pFileName);
 	void LoadWall(const std::string* pFileName);
 	void LoadEnemy(const std::string* pFileName);
 
@@ -90,7 +90,7 @@ public:
 	}
 
 	//ウェーブのリザルトテンプレートメソッド
-	inline void WaveResult(const std::string* pFileName)
+	inline void WaveResult(const std::string& pFileName)
 	{
 		m_pScore->ExportScore(pFileName);
 		m_pScore->Reset();

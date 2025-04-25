@@ -37,7 +37,7 @@ HRESULT CWave_One::Init()
 	//‰Šú‰»
 	CWave::Init();
 	//ƒuƒƒbƒN“Ç‚İ‚İ
-	CWave::LoadBlock(&WAVE_1_BLOCK_FILE);
+	CWave::LoadBlock(WAVE_1_BLOCK_FILE);
 	//“G“Ç‚İ‚İ
 	CWave::LoadEnemy(&WAVE_1_ENEMY_FILE);
 	//•Ç“Ç‚İ‚İ

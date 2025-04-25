@@ -27,7 +27,7 @@ public:
 	void Uninit() override ;
 	void Update() override;
 	void SetNextWave(CWave::WAVE wave);
-	void LoadScore(const char* pFileName);
+	void LoadScore(const std::string& pFileName);
 
 	inline void Create(CWave::WAVE wave, char* pFileName)
 	{
