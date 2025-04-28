@@ -29,7 +29,7 @@ m_bLoopFinish(),												//ループが終わったか
 m_Speed(),														//スピード
 m_Jump(),														//ジャンプ力
 m_pGun(),														//銃のポインタ
-m_MotionSet(),													//モーション設定
+m_motion_data(),													//モーション設定
 m_pMove(),														//移動する処理
 m_pGunAttack(),													//銃の攻撃
 m_pStan(),														//スタン処理
@@ -231,232 +231,45 @@ void CCharacter::MotionDraw()
 //=============================================
 void CCharacter::Load_Parts(const char* FileName)
 {
-	int nCnt = INT_ZERO;
-	int nCntName = INT_ZERO;
-	int nCntKey = INT_ZERO; //キーを入れるパーツのカウント数
-	int nCntMotion = INT_ZERO; //キー数のカウント
-	int nCntMotionSet = INT_ZERO; //モーションの種類のカウント
-	char aDataSearch[MAX_TXT];
-	char aEqual[MAX_TXT]; //[＝]読み込み用
-	char aGets[MAX_TXT]; //モーションのいらないもの読み込み用
-	float radius = FLOAT_ZERO;//半径
-	float height = FLOAT_ZERO;//高さ
-
-	char Path[MAX_PARTS][MAX_TXT]; //パーツのパス
-
 	//ファイルの読み込み
-	FILE* pFile;
+	std::ifstream File(FileName, std::ios::binary);
 
-	//ファイルの読み込み
-	pFile = fopen(FileName, "r");
-
-	if (pFile == NULL)
-	{//種類の情報のデータファイルが開けなかった場合
-		//処理を終了する
+	//ファイルが開かなかったら関数を抜ける
+	if (!File.is_open())
+	{
 		return;
 	}
 
-	//ENDが見つかるまで読み込みを繰り返す
-	while (1)
+	File.read(reinterpret_cast<char*>(&m_motion_data), sizeof(CCharacter::MotionData));
+
+	m_Speed = m_motion_data.speed;
+	m_Jump = m_motion_data.jump;
+	m_PartsCnt = m_motion_data.parts;
+
+	for (int nCnt = 0; nCnt < m_motion_data.parts; ++nCnt)
 	{
-		fscanf(pFile, "%s", aDataSearch); //検索
+		m_apModel[nCnt] = CModel_Parts::Create(VEC3_RESET_ZERO, VEC3_RESET_ZERO, &m_motion_data.path[nCnt][0]);
+		m_apModel[nCnt]->m_nIdx = m_motion_data.idx[nCnt];
+		m_apModel[nCnt]->m_nIdxModelParent = m_motion_data.parent[nCnt];
 
-		if (!strcmp(aDataSearch, "END"))
-		{//読み込みを終了
-			fclose(pFile);
-			break;
-		}
-		if (aDataSearch[0] == '#')
+		//親を設定
+		if (m_apModel[nCnt]->m_nIdxModelParent == -1)
 		{
-			continue;
+			m_apModel[nCnt]->SetParent(nullptr);
 		}
-
-		if (!strcmp(aDataSearch, "NUM_MODEL"))
-		{//モデル数読み込み
-			fscanf(pFile, "%s", &aEqual[0]);
-			fscanf(pFile, "%d", &m_PartsCnt);
-		}
-		if (!strcmp(aDataSearch, "MODEL_FILENAME"))
-		{//モデルファイル読み込み
-			fscanf(pFile, "%s", &aEqual[0]);
-			fscanf(pFile, "%s", &Path[nCntName][0]);
-			//モデルパーツのクリエイト
-			m_apModel[nCntName] = CModel_Parts::Create(VEC3_RESET_ZERO, VEC3_RESET_ZERO, &Path[nCntName][0]);
-
-			nCntName++;
-		}
-
-		if (!strcmp(aDataSearch, "CHARACTERSET"))
+		else
 		{
-			//項目ごとのデータを代入
-			while (1)
-			{
-				fscanf(pFile, "%s", aDataSearch); //検索
-
-				if (!strcmp(aDataSearch, "END_CHARACTERSET"))
-				{
-					break;
-				}
-				else if (!strcmp(aDataSearch, "MOVE"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f", &m_Speed);
-				}
-				else if (!strcmp(aDataSearch, "JUMP"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f", &m_Jump);
-				}
-				else if (!strcmp(aDataSearch, "RADIUS"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f", &radius);
-				}
-				else if (!strcmp(aDataSearch, "HEIGHT"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f", &height);
-				}
-				else if (!strcmp(aDataSearch, "PARTSSET"))
-				{
-					//項目ごとのデータを代入
-					while (1)
-					{
-						fscanf(pFile, "%s", aDataSearch); //検索
-
-						if (!strcmp(aDataSearch, "END_PARTSSET"))
-						{
-							break;
-						}
-						else if (!strcmp(aDataSearch, "INDEX"))
-						{
-							fscanf(pFile, "%s", &aEqual[0]);
-							fscanf(pFile, "%d", &m_apModel[nCnt]->m_nIdx);
-						}
-						else if (!strcmp(aDataSearch, "PARENT"))
-						{
-							fscanf(pFile, "%s", &aEqual[0]);
-							fscanf(pFile, "%d", &m_apModel[nCnt]->m_nIdxModelParent);
-
-							//親を設定
-							if (m_apModel[nCnt]->m_nIdxModelParent == -1)
-							{
-								m_apModel[nCnt]->SetParent(nullptr);
-							}
-							else
-							{
-								m_apModel[nCnt]->SetParent(m_apModel[m_apModel[nCnt]->m_nIdxModelParent]);
-							}
-
-						}
-						else if (!strcmp(aDataSearch, "POS"))
-						{
-							fscanf(pFile, "%s", &aEqual[0]);
-							fscanf(pFile, "%f %f %f",
-								&m_apModel[nCnt]->m_pos.x,
-								&m_apModel[nCnt]->m_pos.y,
-								&m_apModel[nCnt]->m_pos.z);
-
-							m_apModel[nCnt]->SetPos(m_apModel[nCnt]->m_pos);
-
-							m_apModel[nCnt]->m_Tpos = m_apModel[nCnt]->m_pos;
-						}
-						else if (!strcmp(aDataSearch, "ROT"))
-						{
-							fscanf(pFile, "%s", &aEqual[0]);
-							fscanf(pFile, "%f %f %f",
-								&m_apModel[nCnt]->m_rot.x,
-								&m_apModel[nCnt]->m_rot.y,
-								&m_apModel[nCnt]->m_rot.z);
-
-							m_apModel[nCnt]->SetRot(m_apModel[nCnt]->m_rot);
-
-							m_apModel[nCnt]->m_Trot = m_apModel[nCnt]->m_rot;
-
-						}
-					}
-					nCnt++; //データ数加算
-				}
-			}
+			m_apModel[nCnt]->SetParent(m_apModel[m_apModel[nCnt]->m_nIdxModelParent]);
 		}
-		if (!strcmp(aDataSearch, "MOTIONSET"))
-		{
-			//項目ごとのデータを代入
-			while (1)
-			{
-				fscanf(pFile, "%s", aDataSearch); //検索
 
-				if (!strcmp(aDataSearch, "END_MOTIONSET"))
-				{
-					nCntMotion = 0;
-					break;
-				}
-				else if (!strcmp(aDataSearch, "LOOP"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%d", &m_MotionSet[nCntMotionSet].nLoop);
-				}
-				else if (!strcmp(aDataSearch, "NUM_KEY"))
-				{
-					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%d", &m_MotionSet[nCntMotionSet].nNumKey);
+		m_apModel[nCnt]->SetPos(m_motion_data.parts_pos[nCnt]);
+		m_apModel[nCnt]->SetRot(m_motion_data.parts_rot[nCnt]);
 
-				}
-				else if (!strcmp(aDataSearch, "KEYSET"))
-				{
-					fgets(&aGets[0], 39, pFile);
-
-					//項目ごとのデータを代入
-					while (1)
-					{
-						fscanf(pFile, "%s", aDataSearch); //検索
-
-						if (!strcmp(aDataSearch, "END_KEYSET"))
-						{
-							nCntKey = 0;
-							break;
-						}
-
-						else if (!strcmp(aDataSearch, "FRAME"))
-						{
-							fscanf(pFile, "%s", &aEqual[0]);
-							fscanf(pFile, "%d", &m_MotionSet[nCntMotionSet].keySet[nCntMotion].nFrame);
-						}
-						else if (!strcmp(aDataSearch, "KEY"))
-						{
-							//項目ごとのデータを代入
-							while (1)
-							{
-								fscanf(pFile, "%s", aDataSearch);
-
-								if (!strcmp(aDataSearch, "END_KEY"))
-								{
-									break;
-								}
-								else if (!strcmp(aDataSearch, "POS"))
-								{
-									fscanf(pFile, "%s", &aEqual[0]);
-									fscanf(pFile, "%f %f %f", &m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].pos.x,
-										&m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].pos.y,
-										&m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].pos.z);
-								}
-								else if (!strcmp(aDataSearch, "ROT"))
-								{
-									fscanf(pFile, "%s", &aEqual[0]);
-									fscanf(pFile, "%f %f %f", &m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].rot.x,
-										&m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].rot.y,
-										&m_MotionSet[nCntMotionSet].keySet[nCntMotion].key[nCntKey].rot.z);
-								}
-							}
-							nCntKey++; //パーツ数加算
-						}
-					}
-					nCntMotion++; //キー数加算
-				}
-			}
-			nCntMotionSet++; //キータイプ数加算
-		}
+		m_apModel[nCnt]->m_Tpos = m_apModel[nCnt]->m_pos;
+		m_apModel[nCnt]->m_Trot = m_apModel[nCnt]->m_rot;
 	}
+
+	File.close();
 }
 
 //=============================================
@@ -467,12 +280,12 @@ void CCharacter::Motion(int NumParts)
 	D3DXVECTOR3 MovePos[MAX_PARTS];
 	D3DXVECTOR3 MoveRot[MAX_PARTS];
 
-	int nNextKey = (m_nKeySetCnt + INT_ONE) % m_MotionSet[m_Motion].nNumKey;
+	int nNextKey = (m_nKeySetCnt + INT_ONE) % m_motion_data.motion_set[m_Motion].nNumKey;
 
 	for (int nMotionCnt = INT_ZERO; nMotionCnt < m_PartsCnt; nMotionCnt++)
 	{
-		MovePos[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
-		MoveRot[nMotionCnt] = (m_MotionSet[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_MotionSet[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame;
+		MovePos[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
+		MoveRot[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
 
 		m_apModel[nMotionCnt]->m_pos += MovePos[nMotionCnt];
 		m_apModel[nMotionCnt]->m_rot += MoveRot[nMotionCnt];
@@ -480,12 +293,12 @@ void CCharacter::Motion(int NumParts)
 
 	m_nMotionFrameCnt++;
 
-	if (m_nMotionFrameCnt > m_MotionSet[m_Motion].keySet[m_nKeySetCnt].nFrame)
+	if (m_nMotionFrameCnt > m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame)
 	{
 
 		m_nMotionFrameCnt = INT_ZERO;
-		m_nKeySetCnt = (m_nKeySetCnt + INT_ONE) % m_MotionSet[m_Motion].nNumKey;
-		if (m_nKeySetCnt == INT_ZERO && m_MotionSet[m_Motion].nLoop == INT_ZERO)
+		m_nKeySetCnt = (m_nKeySetCnt + INT_ONE) % m_motion_data.motion_set[m_Motion].nNumKey;
+		if (m_nKeySetCnt == INT_ZERO && m_motion_data.motion_set[m_Motion].nLoop == INT_ZERO)
 		{//キーが終わりループモーションじゃなければ
 			//モーションをニュートラルに
 			SetMotion(INT_ZERO);
@@ -514,7 +327,7 @@ void CCharacter::SetMotion(int Motion)
 	//キーカウントリセット
 	m_nKeySetCnt = INT_ZERO;
 
-	if (m_MotionSet[m_Motion].nLoop == INT_ZERO)
+	if (m_motion_data.motion_set[m_Motion].nLoop == INT_ZERO)
 	{
 		//終わった判定
 		m_bLoopFinish = false;
@@ -524,7 +337,7 @@ void CCharacter::SetMotion(int Motion)
 	{
 		m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
 		m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
-		m_apModel[nCntParts]->m_rot = m_MotionSet[Motion].keySet[0].key[nCntParts].rot;
+		m_apModel[nCntParts]->m_rot = m_motion_data.motion_set[Motion].keySet[0].key[nCntParts].rot;
 	}
 }
 

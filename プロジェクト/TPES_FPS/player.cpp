@@ -478,7 +478,7 @@ CPlayer* CPlayer::Create()
 	if (pPlayer == nullptr) { return nullptr; }
 
 		//ƒp[ƒc“Ç‚Ýž‚Ý
-	pPlayer->Load_Parts("data\\motion_soldier.txt");
+	pPlayer->Load_Parts("data\\motion_soldier.bin");
 
 	pPlayer->Init(); //‰Šú‰»ˆ—
 

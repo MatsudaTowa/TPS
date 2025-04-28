@@ -287,6 +287,18 @@ private:
 		KeySet keySet[MAX_PARTS];
 	};
 
-	MotionSet m_MotionSet[MAX_MOTION]; //モーション設定
+	struct MotionData
+	{
+		MotionSet motion_set[MAX_MOTION]; //モーション設定
+		int parts;
+		int idx[MAX_PARTS];
+		int parent[MAX_PARTS];
+		float speed;
+		float jump;
+		char path[MAX_PARTS][MAX_TXT];
+		D3DXVECTOR3 parts_pos[MAX_PARTS];
+		D3DXVECTOR3 parts_rot[MAX_PARTS];
+	};
+	MotionData m_motion_data;
 };
 #endif
