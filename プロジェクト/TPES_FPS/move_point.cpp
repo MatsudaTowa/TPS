@@ -1,7 +1,7 @@
 //=============================================
 // 
 //“G‚ªœpœj‚·‚éÛ‚ÉŒü‚©‚¤ƒ|ƒCƒ“ƒg[move_point.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "move_point.h"

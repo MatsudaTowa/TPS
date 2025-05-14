@@ -1,7 +1,7 @@
 //=============================================
 //
 //キャラクターのストラテジーパターン[character_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "character_behavior.h"

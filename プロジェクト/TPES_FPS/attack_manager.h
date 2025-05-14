@@ -1,7 +1,7 @@
 //=============================================
 //
 //UŒ‚ŠÇ—ƒNƒ‰ƒX[attack_manager.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include"main.h"

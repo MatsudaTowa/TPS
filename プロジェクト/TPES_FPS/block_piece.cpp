@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒuƒƒbƒN‚Ì”j•Ğ[block_piece.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "block_piece.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //Xファイルオブジェクト[objectX.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "objectX.h"

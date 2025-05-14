@@ -1,7 +1,7 @@
 //=============================================
 //
 //3ウェーブ処理[wave_three.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_three.h"

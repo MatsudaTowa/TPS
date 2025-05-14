@@ -1,7 +1,7 @@
 //=============================================
 //
 //チュートリアルスクリーン[tutorial_screen.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "tutorial_screen.h"

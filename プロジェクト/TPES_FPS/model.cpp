@@ -1,7 +1,7 @@
 //=============================================
 //
 //3DTemplate[model.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "model.h"

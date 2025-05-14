@@ -1,7 +1,7 @@
 //=============================================
 //
 //Ž€–SƒAƒCƒRƒ“[death_icon.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "death_icon.h"

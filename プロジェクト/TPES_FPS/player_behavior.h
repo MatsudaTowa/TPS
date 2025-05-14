@@ -1,7 +1,7 @@
 //=============================================
 //
 //プレイヤーのストラテジーパターン[player_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _PLAYER_BEHAVIOR_

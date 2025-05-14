@@ -1,7 +1,7 @@
 //=============================================
 //
 //3DTemplate[object3D.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "object3D.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //’Êí‚Ì“G‚Ìˆ—[normal_enemy.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "normal_enemy.h"

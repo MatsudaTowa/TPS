@@ -1,7 +1,7 @@
 //=============================================
 //
 //3DTemplate[manager.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "manager.h"

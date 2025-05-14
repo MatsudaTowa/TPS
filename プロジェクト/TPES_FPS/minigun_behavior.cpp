@@ -1,7 +1,7 @@
 //=============================================
 //
 //ミニガンのストラテジーパターン[minigun_behavior.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "minigun_behavior.h"

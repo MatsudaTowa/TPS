@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒJƒƒ‰[camera.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "camera.h"

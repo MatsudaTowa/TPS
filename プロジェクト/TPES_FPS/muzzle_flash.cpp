@@ -1,7 +1,7 @@
 //=============================================
 // 
 //マズルフラッシュ[muzzle_flash.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "muzzle_flash.h"

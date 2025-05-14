@@ -1,7 +1,7 @@
 //=============================================
 //
 //ÉXÉÇÅ[ÉNèàóù[tactical_somoke.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "tactical_smoke.h"

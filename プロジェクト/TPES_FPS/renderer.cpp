@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒŒƒ“ƒ_ƒ‰[‚Ìˆ—[renderer.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "renderer.h"

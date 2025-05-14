@@ -1,7 +1,7 @@
 //=============================================
 //
 //3DTemplate[light.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "light.h"

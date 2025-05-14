@@ -1,7 +1,7 @@
 //=============================================
 //
 //オブジェクト[object.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "object.h"

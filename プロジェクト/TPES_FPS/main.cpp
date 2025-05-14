@@ -1,7 +1,7 @@
 //=============================================
 //
 //3DTemplate[main.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #pragma comment(lib,"winmm.lib")

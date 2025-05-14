@@ -1,7 +1,7 @@
 //=============================================
 //
 //キャラクターのストラテジーパターン[character_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _CHARACTER_BEHAVIOR_H_ //これが定義されてないとき

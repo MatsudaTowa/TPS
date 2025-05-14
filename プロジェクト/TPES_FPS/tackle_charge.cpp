@@ -1,7 +1,7 @@
 //=============================================
 //
 //タックルチャージ中のエフェクト[tackle_charge.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "tackle_charge.h"

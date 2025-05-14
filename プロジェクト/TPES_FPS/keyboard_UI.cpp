@@ -1,7 +1,7 @@
 //=============================================
 //
 //キーボードUIの表記[keyboard_UI.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "keyboard_UI.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //ボスのステートパターン[boss_state.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "boss_state.h"

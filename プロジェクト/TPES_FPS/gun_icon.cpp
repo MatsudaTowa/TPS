@@ -1,7 +1,7 @@
 //=============================================
 //
 //èeÇÃï\é¶[gun_icon.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "gun_icon.h"

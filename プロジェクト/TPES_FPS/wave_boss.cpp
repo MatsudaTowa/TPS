@@ -1,7 +1,7 @@
 //=============================================
 //
 //ボスウェーブ処理[wave_boss.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_boss.h"

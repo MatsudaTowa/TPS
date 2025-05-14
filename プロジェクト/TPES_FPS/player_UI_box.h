@@ -1,7 +1,7 @@
 //=============================================
 //
 //プレイヤーのUIの枠[player_UI_box.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _PLAYER_UI_BOX_H_ //これが定義されてないとき

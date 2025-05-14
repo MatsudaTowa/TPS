@@ -1,7 +1,7 @@
 //=============================================
 //
 //キャラクター処理[character.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "character.h"

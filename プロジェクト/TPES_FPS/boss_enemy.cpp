@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒ{ƒX‚Ì“G‚Ìˆ—[boss_enemy.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "boss_enemy.h"

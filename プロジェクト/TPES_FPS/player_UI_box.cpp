@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒvƒŒƒCƒ„[‚ÌUI‚Ì˜g[player_UI_box.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "player_UI_box.h"

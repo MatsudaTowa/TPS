@@ -1,7 +1,7 @@
 //=============================================
 //
 //2ウェーブ処理[wave_two.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_two.h"

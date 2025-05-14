@@ -1,7 +1,7 @@
 //=============================================
 //
 //ボスのストラテジーパターン[enemy_behavior.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "boss_behavior.h"

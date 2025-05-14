@@ -1,7 +1,7 @@
 //=============================================
 //
 //ビルボード処理[billboard.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "billboard.h"

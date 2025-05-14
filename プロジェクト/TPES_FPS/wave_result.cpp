@@ -1,7 +1,7 @@
 //=============================================
 //
 //ウェーブごとの結果[wave_result.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_result.h"

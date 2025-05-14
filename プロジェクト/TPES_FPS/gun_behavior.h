@@ -1,7 +1,7 @@
 //=============================================
 //
 //銃のストラテジーパターン[gun_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _GUN_BEHAVIOR_

@@ -1,7 +1,7 @@
 //=============================================
 //
 //スモークの表記[smoke_icon.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "smoke_icon.h"

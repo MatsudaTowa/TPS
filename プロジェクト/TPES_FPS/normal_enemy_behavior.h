@@ -1,7 +1,7 @@
 //=============================================
 //
 //ノーマルエネミーのストラテジーパターン[normal_enemy_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _NORMAL_ENEMY_BEHAVIOR_

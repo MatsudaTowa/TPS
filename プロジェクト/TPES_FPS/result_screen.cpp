@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒŠƒUƒ‹ƒg‰æ–Ê[result_Screen.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "result_screen.h"

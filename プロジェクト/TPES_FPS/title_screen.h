@@ -1,7 +1,7 @@
 //=============================================
 //
 //タイトルのUI[title_screen.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _TITLE_SCREEN_H_ //これが定義されてないとき

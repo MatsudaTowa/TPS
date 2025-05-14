@@ -1,7 +1,7 @@
 //=============================================
 //
 //Œ‹‰Ê[result.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "result.h"

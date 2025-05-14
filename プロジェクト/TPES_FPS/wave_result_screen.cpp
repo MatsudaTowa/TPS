@@ -1,7 +1,7 @@
 //=============================================
 //
 //ウェーブリザルト画面[wave_result_screen.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_result_screen.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //“G‚ÌƒŠƒ[ƒh’†‚ÌUI[enemy_reload_UI.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "main.h"

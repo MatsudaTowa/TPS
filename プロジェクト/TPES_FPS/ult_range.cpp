@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒEƒ‹ƒg”ÍˆÍˆ—[ult_range.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "ult_range.h"

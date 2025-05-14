@@ -1,7 +1,7 @@
 //=============================================
 // 
 //親子関係のパーツ[model.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "model_parts.h"

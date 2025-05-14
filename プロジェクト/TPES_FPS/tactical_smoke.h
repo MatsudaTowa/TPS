@@ -1,7 +1,7 @@
 //=============================================
 //
 //“G‚ğ–WŠQ‚·‚éƒXƒ‚[ƒNˆ—[tactical_somoke.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "main.h"

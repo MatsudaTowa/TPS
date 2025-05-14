@@ -1,7 +1,7 @@
 //=============================================
 //
 //ウェーブリザルト画面[wave_result_screen.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _WAVE_RESULT_SCREEN_H_ //これが定義されてないとき

@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒXƒ‚[ƒN”ÍˆÍˆ—[somoke_range.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "smoke_range.h"

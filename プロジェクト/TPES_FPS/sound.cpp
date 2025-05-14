@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒTƒEƒ“ƒh[sound.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "sound.h"

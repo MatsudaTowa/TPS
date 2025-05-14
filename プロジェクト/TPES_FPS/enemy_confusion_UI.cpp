@@ -1,7 +1,7 @@
 //=============================================
 //
 //ìGÇÃç¨óêÇÃUI[enemy_wandering_UI.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "enemy_confusion_UI.h"

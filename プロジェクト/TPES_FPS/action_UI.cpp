@@ -1,7 +1,7 @@
 //=============================================
 //
 //アクションUIの表記[action_UI.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "action_UI.h"

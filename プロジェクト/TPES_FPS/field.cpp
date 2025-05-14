@@ -1,7 +1,7 @@
 //=============================================
 //
 //è∞[field.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "field.h"

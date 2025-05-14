@@ -1,7 +1,7 @@
 //=============================================
 //
 //ultが溜まったときにアイコンから出すエフェクト[ult_icon_effect.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "ult_icon_effect.h"

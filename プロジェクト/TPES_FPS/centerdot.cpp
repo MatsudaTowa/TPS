@@ -1,7 +1,7 @@
 //=============================================
 //
 //センタードット[centerdot.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "centerdot.h"

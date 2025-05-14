@@ -1,7 +1,7 @@
 //=============================================
 //
 //“G‚ÌƒŠƒAƒNƒVƒ‡ƒ“‚ÌUI[enemy_reaction_UI.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "main.h"

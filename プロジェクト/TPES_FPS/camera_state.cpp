@@ -1,7 +1,7 @@
 //=============================================
 //
 //カメラのステートパターン[camera_state.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "camera_state.h"

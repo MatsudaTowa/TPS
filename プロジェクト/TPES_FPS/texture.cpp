@@ -1,7 +1,7 @@
 //=============================================
 //
 //テクスチャ管理[texture.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "texture.h"

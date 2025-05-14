@@ -1,7 +1,7 @@
 //=============================================
 //
 //プレイヤーのステートパターン[player_state.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "player_state.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //1ウェーブ処理[wave_one.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "wave_one.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //“–‚½‚è”»’èŠÇ—[colision.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "colision.h"

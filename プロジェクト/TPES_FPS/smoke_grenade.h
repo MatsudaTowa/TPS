@@ -1,7 +1,7 @@
 //=============================================
 //
 //スモークグレネード処理[somoke_grenade.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "main.h"

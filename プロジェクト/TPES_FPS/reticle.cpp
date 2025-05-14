@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒŒƒeƒBƒNƒ‹[reticle.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "reticle.h"

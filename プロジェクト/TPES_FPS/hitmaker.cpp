@@ -1,7 +1,7 @@
 //=============================================
 //
 //ヒットマーカー[hitmaker.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "hitmaker.h"

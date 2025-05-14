@@ -1,7 +1,7 @@
 //=============================================
 //
 //ダッシュ時にキャラクターの前方に出すエフェクト[dash_effect.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "dash_effect.h"

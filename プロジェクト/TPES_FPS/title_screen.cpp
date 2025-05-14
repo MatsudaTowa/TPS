@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒ^ƒCƒgƒ‹‚ÌUI[title_Screen.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "title_screen.h"

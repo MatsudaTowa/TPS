@@ -1,7 +1,7 @@
 //=============================================
 //
 //カメラのステートパターン[camera_state.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _CAMERA_STATE_H_

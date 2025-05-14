@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒvƒŒƒCƒ„[[player.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "player.h"

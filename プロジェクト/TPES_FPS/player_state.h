@@ -1,7 +1,7 @@
 //=============================================
 //
 //プレイヤーのステートパターン[player_state.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _PLAYER_STATE_H_

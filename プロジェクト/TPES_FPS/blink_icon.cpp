@@ -1,7 +1,7 @@
 //=============================================
 //
 //ブリンクの表記[blink_icon.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "blink_icon.h"

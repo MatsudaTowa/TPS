@@ -1,7 +1,7 @@
 //=============================================
 //
 //ボスのストラテジーパターン[boss_behavior.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _BOSS_BEHAVIOR_

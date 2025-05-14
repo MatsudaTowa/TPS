@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒNƒƒXƒwƒA[crosshair.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "main.h"

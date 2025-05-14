@@ -1,7 +1,7 @@
 //=============================================
 //
 //チュートリアル処理[tutorial.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "tutorial.h"

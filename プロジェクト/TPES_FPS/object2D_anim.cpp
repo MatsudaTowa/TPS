@@ -1,7 +1,7 @@
 //=============================================
 //
 //アニメーション2D[object2D_anim.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "object2D_anim.h"

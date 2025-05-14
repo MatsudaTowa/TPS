@@ -1,7 +1,7 @@
 //=============================================
 //
 //銃のストラテジーパターン[gun_behavior.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "gun_behavior.h"

@@ -1,7 +1,7 @@
 //=============================================
 //
 //チュートリアルスクリーン[tutorial_screen.h]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #ifndef _TUTORIAL_SCREEN_H_ //これが定義されてないとき

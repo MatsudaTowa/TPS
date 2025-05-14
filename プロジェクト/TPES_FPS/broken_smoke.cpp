@@ -1,7 +1,7 @@
 //=============================================
 //
 //ÉXÉÇÅ[ÉNèàóù[broken_somoke.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "broken_smoke.h"

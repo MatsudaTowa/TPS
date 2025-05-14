@@ -1,7 +1,7 @@
 //=============================================
 //
 //ƒuƒŠƒ“ƒN‚Ì”š‚Ì”wŒi[blink_back_UI.cpp]
-//Auther Matsuda Towa
+//Author Matsuda Towa
 //
 //=============================================
 #include "blink_back_UI.h"
