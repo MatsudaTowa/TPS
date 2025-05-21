@@ -187,7 +187,7 @@ void CBossEnemy::Update()
 
 	ProcessState(); //各ステートの実行処理
 
-	Motion(NUM_PARTS); //モーション処理
+	Motion(GetNumParts()); //モーション処理
 
 	for (int nCnt = INT_ZERO; nCnt < GetNumParts(); ++nCnt)
 	{

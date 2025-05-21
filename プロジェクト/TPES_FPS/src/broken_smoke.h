@@ -33,9 +33,9 @@ private:
 	static constexpr float MOVE_Z_MAX = 0.1f; //スモークの移動量の最大値_Z
 	static constexpr float MOVE_Z_MIN = 0.0f; //スモークの移動量の最小値_Z
 
-	static const D3DXVECTOR3 SIZE; //スモークのサイズ
+	static const D3DXVECTOR3 SIZE;	//スモークのサイズ
 
-	static const D3DXCOLOR COLOR;
+	static const D3DXCOLOR COLOR;	//カラー
 };
 
 #endif

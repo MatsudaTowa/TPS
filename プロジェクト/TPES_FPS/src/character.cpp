@@ -249,24 +249,24 @@ void CCharacter::Load_Parts(const char* FileName)
 	for (int nCnt = 0; nCnt < m_motion_data.parts; ++nCnt)
 	{
 		m_apModel[nCnt] = CModel_Parts::Create(VEC3_RESET_ZERO, VEC3_RESET_ZERO, &m_motion_data.path[nCnt][0]);
-		m_apModel[nCnt]->m_nIdx = m_motion_data.idx[nCnt];
-		m_apModel[nCnt]->m_nIdxModelParent = m_motion_data.parent[nCnt];
+		m_apModel[nCnt]->SetIdx(m_motion_data.idx[nCnt]);
+		m_apModel[nCnt]->SetParentIdx(m_motion_data.parent[nCnt]);
 
 		//e‚ðÝ’è
-		if (m_apModel[nCnt]->m_nIdxModelParent == -1)
+		if (m_apModel[nCnt]->GetParentIdx() == -1)
 		{
 			m_apModel[nCnt]->SetParent(nullptr);
 		}
 		else
 		{
-			m_apModel[nCnt]->SetParent(m_apModel[m_apModel[nCnt]->m_nIdxModelParent]);
+			m_apModel[nCnt]->SetParent(m_apModel[m_apModel[nCnt]->GetParentIdx()]);
 		}
 
 		m_apModel[nCnt]->SetPos(m_motion_data.parts_pos[nCnt]);
 		m_apModel[nCnt]->SetRot(m_motion_data.parts_rot[nCnt]);
 
-		m_apModel[nCnt]->m_Tpos = m_apModel[nCnt]->m_pos;
-		m_apModel[nCnt]->m_Trot = m_apModel[nCnt]->m_rot;
+		m_apModel[nCnt]->SetTPos(m_apModel[nCnt]->GetPos());
+		m_apModel[nCnt]->SetTRot(m_apModel[nCnt]->GetRot());
 	}
 
 	File.close();
@@ -287,8 +287,17 @@ void CCharacter::Motion(int NumParts)
 		MovePos[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
 		MoveRot[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
 
-		m_apModel[nMotionCnt]->m_pos += MovePos[nMotionCnt];
-		m_apModel[nMotionCnt]->m_rot += MoveRot[nMotionCnt];
+		//ˆÊ’u‚Æ•ûŒüŽæ“¾
+		D3DXVECTOR3 pos = m_apModel[nMotionCnt]->GetPos();
+		D3DXVECTOR3 rot = m_apModel[nMotionCnt]->GetRot();
+
+		//ˆÚ“®—Ê’Ç‰Á
+		pos += MovePos[nMotionCnt];
+		rot += MoveRot[nMotionCnt];
+
+		//ˆÊ’u‚Æ•ûŒü‘ã“ü
+		m_apModel[nMotionCnt]->SetPos(pos);
+		m_apModel[nMotionCnt]->SetRot(rot);
 	}
 
 	m_nMotionFrameCnt++;
@@ -335,9 +344,10 @@ void CCharacter::SetMotion(int Motion)
 
 	for (int nCntParts = INT_ZERO; nCntParts < m_PartsCnt; nCntParts++)
 	{
-		m_apModel[nCntParts]->m_pos = m_apModel[nCntParts]->m_Tpos;
-		m_apModel[nCntParts]->m_rot = m_apModel[nCntParts]->m_Trot;
-		m_apModel[nCntParts]->m_rot = m_motion_data.motion_set[Motion].keySet[0].key[nCntParts].rot;
+		m_apModel[nCntParts]->SetPos(m_apModel[nCntParts]->GetTPos());
+		m_apModel[nCntParts]->SetRot(m_apModel[nCntParts]->GetTRot());
+
+		m_apModel[nCntParts]->SetRot(m_motion_data.motion_set[Motion].keySet[0].key[nCntParts].rot);
 	}
 }
 

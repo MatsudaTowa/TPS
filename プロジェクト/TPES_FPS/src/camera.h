@@ -91,9 +91,6 @@ public:
 	void DebugCameraDraw();
 
 	void ThirdViewCamera(); //サードパーソンビュー処理
-
-
-	CCameraState* m_pCameraState;
 private:
 	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
 	static constexpr float DAMPING_COEFFICIENT = 0.2f; //移動抵抗
@@ -136,5 +133,7 @@ private:
 
 	D3DXMATRIX m_mtxProjection; //プロジェクション
 	D3DXMATRIX m_mtxView; //ビュー行列
+	CCameraState* m_pCameraState;
+
 };
 #endif

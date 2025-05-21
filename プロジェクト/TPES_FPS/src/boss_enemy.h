@@ -34,11 +34,9 @@ class CBossState;
 class CBossEnemy :public CEnemy
 {
 public:
-	static const int NUM_PARTS = 15; //パーツ数
 	static const int MAX_KEY = 20; //キー最大数
 	static const int NUM_MOTION = 3;
 	static const int ENEMY_PRIORITY = 8; //描画順
-	static const int PARTS_PARENT[NUM_PARTS]; //パーツ数
 	static const int DEFAULT_LIFE = 1500; //ライフ
 	static const int LOW_HP = DEFAULT_LIFE / 3; //体力が低い
 	static constexpr float FIND_PLAYER_DISTANCE = 300.0f; //この値までだったら追いかける

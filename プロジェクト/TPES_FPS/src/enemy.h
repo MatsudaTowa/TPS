@@ -11,7 +11,6 @@
 #include "model_parts.h"
 #include "character.h"
 #include "enemy_behavior.h"
-#include "enemy_state.h"
 
 //=============================================
 // 前方宣言
@@ -64,9 +63,6 @@ public:
 	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
 
 	static int m_NumEnemy; //エネミーの総数
-	ENEMY_TYPE m_Type; //エネミーの種類
-	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
-
 private:
 	//void ColisionUlt(D3DXVECTOR3& enemyPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
 
@@ -84,6 +80,9 @@ private:
 
 
 	void ReSpawn(); //リスポーン
+
+	ENEMY_TYPE m_Type; //エネミーの種類
+	int m_nCombatChangeCnt; //戦闘状態切り替えカウント
 
 	Motion_Type m_Motion; //モーションの種類
 	bool m_isStencil; //ステンシルテストを有効にするか

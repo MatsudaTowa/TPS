@@ -17,9 +17,6 @@
     <ClCompile Include="src\ammo_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\ammo_UI_manager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\assault_behavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\blink_UI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\blink_UI_manager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\block.cpp">
@@ -311,9 +305,6 @@
     <ClCompile Include="src\tutorial_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI_2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\ult.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -369,14 +360,12 @@
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
     <ClInclude Include="src\ammo_UI.h" />
-    <ClInclude Include="src\ammo_UI_manager.h" />
     <ClInclude Include="src\assault_behavior.h" />
     <ClInclude Include="src\attack_manager.h" />
     <ClInclude Include="src\billboard.h" />
     <ClInclude Include="src\blink_back_UI.h" />
     <ClInclude Include="src\blink_icon.h" />
     <ClInclude Include="src\blink_UI.h" />
-    <ClInclude Include="src\blink_UI_manager.h" />
     <ClInclude Include="src\block.h" />
     <ClInclude Include="src\block_piece.h" />
     <ClInclude Include="src\boss_behavior.h" />
@@ -400,7 +389,6 @@
     <ClInclude Include="src\enemy_reaction_UI.h" />
     <ClInclude Include="src\enemy_reload_UI.h" />
     <ClInclude Include="src\enemy_stan_UI.h" />
-    <ClInclude Include="src\enemy_state.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\field.h" />
     <ClInclude Include="src\game.h" />
@@ -414,7 +402,6 @@
     <ClInclude Include="src\hit_camera_effect_moderate.h" />
     <ClInclude Include="src\hit_camera_effect_severe.h" />
     <ClInclude Include="src\hitmaker.h" />
-    <ClInclude Include="src\icon.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\keyboard_UI.h" />
     <ClInclude Include="src\life_UI.h" />
@@ -443,11 +430,9 @@
     <ClInclude Include="src\player_UI_box.h" />
     <ClInclude Include="src\precompile.h" />
     <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\result.h" />
     <ClInclude Include="src\result_screen.h" />
     <ClInclude Include="src\reticle.h" />
-    <ClInclude Include="src\roof.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\score.h" />
     <ClInclude Include="src\shadow.h" />
@@ -468,7 +453,6 @@
     <ClInclude Include="src\tutorial_screen.h" />
     <ClInclude Include="src\tutorial_UI.h" />
     <ClInclude Include="src\tutorial_UI_manager.h" />
-    <ClInclude Include="src\UI_2D.h" />
     <ClInclude Include="src\ult.h" />
     <ClInclude Include="src\ult_camera_effect.h" />
     <ClInclude Include="src\ult_effect.h" />

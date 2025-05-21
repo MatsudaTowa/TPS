@@ -69,8 +69,6 @@ public:
 	
 	CColision* GetColision();
 
-	CFade* m_pFade;
-
 	static void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
 
 private:
@@ -86,6 +84,7 @@ private:
 	CModel* m_pModel;
 	CSound* m_pSound;
 	CColision* m_pColision;
+	CFade* m_pFade;
 };
 
 #endif

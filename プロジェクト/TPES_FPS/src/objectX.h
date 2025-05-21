@@ -89,7 +89,6 @@ public:
 		return m_rot;
 	}
 
-	//TODO:’†‚Ìˆ—‚ª‚Å‚©‚·‚¬‚Äinline“WŠJ‚Å‚«‚È‚¢‰Â”\«‘å
 	//Å¬’læ“¾
 	D3DXVECTOR3& GetMinPos();
 

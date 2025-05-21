@@ -106,7 +106,7 @@ HRESULT CAssultRifle::Init()
 	m_nRateCnt = GetFireRate();
 
 	//サイズの代入
-	m_Size = DEFAULT_AR_SIZE;
+	SetSize(DEFAULT_AR_SIZE);
 
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);
@@ -179,7 +179,7 @@ HRESULT CMiniGun::Init()
 	SetDamage(DEFAULT_MINIGUN_DAMAGE);
 
 	//サイズの代入
-	m_Size = DEFAULT_MINIGUN_SIZE;
+	SetSize(DEFAULT_MINIGUN_SIZE);
 
 	//各メンバー変数に代入
 	SetAmmo(nAmmo);

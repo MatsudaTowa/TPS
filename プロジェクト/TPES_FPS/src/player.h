@@ -159,8 +159,6 @@ public:
 
 	CUlt* m_pUlt;			//ウルトポインタ
 
-	CPlayerState* m_pPlayerState;	//プレイヤーの状態
-
 	CPlayerAvoidance* m_pAvoidance;	//回避行動
 private:
 
@@ -202,6 +200,8 @@ private:
 	CGunIcon* m_pGunIcon;	//銃のアイコン
 
 	CHitCameraEffect* m_pHitCameraEffect;	//ヒット時のカメラエフェクト
+
+	CPlayerState* m_pPlayerState;	//プレイヤーの状態
 
 	void DebugPos();	//デバッグ時位置情報表示
 

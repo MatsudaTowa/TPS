@@ -36,6 +36,11 @@ public:
 	virtual void Uninit() = 0;
 	virtual bool Reload();
 
+	//サイズ設定
+	inline void SetSize(D3DXVECTOR3 size)
+	{
+		m_Size = size;
+	}
 	//弾数設定
 	inline void SetAmmo(int Ammo)
 	{
@@ -62,6 +67,11 @@ public:
 		m_BulletSpeed = BulletSpeed;
 	}
 	
+	//サイズ取得
+	inline D3DXVECTOR3& GetSize()
+	{
+		return m_Size;
+	}
 	//弾数取得
 	inline int& GetAmmo()
 	{
@@ -93,8 +103,9 @@ public:
 	CShot* m_pShot; //弾発射処理
 	CReload* m_pReload; //リロード処理
 
-	D3DXVECTOR3 m_Size; //サイズ
 private:
+	D3DXVECTOR3 m_Size; //サイズ
+
 	int m_Ammo; //マガジン内の弾数
 	int m_nDamage; //ダメージ
 	int m_ReloadFrame; //リロードフレーム

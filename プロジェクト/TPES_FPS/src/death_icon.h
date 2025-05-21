@@ -28,4 +28,4 @@ public:
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
-#endif#pragma once
+#endif

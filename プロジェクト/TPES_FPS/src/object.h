@@ -78,11 +78,6 @@ public:
 		m_isDraw = isDraw;
 	}
 
-	OBJECT_TYPE m_type;
-	
-protected:
-	void Release(); //©•ª©g‚Ì‰ğ•ú
-
 	inline bool& GetisDraw()
 	{
 		return m_isDraw;
@@ -93,10 +88,13 @@ protected:
 		m_type = type;
 	}
 
+	void Release(); //©•ª©g‚Ì‰ğ•ú
 private:
 	static CObject* m_apObject[CObject::PRI_MAX][MAX_OBJECT];
 
 	int m_nPriority; //•`‰æ—Dæ“x
+
+	OBJECT_TYPE m_type;
 
 	static int m_nNumAll; //‘”
 
