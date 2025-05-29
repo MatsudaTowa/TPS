@@ -101,6 +101,7 @@
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\score.cpp" />
     <ClCompile Include="src\shadow.cpp" />
+    <ClCompile Include="src\shotgun_enemy.cpp" />
     <ClCompile Include="src\smoke.cpp" />
     <ClCompile Include="src\smoke_granade.cpp" />
     <ClCompile Include="src\smoke_grenade.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\score.h" />
     <ClInclude Include="src\shadow.h" />
+    <ClInclude Include="src\shotgun_enemy.h" />
     <ClInclude Include="src\smoke.h" />
     <ClInclude Include="src\smoke_grenade.h" />
     <ClInclude Include="src\smoke_icon.h" />

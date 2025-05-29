@@ -52,7 +52,7 @@ public:
 
 	static GAME_STATE&GetState();
 
-	static CPlayer*GetPlayer();
+	CPlayer*GetPlayer();
 	static CWave*GetWave();
 	//ウェーブ設定
 	static void SetWave(CWave::WAVE wave);
@@ -67,7 +67,7 @@ private:
 	static GAME_STATE m_GameState; //ゲームステート
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 
-	static CPlayer*m_pPlayer;
+	CPlayer*m_pPlayer;
 	static CWave* m_pWave;
 
 	CWave::WAVE m_next_wave;

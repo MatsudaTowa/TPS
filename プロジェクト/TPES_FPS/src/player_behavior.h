@@ -34,7 +34,7 @@ public:
 private:
 	//ŽËŒ‚Žž‚ÌˆÚ“®Œ¸ŽZ‚Ì’l
 	static constexpr float MOVE_SUBTRACTION = 0.85f;
-	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type);
+	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type,int& nRateCnt);
 };
 
 //=============================================

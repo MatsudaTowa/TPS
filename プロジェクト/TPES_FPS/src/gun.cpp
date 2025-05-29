@@ -85,35 +85,15 @@ CAssultRifle::~CAssultRifle()
 //=============================================
 HRESULT CAssultRifle::Init()
 {
-	//現在の弾数取得
-	int nAmmo = GetAmmo();
-	//現在のリロードフレーム取得
-	int nReloadFrame = GetReloadFrame();
-	//現在の発射レート取得
-	int nFireRate = GetFireRate();
-	//現在の弾速取得
-	float fBulletSpeed = GetBulletSpeed();
-
-	//デフォルトのマガジン弾数代入
-	nAmmo = DEFAULT_AR_MAG_SIZE;
-
-	//デフォルトの発射レート代入
-	nFireRate = DEFAULT_AR_FIRE_RATE;
-	//デフォルトの弾速代入
-	fBulletSpeed = DEFAULT_AR_BULLET_SPEED;
-
-	//押したらすぐ発射するため
-	m_nRateCnt = GetFireRate();
-
-	//サイズの代入
-	SetSize(DEFAULT_AR_SIZE);
 
 	//各メンバー変数に代入
-	SetAmmo(nAmmo);
-	SetReloadFrame(nReloadFrame);
-	SetFireRate(nFireRate);
-	SetBulletSpeed(fBulletSpeed);
-
+	SetAmmo(DEFAULT_AR_MAG_SIZE);
+	SetFireRate(DEFAULT_AR_FIRE_RATE);
+	SetBulletSpeed(DEFAULT_AR_BULLET_SPEED);
+	SetRateCnt(GetFireRate());
+	SetDamage(DEFAULT_AR_DAMAGE);
+	SetReloadFrame(DEFAULT_AR_RELOAD_FRAME);
+	SetSize(DEFAULT_AR_SIZE);
 	return S_OK;
 }
 
@@ -173,7 +153,7 @@ HRESULT CMiniGun::Init()
 	fBulletSpeed = DEFAULT_MINIGUN_BULLET_SPEED;
 
 	//押したらすぐ発射するため
-	m_nRateCnt = DEFAULT_MINIGUN_FIRE_RATE;
+	SetRateCnt(DEFAULT_MINIGUN_FIRE_RATE);
 
 	//ダメージの代入
 	SetDamage(DEFAULT_MINIGUN_DAMAGE);

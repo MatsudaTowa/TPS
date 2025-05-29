@@ -57,15 +57,17 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	//ƒ‚[ƒVƒ‡ƒ“‘ã“ü
 	character->SetMotion(Motion);
 
+	int nRateCnt = character->m_pGun->GetRateCnt();
+
 	if (pMouse->GetPress(0))
 	{//ŽËŒ‚ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
 		if (character->m_pGunAttack != nullptr)
 		{
 			if (character->m_pGun->GetAmmo() > INT_ZERO)
 			{
-				++character->m_pGun->m_nRateCnt;
+				++nRateCnt;
 
-				ShotBullet(character, pCamera, Allegiance, type);
+				ShotBullet(character, pCamera, Allegiance, type, nRateCnt);
 			}
 			else
 			{
@@ -75,20 +77,21 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	}
 	if (pMouse->GetRelease(0))
 	{
-		character->m_pGun->m_nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+		nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
 	}
+	character->m_pGun->SetRateCnt(nRateCnt);
 }
 
 //=============================================
 //’e”­ŽË
 //=============================================
-void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type)
+void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type, int& nRateCnt)
 {
-	if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
+	if (nRateCnt >= character->m_pGun->GetFireRate())
 	{
-		character->m_pGun->m_nRateCnt = INT_ZERO;
-		//e‚©‚ç”­ŽË TODO:eŒû‚Æ•ûŒü‚ª‚¨‚©‚µ‚¢
+		nRateCnt = INT_ZERO;
 
+		//e‚©‚ç”­ŽË
 		D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
 			character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
 
@@ -101,6 +104,8 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
 	}
+
+	character->m_pGun->SetRateCnt(nRateCnt);
 }
 
 //=============================================

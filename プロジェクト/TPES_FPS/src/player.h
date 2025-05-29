@@ -167,9 +167,7 @@ private:
 
 	static const int IGNORE_COLLISION_FRAME = 150; //当たり判定無視フレーム
 	static const int SMOKE_RECAST_FRAME = 900; //スモーク復活フレーム
-	static const int DEFAULT_AR_RELOAD_FRAME = 90; //デフォルトのアサルトのリロードフレーム数
 	static const int STAN_FRAME = 120; //スタンフレーム数
-	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 	static const int STAMINA_RECOVERY = 1; //スタミナ回復数値
 	static const int STAMINA_RECOVERY_FRAME = 5; //スタミナがSTAMINA_RECOVERY分回復するまでのフレーム数
 	static const int DAMAGE_FRAME = 30; //ダメージフレーム

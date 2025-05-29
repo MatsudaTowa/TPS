@@ -110,10 +110,6 @@ HRESULT CPlayer::Init()
 	if (m_pGun == nullptr)
 	{
 		m_pGun = new CAssultRifle;
-
-		m_pGun->SetReloadFrame(DEFAULT_AR_RELOAD_FRAME);
-		m_pGun->SetDamage(DEFAULT_AR_DAMAGE);
-
 		m_pGun->Init();
 	}
 
@@ -424,17 +420,16 @@ void CPlayer::CanDetectEnemyCollision()
 	if (m_isEnemyColision)
 	{//敵との当たり判定をとる状態だったら
 		ColisionEnemy();
+		return;
 	}
-	else if (!m_isEnemyColision)
-	{//敵との当たり判定をとらない状態だったら
-		++m_IgnoreColisionCnt;
+	//敵との当たり判定をとらない状態だったら
+	++m_IgnoreColisionCnt;
 
-		if (m_IgnoreColisionCnt > IGNORE_COLLISION_FRAME)
-		{//フレームに到達したら
-		 //当たり判定をとる状態に
-			m_IgnoreColisionCnt = INT_ZERO;
-			m_isEnemyColision = true;
-		}
+	if (m_IgnoreColisionCnt > IGNORE_COLLISION_FRAME)
+	{//フレームに到達したら
+		//当たり判定をとる状態に
+		m_IgnoreColisionCnt = INT_ZERO;
+		m_isEnemyColision = true;
 	}
 }
 

@@ -16,9 +16,6 @@
 #include "dash_effect.h"
 #include "player.h"
 
-//プレイヤー
-CPlayer*CGame::m_pPlayer = nullptr;
-
 //ウェーブ
 CWave*CGame::m_pWave = nullptr;
 
@@ -29,7 +26,8 @@ CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
 //=============================================
 CGame::CGame():
 m_nResultDelay(INT_ZERO),	//リザルトの遷移ディレイ
-m_next_wave()				//次のウェーブ格納変数
+m_next_wave(),				//次のウェーブ格納変数
+m_pPlayer(nullptr)			//プレイヤー
 {
 	//読み込むブロックの情報初期化
 	m_LoadBlock.pos = VEC3_RESET_ZERO;

@@ -98,13 +98,17 @@ void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::
 
 	if (character->m_pGun->GetAmmo() > INT_ZERO)
 	{
-		character->m_pGun->m_nRateCnt++;
-		if (character->m_pGun->m_nRateCnt >= character->m_pGun->GetFireRate())
+		int nRateCnt = character->m_pGun->GetRateCnt();
+
+		++nRateCnt;
+		if (nRateCnt >= character->m_pGun->GetFireRate())
 		{
-			character->m_pGun->m_nRateCnt = INT_ZERO;
+			nRateCnt = INT_ZERO;
 			//’e”­ŽË
 			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->GetSize(), character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);
 		}
+
+		character->m_pGun->SetRateCnt(nRateCnt);
 	}
 	else
 	{

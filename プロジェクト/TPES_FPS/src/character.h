@@ -222,7 +222,7 @@ public:
 
 	CConfusion* m_pConfusion;
 
-	CGunAttack*m_pGunAttack;
+	CGunAttack* m_pGunAttack;
 
 	//キャラクターのステートパターン
 	CCharacterState* m_pCharacterState;

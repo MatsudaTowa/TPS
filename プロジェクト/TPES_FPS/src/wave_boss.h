@@ -19,11 +19,6 @@
 class CWave_Boss :public CWave
 {
 public:
-	static const std::string WAVE_BOSS_ENEMY_FILE;	//ウェーブボスのエネミーのファイル
-	static const std::string WAVE_BOSS_BLOCK_FILE;	//ウェーブボスのブロックのファイル
-	static const std::string WAVE_BOSS_WALL_FILE;	//ウェーブボスの壁のファイル
-	static const std::string WAVE_BOSS_POINT_FILE;	//ウェーブボスポイントのファイル
-
 	static const int NUM_POINT = 12;
 
 	CWave_Boss();
@@ -34,6 +29,10 @@ public:
 	//移動先取得
 	static CMovePoint* GetMovePoint(int Idx);
 private:
+	static const std::string WAVE_BOSS_ENEMY_FILE;	//ウェーブボスのエネミーのファイル
+	static const std::string WAVE_BOSS_BLOCK_FILE;	//ウェーブボスのブロックのファイル
+	static const std::string WAVE_BOSS_WALL_FILE;	//ウェーブボスの壁のファイル
+	static const std::string WAVE_BOSS_POINT_FILE;	//ウェーブボスポイントのファイル
 	void LoadPoint(const std::string* pFileName);
 	static CMovePoint* m_pMovePoint[NUM_POINT];
 };

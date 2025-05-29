@@ -36,7 +36,6 @@ public:
 	void Draw()override;
 	void SetFade(CScene::MODE modeNext);
 
-	//static FADE GetFade(void);
 	float FadeColor(void);
 	static CFade* Create(D3DXVECTOR3 pos);
 private:

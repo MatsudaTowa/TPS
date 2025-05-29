@@ -64,8 +64,6 @@ public:
 
 	static int m_NumEnemy; //エネミーの総数
 private:
-	//void ColisionUlt(D3DXVECTOR3& enemyPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall);
-
 	//プレイヤーの移動関連
 	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
 	static constexpr float DAMPING_COEFFICIENT = 0.3f; //移動抵抗

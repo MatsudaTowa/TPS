@@ -57,8 +57,8 @@ public:
 	void Start(CCharacter* character) override;
 	virtual void Confusion(CCharacter* character)override;
 private:
-	float m_StartRot;
-	bool m_isRight; //見渡す(true:右 false:左)
+	float m_StartRot;	//ロットの開始値
+	bool m_isRight;		//見渡す(true:右 false:左)
 };
 
 //=============================================

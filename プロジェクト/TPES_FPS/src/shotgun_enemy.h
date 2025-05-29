@@ -20,14 +20,12 @@ class CNormalEnemy :public CEnemy
 public:
 	static const int MAX_KEY = 20; //キー最大数
 	static const int NUM_MOTION = 3;
-	static const int ENEMY_PRIORITY = 8; //描画順
-	static const int DEFAULT_LIFE = 80; //ライフ
+	static const int DEFAULT_LIFE = 50; //ライフ
 
 	//モーションの種類の列挙
 	enum Motion_Type
 	{
 		MOTION_NEUTRAL = 0,
-		MOTION_MOVE,
 		MOTION_ATTACK,
 		MOTION_STAN,
 		MOTION_MAX,
@@ -45,6 +43,8 @@ private:
 
 	//エネミーの移動関連
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
+	static const int DEFAULT_AR_RELOAD_FRAME = 120; //デフォルトのアサルトのリロードフレーム数
+	static const int DEFAULT_AR_DAMAGE = 3; //デフォルトのアサルトのダメージ
 
 	Motion_Type m_Motion; //モーションの種類
 };

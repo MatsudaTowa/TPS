@@ -41,6 +41,11 @@ public:
 	{
 		m_Size = size;
 	}
+	//レート計測カウント設定
+	inline void SetRateCnt(int nRateCnt)
+	{
+		m_nRateCnt = nRateCnt;
+	}
 	//弾数設定
 	inline void SetAmmo(int Ammo)
 	{
@@ -72,6 +77,11 @@ public:
 	{
 		return m_Size;
 	}
+	//レート計測カウント取得
+	inline int& GetRateCnt()
+	{
+		return m_nRateCnt;
+	}
 	//弾数取得
 	inline int& GetAmmo()
 	{
@@ -98,7 +108,6 @@ public:
 		return m_BulletSpeed;
 	}
 
-	int m_nRateCnt;//レートカウント
 
 	CShot* m_pShot; //弾発射処理
 	CReload* m_pReload; //リロード処理
@@ -106,6 +115,7 @@ public:
 private:
 	D3DXVECTOR3 m_Size; //サイズ
 
+	int m_nRateCnt;//レートカウント
 	int m_Ammo; //マガジン内の弾数
 	int m_nDamage; //ダメージ
 	int m_ReloadFrame; //リロードフレーム
@@ -124,6 +134,8 @@ public:
 	static const int DEFAULT_AR_FIRE_RATE = 13; //デフォルトのアサルトの発射レート
 	static constexpr float DEFAULT_AR_BULLET_SPEED = 100.0f; //デフォルトのアサルトの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_AR_SIZE; //デフォルトのアサルトサイズ
+	static const int DEFAULT_AR_RELOAD_FRAME = 120; //デフォルトのアサルトのリロードフレーム数
+	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 
 	CAssultRifle();
 	~CAssultRifle() override;

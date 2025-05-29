@@ -414,7 +414,7 @@ void CCharacter::HitBlock(int NumParts)
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
 				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
 			{
-				break;
+				continue;
 			}
 		}
 	}
