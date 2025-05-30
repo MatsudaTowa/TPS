@@ -98,14 +98,6 @@ void CEnemy::Update()
 		}
 	}
 
-	//現在のシーンを取得
-	CScene::MODE pScene = CScene::GetSceneMode();
-
-	if (pScene == CScene::MODE::MODE_TITLE)
-	{
-		return;
-	}
-
 	//ダメージステートの切り替えTODO:これもステートパターンで
 	ChangeDamageState();
 

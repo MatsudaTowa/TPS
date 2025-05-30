@@ -108,56 +108,11 @@ HRESULT CActivePlayer::Init()
 		m_pUlt->Init();
 	}
 
+	//ブリンクの回数算出
 	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
 
-	//カメラ情報取得
-	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-
-	//現在のシーンを取得 TODO:シーン参照するな
-	CScene::MODE pScene = CScene::GetSceneMode();
-	if (pScene != CScene::MODE::MODE_TITLE)
-	{
-		if (m_pGunIcon == nullptr)
-		{
-			m_pGunIcon = CGunIcon::Create(GUN_UI_POS, GUN_UI_SIZE, COLOR_WHITE, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
-		}
-		//残弾数初期化
-		if (m_pAmmoUI == nullptr)
-		{
-			m_pAmmoUI = new CAmmo_UI;
-
-			m_pAmmoUI->Init();
-
-			m_pAmmoUI->SetDefaultAmmo_UI(m_pGun->GetAmmo());
-		}
-		//体力UI初期化
-		if (m_pLifeUI == nullptr)
-		{
-			m_pLifeUI = new CLife_UI;
-
-			m_pLifeUI->Init();
-		}
-		//ブリンクUI初期化
-		if (m_pBlinkUI == nullptr)
-		{
-			m_pBlinkUI = new CBlink_UI;
-
-			m_pBlinkUI->Init(this);
-		}
-		//ウルトUI初期化
-		if (m_pUltUI == nullptr)
-		{
-			m_pUltUI = new CUlt_UI;
-
-			m_pUltUI->Init(this);
-		}
-
-		if (m_pSmokeUI == nullptr)
-		{
-			m_pSmokeUI = new CSmoke_UI;
-			m_pSmokeUI->Init(this);
-		}
-	}
+	//UI生成
+	CreateUI();
 
 	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
@@ -165,11 +120,8 @@ HRESULT CActivePlayer::Init()
 	//移動量初期化
 	D3DXVECTOR3 move = VEC3_RESET_ZERO;
 
-	for (int nCnt = 0; nCnt < GetNumParts(); nCnt++)
-	{
-		CModel* pModel = CManager::GetInstance()->GetModel();
-	}
-
+	//カメラ情報取得
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 	pCamera->SetRot(VEC3_RESET_ZERO);
 
 	//ムーブ値代入
@@ -182,6 +134,54 @@ HRESULT CActivePlayer::Init()
 	SetShadowSize(SHADOW_SIZE);
 
 	return S_OK;
+}
+
+//=============================================
+//UI生成
+//=============================================
+void CActivePlayer::CreateUI()
+{
+	if (m_pGunIcon == nullptr)
+	{
+		m_pGunIcon = CGunIcon::Create(GUN_UI_POS, GUN_UI_SIZE, COLOR_WHITE, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
+	}
+	//残弾数初期化
+	if (m_pAmmoUI == nullptr)
+	{
+		m_pAmmoUI = new CAmmo_UI;
+
+		m_pAmmoUI->Init();
+
+		m_pAmmoUI->SetDefaultAmmo_UI(m_pGun->GetAmmo());
+	}
+	//体力UI初期化
+	if (m_pLifeUI == nullptr)
+	{
+		m_pLifeUI = new CLife_UI;
+
+		m_pLifeUI->Init();
+	}
+	//ブリンクUI初期化
+	if (m_pBlinkUI == nullptr)
+	{
+		m_pBlinkUI = new CBlink_UI;
+
+		m_pBlinkUI->Init(this);
+	}
+	//ウルトUI初期化
+	if (m_pUltUI == nullptr)
+	{
+		m_pUltUI = new CUlt_UI;
+
+		m_pUltUI->Init(this);
+	}
+
+	if (m_pSmokeUI == nullptr)
+	{
+		m_pSmokeUI = new CSmoke_UI;
+		m_pSmokeUI->Init(this);
+	}
+
 }
 
 //=============================================

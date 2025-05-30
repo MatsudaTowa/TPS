@@ -48,6 +48,7 @@ public:
 	CActivePlayer(int nPriority = PLAYER_PRIORITY);
 	~CActivePlayer();
 	HRESULT Init();
+	void CreateUI();
 	void Uninit();
 	void Update();
 	void CanDetectEnemyCollision();
