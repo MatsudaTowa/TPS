@@ -11,7 +11,7 @@
 #include "block.h"
 #include "field.h"
 #include"game.h"
-#include "player.h"
+#include "active_player.h"
 
 //=============================================
 //コンストラクタ
@@ -169,10 +169,10 @@ bool CAttack_Manager::HitPlayer()
 		}
 
 		//プレイヤーとの当たり判定
-		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+		CActivePlayer* pPlayer = dynamic_cast<CActivePlayer*>(pObj);
 
 		CColision::COLISION ColisionCheck;
-		for (int nCnt = 0; nCnt < pPlayer->NUM_PARTS; nCnt++)
+		for (int nCnt = 0; nCnt < pPlayer->GetNumParts(); nCnt++)
 		{
 			//パーツのオフセットpos
 			D3DXVECTOR3 PartsPos = { pPlayer->m_apModel[nCnt]->GetMtxWorld()._41

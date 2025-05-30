@@ -49,7 +49,7 @@ CSmoke_UI_Manager::~CSmoke_UI_Manager()
 //=============================================
 //初期化
 //=============================================
-HRESULT CSmoke_UI_Manager::Init(CPlayer* player)
+HRESULT CSmoke_UI_Manager::Init(CActivePlayer* player)
 {
 	m_SmokePos = NUMBER_POS;
 
@@ -133,7 +133,7 @@ void CSmoke_UI_Manager::Update()
 //=============================================
 //現在のUIの設定
 //=============================================
-void CSmoke_UI_Manager::SetCurrentSmoke_UI(CPlayer* player)
+void CSmoke_UI_Manager::SetCurrentSmoke_UI(CActivePlayer* player)
 {
 	if (player->GetIsSmoke())
 	{//スモークを使っていたら

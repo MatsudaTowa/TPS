@@ -5,7 +5,7 @@
 //
 //=============================================
 #include "game_score.h"
-#include "player.h"
+#include "active_player.h"
 
 //UI‚Ì”wŒi‚ÌˆÊ’u
 const D3DXVECTOR3 CGameScore::BOX_POS = { 650.0f, 60.0f, 0.0f };
@@ -140,7 +140,7 @@ void CGameScore::Update()
 			continue;
 		}
 
-		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+		CActivePlayer* pPlayer = dynamic_cast<CActivePlayer*>(pObj);
 
 		SetDeathCntUI(pPlayer->GetDeathCnt());
 	}

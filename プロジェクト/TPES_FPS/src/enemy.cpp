@@ -298,7 +298,7 @@ CCharacter::RayHitInfo CEnemy::PerformRaycast_Player(D3DXVECTOR3 vector, CCharac
 
 		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
 		D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y,character->GetPos().z - pPlayer->GetPos().z };
-		for (int nParts = 0; nCnt < CPlayer::NUM_PARTS; nCnt++)
+		for (int nParts = 0; nCnt < pPlayer->GetNumParts(); nCnt++)
 		{
 			//レイを飛ばしプレイヤーと当たるかチェック
 			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);

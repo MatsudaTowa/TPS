@@ -55,7 +55,7 @@ CBlink_UI::~CBlink_UI()
 //=============================================
 //初期化
 //=============================================
-HRESULT CBlink_UI::Init(CPlayer* player)
+HRESULT CBlink_UI::Init(CActivePlayer* player)
 {
 	m_BlinkUIPos = NUMBER_POS;
 
@@ -152,7 +152,7 @@ void CBlink_UI::Update()
 //=============================================
 //現在のブリンク状態代入
 //=============================================
-void CBlink_UI::SetCurrentBlink_UI(CPlayer* player)
+void CBlink_UI::SetCurrentBlink_UI(CActivePlayer* player)
 {
 	//今のブリンク数を代入
 	SetNumber(player->GetBlinkCnt());

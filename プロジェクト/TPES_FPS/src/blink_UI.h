@@ -9,7 +9,7 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
-#include "player.h"
+#include "active_player.h"
 #include "player_UI_box.h"
 #include "blink_icon.h"
 #include "keyboard_UI.h"
@@ -24,10 +24,10 @@ class CBlink_UI
 public:
 	CBlink_UI();
 	~CBlink_UI();
-	HRESULT Init(CPlayer* player);
+	HRESULT Init(CActivePlayer* player);
 	void Uninit();
 	void Update();
-	void SetCurrentBlink_UI(CPlayer* player);
+	void SetCurrentBlink_UI(CActivePlayer* player);
 
 	void SetNumber(int nParcent);
 

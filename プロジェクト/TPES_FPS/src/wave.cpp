@@ -13,7 +13,7 @@
 #include "wave_result.h"
 #include "game_score.h"
 #include "wave_score.h"
-#include"player.h"
+#include"game_player.h"
 #include "wall.h"
 #include "move_point.h"
 #include "mask.h"
@@ -128,7 +128,7 @@ CWave* CWave::Create(WAVE wave)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer::Create();
+			CPlayer::Create(new CGamePlayer);
 		}
 		else if (wave == WAVE::RESULT)
 		{
@@ -178,7 +178,7 @@ CWave* CWave::Create(WAVE wave, WAVE next_wave,const char* ResultFile)
 		{
 			m_pScore = new CGameScore;
 			//プレイヤー生成
-			CPlayer::Create();
+			CPlayer::Create(new CGamePlayer);
 		}
 		else if (wave == WAVE::RESULT)
 		{

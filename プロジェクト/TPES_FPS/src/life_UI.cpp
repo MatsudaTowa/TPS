@@ -6,7 +6,7 @@
 //=============================================
 #include "life_UI.h"
 #include "manager.h"
-#include "player.h"
+#include "active_player.h"
 
 //UI‚Ì˜g‚ÌˆÊ’u
 const D3DXVECTOR3 CLife_UI::BOX_POS ={ 200.0f, 665.0f, 0.0f };
@@ -124,19 +124,19 @@ void CLife_UI::SetLife_UI(int nLife)
 {
 	SetNumber(nLife);
 
-	float gaugeWidth = (nLife * GAUGE_SIZE.x) / CPlayer::PLAYER_LIFE;
+	float gaugeWidth = (nLife * GAUGE_SIZE.x) / CActivePlayer::PLAYER_LIFE;
 
 	m_pGauge->SetGauge({ gaugeWidth , m_pGauge->GetSize().y});
 
-	if (nLife >= CPlayer::PLAYER_LIFE * 0.6f)
+	if (nLife >= CActivePlayer::PLAYER_LIFE * 0.6f)
 	{
 		m_pGauge->SetColor(COLOR_GREEN);
 	}
-	else if (nLife >= CPlayer::PLAYER_LIFE * 0.3f && nLife < CPlayer::PLAYER_LIFE * 0.6f)
+	else if (nLife >= CActivePlayer::PLAYER_LIFE * 0.3f && nLife < CActivePlayer::PLAYER_LIFE * 0.6f)
 	{
 		m_pGauge->SetColor(COLOR_YELLOW);
 	}
-	else if (nLife < CPlayer::PLAYER_LIFE * 0.3f)
+	else if (nLife < CActivePlayer::PLAYER_LIFE * 0.3f)
 	{
 		m_pGauge->SetColor(COLOR_RED);
 	}

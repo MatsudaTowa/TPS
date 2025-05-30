@@ -412,9 +412,9 @@ void CCharacter::HitBlock(int NumParts)
 			ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
 
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
-				|| m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
+				&& m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_Z)
 			{
-				continue;
+				break;
 			}
 		}
 	}

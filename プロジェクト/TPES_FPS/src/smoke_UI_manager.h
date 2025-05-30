@@ -9,7 +9,7 @@
 #include "main.h"
 #include "object2D.h"
 #include "number.h"
-#include "player.h"
+#include "active_player.h"
 #include "player_UI_box.h"
 #include "smoke_icon.h"
 #include "keyboard_UI.h"
@@ -23,10 +23,10 @@ class CSmoke_UI_Manager
 public:
 	CSmoke_UI_Manager();
 	~CSmoke_UI_Manager();
-	HRESULT Init(CPlayer* player);
+	HRESULT Init(CActivePlayer* player);
 	void Uninit();
 	void Update();
-	void SetCurrentSmoke_UI(CPlayer* player);
+	void SetCurrentSmoke_UI(CActivePlayer* player);
 
 	void SetNumber(int nParcent);
 

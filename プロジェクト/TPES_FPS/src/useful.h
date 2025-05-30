@@ -14,6 +14,7 @@
 //0‰Šú‰»—p
 #define INT_ZERO (0)
 #define FLOAT_ZERO (0.0f)
+//1‰Šú‰»
 #define INT_ONE (1)
 #define FLOAT_ONE (1.0f)
 

@@ -127,7 +127,7 @@ void CMediumUlt::Update()
 //=============================================
 //ƒEƒ‹ƒg‚ÌŽÀsˆ—
 //=============================================
-bool CMediumUlt::Action(CPlayer* player)
+bool CMediumUlt::Action(CActivePlayer* player)
 {
 	float rot = CManager::GetInstance()->GetCamera()->GetRot().y;
 

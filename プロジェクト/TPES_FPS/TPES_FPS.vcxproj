@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\action_UI.cpp" />
+    <ClCompile Include="src\active_player.cpp" />
     <ClCompile Include="src\ammo_UI.cpp" />
     <ClCompile Include="src\assault_behavior.cpp" />
     <ClCompile Include="src\attack_manager.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="src\fade.cpp" />
     <ClCompile Include="src\field.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\game_player.cpp" />
     <ClCompile Include="src\game_score.cpp" />
     <ClCompile Include="src\gauge.cpp" />
     <ClCompile Include="src\gun.cpp" />
@@ -115,8 +117,10 @@
     <ClCompile Include="src\test.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\title.cpp" />
+    <ClCompile Include="src\title_player.cpp" />
     <ClCompile Include="src\title_screen.cpp" />
     <ClCompile Include="src\tutorial.cpp" />
+    <ClCompile Include="src\tutorial_player.cpp" />
     <ClCompile Include="src\tutorial_screen.cpp" />
     <ClCompile Include="src\tutorial_UI.cpp" />
     <ClCompile Include="src\tutorial_UI._manager.cpp" />
@@ -140,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
+    <ClInclude Include="src\active_player.h" />
     <ClInclude Include="src\ammo_UI.h" />
     <ClInclude Include="src\assault_behavior.h" />
     <ClInclude Include="src\attack_manager.h" />
@@ -173,6 +178,7 @@
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\field.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\game_player.h" />
     <ClInclude Include="src\game_score.h" />
     <ClInclude Include="src\gauge.h" />
     <ClInclude Include="src\gun.h" />
@@ -230,8 +236,10 @@
     <ClInclude Include="src\test.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\title.h" />
+    <ClInclude Include="src\title_player.h" />
     <ClInclude Include="src\title_screen.h" />
     <ClInclude Include="src\tutorial.h" />
+    <ClInclude Include="src\tutorial_player.h" />
     <ClInclude Include="src\tutorial_screen.h" />
     <ClInclude Include="src\tutorial_UI.h" />
     <ClInclude Include="src\tutorial_UI_manager.h" />

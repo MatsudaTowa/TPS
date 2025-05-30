@@ -13,7 +13,7 @@
 //=============================================
 //前方宣言
 //=============================================
-class CPlayer;
+class CActivePlayer;
 
 //=============================================
 //キャラクターのステートクラス
@@ -21,10 +21,10 @@ class CPlayer;
 class CPlayerState
 {
 public:
-	virtual void Default(CPlayer* player);
-	virtual void Ult(CPlayer* player);
-	virtual void Avoidance(CPlayer* player);
-	virtual void Blown(CPlayer* player);
+	virtual void Default(CActivePlayer* player);
+	virtual void Ult(CActivePlayer* player);
+	virtual void Avoidance(CActivePlayer* player);
+	virtual void Blown(CActivePlayer* player);
 };
 
 //=============================================
@@ -33,7 +33,7 @@ public:
 class CDefaultState : public CPlayerState
 {
 public:
-	virtual void Default(CPlayer* player)override;
+	virtual void Default(CActivePlayer* player)override;
 };
 
 //=============================================
@@ -42,7 +42,7 @@ public:
 class CUltState : public CPlayerState
 {
 public:
-	virtual void Ult(CPlayer* player) override;
+	virtual void Ult(CActivePlayer* player) override;
 };
 
 //=============================================
@@ -51,7 +51,7 @@ public:
 class CAvoidanceState : public CPlayerState
 {
 public:
-	virtual void Avoidance(CPlayer* player) override;
+	virtual void Avoidance(CActivePlayer* player) override;
 };
 
 //=============================================
@@ -61,7 +61,7 @@ class CBlownState : public CPlayerState
 {
 public:
 	CBlownState();
-	virtual void Blown(CPlayer* player) override;
+	virtual void Blown(CActivePlayer* player) override;
 private:
 	int m_nStanCnt;
 };

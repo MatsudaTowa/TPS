@@ -7,7 +7,7 @@
 #include "bullet.h"
 #include "manager.h"
 #include "game.h"
-#include "player.h"
+#include "active_player.h"
 
 //テクスチャパス
 const std::string CBullet::BULLET_TEXTURE_NAME ="data\\TEXTURE\\bullet.png";
@@ -151,13 +151,13 @@ void CBullet::SetHitMaker()
 			continue;
 		}
 
-		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+		CActivePlayer* pPlayer = dynamic_cast<CActivePlayer*>(pObj);
 
-		if (pPlayer->m_Raticle != nullptr)
+		if (pPlayer->GetReticle() != nullptr)
 		{
-			if (pPlayer->m_Raticle->m_pHitMaker != nullptr)
+			if (pPlayer->GetReticle()->m_pHitMaker != nullptr)
 			{
-				pPlayer->m_Raticle->m_pHitMaker->SetColor(COLOR_WHITE);
+				pPlayer->GetReticle()->m_pHitMaker->SetColor(COLOR_WHITE);
 			}
 		}
 	}

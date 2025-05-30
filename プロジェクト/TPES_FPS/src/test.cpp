@@ -9,7 +9,7 @@
 #include "object2D.h"
 #include "object3D.h"
 #include "objectX.h"
-#include "player.h"
+#include "game_player.h"
 #include "colision.h"
 #include "block.h"
 #include "field.h"
@@ -43,7 +43,7 @@ HRESULT CTest::Init()
 	CField::Create(VEC3_RESET_ZERO, { 1000.0f,0.0f,1000.0f });
 
 	//ÉvÉåÉCÉÑÅ[ê∂ê¨
-	CPlayer::Create();
+	CPlayer::Create(new CGamePlayer);
 	return S_OK;
 }
 

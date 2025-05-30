@@ -13,7 +13,7 @@
 #include "enemy_behavior.h"
 #include "boss_behavior.h"
 #include "boss_state.h"
-#include"player.h"
+#include "active_player.h"
 #include "dash_effect.h"
 #include "tackle_charge.h"
 
@@ -66,7 +66,7 @@ public:
 
 	void ColisionPlayer(); //ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 
-	void CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
+	void CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
 
 	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
 

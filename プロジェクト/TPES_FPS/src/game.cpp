@@ -14,7 +14,7 @@
 #include "field.h"
 #include "manager.h"
 #include "dash_effect.h"
-#include "player.h"
+#include "active_player.h"
 
 //ウェーブ
 CWave*CGame::m_pWave = nullptr;
@@ -177,7 +177,7 @@ void CGame::ApplyDeathPenalty()
 			continue;
 		}
 
-		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+		CActivePlayer* pPlayer = dynamic_cast<CActivePlayer*>(pObj);
 
 		for (int nCnt = 0; nCnt < pPlayer->GetDeathCnt(); nCnt++)
 		{

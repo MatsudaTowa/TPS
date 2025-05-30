@@ -14,7 +14,7 @@
 //=============================================
 // ëOï˚êÈåæ
 //============================================
-class CPlayer;
+class CActivePlayer;
 class CUltIcon;
 
 //=============================================
@@ -25,10 +25,10 @@ class CUlt_UI
 public:
 	CUlt_UI();
 	~CUlt_UI();
-	HRESULT Init(CPlayer* player);
+	HRESULT Init(CActivePlayer* player);
 	void Uninit();
 	void Update();
-	void SetCurrentUlt_UI(CPlayer* player);
+	void SetCurrentUlt_UI(CActivePlayer* player);
 
 	void Reset();
 

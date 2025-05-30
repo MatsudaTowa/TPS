@@ -359,6 +359,18 @@
     <ClCompile Include="src\shotgun_enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\title_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tutorial_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\active_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
@@ -474,5 +486,9 @@
     <ClInclude Include="src\wave_three.h" />
     <ClInclude Include="src\wave_two.h" />
     <ClInclude Include="src\shotgun_enemy.h" />
+    <ClInclude Include="src\title_player.h" />
+    <ClInclude Include="src\tutorial_player.h" />
+    <ClInclude Include="src\game_player.h" />
+    <ClInclude Include="src\active_player.h" />
   </ItemGroup>
 </Project>

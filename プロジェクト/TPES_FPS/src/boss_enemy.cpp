@@ -336,7 +336,7 @@ void CBossEnemy::ColisionPlayer()
 			}
 
 			//安全にダウンキャスト
-			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+			CActivePlayer* pPlayer = dynamic_cast<CActivePlayer*>(pObj);
 
 			if (pPlayer->GetEnemyColision())
 			{//プレイヤーがエネミーと当たる状態のとき
@@ -349,7 +349,7 @@ void CBossEnemy::ColisionPlayer()
 //=============================================
 //プレイヤーとの当たり判定チェック
 //=============================================
-void CBossEnemy::CheckColisionPlayer(CPlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+void CBossEnemy::CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
 {
 	for (int nPartsCnt = INT_ZERO; nPartsCnt < pPlayer->GetNumParts(); ++nPartsCnt)
 	{//パーツ数回す

@@ -13,7 +13,7 @@
 #include "player.h"
 #include "colision.h"
 #include "block.h"
-#include"player.h"
+#include"title_player.h"
 #include "field.h"
 #include "manager.h"
 #include "sound.h"
@@ -63,7 +63,7 @@ HRESULT CTitle::Init()
     CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
 	//プレイヤー生成
-	CPlayer::Create();
+	CPlayer::Create(new CTitlePlayer);
 
 	//タイトルUI生成
     m_pTitleScreen[0] = CTitle_Screen::Create(LOGO_POS, LOGO_SIZE,CTitle_Screen::TITLE_UI::UI_TITLE_ROGO);

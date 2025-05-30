@@ -6,6 +6,7 @@
 //=============================================
 #include "ult_UI.h"
 #include "ult.h"
+#include "active_player.h"
 
 //アイコンの位置
 const D3DXVECTOR3 CUlt_UI::ICON_POS = { SCREEN_WIDTH * 0.5f,660.0f,0.0f };
@@ -37,12 +38,12 @@ CUlt_UI::~CUlt_UI()
 //=============================================
 // 初期化
 //=============================================
-HRESULT CUlt_UI::Init(CPlayer* player)
+HRESULT CUlt_UI::Init(CActivePlayer* player)
 {
 	//UIの枠生成
 	if (m_pIcon == nullptr)
 	{
-		float Addcolor = (FLOAT_ONE - CUltIcon::START_COLOR.r) / player->m_pUlt->GetCoolTime();
+		float Addcolor = (FLOAT_ONE - CUltIcon::START_COLOR.r) / player->GetUlt()->GetCoolTime();
 
 		m_pIcon = CUltIcon::Create(ICON_POS, ICON_SIZE, Addcolor, CUltIcon::ULT_TYPE::ULT_TYPE_MEDIUM);
 	}
@@ -93,10 +94,10 @@ void CUlt_UI::Update()
 //=============================================
 // UI設定
 //=============================================
-void CUlt_UI::SetCurrentUlt_UI(CPlayer* player)
+void CUlt_UI::SetCurrentUlt_UI(CActivePlayer* player)
 {
 	//割合を出すためにfloatにキャスト
-	int Parcent = ((float)player->m_pUlt->GetCoolTimeCnt() / (float)player->m_pUlt->GetCoolTime()) * 100;
+	int Parcent = ((float)player->GetUlt()->GetCoolTimeCnt() / (float)player->GetUlt()->GetCoolTime()) * 100;
 }
 
 //=============================================

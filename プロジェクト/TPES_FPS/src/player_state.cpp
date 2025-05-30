@@ -7,43 +7,44 @@
 #include "player_state.h"
 #include "manager.h"
 #include "camera_state.h"
+#include "active_player.h"
 
 //=============================================
 //デフォルト状態の処理
 //=============================================
-void CPlayerState::Default(CPlayer* player)
+void CPlayerState::Default(CActivePlayer* player)
 {
 }
 
 //=============================================
 //ウルト状態の処理
 //=============================================
-void CPlayerState::Ult(CPlayer* player)
+void CPlayerState::Ult(CActivePlayer* player)
 {
 }
 
 //=============================================
 //回避状態の処理
 //=============================================
-void CPlayerState::Avoidance(CPlayer* player)
+void CPlayerState::Avoidance(CActivePlayer* player)
 {
 }
 
 //=============================================
 //ふっとび状態の処理
 //=============================================
-void CPlayerState::Blown(CPlayer* player)
+void CPlayerState::Blown(CActivePlayer* player)
 {
 }
 
 //=============================================
 //デフォルト状態の処理
 //=============================================
-void CDefaultState::Default(CPlayer* player)
+void CDefaultState::Default(CActivePlayer* player)
 {
-	if (player->m_pUlt != nullptr)
+	if (player->GetUlt() != nullptr)
 	{
-		player->m_pUlt->Update();
+		player->GetUlt()->Update();
 	}
 
 	player->Input();
@@ -52,12 +53,12 @@ void CDefaultState::Default(CPlayer* player)
 //=============================================
 //ウルト状態の処理
 //=============================================
-void CUltState::Ult(CPlayer* player)
+void CUltState::Ult(CActivePlayer* player)
 {
 	bool isFinish = false;
-	if (player->m_pUlt != nullptr)
+	if (player->GetUlt() != nullptr)
 	{
-		isFinish = player->m_pUlt->Action(player);
+		isFinish = player->GetUlt()->Action(player);
 	}
 
 	if (isFinish)
@@ -71,7 +72,7 @@ void CUltState::Ult(CPlayer* player)
 //=============================================
 //キャラクターの回避状態
 //=============================================
-void CAvoidanceState::Avoidance(CPlayer* player)
+void CAvoidanceState::Avoidance(CActivePlayer* player)
 {
 
 }
@@ -86,7 +87,7 @@ CBlownState::CBlownState():m_nStanCnt(INT_ZERO)
 //=============================================
 //キャラクターの吹っ飛ばされ状態
 //=============================================
-void CBlownState::Blown(CPlayer* player)
+void CBlownState::Blown(CActivePlayer* player)
 {
 	if (player->GetLaunding())
 	{//着地したら

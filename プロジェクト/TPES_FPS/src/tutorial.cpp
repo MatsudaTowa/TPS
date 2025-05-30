@@ -6,7 +6,7 @@
 //=============================================
 #include "tutorial.h"
 #include "tutorial_screen.h"
-#include "player.h"
+#include "tutorial_player.h"
 
 //エネミーファイル
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
@@ -26,7 +26,7 @@ const D3DXVECTOR2 CTutorial::UI_SIZE = { 200.0f, 100.0f };
 
 //=============================================
 //コンストラクタ
-//=============================================
+//=============================================s
 CTutorial::CTutorial():m_pTutorial_UI()
 {
 }
@@ -47,7 +47,7 @@ HRESULT CTutorial::Init()
 	CScene::Init();
 
 	//プレイヤー生成
-	CPlayer::Create();
+	CPlayer::Create(new CTutorialPlayer);
 
 	//ブロック読み込み
 	LoadBlock(BLOCK_FILE);
