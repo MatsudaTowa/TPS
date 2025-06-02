@@ -65,7 +65,6 @@
     <ClCompile Include="src\hit_camera_effect_mild.cpp" />
     <ClCompile Include="src\hit_camera_effect_moderate.cpp" />
     <ClCompile Include="src\hit_camera_effect_severe.cpp" />
-    <ClCompile Include="src\icon.cpp" />
     <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\keyboard_UI.cpp" />
     <ClCompile Include="src\life_UI.cpp" />
@@ -99,13 +98,10 @@
     <ClCompile Include="src\result.cpp" />
     <ClCompile Include="src\result_screen.cpp" />
     <ClCompile Include="src\reticle.cpp" />
-    <ClCompile Include="src\roof.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\score.cpp" />
     <ClCompile Include="src\shadow.cpp" />
-    <ClCompile Include="src\shotgun_enemy.cpp" />
     <ClCompile Include="src\smoke.cpp" />
-    <ClCompile Include="src\smoke_granade.cpp" />
     <ClCompile Include="src\smoke_grenade.cpp" />
     <ClCompile Include="src\smoke_icon.cpp" />
     <ClCompile Include="src\smoke_range.cpp" />
@@ -223,7 +219,6 @@
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\score.h" />
     <ClInclude Include="src\shadow.h" />
-    <ClInclude Include="src\shotgun_enemy.h" />
     <ClInclude Include="src\smoke.h" />
     <ClInclude Include="src\smoke_grenade.h" />
     <ClInclude Include="src\smoke_icon.h" />
