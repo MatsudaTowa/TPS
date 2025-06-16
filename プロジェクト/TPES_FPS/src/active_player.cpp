@@ -71,6 +71,9 @@ HRESULT CActivePlayer::Init()
 	SetRot(PLAYER_SPAWN_ROT); //rot設定
 	SetLife(PLAYER_LIFE); //体力代入
 
+	//ステート変更フレーム代入
+	SetStateFrame(DAMAGE_FRAME);
+
 	//スタンフレーム数代入
 	SetStanFrame(STAN_FRAME);
 
@@ -81,13 +84,13 @@ HRESULT CActivePlayer::Init()
 	{
 		m_pAvoidance = new CPlayerAvoidance;
 	}
-	if (m_pMove == nullptr)
+	if (GetMoveStrategy() == nullptr)
 	{
-		m_pMove = new CPlayerMove;
+		SetMoveStrategy(new CPlayerMove);
 	}
-	if (m_pGunAttack == nullptr)
+	if (GetGunAttack() == nullptr)
 	{
-		m_pGunAttack = new CPlayerAttack;
+		SetGunAttack(new CPlayerAttack);
 	}
 
 	if (m_pPlayerState == nullptr)
@@ -96,10 +99,10 @@ HRESULT CActivePlayer::Init()
 	}
 
 	//銃初期化
-	if (m_pGun == nullptr)
+	if (GetGun() == nullptr)
 	{
-		m_pGun = new CAssultRifle;
-		m_pGun->Init();
+		SetGun(new CAssultRifle);
+		GetGun()->Init();
 	}
 
 	if (m_pUlt == nullptr)
@@ -152,7 +155,7 @@ void CActivePlayer::CreateUI()
 
 		m_pAmmoUI->Init();
 
-		m_pAmmoUI->SetDefaultAmmo_UI(m_pGun->GetAmmo());
+		m_pAmmoUI->SetDefaultAmmo_UI(GetGun()->GetAmmo());
 	}
 	//体力UI初期化
 	if (m_pLifeUI == nullptr)
@@ -355,7 +358,7 @@ void CActivePlayer::Update()
 
 	if (m_isRelorad)
 	{//リロード中だったら
-		m_isRelorad = m_pGun->Reload(); //リロードし終わったらfalseが返ってくる
+		m_isRelorad = GetGun()->Reload(); //リロードし終わったらfalseが返ってくる
 	}
 }
 
@@ -366,7 +369,7 @@ void CActivePlayer::SetUI()
 {
 	if (m_pAmmoUI != nullptr)
 	{
-		m_pAmmoUI->SetCurrentAmmo_UI(m_pGun->GetAmmo());
+		m_pAmmoUI->SetCurrentAmmo_UI(GetGun()->GetAmmo());
 	}
 
 	if (m_pLifeUI != nullptr)
@@ -487,7 +490,7 @@ void CActivePlayer::ReSpawn()
 	m_isSmoke = true;
 	m_SmokeRecastCnt = INT_ZERO;
 
-	m_pGun->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
+	GetGun()->SetAmmo(CAssultRifle::DEFAULT_AR_MAG_SIZE);
 	ChangePlayerState(new CDefaultState);
 
 	++m_DeathCnt;
@@ -593,8 +596,6 @@ void CActivePlayer::Input()
 
 	if (pMouse->GetPress(1))
 	{//マウスが押されてる間は
-		//射撃状態に変更
-		ChangeState(new CShotState);
 
 		//モーションを変更 TODO:覗きこむモーションに
 		SetMotion(MOTION_NEUTRAL);
@@ -611,24 +612,25 @@ void CActivePlayer::Input()
 
 			m_Reticle->Init();
 		}
-		m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_PLAYER, CBullet::BULLET_TYPE_NORMAL, this);
+		//射撃状態に変更
+		ChangeState(new CShotState);
+		m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_PLAYER, this);
 	}
 
 	if (pMouse->GetRelease(1))
 	{//マウスが離されたら
-		//移動状態に変更
-		ChangeState(new CMoveState);
-
 		if (m_Reticle != nullptr)
 		{//使われていたら
 			m_Reticle->Uninit();
 			m_Reticle = nullptr;
 		}
+		//移動状態に変更
+		ChangeState(new CMoveState);
 	}
 
 	if (pKeyboard->GetTrigger(DIK_R) && !pMouse->GetPress(0))
 	{
-		if (m_pGun->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
+		if (GetGun()->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
 			//リロード
 			m_isRelorad = true;
@@ -708,41 +710,9 @@ void CActivePlayer::ColisionEnemy()
 }
 
 //=============================================
-//ダメージ状態の切り替え
-//=============================================
-void CActivePlayer::ChangeDamageState()
-{
-	// 状態を取得
-	CCharacter::CHARACTER_STATE state = GetState();
-
-	if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
-	{
-		//状態のカウント数取得
-		int nStateCnt = GetStateCnt();
-
-		//ステート変更カウント進める
-		nStateCnt++;
-
-		if (nStateCnt >= DAMAGE_FRAME)
-		{
-			//通常に戻す
-			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
-
-			//ステートカウントリセット
-			nStateCnt = INT_ZERO;
-
-			//状態代入
-			SetState(state);
-		}
-		//ステートカウント代入
-		SetStateCnt(nStateCnt);
-	}
-}
-
-//=============================================
 //敵との当たり判定
 //=============================================
-void CActivePlayer::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+void CActivePlayer::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos)
 {
 	for (int nEnemyPartsCnt = INT_ZERO; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)
 	{
@@ -784,7 +754,7 @@ void CActivePlayer::DebugPos()
 	char aStr[256];
 
 	sprintf(&aStr[0], "\n\n[player]\npos:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f\nmove:%.1f,%.1f,%.1f\n弾数:%d\n体力:%d\nスタミナ:%d"
-		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z, GetMove().x, GetMove().y, GetMove().z, m_pGun->GetAmmo(), GetLife(), GetStamina());
+		, GetPos().x, GetPos().y, GetPos().z, GetRot().x, GetRot().y, GetRot().z, GetMove().x, GetMove().y, GetMove().z, GetGun()->GetAmmo(), GetLife(), GetStamina());
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG

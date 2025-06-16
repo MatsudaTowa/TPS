@@ -12,11 +12,29 @@
 class CInput
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CInput();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CInput();
+	/**
+	 * @brief 初期化
+	 * @param [in]インスタンス
+	 * @param [in]ハンドルワンド
+	 * @return 成功したか
+	 */
 	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd);
+	/**
+	 * @brief 終了
+	 */
 	virtual void Uninit();
-	virtual void Update() = 0;//端末ごとに
+	/**
+	 * @brief 更新
+	 */
+	virtual void Update() = 0;
 protected:
 	static LPDIRECTINPUT8 m_pInput;
 	LPDIRECTINPUTDEVICE8 m_pDevice;
@@ -27,25 +45,55 @@ class CInputKeyboard:public CInput
 {
 public:
 	static const int NUM_KEY_MAX = 256; //キーボードのキー数
+	/**
+	 * @brief コンストラクタ
+	 */
 	CInputKeyboard();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CInputKeyboard();
+	/**
+	 * @brief 初期化
+	 * @param [in]インスタンス
+	 * @param [in]ハンドルワンド
+	 * @return 成功したか
+	 */
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
-	void Update() override;//端末ごとに
+	/**
+	 * @brief 更新
+	 */
+	void Update() override;
 
-	//プレス情報取得
+	/**
+	 * @brief プレス情報取得
+	 * @param [in]キー番号
+	 * @return 押されているか
+	 */
 	inline bool GetPress(int nKey)
 	{
 		return(m_aKeyState[nKey] & 0x80) != 0;
 	}
 
-	//トリガー情報取得
+	/**
+	 * @brief トリガー情報取得
+	 * @param [in]キー番号
+	 * @return 押されているか
+	 */
 	inline bool GetTrigger(int nKey)
 	{
 		return(m_aKeyStateTrigger[nKey] & 0x80) != 0;
 	}
 
-	//リリース情報取得
+	/**
+	 * @brief リリース情報取得
+	 * @param [in]キー番号
+	 * @return 離されているか
+	 */	
 	inline bool GetRelease(int nKey)
 	{
 		return(m_aKeyStateRelease[nKey] & 0x80) != 0;
@@ -61,36 +109,72 @@ class CInputMouse :public CInput
 {
 public:
 	static const int NUM_MOUSE_MAX = 3; //マウスのキー数
+	/**
+	 * @brief コンストラクタ
+	 */
 	CInputMouse();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CInputMouse();
+	/**
+	 * @brief 初期化
+	 * @param [in]インスタンス
+	 * @param [in]ハンドルワンド
+	 * @return 成功したか
+	 */
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
-	void Update() override;//端末ごとに
+	/**
+	 * @brief 更新
+	 */
+	void Update() override;
 
-	//プレス情報取得
+	/**
+	 * @brief プレス情報取得
+	 * @param [in]キー番号
+	 * @return 押されているか
+	 */	
 	inline bool GetPress(int nKey)
 	{
 		return(m_KeyState.rgbButtons[nKey] & 0x80) != 0;
 	}
 
-	//トリガー情報取得
+	/**
+	* @brief トリガー情報取得
+	* @param [in]キー番号
+	* @return 押されているか
+	*/	
 	inline bool GetTrigger(int nKey)
 	{
 		return(m_KeyStateTrigger.rgbButtons[nKey] & 0x80) != 0;
 	}
 
-	//リリース情報取得
+	/**
+	* @brief リリース情報取得
+	* @param [in]キー番号
+	* @return 離されているか
+	*/	
 	inline bool GetRelease(int nKey)
 	{
 		return(m_KeyStateRelease.rgbButtons[nKey] & 0x80) != 0;
 	}
 
-	//移動量取得
+	/**
+	 * @brief 移動量取得
+	 * @return 移動量
+	 */
 	inline D3DXVECTOR3 GetMouseMove(void)
 	{
 		return m_MouseMove;
 	}
 
+	/**
+	 * @brief デバッグ情報
+	 */
 	void Debug();
 private:
 	DIMOUSESTATE m_KeyStateTrigger; //マウスのトリガー情報
@@ -160,45 +244,103 @@ public:
 	static const int JOYPAD_ZONE = 1;
 	static const int JOYPAD_SPEED = 15;
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CInputPad();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CInputPad();
+	/**
+	 * @brief 初期化
+	 * @param [in]インスタンス
+	 * @param [in]ハンドルワンド
+	 * @return 成功したか
+	 */
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
-	void Update() override;//端末ごとに
+	
+	/**
+	 * @brief 更新
+	 */
+	void Update() override;
 
-	//接続されているかどうか
+	/**
+	 * @brief 接続されているか取得
+	 * @return 接続されてるか
+	 */
 	inline bool GetConnet()
 	{
 		return m_Connect;
 	}
 
-	//プレス情報取得
+	/**
+	 * @brief プレス情報取得
+	 * @param [in]キー
+	 * @return 押されているか
+	 */
 	inline bool GetPress(JOYKEY Key)
 	{
 		return (m_joyKeyState & (0x01 << Key)) ? true : false;
 	}
 
-	//トリガー情報取得
+	/**
+	 * @brief トリガー情報取得
+	 * @param [in]キー
+	 * @return 押されているか
+	 */
 	inline bool GetTrigger(JOYKEY Key)
 	{
 		return (m_joyKeyStateTrigger & (0x01 << Key)) ? true : false;
 	}
 
-	//リリース情報取得
+	/**
+	 * @brief リリース情報取得
+	 * @param [in]キー
+	 * @return 離されているか
+	 */
 	inline bool GetRelease(JOYKEY Key)
 	{
 		return(m_ajoyKeyStateRelease & (0x01 << Key)) ? true : false;
 	}
 
-
+	/**
+	 * @brief ステート取得
+	 * @return ステート
+	 */
 	inline XINPUT_STATE* GetXInputState(void)
 	{
 		return &m_XInput;
 	}
 
+	/**
+	 * @brief スティック更新
+	 * @param [in]状態
+	 */
 	void UpdateStick(XINPUT_STATE state);
+	/**
+	 * @brief スティック取得
+	 * @return スティックのインプット情報
+	 */
 	STICKINPUT GetStick(void);
+	/**
+	 * @brief 角度計算
+	 * @param [in]位置
+	 * @param [in]目的の位置
+	 * @return 角度
+	 */
 	float FindAngle(D3DXVECTOR3 pos, D3DXVECTOR3 TargetPos);
+	/**
+	 * @brief スティック情報取得
+	 * @param [in]Xの倒し度
+	 * @param [in]Xの倒し度
+	 * @param [in]デッドゾーン
+	 * @return 方向
+	 */
 	WORD GetJoypadStick(SHORT sThumbX, SHORT sThumbY, SHORT sDeadZone);
 private:
 	//コントローラー

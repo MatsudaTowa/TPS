@@ -19,6 +19,7 @@ m_bLanding(false),												//着地しているか
 m_move(VEC3_RESET_ZERO),										//移動量
 m_nLife(INT_ZERO),												//体力
 m_nStateCnt(INT_ZERO),											//ダメージステートを維持するカウント
+m_nStateFrame(INT_ZERO),											//ダメージステートを維持するカウント
 m_oldpos(VEC3_RESET_ZERO),										//過去の位置
 m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL),			 //今の状態
 m_PartsCnt(INT_ZERO),											//パーツ数
@@ -372,6 +373,39 @@ void CCharacter::Jump()
 	m_bLanding = false; //空中状態
 }
 
+
+//=============================================
+//ダメージ状態の切り替え
+//=============================================
+void CCharacter::ChangeDamageState()
+{
+	// 状態を取得
+	CCharacter::CHARACTER_STATE state = GetState();
+
+	if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
+	{
+		//状態のカウント数取得
+		int nStateCnt = GetStateCnt();
+
+		//ステート変更カウント進める
+		nStateCnt++;
+
+		if (nStateCnt >= m_nStateFrame)
+		{
+			//通常に戻す
+			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
+
+			//ステートカウントリセット
+			nStateCnt = INT_ZERO;
+
+			//状態代入
+			SetState(state);
+		}
+		//ステートカウント代入
+		SetStateCnt(nStateCnt);
+	}
+}
+
 //=============================================
 //ブロックとの接触判定(複数パーツ用)
 //=============================================
@@ -407,9 +441,9 @@ void CCharacter::HitBlock(int NumParts)
 			CBlock* pBlock = dynamic_cast<CBlock*>(pObj);
 
 			//ブロックとの当たり判定
-			ColisionBlock_X(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-			ColisionBlock_Z(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
-			ColisionBlock_Y(nPartsCnt, pos, oldpos, Minpos, Maxpos, pBlock);
+			ColisionBlock_X(nPartsCnt, pos,Minpos, Maxpos, pBlock);
+			ColisionBlock_Z(nPartsCnt, pos,Minpos, Maxpos, pBlock);
+			ColisionBlock_Y(nPartsCnt, pos,Minpos, Maxpos, pBlock);
 
 			//当たっていれば関数を抜ける
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X
@@ -424,7 +458,7 @@ void CCharacter::HitBlock(int NumParts)
 //=============================================
 //ブロックとの接触判定_X
 //=============================================
-void CCharacter::ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_X(int PartsIdx,D3DXVECTOR3 CharacterPos, const D3DXVECTOR3 CharacterMin, const D3DXVECTOR3 CharacterMax, CBlock* pBlock)
 {
 	//当たり判定チェック
 	CColision::COLISION Colision = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
@@ -453,14 +487,14 @@ void CCharacter::ColisionBlock_X(int PartsIdx,D3DXVECTOR3& CharacterPos, const D
 //=============================================
 //ブロックとの接触判定_Y
 //=============================================
-void CCharacter::ColisionBlock_Y(int PartsIdx, D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_Y(int PartsIdx, D3DXVECTOR3& CharacterPos, const D3DXVECTOR3 CharacterMin, const D3DXVECTOR3 CharacterMax, CBlock* pBlock)
 {
 	CColision::COLISION Colision = CManager::GetInstance()->GetColision()->CheckColision_Y(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 	CModel_Parts::ColisionBlockInfo Info = m_apModel[PartsIdx]->GetColisionBlockInfo();
 
 	if (Colision == CColision::COLISION::COLISON_UNDER_Y)
 	{//y(下)方向に当たってたら
-		CharacterPos.y = CharacterOldPos.y;
+		CharacterPos.y = m_oldpos.y;
 
 		//Y軸に当たった
 		Info.bColision_Y = true;
@@ -468,7 +502,7 @@ void CCharacter::ColisionBlock_Y(int PartsIdx, D3DXVECTOR3& CharacterPos, const 
 
 	if (Colision == CColision::COLISION::COLISON_TOP_Y)
 	{//y(上)方向に当たってたら
-		CharacterPos.y = CharacterOldPos.y;
+		CharacterPos.y = m_oldpos.y;
 		m_move.y = FLOAT_ZERO;
 		m_bLanding = true; //着地
 
@@ -487,7 +521,7 @@ void CCharacter::ColisionBlock_Y(int PartsIdx, D3DXVECTOR3& CharacterPos, const 
 //=============================================
 //ブロックとの接触判定_Z
 //=============================================
-void CCharacter::ColisionBlock_Z(int PartsIdx, D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterOldPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CBlock* pBlock)
+void CCharacter::ColisionBlock_Z(int PartsIdx, D3DXVECTOR3 CharacterPos, const D3DXVECTOR3 CharacterMin, const D3DXVECTOR3 CharacterMax, CBlock* pBlock)
 {
 	CColision::COLISION Colision = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pBlock->GetPos(), pBlock->GetMinPos(), pBlock->GetMaxPos());
 	CModel_Parts::ColisionBlockInfo Info = m_apModel[PartsIdx]->GetColisionBlockInfo();
@@ -710,34 +744,6 @@ void CCharacter::ConversionMtxWorld()
 }
 
 //=============================================
-//壁との接触判定_X
-//=============================================
-void CCharacter::ColisionWall_X(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
-{
-	//当たり判定チェック
-	CColision::COLISION Checkcolision_X = CManager::GetInstance()->GetColision()->CheckColision_X(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
-	if (Checkcolision_X == CColision::COLISION::COLISON_X)
-	{//x方向に当たってたら
-		CharacterPos.x = m_oldpos.x;
-		m_move.x = FLOAT_ZERO;
-	}
-}
-
-//=============================================
-//壁との接触判定_Z
-//=============================================
-void CCharacter::ColisionWall_Z(D3DXVECTOR3& CharacterPos, const D3DXVECTOR3& CharacterMin, const D3DXVECTOR3& CharacterMax, CWall* pWall)
-{
-	//当たり判定チェック
-	CColision::COLISION Checkcolision_Z = CManager::GetInstance()->GetColision()->CheckColision_Z(m_oldpos, CharacterPos, CharacterMin, CharacterMax, pWall->GetPos(), pWall->GetSize());
-	if (Checkcolision_Z == CColision::COLISION::COLISON_Z)
-	{//z方向に当たってたら
-		CharacterPos.z = m_oldpos.z;
-		m_move.z = FLOAT_ZERO;
-	}
-}
-
-//=============================================
 //キャラクターのステート変更
 //=============================================
 void CCharacter::ChangeState(CCharacterState* state)
@@ -746,6 +752,7 @@ void CCharacter::ChangeState(CCharacterState* state)
 	if (m_pCharacterState != nullptr)
 	{
 		delete m_pCharacterState;
+		m_pCharacterState = nullptr;
 		m_pCharacterState = state;
 		m_pCharacterState->Start(this);
 	}

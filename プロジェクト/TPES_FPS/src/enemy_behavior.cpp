@@ -84,35 +84,38 @@ CEnemyGunAttack::~CEnemyGunAttack()
 //=============================================
 //攻撃処理(エネミー)
 //=============================================
-void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CEnemyGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)
 {
 	CNormalEnemy::Motion_Type Motion;
 	Motion = CNormalEnemy::Motion_Type::MOTION_ATTACK;
 	//モーション代入
 	character->SetMotion(Motion);
 
+	CGun* gun = character->GetGun();
+
 	D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI)* 45.0f,
 		character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
-	D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
-		0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
 
-	if (character->m_pGun->GetAmmo() > INT_ZERO)
+	D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed(),
+		0.0f, cosf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed());
+
+	if (gun->GetAmmo() > INT_ZERO)
 	{
-		int nRateCnt = character->m_pGun->GetRateCnt();
+		int nRateCnt = gun->GetRateCnt();
 
 		++nRateCnt;
-		if (nRateCnt >= character->m_pGun->GetFireRate())
+		if (nRateCnt >= gun->GetFireRate())
 		{
 			nRateCnt = INT_ZERO;
 			//弾発射
-			character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->GetSize(), character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);
+			gun->m_pShot->Shot(ShotPos, ShotMove, gun->GetSize(), gun->GetDamage(), Allegiance, gun);
 		}
 
-		character->m_pGun->SetRateCnt(nRateCnt);
+		gun->SetRateCnt(nRateCnt);
 	}
 	else
 	{
-		character->m_pGun->m_pReload->Reload(character->m_pGun);
+		gun->m_pReload->Reload(gun);
 	}
 
 	//自分の方向を取得
@@ -212,7 +215,11 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 
 	D3DXVec3Normalize(&vec, &vec);
 
-	CCharacter::RayHitInfo HitPlayerInfo = PerformRaycast_Player(vec, character);
+	CCharacter::RayHitInfo HitPlayerInfo;
+
+	CEnemy* pEnemy = dynamic_cast<CEnemy*>(character);
+	HitPlayerInfo = pEnemy->PerformRaycast_Player(vec, pEnemy);
+	
 	CCharacter::RayHitInfo HitBlockInfo = character->PerformRaycast_Block(vec, character);
 	CCharacter::RayHitInfo HitSmokeInfo = character->PerformRaycast_Smoke(vec, character);
 
@@ -224,6 +231,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 			m_pReaction = nullptr;
 		}
 		character->ChangeState(new CShotState);
+		return;
 	}
 	if (character->GetState() == CCharacter::CHARACTER_DAMAGE)
 	{
@@ -233,6 +241,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 			m_pReaction = nullptr;
 		}
 		character->ChangeState(new CStanState);
+		return;
 	}
 	if (m_TurnCnt >= NUM_TURN)
 	{//上限に達したら
@@ -243,6 +252,7 @@ void CEnemyConfusion::Confusion(CCharacter* character, float StartRot_y)
 		}
 		m_TurnCnt = INT_ZERO;
 		character->ChangeState(new CMoveState);
+		return;
 	}
 }
 
@@ -272,53 +282,6 @@ void CEnemyConfusion::MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* 
 		}
 	}
 	character->SetRot(rot);
-}
-
-//=============================================
-//混乱
-//=============================================
-CCharacter::RayHitInfo CEnemyConfusion::PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character)
-{
-	CCharacter::RayHitInfo Info; //ヒット情報を返す変数
-
-		//初期化
-	Info.distance = -1.0f; //絶対値で返るので当たらなかった時用に-を代入
-	Info.hit = false; //当たっていない状態に
-
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
-	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj == nullptr)
-		{//ヌルポインタなら
-			//オブジェクトを探し続ける
-			continue;
-		}
-
-		//タイプ取得
-		CObject::OBJECT_TYPE type = pObj->GetType();
-
-		if (type != CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-		{//プレイヤーじゃなければ
-			//プレイヤーを探し続ける
-			continue;
-		}
-
-		CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
-		//レイを原点からの差分から飛ばす(yはエネミーから飛ばす際の高さ調整)
-		D3DXVECTOR3 StartRay = { character->GetPos().x - pPlayer->GetPos().x,character->GetPos().y + CORRECTION_VALUE_Y,character->GetPos().z - pPlayer->GetPos().z };
-		for (int nParts = 0; nCnt < pPlayer->GetNumParts(); nCnt++)
-		{
-			//レイを飛ばしプレイヤーと当たるかチェック
-			D3DXIntersect(pPlayer->m_apModel[nCnt]->GetModelInfo(nCnt).pMesh, &StartRay, &vector, &Info.hit, NULL, NULL, NULL, &Info.distance, NULL, NULL);
-			if (Info.hit)
-			{
-				return Info;
-			}
-		}
-	}
-	return Info;
 }
 
 //=============================================

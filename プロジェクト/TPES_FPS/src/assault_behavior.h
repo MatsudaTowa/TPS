@@ -15,7 +15,13 @@
 class CAssaultShot : public CShot
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CAssaultShot();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CAssaultShot() override;
 };
 
@@ -25,8 +31,19 @@ public:
 class CAssaultReload : public CReload
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CAssaultReload();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CAssaultReload() override;
+	/**
+	 * @brief リロード処理
+	 * @param [in]銃のポインタ
+	 * @return 撃てるかどうか
+	 */
 	bool Reload(CGun* gun) override;
 private:
 };

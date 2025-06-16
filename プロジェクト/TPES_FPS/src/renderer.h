@@ -14,15 +14,49 @@
 class CRenderer
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CRenderer();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CRenderer();
+	/**
+	 * @brief 初期化
+	 * @param [in]ハンドルワンド
+	 * @param [in]ウィンドウが生成出来たか
+	 * @return 成功したか
+	 */
 	HRESULT Init(HWND hWnd,BOOL bWindow);
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 描画
+	 */
 	void Draw();
+	/**
+	 * @brief FPS表示
+	 * @param [in]FPSカウント
+	 */
 	void DrawFPS(int nCntFPS);
-	static LPDIRECT3DDEVICE9 GetDevice(); //3Dデバイス取得
 
+	/**
+	 * @brief デバイス取得
+	 * @return デバイス
+	 */
+	static LPDIRECT3DDEVICE9 GetDevice();
+
+	/**
+	 * @brief フォント取得
+	 * @return フォント
+	 */
 	LPD3DXFONT GetFont();
 
 private:

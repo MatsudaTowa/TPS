@@ -44,7 +44,7 @@ CPlayerAttack::~CPlayerAttack()
 //=============================================
 //攻撃処理(プレイヤー)
 //=============================================
-void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)
 {
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
@@ -57,21 +57,23 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	//モーション代入
 	character->SetMotion(Motion);
 
-	int nRateCnt = character->m_pGun->GetRateCnt();
+	CGun* gun = character->GetGun();
+
+	int nRateCnt = gun->GetRateCnt();
 
 	if (pMouse->GetPress(0))
 	{//射撃ボタンが押されたら
-		if (character->m_pGunAttack != nullptr)
+		if (character->GetGunAttack() != nullptr)
 		{
-			if (character->m_pGun->GetAmmo() > INT_ZERO)
+			if (gun->GetAmmo() > INT_ZERO)
 			{
 				++nRateCnt;
 
-				ShotBullet(character, pCamera, Allegiance, type, nRateCnt);
+				ShotBullet(character, pCamera, Allegiance, nRateCnt);
 			}
 			else
 			{
-				character->m_pGun->m_pReload->Reload(character->m_pGun);
+				gun->m_pReload->Reload(gun);
 			}
 		}
 	}
@@ -79,15 +81,16 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BU
 	{
 		nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
 	}
-	character->m_pGun->SetRateCnt(nRateCnt);
+	gun->SetRateCnt(nRateCnt);
 }
 
 //=============================================
 //弾発射
 //=============================================
-void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type, int& nRateCnt)
+void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, int& nRateCnt)
 {
-	if (nRateCnt >= character->m_pGun->GetFireRate())
+	CGun* gun = character->GetGun();
+	if (nRateCnt >= gun->GetFireRate())
 	{
 		nRateCnt = INT_ZERO;
 
@@ -96,16 +99,16 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 			character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
 
 		//移動量設定
-		D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed(),
-			sinf(pCamera->GetRot().x + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
-			cosf(pCamera->GetRot().y + D3DX_PI) * -character->m_pGun->GetBulletSpeed());
+		D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(pCamera->GetRot().y + D3DX_PI) * -gun->GetBulletSpeed(),
+			sinf(pCamera->GetRot().x + D3DX_PI) * gun->GetBulletSpeed(),
+			cosf(pCamera->GetRot().y + D3DX_PI) * -gun->GetBulletSpeed());
 		//弾発射
-		character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->GetSize(), character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);
+		gun->m_pShot->Shot(ShotPos, ShotMove, gun->GetSize(), gun->GetDamage(), Allegiance, gun);
 
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
 	}
 
-	character->m_pGun->SetRateCnt(nRateCnt);
+	gun->SetRateCnt(nRateCnt);
 }
 
 //=============================================

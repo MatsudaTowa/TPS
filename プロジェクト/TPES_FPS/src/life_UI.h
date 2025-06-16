@@ -20,15 +20,38 @@ class CLife_UI
 public:
 	static const int NUM_DIGIT = 3;  //桁数
 	static constexpr float DIGIT_SHIFT = 18.0f;  //桁ごとに座標をずらす
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CLife_UI();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CLife_UI();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
-	int m_nLife; //体力の値
+
+	/**
+	 * @brief ライフUI設定
+	 * @param [in]ライフ
+	 */
 	void SetLife_UI(int nLife);
 
+	/**
+	 * @brief 数字設定
+	 * @param [in]ライフ
+	 */
 	void SetNumber(int nLife);
 
 private:
@@ -44,6 +67,8 @@ private:
 	CPlayerUIBox* m_pUIBox;
 	CGauge_2D*m_pGauge;
 	D3DXVECTOR3 m_NumPos;
+	int m_nLife; //体力の値
+
 };
 
 #endif // DEBUG

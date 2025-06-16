@@ -17,11 +17,31 @@
 class CBrokenSmoke : public CSmoke
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CBrokenSmoke(int nPriority = SMOKE_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBrokenSmoke()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 private:
 	static constexpr float MOVE_X_MAX = 0.3f; //スモークの移動量の最大値_X

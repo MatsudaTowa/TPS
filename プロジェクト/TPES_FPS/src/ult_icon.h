@@ -24,14 +24,45 @@ public:
 		ULT_TYPE_MEDIUM,
 		ULT_TYPE_MAX,
 	};
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CUltIcon(int nPriority = ULT_ICON_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CUltIcon()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]サイズ
+	 * @param [in]加算値
+	 * @param [in]タイプ
+	 * @return ウルトのUIポインタ
+	 */
 	static CUltIcon* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, float add_col, ULT_TYPE type);
 
+	/**
+	 * @brief リセット
+	 */
 	void Reset();
 private:
 	static const D3DXVECTOR2 EFFECT_SIZE;
@@ -47,11 +78,31 @@ private:
 class CMediumIcon : public CUltIcon
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CMediumIcon(int nPriority = ULT_ICON_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CMediumIcon()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 private:
 	static const std::string TEXTURE_NAME;	//テクスチャの名前

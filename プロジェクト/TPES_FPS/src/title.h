@@ -30,13 +30,33 @@ public:
 		CBlock::BLOCKTYPE type;
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTitle();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTitle() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 private:
+	static const int NUM_SCREEN = 2;	//何個のUIを置くか
 	static const D3DXVECTOR3 LOGO_POS; //ロゴの位置
 	static const D3DXVECTOR3 UI_POS; //UIの位置
 
@@ -51,6 +71,6 @@ private:
 	//プレイヤー
 	CPlayer*m_pPlayer;
 
-	CTitle_Screen*m_pTitleScreen[2];
+	CTitle_Screen*m_pTitleScreen[NUM_SCREEN];
 };
 #endif

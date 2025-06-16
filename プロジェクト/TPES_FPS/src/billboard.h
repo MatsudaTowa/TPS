@@ -16,8 +16,18 @@
 class CBillboard : public CObject3D
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CBillboard(int nPriority);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBillboard()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 };
 #endif

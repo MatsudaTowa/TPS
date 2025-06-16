@@ -16,13 +16,29 @@ class CNormalMove : public CEnemyMove
 {
 public:
 	static const int MAX_JUMPCNT = 2; //ジャンプ回数
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CNormalMove();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CNormalMove() override;
+	/**
+	 * @brief 移動
+	 * @param [in]キャラクターポインタ
+	 */
 	void Move(CCharacter* character)override;
 private:
-	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
+	/**
+	 * @brief 留まる
+	 * @param [in]キャラクターポインタ
+	 */
 	void Stay(CCharacter* character);
+	/**
+	 * @brief Xの移動先
+	 * @param [in]キャラクターポインタ
+	 */
 	void NextMove_X(CCharacter* character);
 	static const int TRANSITION_FRAME = 60;
 	static const int MOVE_FRAME = 60; //移動フレーム
@@ -45,12 +61,22 @@ private:
 class CNormalAttack : public CEnemyGunAttack
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CNormalAttack();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CNormalAttack() override;
-	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	/**
+	 * @brief 銃の攻撃
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクターポインタ
+	 */
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character) override;
 private:
 	static const int LOST_FRAME = 180;
-	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
 	int m_nLostCnt;
 };
 

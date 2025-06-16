@@ -17,18 +17,51 @@ class CNumber_2D:public CObject2D
 {
 public:
 	static const int NUMBER_PRIORITY = 21;  //描画順
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CNumber_2D(int nPriority = NUMBER_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CNumber_2D()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 
-	//数字のポリゴン生成処理
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]サイズ
+	 * @return ナンバー2D
+	 */
 	static CNumber_2D* Create(D3DXVECTOR3 pos ,D3DXVECTOR2 size);
 
+	/**
+	 * @brief 数字の設定
+	 * @param [in]数字の最小座標
+	 * @param [in]数字の最大座標
+	 * @param [in]色
+	 */
 	void SetNumber(float fNumPos1,float fNumPos2,D3DXCOLOR col);
-
+	/**
+	 * @brief 数字の頂点生成
+	 */
 	void NumberVtx();
 
 private:
@@ -46,18 +79,50 @@ class CNumber_3D :public CBillboard
 {
 public:
 	static const int NUMBER_PRIORITY = 20;  //描画順
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CNumber_3D(int nPriority = NUMBER_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CNumber_3D()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
-
-	//数字のポリゴン生成処理
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]サイズ
+	 * @return ナンバー3Dのポインタ
+	 */
 	static CNumber_3D* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 
+	/**
+	 * @brief 数字の設定
+	 * @param [in]数字の最小座標
+	 * @param [in]数字の最大座標
+	 * @param [in]色
+	 */
 	void SetNumber(float fNumPos1, float fNumPos2, D3DXCOLOR col);
-
+	/**
+	 * @brief 数字の頂点生成
+	 */
 	void NumberVtx();
 
 private:

@@ -15,11 +15,31 @@
 class CHitCameraEffectModerate :public CHitCameraEffect
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CHitCameraEffectModerate(int nPriority = PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CHitCameraEffectModerate() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 
 private:

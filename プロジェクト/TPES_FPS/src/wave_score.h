@@ -17,10 +17,24 @@ class CWaveScore : public CScore
 {
 public:
 	static constexpr float DIGIT_SHIFT = 70.0f;
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWaveScore();
+	/** デストラクタ */
 	~CWaveScore() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
 private:
 

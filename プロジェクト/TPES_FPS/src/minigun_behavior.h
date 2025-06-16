@@ -15,7 +15,13 @@
 class CMiniGunShot : public CShot
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CMiniGunShot();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CMiniGunShot() override;
 };
 
@@ -25,8 +31,19 @@ public:
 class CMiniGunReload : public CReload
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CMiniGunReload();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CMiniGunReload() override;
+	/**
+	 * @brief リロード
+	 * @param [in]銃のポインタ
+	 * @return リロードが終わったか
+	 */
 	bool Reload(CGun* gun) override;
 private:
 };

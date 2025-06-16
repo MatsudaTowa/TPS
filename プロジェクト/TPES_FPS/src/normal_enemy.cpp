@@ -15,21 +15,21 @@ const D3DXVECTOR3 CNormalEnemy::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
 //=============================================
 CNormalEnemy::CNormalEnemy(int nPriority):CEnemy(nPriority)
 {
-	if (m_pMove == nullptr)
+	if (GetMoveStrategy() == nullptr)
 	{
-		m_pMove = new CNormalMove;
+		SetMoveStrategy(new CNormalMove);
 	}
-	if (m_pGunAttack == nullptr)
+	if (GetGunAttack() == nullptr)
 	{
-		m_pGunAttack = new CNormalAttack;
+		SetGunAttack(new CNormalAttack);
 	}
-	if (m_pStan == nullptr)
+	if (GetStan() == nullptr)
 	{
-		m_pStan = new CEnemyStan;
+		SetStan(new CEnemyStan);
 	}
-	if (m_pConfusion == nullptr)
+	if (GetConfusion() == nullptr)
 	{
-		m_pConfusion = new CEnemyConfusion;
+		SetConfusion(new CEnemyConfusion);
 	}
 }
 
@@ -46,10 +46,10 @@ CNormalEnemy::~CNormalEnemy()
 HRESULT CNormalEnemy::Init()
 {
 	//e‰Šú‰»
-	if (m_pGun == nullptr)
+	if (GetGun() == nullptr)
 	{
-		m_pGun = new CAssultRifle;
-		m_pGun->Init();
+		SetGun(new CAssultRifle);
+		GetGun()->Init();
 	}
 
 	SetLife(DEFAULT_LIFE);

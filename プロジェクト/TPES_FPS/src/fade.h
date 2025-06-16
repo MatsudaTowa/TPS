@@ -28,15 +28,49 @@ public:
 
 	static const int FADE_PRIORITY = 29;  //描画順
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CFade(int nPriority = FADE_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CFade()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
+
+	/**
+	 * @brief フェード設定
+	 * @param [in]次のシーン
+	 */
 	void SetFade(CScene::MODE modeNext);
 
+	/**
+	 * @brief フェードの色取得
+	 * @return フェードの色
+	 */
 	float FadeColor(void);
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @return フェードのポインタ
+	 */
 	static CFade* Create(D3DXVECTOR3 pos);
 private:
 	static constexpr float FADE_VALUE = 0.05f;  //アルファ値減衰量

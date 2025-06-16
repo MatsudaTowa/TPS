@@ -53,42 +53,160 @@ public:
 		MOTION_MAX,
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CBossEnemy(int nPriority = ENEMY_PRIORITY);
+
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossEnemy() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
-
+	/**
+	 * @brief ステート変更
+	 * @param ボスの次のステート
+	 */
 	void ChangeState(CBossState* state);
-
-	void TackleAction(); //タックルの実行処理
-
-	void ColisionPlayer(); //プレイヤーとの当たり判定
-
-	void CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
-
+	/**
+	 * @brief タックルの実行処理
+	 */
+	void TackleAction();
+	/**
+	 * @brief プレイヤーとの判定
+	 */
+	void ColisionPlayer();
+	/**
+	 * @brief プレイヤーとのヒット判定
+	 * @param [in]プレイヤーのポインタ
+	 * @param [in]パーツの数
+	 * @param [in]位置
+	 * @param [in]最大の頂点座標
+	 * @param [in]最小の頂点座標
+	 */
+	void CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos);
+	/**
+	 * @brief ウルトヒット処理
+	 * @param [in]ウルトの座標
+	 * @param [in]ダメージ数
+	 */
 	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
+	/**
+	 * @brief ブロックとのヒット判定(複数パーツ)
+	 * @param [in]ダメージ数
+	 */
+	void HitBlock(int NumParts) override;
+	/**
+	 * @brief 当たってない判定に
+	 */
+	void ColisionReset();
 
-	void HitBlock(int NumParts) override; //ブロック当たり判定(複数パーツ用)
+	/**
+	 * @brief 追跡のポインタ取得
+	 * @return 追跡のストラテジーポインタ
+	 */
+	CBossChase* GetBossChase()
+	{
+		return m_pChase;
+	}
 
-	void ColisionReset(); //当たってない判定に
+	/**
+	 * @brief 徘徊のポインタ取得
+	 * @return 徘徊のストラテジーポインタ
+	 */
+	CBossWandering* GetBossWandering()
+	{
+		return m_pWandering;
+	}
 
-	CBossChase* m_pChase; //追跡処理
+	/**
+	 * @brief 混乱のポインタ取得
+	 * @return 混乱のストラテジーポインタ
+	 */
+	CBossConfusion* GetBossConfusion()
+	{
+		return m_pConfusion;
+	}
 
-	CBossWandering* m_pWandering; //徘徊処理
+	/**
+	 * @brief タックルのポインタ取得
+	 * @return タックルのストラテジーポインタ
+	 */
+	CBossTackle* GetBossTackle()
+	{
+		return m_pTackle;
+	}
 
-	CBossConfusion* m_pConfusion; //混乱
+	/**
+	 * @brief 探索のポインタ取得
+	 * @return 探索のストラテジーポインタ
+	 */
+	CBossSearch* GetBossSearch()
+	{
+		return m_pSearch;
+	}
 
-	CBossTackle* m_pTackle; //タックル処理
+	/**
+	 * @brief 暴走のポインタ取得
+	 * @return 暴走のストラテジーポインタ
+	 */
+	CBossRampage* GetBossRampage()
+	{
+		return m_pRampage;
+	}
 
-	CBossSearch* m_pSearch; //探索処理
+	/**
+	 * @brief ダッシュエフェクト取得
+	 * @return ダッシュエフェクトポインタ
+	 */
+	CDashEffect* GetDashEffect()
+	{
+		return m_pTackleEffect;
+	}
 
-	CBossRampage* m_pRampage; //暴走処理
+	/**
+	 * @brief タックルチャージエフェクト取得
+	 * @return タックルチャージエフェクトポインタ
+	 */
+	CTackleCharge* GetTackleCharge()
+	{
+		return m_pTackleCharge;
+	}
 
-	CDashEffect* m_pTackleEffect; //ダッシュエフェクト
+	/**
+	 * @brief ダッシュエフェクト設定
+	 * @param [in]ダッシュエフェクトポインタ
+	 */
+	void SetDashEffect(CDashEffect* effect)
+	{
+		m_pTackleEffect = effect;
+	}
 
-	CTackleCharge* m_pTackleCharge; //タックルを行う前のエフェクト
+	/**
+	 * @brief タックルチャージエフェクト設定
+	 * @param [in]タックルチャージエフェクトポインタ
+	 */
+	void SetTackleCharge(CTackleCharge* charge)
+	{
+		m_pTackleCharge = charge;
+	}
 
 	//当たった方向の列挙
 	enum COLISION_AXIS
@@ -123,16 +241,24 @@ private:
 
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
 
-	//各行動生成
+	/**
+	 * @brief 各行動生成
+	 */
 	void CreateBossStrategy();
 
-	//各行動破棄
+	/**
+	 * @brief 各行動破棄
+	 */
 	void DeleteBossStrategy();
 
-	//ステートの実行処理
+	/**
+	 * @brief ステート実行
+	 */
 	void ProcessState();
 
-	//デバッグ表示
+	/**
+	 * @brief デバッグ表示
+	 */
 	void DrawDebug();
 
 	Motion_Type m_Motion; //モーションの種類
@@ -140,6 +266,22 @@ private:
 	CBossState* m_pBossState; //ボスのステートパターン
 
 	COLISION_AXIS m_HitAxis; //どの方向から当たったか
+
+	CBossChase* m_pChase; //追跡処理
+
+	CBossWandering* m_pWandering; //徘徊処理
+
+	CBossConfusion* m_pConfusion; //混乱
+
+	CBossTackle* m_pTackle; //タックル処理
+
+	CBossSearch* m_pSearch; //探索処理
+
+	CBossRampage* m_pRampage; //暴走処理
+
+	CDashEffect* m_pTackleEffect; //ダッシュエフェクト
+
+	CTackleCharge* m_pTackleCharge; //タックルを行う前のエフェクト
 };
 
 #endif

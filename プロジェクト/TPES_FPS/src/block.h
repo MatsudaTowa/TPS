@@ -23,16 +23,44 @@ public:
 		BLOCKTYPE_DEFAULT,
 		BLOCKTYPE_MAX,
 	};
-
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CBlock(int nPriority = BLOCK_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBlock()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
-	void CreatePiece();
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
-	//ブロック作成
+	/**
+	 * @brief 生成
+	 * @param [in]ブロックのタイプ
+	 * @param [in]位置
+	 * @param [in]方向
+	 * @return ブロックのポインタ 
+	 */
 	static CBlock* Create(BLOCKTYPE type,D3DXVECTOR3 pos, D3DXVECTOR3 rot);
+	/**
+	 * @brief 破片を生成
+	 */
+	void CreatePiece();
 private:
 	static const char* MODEL_NAME;	//モデルの名前
 

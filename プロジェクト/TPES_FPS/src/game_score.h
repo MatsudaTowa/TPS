@@ -17,10 +17,26 @@
 class CGameScore : public CScore
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CGameScore();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CGameScore() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
 private:
 	static constexpr float DIGIT_SHIFT = 40.0f;
@@ -38,6 +54,10 @@ private:
 	static const D3DXVECTOR3 SCORE_POS; //スコアの位置
 	static const D3DXVECTOR2 SCORE_SIZE; //スコアのサイズ
 
+	/**
+	 * @brief 死亡カウントのUI表示
+	 * @param [in]死亡回数
+	 */
 	void SetDeathCntUI(int nDeathCnt);
 
 	CNumber_2D* m_pDeathCnt[DEATH_DIGIT];

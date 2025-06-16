@@ -183,14 +183,14 @@ void CGame::ApplyDeathPenalty()
 		{
 			CScore* pScore = CWave::GetScore();
 
-			if (pScore->m_nScore > INT_ZERO)
+			if (pScore->GetScore() > INT_ZERO)
 			{
 				pScore->AddScore(DEATH_PENALTY);
 
-				if (pScore->m_nScore <= INT_ZERO)
+				if (pScore->GetScore() <= INT_ZERO)
 				{//0‚ð‰º‰ñ‚Á‚½‚ç
 					//ƒXƒRƒA0‚É
-					pScore->m_nScore = INT_ZERO;
+					pScore->SetScore(INT_ZERO);
 				}
 			}
 		}

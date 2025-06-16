@@ -22,13 +22,37 @@ class CPlayer;
 class CBlink_UI
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBlink_UI();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBlink_UI();
+	/**
+	 * @brief 初期化
+	 * @param [in]プレイヤーポインタ
+	 * @return 成功したか
+	 */
 	HRESULT Init(CActivePlayer* player);
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 現在のUIの設定
+	 * @param [in]プレイヤーポインタ
+	 */
 	void SetCurrentBlink_UI(CActivePlayer* player);
-
+	/**
+	 * @brief 数字の設定
+	 * @param [in]ブリンクの回数
+	 */
 	void SetNumber(int nParcent);
 
 private:

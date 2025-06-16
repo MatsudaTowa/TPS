@@ -28,48 +28,128 @@ public:
 	static const int NUM_RESULT_FILE = 4;
 	static const std::string RESULT_SCORE_FILE[NUM_RESULT_FILE]; //リザルトのファイルネーム
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CManager();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CManager();
+	/**
+	 * @brief 初期化
+	 * @param [in]インスタンス
+	 * @param [in]ハンドルワンド
+	 * @param [in]ウィンドウ生成できたか
+	 * @return 成功したか
+	 */
 	HRESULT Init(HINSTANCE hInstance,HWND hWnd,BOOL bWindow);
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 描画
+	 */
 	void Draw();
 
-	//シーン設定
+	/**
+	 * @brief シーン設定
+	 * @param [in]シーン
+	 */
 	void SetMode(CScene::MODE mode);
 
+	/**
+	 * @brief インスタンス生成
+	 * @return インスタンス
+	 */
 	static CManager* GetInstance()
 	{
 		static CManager instance; //静的インスタンス
 		return &instance;
 	}
 
-	//シーン取得
+	/**
+	 * @brief シーン取得
+	 * @return シーンポインタ
+	 */
 	CScene* GetScene();
-	//レンダラー取得
+
+	/**
+	 * @brief レンダラー取得
+	 * @return レンダラーポインタ
+	 */	
 	CRenderer*GetRenderer();
-	//キーボード情報取得
+
+	/**
+	* @brief キーボード取得
+	* @return キーボードポインタ
+	*/
 	CInputKeyboard* GetKeyboard();
-	//マウス情報取得
+
+	/**
+	* @brief マウス取得
+	* @return マウスポインタ
+	*/	
 	CInputMouse* GetMouse();
-	//pad情報取得
+
+	/**
+	* @brief パッド取得
+	* @return パッドポインタ
+	*/
 	CInputPad* GetPad();
-	//カメラ取得
+
+	/**
+	* @brief カメラ取得
+	* @return カメラポインタ
+	*/
 	CCamera* GetCamera();
-	//ライト取得
+
+	/**
+	* @brief ライト取得
+	* @return ライトポインタ
+	*/
 	CLight* GetLight();
-	//テクスチャ取得
+
+	/**
+	* @brief テクスチャ取得
+	* @return テクスチャポインタ
+	*/
 	CTexture* GetTexture();
-	//モデル取得
+
+	/**
+	* @brief モデル取得
+	* @return モデルポインタ
+	*/
 	CModel* GetModel();
-	//サウンド取得
+
+	/**
+	* @brief サウンド取得
+	* @return サウンドポインタ
+	*/
 	CSound* GetSound();
-	//フェード取得
+
+	/**
+	* @brief フェード取得
+	* @return フェードポインタ
+	*/
 	CFade* GetFade();
-	
+
+	/**
+	* @brief 当たり判定取得
+	* @return 当たり判定ポインタ
+	*/
 	CColision* GetColision();
 
-	static void ExportScoreReset(const std::string* pFileName); //スコアに0書き出し
+	/**
+	* @brief スコアに0書き出し
+	* @return ファイルネーム
+	*/
+	static void ExportScoreReset(const std::string* pFileName);
 
 private:
 

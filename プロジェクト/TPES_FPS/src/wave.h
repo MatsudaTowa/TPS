@@ -62,34 +62,94 @@ public:
 		D3DXVECTOR3 pos;
 	};
 
-	// メンバ関数
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWave();
+	/**
+	 * @brief デストラクタ
+	 */
 	virtual ~CWave();
 
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	virtual HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	virtual void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	virtual void Update();
 
+	/**
+	 * @brief 生成
+	 * @param [in]ウェーブ
+	 * @return ウェーブポインタ
+	 */
 	static CWave* Create(WAVE wave);
+	/**
+	 * @brief 生成
+	 * @param [in]ウェーブ
+	 * @param [in]次のウェーブ
+	 * @param [in]リザルトファイルネーム
+	 * @return ウェーブポインタ
+	 */
 	static CWave* Create(WAVE wave,WAVE next_wave,const char* ResultFile);
+	/**
+	 * @brief 現在のウェーブ取得
+	 * @return 何ウェーブ目か
+	 */
 	static WAVE GetCurrentWave();
+	/**
+	 * @brief スコア取得
+	 * @return スコア
+	 */
 	static CScore* GetScore();
 
+	/**
+	 * @brief ブロック読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadBlock(const std::string& pFileName);
+
+	/**
+	 * @brief 壁読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadWall(const std::string* pFileName);
+
+	/**
+	 * @brief 敵読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadEnemy(const std::string* pFileName);
 
+	/**
+	 * @brief ウェーブのスコア設定
+	 * @param [in]スコア
+	 */
 	inline void SetWaveScore(int nScore)
 	{
 		m_nTotalScore = nScore;
 	}
 
+	/**
+	 * @brief スコア取得
+	 * @return スコア
+	 */
 	inline int GetWaveScore()
 	{
 		return m_nTotalScore;
 	}
 
-	//ウェーブのリザルトテンプレートメソッド
+	/**
+	 * @brief ウェーブのリザルト処理
+	 * @param [in]リザルトファイル
+	 */
 	inline void WaveResult(const std::string& pFileName)
 	{
 		m_pScore->ExportScore(pFileName);

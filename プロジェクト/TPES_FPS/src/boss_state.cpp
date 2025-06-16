@@ -133,9 +133,9 @@ void CChaseState::Chase(CBossEnemy* boss)
 			continue;
 		}
 
-		if (boss->m_pChase != nullptr)
+		if (boss->GetBossChase() != nullptr)
 		{
-			boss->m_pChase->Chase(boss, pObj);
+			boss->GetBossChase()->Chase(boss, pObj);
 		}
 	}
 
@@ -150,7 +150,7 @@ void CChaseState::Chase(CBossEnemy* boss)
 		boss->ChangeState(new CTackleState);
 	}
 
-	boss->m_pGunAttack->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL, boss);
+	boss->GetGunAttack()->GunAttack(CBullet::BULLET_ALLEGIANCE_ENEMY, boss);
 }
 
 //=============================================
@@ -193,9 +193,11 @@ void CBossStanState::Stan(CBossEnemy* boss)
 	//スタンカウント加算
 	++m_StanCnt;
 
-	if (boss->m_pStan != nullptr)
+	CStan* stan = boss->GetStan();
+
+	if (stan != nullptr)
 	{
-		boss->m_pStan->Stan(boss);
+		stan->Stan(boss);
 	}
 
 	if (m_StanCnt >= STAN_FRAME)
@@ -306,9 +308,9 @@ void CWanderingState::Wandering(CBossEnemy* boss)
 	}
 	else if(!m_bDamage)
 	{
-		if (boss->m_pWandering != nullptr)
+		if (boss->GetBossWandering() != nullptr)
 		{
-			boss->m_pWandering->Wandering(boss);
+			boss->GetBossWandering()->Wandering(boss);
 			//プレイヤーの位置への方向情報
 			D3DXVECTOR3 Vector = boss->GetPos() + boss->GetMove() - boss->GetPos();
 
@@ -376,15 +378,15 @@ void CTackleState::Start(CBossEnemy* boss)
 //=============================================
 void CTackleState::End(CBossEnemy* boss)
 {
-	if (boss->m_pTackleEffect != nullptr)
+	if (boss->GetDashEffect() != nullptr)
 	{
-		boss->m_pTackleEffect->Uninit();
-		boss->m_pTackleEffect = nullptr;
+		boss->GetDashEffect()->Uninit();
+		boss->SetDashEffect(nullptr);
 	}
-	if (boss->m_pTackleCharge != nullptr)
+	if (boss->GetTackleCharge() != nullptr)
 	{
-		boss->m_pTackleCharge->Uninit();
-		boss->m_pTackleCharge = nullptr;
+		boss->GetTackleCharge()->Uninit();
+		boss->SetTackleCharge(nullptr);
 	}
 }
 
@@ -393,9 +395,9 @@ void CTackleState::End(CBossEnemy* boss)
 //=============================================
 void CTackleState::Tackle(CBossEnemy* boss)
 {
-	if (boss->m_pTackle != nullptr)
+	if (boss->GetBossTackle() != nullptr)
 	{
-		boss->m_pTackle->Tackle(boss);
+		boss->GetBossTackle()->Tackle(boss);
 	}
 }
 
@@ -467,7 +469,7 @@ void CConfusionBossState::Start(CBossEnemy* boss)
 //=============================================
 void CConfusionBossState::Confusion(CBossEnemy* boss)
 {
-	if (boss->m_pConfusion != nullptr)
+	if (boss->GetBossConfusion() != nullptr)
 	{
 		//自分の方向を取得
 		D3DXVECTOR3 vec = { sinf(boss->GetRot().y + D3DX_PI), FLOAT_ZERO, cosf(boss->GetRot().y + D3DX_PI) };
@@ -488,7 +490,7 @@ void CConfusionBossState::Confusion(CBossEnemy* boss)
 			}
 		}
 
-		boss->m_pConfusion->Confusion(boss, m_StartRot);
+		boss->GetBossConfusion()->Confusion(boss, m_StartRot);
 	}
 
 	if (boss->GetState() == CCharacter::CHARACTER_DAMAGE)
@@ -549,9 +551,9 @@ void CSearchState::Start(CBossEnemy* boss)
 //=============================================
 void CSearchState::Search(CBossEnemy* boss)
 {
-	if (boss->m_pSearch != nullptr)
+	if (boss->GetBossSearch() != nullptr)
 	{
-		boss->m_pSearch->Search(boss, m_TargetPos);
+		boss->GetBossSearch()->Search(boss, m_TargetPos);
 	}
 }
 
@@ -575,10 +577,10 @@ void CRampageState::Start(CBossEnemy* boss)
 //=============================================
 void CRampageState::End(CBossEnemy* boss)
 {
-	if (boss->m_pTackleEffect != nullptr)
+	if (boss->GetDashEffect() != nullptr)
 	{
-		boss->m_pTackleEffect->Uninit();
-		boss->m_pTackleEffect = nullptr;
+		boss->GetDashEffect()->Uninit();
+		boss->SetDashEffect(nullptr);
 	}
 }
 
@@ -587,9 +589,9 @@ void CRampageState::End(CBossEnemy* boss)
 //=============================================
 void CRampageState::Rampage(CBossEnemy* boss)
 {
-	if (boss->m_pRampage != nullptr)
+	if (boss->GetBossRampage() != nullptr)
 	{
-		boss->m_pRampage->Rampage(boss);
+		boss->GetBossRampage()->Rampage(boss);
 	}
 }
 

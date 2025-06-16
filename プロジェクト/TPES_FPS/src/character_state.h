@@ -20,10 +20,31 @@ class CCharacter;
 class CCharacterState
 {
 public:
+	/**
+	 * @brief 最初に呼ばれる関数
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Start(CCharacter* character);
-	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character); 
+	/**
+	 * @brief ショット
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクターポインタ
+	 */
+	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character); 
+	/**
+	 * @brief スタン処理
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Stan(CCharacter* character);
+	/**
+	 * @brief 混乱
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Confusion(CCharacter* character);
+	/**
+	 * @brief 移動
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Move(CCharacter* character);
 };
 
@@ -33,7 +54,12 @@ public:
 class CShotState : public CCharacterState
 {
 public:
-	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)override;
+	/**
+	 * @brief ショット
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクターポインタ
+	 */
+	virtual void Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)override;
 };
 
 //=============================================
@@ -42,7 +68,15 @@ public:
 class CStanState : public CCharacterState
 {
 public:
+	/**
+	 * @brief 最初に呼ばれる関数
+	 * @param [in]キャラクターポインタ
+	 */
 	void Start(CCharacter* character) override;
+	/**
+	 * @brief スタン
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Stan(CCharacter* character)override;
 private:
 	int m_StanCnt; //スタン計測カウント
@@ -54,7 +88,15 @@ private:
 class CConfusionState : public CCharacterState
 {
 public:
+	/**
+	 * @brief 最初に呼ばれる関数
+	 * @param [in]キャラクターポインタ
+	 */
 	void Start(CCharacter* character) override;
+	/**
+	 * @brief 混乱
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Confusion(CCharacter* character)override;
 private:
 	float m_StartRot;	//ロットの開始値
@@ -67,6 +109,10 @@ private:
 class CMoveState : public CCharacterState
 {
 public:
+	/**
+	 * @brief 移動
+	 * @param [in]キャラクターポインタ
+	 */
 	virtual void Move(CCharacter* character)override;
 };
 

@@ -27,15 +27,42 @@ public:
 		MODE_MAX,
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CScene();
+	/**
+	 * @brief デストラクタ
+	 */
 	virtual ~CScene();
 
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	virtual HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	virtual void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	virtual void Update();
+	/**
+	 * @brief 描画
+	 */
 	virtual void Draw();
-
+	/**
+	 * @brief 生成
+	 * @param [in]シーンモード
+	 * @return シーンポインタ
+	 */
 	static CScene* Create(MODE mode);
+	/**
+	 * @brief シーンモード取得
+	 * @return シーンモード
+	 */
 	static MODE GetSceneMode();
 private:
 	static MODE m_Mode; //現在のモード

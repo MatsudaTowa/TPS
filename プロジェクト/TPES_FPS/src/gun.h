@@ -30,84 +30,151 @@ public:
 	static const int DEFAULT_HG_RELOAD_FRAME = 20; //デフォルトのハンドガンのリロードフレーム数
 	static const int DEFAULT_SG_RELOAD_FRAME = 30; //デフォルトのハンドガンのリロードフレーム数
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CGun();
+	/**
+	 * @brief デストラクタ
+	 */
 	virtual ~CGun();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	virtual HRESULT Init() = 0;
+	/**
+	 * @brief 終了
+	 */
 	virtual void Uninit() = 0;
+	/**
+	 * @brief リロード
+	 * @return リロードし終わったか
+	 */
 	virtual bool Reload();
-
-	//サイズ設定
+	/**
+	 * @brief サイズ設定
+	 * @param [in]サイズ
+	 */
 	inline void SetSize(D3DXVECTOR3 size)
 	{
 		m_Size = size;
 	}
-	//レート計測カウント設定
+
+	/**
+	 * @brief レート計測カウント設定
+	 * @param [in]レートカウント
+	 */
 	inline void SetRateCnt(int nRateCnt)
 	{
 		m_nRateCnt = nRateCnt;
 	}
-	//弾数設定
-	inline void SetAmmo(int Ammo)
+
+	/**
+	 * @brief 弾数設定
+	 * @param [in]弾数
+	 */	inline void SetAmmo(int Ammo)
 	{
 		m_Ammo = Ammo;
 	}
-	//ダメージ設定
+
+	/**
+	 * @brief ダメージ設定
+	 * @param [in]ダメージ
+	 */
 	inline void SetDamage(int Damage)
 	{
 		m_nDamage = Damage;
 	}
-	//リロードフレーム設定
+
+	/**
+	 * @brief リロードフレーム設定
+	 * @param [in]リロードフレーム
+	 */
 	inline void SetReloadFrame(int ReloadFrame)
 	{
 		m_ReloadFrame = ReloadFrame;
 	}
-	//発射レート設定
+	/**
+	 * @brief 発射レート設定
+	 * @param [in]発射レート
+	 */
 	inline void SetFireRate(int FireRate)
 	{
 		m_FireRate = FireRate;
 	}
-	//発射レート設定
+
+	/**
+	 * @brief 弾速設定
+	 * @param [in]弾速
+	 */
 	inline void SetBulletSpeed(float BulletSpeed)
 	{
 		m_BulletSpeed = BulletSpeed;
 	}
 	
-	//サイズ取得
+	/**
+	 * @brief サイズ取得
+	 * @return サイズ
+	 */
 	inline D3DXVECTOR3& GetSize()
 	{
 		return m_Size;
 	}
-	//レート計測カウント取得
+
+	/**
+	 * @brief レートカウント取得
+	 * @return レートカウント
+	 */
 	inline int& GetRateCnt()
 	{
 		return m_nRateCnt;
 	}
-	//弾数取得
+
+	/**
+	 * @brief 弾数取得
+	 * @return 弾数
+	 */
 	inline int& GetAmmo()
 	{
 		return m_Ammo;
 	}
-	//ダメージ取得
+
+	/**
+	 * @brief ダメージ取得
+	 * @return ダメージ
+	 */
 	inline int& GetDamage()
 	{
 		return m_nDamage;
 	}
-	//リロードフレーム
+
+	/**
+	 * @brief リロードフレーム取得
+	 * @return リロードフレーム
+	 */
 	inline int& GetReloadFrame()
 	{
 		return m_ReloadFrame;
 	}
-	//発射レート取得
+
+	/**
+	 * @brief 発射レート取得
+	 * @return 発射レート
+	 */
 	inline int& GetFireRate()
 	{
 		return m_FireRate;
 	}
-	//弾速取得
+
+	/**
+	 * @brief 弾速取得
+	 * @return 弾速
+	 */
 	inline float& GetBulletSpeed()
 	{
 		return m_BulletSpeed;
 	}
-
 
 	CShot* m_pShot; //弾発射処理
 	CReload* m_pReload; //リロード処理
@@ -137,9 +204,22 @@ public:
 	static const int DEFAULT_AR_RELOAD_FRAME = 120; //デフォルトのアサルトのリロードフレーム数
 	static const int DEFAULT_AR_DAMAGE = 10; //デフォルトのアサルトのダメージ
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CAssultRifle();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CAssultRifle() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
 private:
 };
@@ -157,9 +237,22 @@ public:
 	static constexpr float DEFAULT_MINIGUN_BULLET_SPEED = 100.0f; //デフォルトのミニガンの弾のスピード
 	static const D3DXVECTOR3 DEFAULT_MINIGUN_SIZE; //デフォルトのミニガンのサイズ
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CMiniGun();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CMiniGun() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
 private:
 };

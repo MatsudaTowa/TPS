@@ -18,10 +18,26 @@
 class CWave_One :public CWave
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWave_One();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CWave_One()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
 private:
 	static const std::string WAVE_1_ENEMY_FILE;	//ウェーブ1のエネミーのファイル

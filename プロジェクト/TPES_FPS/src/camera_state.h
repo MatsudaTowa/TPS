@@ -20,8 +20,20 @@ class CCamera;
 class CCameraState
 {
 public:
+	/**
+	 * @brief 自由視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void FreeView(CCamera* camera);
+	/**
+	 * @brief 三人称視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void ThirdView(CCamera* camera);
+	/**
+	 * @brief ウルト視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void Ult(CCamera* camera);
 };
 
@@ -31,6 +43,10 @@ public:
 class CFreeView : public CCameraState
 {
 public:
+	/**
+	 * @brief 自由視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void FreeView(CCamera* camera)override;
 private:
 	static constexpr float FREEVIEW_LENGTH = 200.0f; //自由視点時の距離
@@ -42,6 +58,10 @@ private:
 class CThirdView : public CCameraState
 {
 public:
+	/**
+	 * @brief 三人称視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void ThirdView(CCamera* camera)override;
 private:
 	static constexpr float THIRDVIEW_LENGTH = 130.0f; //サードパーソンビュー時の距離
@@ -53,6 +73,10 @@ private:
 class CUltCameraState : public CCameraState
 {
 public:
+	/**
+	 * @brief ウルト視点
+	 * @param [in]カメラポインタ
+	 */
 	virtual void Ult(CCamera* camera) override;
 private:
 	static constexpr float ULT_LENGTH = 200.0f; //ウルト時の距離

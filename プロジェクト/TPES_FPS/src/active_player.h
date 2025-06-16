@@ -35,9 +35,10 @@ class CUlt;
 class CSmoke_UI;
 class CBlink_UI;
 
-//=============================================
-//動かすプレイヤークラス
-//=============================================
+/**
+* @brief 動くプレイヤークラス
+* @copydoc CPlayer
+*/
 class CActivePlayer :public CPlayer
 {
 public:
@@ -45,129 +46,222 @@ public:
 	static const int PLAYER_STAMINA = 100; //スタミナ
 	static const int AVOIDANCE_COST = 30; //回避アクションのスタミナコスト
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CActivePlayer(int nPriority = PLAYER_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CActivePlayer();
-	HRESULT Init();
-	void CreateUI();
-	void Uninit();
-	void Update();
-	void CanDetectEnemyCollision();
-	void Draw();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
+	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
+	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
+	void Update()override;
+	/**
+	 * @brief 描画
+	 */
+	void Draw()override;
 
-	void Damage(int nDamage); //当たり判定
+	/**
+	 * @brief ダメージ
+	 */
+	void Damage(int nDamage);
+	/**
+	 * @brief 方向のリセット
+	 */
+	void ResetRot();
+	/**
+	 * @brief 敵とのヒット判定
+	 */
+	void ColisionEnemy();
 
-	void ResetRot(); //方向のリセット
+	/**
+	 * @brief 敵の判定チェック
+	 * @param [in]敵の情報
+	 * @param [in]パーツの数
+	 * @param [in]位置情報
+	 * @param [in]最小の位置
+	 * @param [in]最大の位置
+	 */
+	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos);
+	/**
+	 * @brief プレイヤー入力処理
+	 */
+	void Input();
+	/**
+	 * @brief プレイヤーのステート切り替え
+	 * @param [in]次のステート
+	 */
+	void ChangePlayerState(CPlayerState* state);
 
-	void ColisionEnemy(); //敵との当たり判定
-
-	void ChangeDamageState(); //TODOキャラクターにまとめろ
-
-	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos);
-
-	void Input(); //プレイヤー入力処理
-
-	void ChangePlayerState(CPlayerState* state); //プレイヤーのステート切り替え
-
-	//レティクル設定
+	/**
+	 * @brief レティクルの設定
+	 * @param [in]レティクルポインタ
+	 */
 	inline void SetReticle(CReticle* reticle)
 	{
 		m_Reticle = reticle;
 	}
 
-	//ウルト設定
+	/**
+	 * @brief ウルトの設定
+	 * @param [in]ウルトのストラテジーポインタ
+	 */
 	inline void SetUlt(CUlt* ult)
 	{
 		m_pUlt = ult;
 	}
 
-	//回避設定
+	/**
+	 * @brief 回避の設定
+	 * @param [in]回避のストラテジーポインタ
+	 */
 	inline void SetAvoidance(CPlayerAvoidance* avoidance)
 	{
 		m_pAvoidance = avoidance;
 	}
 
-	//死んだ回数設定
+	/**
+	 * @brief 死亡回数の設定
+	 * @param [in]死亡回数
+	 */
 	inline void SetDeathCnt(int DeathCnt)
 	{
 		m_DeathCnt = DeathCnt;
 	}
 
-	//スタミナ設定
+	/**
+	 * @brief スタミナの設定
+	 * @param [in]スタミナの値
+	 */
 	inline void SetStamina(int Stamina)
 	{
 		m_Stamina = Stamina;
 	}
 
-	//スモークが使えるかを設定
+	/**
+	 * @brief スモークが使えるかの設定
+	 * @param [in]スモークが使えるかどうか
+	 */
 	inline void SetIsSmoke(bool isSmoke)
 	{
 		m_isSmoke = isSmoke;
 	}
 
-	//吹っ飛ばされているか設定
+	/**
+	 * @brief 吹っ飛ばされるかの設定
+	 * @param [in]吹っ飛ばされているかどうか
+	 */
 	inline void SetBlown(bool isBlown)
 	{
 		m_isBlown = isBlown;
 	}
 
-	//ブリンクの使える回数設定
+	/**
+	 * @brief ブリンクのカウントの設定
+	 * @param [in]ブリンクのカウント
+	 */
 	inline void SetBlinkCnt(int BlinkCnt)
 	{
 		m_BlinkCnt = BlinkCnt;
 	}
 
-	//エネミーとの当たり判定設定
+	/**
+	 * @brief エネミーと判定をとるかの設定
+	 * @param [in]判定するか
+	 */
 	inline void SetEnemyColision(bool isColision)
 	{
 		m_isEnemyColision = isColision;
 	}
 
-	//レティクル取得
+	/**
+	 * @brief レティクルの取得
+	 * @return レティクルポインタ
+	 */
 	inline CReticle* GetReticle()
 	{
 		return m_Reticle;
 	}
-	//ウルト取得
+
+	/**
+	 * @brief ウルトのストラテジーの取得
+	 * @return ウルトのストラテジーポインタ
+	 */
 	inline CUlt* GetUlt()
 	{
 		return m_pUlt;
 	}
-	//回避取得
+
+	/**
+	 * @brief 回避のストラテジーの取得
+	 * @return 回避のストラテジーポインタ
+	 */
 	inline CPlayerAvoidance* GetAvoidance()
 	{
 		return m_pAvoidance;
 	}
-	//死んだ回数取得
+
+	/**
+	 * @brief 死亡回数の取得
+	 * @return 死亡回数
+	 */
 	inline int& GetDeathCnt()
 	{
 		return m_DeathCnt;
 	}
 
-	//スタミナ取得
+	/**
+	 * @brief スタミナの取得
+	 * @return スタミナ数
+	 */
 	inline int& GetStamina()
 	{
 		return m_Stamina;
 	}
 
-	//ブリンクが使える回数取得
+	/**
+	 * @brief ブリンクの回数の取得
+	 * @return ブリンクの回数
+	 */
 	inline int& GetBlinkCnt()
 	{
 		return m_BlinkCnt;
 	}
 
-	//スモークが使えるか取得
+	/**
+	 * @brief スモークが使えるか取得
+	 * @return スモークが使えるかどうか
+	 */
 	inline bool& GetIsSmoke()
 	{
 		return m_isSmoke;
 	}
 
-	//吹っ飛ばされているか取得
+	/**
+	 * @brief 吹っ飛ばされてるか取得
+	 * @return スモークが使えるかどうか
+	 */
 	inline bool& GetBlown()
 	{
 		return m_isBlown;
 	}
 
-	//エネミーとの当たり判定取得
+	/**
+	 * @brief 敵と判定を取るか取得
+	 * @return 敵との判定を取るか
+	 */
 	inline bool& GetEnemyColision()
 	{
 		return m_isEnemyColision;
@@ -193,9 +287,30 @@ private:
 	static const D3DXVECTOR3 GUN_UI_POS;//銃のUIの位置
 	static const D3DXVECTOR2 GUN_UI_SIZE;//銃のUIのサイズ
 
-	void SetUI();	//UI設定
-	void ReSpawn(); //リスポーン
-	void DebugPos();//デバッグ時位置情報表示
+	/**
+	 * @brief 敵と判定どうするか(判定を取るなら当たり判定、判定取らないならカウントを進める)
+	 */
+	void CanDetectEnemyCollision();
+
+	/**
+	 * @brief UIを生成
+	 */
+	void CreateUI();
+
+	/**
+	 * @brief UIを設定
+	 */
+	void SetUI();
+
+	/**
+	 * @brief リスポーン処理
+	 */
+	void ReSpawn();
+
+	/**
+	 * @brief デバッグ表示
+	 */
+	void DebugPos();
 
 	CAmmo_UI* m_pAmmoUI;	//残弾UI
 

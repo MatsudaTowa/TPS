@@ -77,14 +77,14 @@ void CBossEnemy::CreateBossStrategy()
 		m_pConfusion = new CBossConfusion;
 	}
 	//ボスのスタン行動を生成
-	if (m_pStan == nullptr)
+	if (GetStan() == nullptr)
 	{
-		m_pStan = new CEnemyStan;
+		SetStan(new CEnemyStan);
 	}
 	//ボスの射撃行動を生成
-	if (m_pGunAttack == nullptr)
+	if (GetGunAttack() == nullptr)
 	{
-		m_pGunAttack = new CBossGunAttack;
+		SetGunAttack(new CBossGunAttack);
 	}
 	//ボスのタックル行動を生成
 	if (m_pTackle == nullptr)
@@ -152,11 +152,11 @@ HRESULT CBossEnemy::Init()
 		m_pBossState = new CWanderingState;
 	}
 	//銃初期化
-	if (m_pGun == nullptr)
+	if (GetGun() == nullptr)
 	{
-		m_pGun = new CMiniGun;
+		SetGun(new CMiniGun);
 
-		m_pGun->Init();
+		GetGun()->Init();
 	}
 
 	//定数値で決められている初期体力設定
@@ -349,7 +349,7 @@ void CBossEnemy::ColisionPlayer()
 //=============================================
 //プレイヤーとの当たり判定チェック
 //=============================================
-void CBossEnemy::CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3& pos, const D3DXVECTOR3& Minpos, const D3DXVECTOR3& Maxpos)
+void CBossEnemy::CheckColisionPlayer(CActivePlayer* pPlayer, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos)
 {
 	for (int nPartsCnt = INT_ZERO; nPartsCnt < pPlayer->GetNumParts(); ++nPartsCnt)
 	{//パーツ数回す
@@ -400,15 +400,6 @@ void CBossEnemy::HitBlock(int NumParts)
 
 	for (int nPartsCnt = INT_ZERO; nPartsCnt < NumParts; ++nPartsCnt)
 	{//パーツ数回す
-		//自分のワールドマトリックスの位置情報取得
-		D3DXVECTOR3 pos = { m_apModel[nPartsCnt]->GetMtxWorld()._41,m_apModel[nPartsCnt]->GetMtxWorld()._42,m_apModel[nPartsCnt]->GetMtxWorld()._43 };
-		//過去の位置取得
-		D3DXVECTOR3 oldpos = m_apModel[nPartsCnt]->GetOldPos();
-		//最小値取得
-		D3DXVECTOR3 Minpos = m_apModel[nPartsCnt]->GetMin();
-		//最大値取得
-		D3DXVECTOR3 Maxpos = m_apModel[nPartsCnt]->GetMax();
-
 		for (int nCnt = INT_ZERO; nCnt < MAX_OBJECT; ++nCnt)
 		{
 			if (m_apModel[nPartsCnt]->GetColisionBlockInfo().bColision_X

@@ -25,12 +25,40 @@ public:
 		MOUSE_MAX
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CMouse_UI(int nPriority = PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CMouse_UI()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]サイズ
+	 * @param [in]色
+	 * @param [in]タイプ
+	 * @return マウスのUIポインタ
+	 */
 	static CMouse_UI* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, MOUSE_TYPE type);
 private:
 	static const std::string TEXTURE_NAME[MOUSE_MAX];	//テクスチャの名前

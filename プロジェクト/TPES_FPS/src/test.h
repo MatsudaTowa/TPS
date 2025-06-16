@@ -29,13 +29,36 @@ public:
 		CBlock::BLOCKTYPE type;
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTest();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTest() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 private:
+	/**
+	 * @brief ブロック読み込み
+	 * @param [in]ファイルパス
+	 */
 	void LoadBlock(const std::string& pFileName);
 
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報

@@ -30,14 +30,38 @@ public:
 		MOTION_MAX,
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CPlayer(int nPriority = PLAYER_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CPlayer();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 描画
+	 */
 	void Draw();
 
-	//プレイヤー作成
+	/**
+	 * @brief プレイヤー生成
+	 * @param [in]プレイヤーポインタ
+	 * @return プレイヤーポインタ
+	 */
 	static CPlayer* Create(CPlayer* player);
 private:
 
@@ -46,6 +70,9 @@ private:
 
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
 
-	void DebugPos();	//デバッグ時位置情報表示
+	/**
+	 * @brief デバッグ表示
+	 */
+	void DebugPos();
 };
 #endif

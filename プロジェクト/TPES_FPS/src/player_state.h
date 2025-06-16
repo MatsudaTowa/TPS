@@ -21,9 +21,25 @@ class CActivePlayer;
 class CPlayerState
 {
 public:
+	/**
+	 * @brief 通常
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Default(CActivePlayer* player);
+	/**
+	 * @brief ウルト
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Ult(CActivePlayer* player);
+	/**
+	 * @brief 回避
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Avoidance(CActivePlayer* player);
+	/**
+	 * @brief 吹っ飛ばされ
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Blown(CActivePlayer* player);
 };
 
@@ -33,6 +49,10 @@ public:
 class CDefaultState : public CPlayerState
 {
 public:
+	/**
+	 * @brief 通常
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Default(CActivePlayer* player)override;
 };
 
@@ -42,6 +62,10 @@ public:
 class CUltState : public CPlayerState
 {
 public:
+	/**
+	 * @brief ウルト
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Ult(CActivePlayer* player) override;
 };
 
@@ -51,6 +75,10 @@ public:
 class CAvoidanceState : public CPlayerState
 {
 public:
+	/**
+	 * @brief 回避
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Avoidance(CActivePlayer* player) override;
 };
 
@@ -60,7 +88,14 @@ public:
 class CBlownState : public CPlayerState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBlownState();
+	/**
+	 * @brief 吹っ飛ばされ
+	 * @param [in]動くプレイヤーポインタ
+	 */
 	virtual void Blown(CActivePlayer* player) override;
 private:
 	int m_nStanCnt;

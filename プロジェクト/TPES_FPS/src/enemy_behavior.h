@@ -18,9 +18,23 @@ class CEnemyMove : public CMove
 public:
 	static const int MAX_JUMPCNT = 2; //ジャンプ回数
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CEnemyMove();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CEnemyMove() override;
+	/**
+	 * @brief 移動処理
+	 * @param [in]キャラクターポインタ
+	 */
 	void Move(CCharacter* character)override;
+	/**
+	 * @brief 移動方向設定
+	 * @param [in]移動方向
+	 */
 	void SetMoveVec(D3DXVECTOR3 move_vec)
 	{
 		m_move_vec = move_vec;
@@ -35,8 +49,18 @@ private:
 class CEnemyStan : public CStan
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CEnemyStan();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CEnemyStan() override;
+	/**
+	 * @brief スタン
+	 * @param [in]キャラクターポインタ
+	 */
 	void Stan(CCharacter* character)override;
 private:
 };
@@ -47,11 +71,27 @@ private:
 class CEnemyConfusion : public CConfusion
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CEnemyConfusion();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CEnemyConfusion() override;
+	/**
+	 * @brief 混乱
+	 * @param [in]キャラクターポインタ
+	 * @param [in]回転開始位置
+	 */
 	void Confusion(CCharacter* character, float StartRot_y)override;
+	/**
+	 * @brief 回転処理
+	 * @param [in]方向
+	 * @param [in]最終到達点
+	 * @param [in]キャラクターポインタ
+	 */
 	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CCharacter* character);
-	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
 private:
 	static constexpr float CORRECTION_VALUE = 40.0f; //リアクションのUIを生成する際のYの補正値
 	static const D3DXVECTOR3 SIZE; //リアクションのUIのサイズ
@@ -72,10 +112,25 @@ private:
 class CEnemyGunAttack : public CGunAttack
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CEnemyGunAttack();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CEnemyGunAttack() override;
-	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
-	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
+	/**
+	 * @brief 銃の攻撃
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクタポインタ
+	 */
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance,CCharacter* character) override;
+	/**
+	 * @brief プレイヤーのほうを向かせる
+	 * @param [in]キャラクタポインタ
+	 */
+	void LookAtPlayer(CCharacter* character);
 
 private:
 };

@@ -16,10 +16,29 @@ class CTexture
 {
 public:
 	static const int MAX_TEX = 256; //テクスチャの数
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTexture();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTexture();
-	void Unload(); //テクスチャ破棄
+	/**
+	 * @brief テクスチャ破棄
+	 */
+	void Unload();
+	/**
+	 * @brief 登録
+	 * @param [in]テクスチャパス
+	 * @return テクスチャ登録番号
+	 */
 	int Regist(const std::string*pTex);
+	/**
+	 * @brief アドレス取得
+	 * @param [in]番号
+	 * @return テクスチャアドレス
+	 */
 	LPDIRECT3DTEXTURE9 GetAddress(int nIdx);
 private:
 	LPDIRECT3DTEXTURE9 m_apTexture[MAX_TEX]; //テクスチャへのポインタ

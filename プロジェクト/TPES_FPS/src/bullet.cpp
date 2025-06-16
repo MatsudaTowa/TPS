@@ -167,19 +167,11 @@ void CBullet::SetHitMaker()
 //’eì¬
 //=============================================
 CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3DXVECTOR3 size
-,int nLife, int nDamage, BULLET_ALLEGIANCE Allegiance,BULLET_TYPE type)
+,int nLife, int nDamage, BULLET_ALLEGIANCE Allegiance)
 {
 	CBullet* pBullet = nullptr;
 
-	switch (type)
-	{
-	case CBullet::BULLET_TYPE::BULLET_TYPE_NORMAL:
-		pBullet = new CBullet;
-		break;
-
-	default:
-		break;
-	}
+	pBullet = new CBullet;
 
 	if (pBullet == nullptr) {return nullptr;}
 
@@ -192,16 +184,8 @@ CBullet* CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, D3D
 	pBullet->SetLife(nLife); //Žõ–½‘ã“ü
 	pBullet->SetDamage(nDamage); //ˆÐ—Í‘ã“ü
 
-	switch (type)
-	{
-	case CBullet::BULLET_TYPE::BULLET_TYPE_NORMAL:
-		pBullet->BindTexture(pTexture->GetAddress(pTexture->Regist(&BULLET_TEXTURE_NAME)));
-		break;
-	default:
-		assert(false);
-		break;
-	}
-	pBullet->m_type = type;
+	pBullet->BindTexture(pTexture->GetAddress(pTexture->Regist(&BULLET_TEXTURE_NAME)));
+
 	pBullet->m_Allegiance = Allegiance; //’e‚ÌÝ’è
 	pBullet->SetType(OBJECT_TYPE_BULLET); //ƒ^ƒCƒvÝ’è
 	pBullet->Init();

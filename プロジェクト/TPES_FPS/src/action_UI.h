@@ -10,9 +10,10 @@
 #include "main.h"
 #include "object2D.h"
 
-//=============================================
-//アクションUIクラス
-//=============================================
+/**
+* @brief アクションUIクラス
+* @copydoc CObject2D
+*/
 class CAction_UI : public CObject2D
 {
 public:
@@ -29,15 +30,43 @@ public:
 		ACTION_MAX
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CAction_UI(int nPriority = PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CAction_UI()override;
+	/**
+	 * @brief コンストラクタ
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
+	/**
+	 * @brief コンストラクタ
+	 * @param[in]位置
+	 * @param[in]サイズ
+	 * @param[in]色
+	 * @param[in]どのタイプか
+	 * @return アクションのUIポインタ
+	 */
 	static CAction_UI* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, ACTION_TYPE type);
 private:
 	static const std::string TEXTURE_NAME[ACTION_MAX];	//テクスチャの名前
-	ACTION_TYPE m_type;
+	ACTION_TYPE m_type;		//アクションのタイプ
 };
 #endif

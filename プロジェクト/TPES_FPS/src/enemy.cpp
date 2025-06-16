@@ -47,6 +47,9 @@ HRESULT CEnemy::Init()
 {
 	CCharacter::Init();
 
+	//ステート変更フレーム代入
+	SetStateFrame(DAMAGE_FRAME);
+
 	//スタンフレーム数代入
 	SetStanFrame(STAN_FRAME);
 
@@ -79,13 +82,16 @@ void CEnemy::Update()
 {
 	CCharacter::Update();
 
-	m_pCharacterState->Move(this);
+	if (m_pCharacterState != nullptr)
+	{
+		m_pCharacterState->Move(this);
 
-	m_pCharacterState->Stan(this);
+		m_pCharacterState->Stan(this);
 
-	m_pCharacterState->Confusion(this);
+		m_pCharacterState->Confusion(this);
 
-	m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, CBullet::BULLET_TYPE_NORMAL,this);
+		m_pCharacterState->Shot(CBullet::BULLET_ALLEGIANCE_ENEMY, this);
+	}
 
 	if (m_isStencil)
 	{//ステンシルテストが有効だったら
@@ -315,36 +321,4 @@ void CEnemy::ReSpawn()
 
 	//pos代入
 	SetPos(EnemyPos);
-}
-
-//=============================================
-//ダメージステートの切り替え
-//=============================================
-void CEnemy::ChangeDamageState()
-{
-	//状態を取得
-	CCharacter::CHARACTER_STATE state = GetState();
-
-	if (state == CCharacter::CHARACTER_STATE::CHARACTER_DAMAGE)
-	{
-		//状態のカウント数取得
-		int nStateCnt = GetStateCnt();
-
-		//ステート変更カウント進める
-		nStateCnt++;
-
-		if (nStateCnt >= 10)
-		{
-			//通常に戻す
-			state = CCharacter::CHARACTER_STATE::CHARACTER_NORMAL;
-
-			//ステートカウントリセット
-			nStateCnt = 0;
-
-			//状態代入
-			SetState(state);
-		}
-		//ステートカウント代入
-		SetStateCnt(nStateCnt);
-	}
 }

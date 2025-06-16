@@ -20,14 +20,39 @@ class CSmokeRange : public CObjectX
 public:
 	static const int SMOKE_RANGE_PRIORITY = 15; //描画順
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CSmokeRange(int nPriority = SMOKE_RANGE_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CSmokeRange()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 
-	//スモーク範囲作成
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]方向
+	 * @return スモークの範囲のポインタ
+	 */
 	static CSmokeRange* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 
 private:

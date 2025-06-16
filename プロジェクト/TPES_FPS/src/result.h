@@ -18,12 +18,36 @@
 class CResult :public CScene
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CResult();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CResult() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
+	/**
+	 * @brief スコアロード
+	 * @param [in]ファイルパス
+	 * @return スコア
+	 */
 	int LoadScore(const std::string& FileName);
 
 private:

@@ -50,11 +50,30 @@ public:
 	static const std::string BLOCK_FILE;	//ブロックのファイル
 	static const std::string WALL_FILE;		//壁のファイル
 	static const int TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTutorial();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTutorial() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 private:
 	static const D3DXVECTOR3 FIELD_SIZE; //床のサイズ
@@ -67,8 +86,20 @@ private:
 
 	CTutorial_UI* m_pTutorial_UI;
 
+	/**
+	 * @brief ブロック読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadBlock(const std::string& pFileName);
+	/**
+	 * @brief 壁読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadWall(const std::string* pFileName);
+	/**
+	 * @brief 敵読み込み
+	 * @param [in]ファイルネーム
+	 */
 	void LoadEnemy(const std::string* pFileName);
 };
 #endif

@@ -29,12 +29,40 @@ public:
 		KEY_MAX
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CKeyboard_UI(int nPriority = PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CKeyboard_UI()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]サイズ
+	 * @param [in]色
+	 * @param [in]キー
+	 * @return キーボードUIのポインタ
+	 */
 	static CKeyboard_UI* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col, KEY_TYPE key);
 private:
 	static const std::string TEXTURE_NAME[KEY_MAX];	//テクスチャの名前

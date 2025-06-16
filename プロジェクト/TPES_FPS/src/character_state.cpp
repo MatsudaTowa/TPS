@@ -16,7 +16,7 @@ void CCharacterState::Start(CCharacter* character)
 //=============================================
 //キャラクターのショット
 //=============================================
-void CCharacterState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CCharacterState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)
 {
 }
 
@@ -45,9 +45,9 @@ void CCharacterState::Move(CCharacter* character)
 //=============================================
 //キャラクターのショット
 //=============================================
-void CShotState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CShotState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)
 {
-	character->m_pGunAttack->GunAttack(Allegiance,type,character);
+	character->GetGunAttack()->GunAttack(Allegiance,character);
 }
 
 //=============================================
@@ -55,9 +55,10 @@ void CShotState::Shot(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYP
 //=============================================
 void CMoveState::Move(CCharacter* character)
 {
-	if (character->m_pMove != nullptr)
+	CMove* move = character->GetMoveStrategy();
+	if (move != nullptr)
 	{
-		character->m_pMove->Move(character);
+		move->Move(character);
 	}
 }
 
@@ -81,9 +82,11 @@ void CStanState::Stan(CCharacter* character)
 	{
 		++m_StanCnt;
 
-		if (character->m_pStan != nullptr)
+		CStan* stan = character->GetStan();
+
+		if (stan != nullptr)
 		{
-			character->m_pStan->Stan(character);
+			stan->Stan(character);
 		}
 	}
 	if (m_StanCnt >= StanFrame)
@@ -92,6 +95,7 @@ void CStanState::Stan(CCharacter* character)
 
 		//射撃状態に遷移
 		character->ChangeState(new CShotState);
+		return;
 	}
 }
 
@@ -116,8 +120,9 @@ void CConfusionState::Start(CCharacter* character)
 //=============================================
 void CConfusionState::Confusion(CCharacter* character)
 {
-	if (character->m_pConfusion != nullptr)
+	CConfusion* confusion = character->GetConfusion();
+	if (confusion != nullptr)
 	{
-		character->m_pConfusion->Confusion(character, m_StartRot);
+		confusion->Confusion(character, m_StartRot);
 	}
 }

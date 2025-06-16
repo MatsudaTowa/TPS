@@ -207,7 +207,7 @@ void CBossChase::Chase(CBossEnemy* boss, CObject* obj)
 //=============================================
 //プレイヤーに向かって動かす
 //=============================================
-void CBossChase::MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss)
+void CBossChase::MovetoPlayer(float distance, const float threshold, D3DXVECTOR3 Vector, CBossEnemy* boss)
 {
 	//対象物との角度計算
 	float angle = atan2f(Vector.x, Vector.z);
@@ -403,37 +403,40 @@ CBossGunAttack::~CBossGunAttack()
 //=============================================
 //銃攻撃
 //=============================================
-void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character)
+void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character)
 {
 	CBossEnemy::Motion_Type Motion;
 	Motion = CBossEnemy::Motion_Type::MOTION_ATTACK;
 	//モーション代入
 	character->SetMotion(Motion);
-	if (character->m_pGun->GetAmmo() > INT_ZERO)
+
+	CGun* gun = character->GetGun();
+
+	if (gun->GetAmmo() > INT_ZERO)
 	{
-		if (character->m_pGunAttack != nullptr)
+		if (character->GetGunAttack() != nullptr)
 		{
-			int nRateCnt = character->m_pGun->GetRateCnt();
+			int nRateCnt = gun->GetRateCnt();
 			++nRateCnt;
 			
-			if (nRateCnt >= character->m_pGun->GetFireRate())
+			if (nRateCnt >= gun->GetFireRate())
 			{
 				nRateCnt = INT_ZERO;
 				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
 					character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
 
-				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed(),
-					0.0f, cosf(character->GetRot().y + D3DX_PI) * character->m_pGun->GetBulletSpeed());
+				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed(),
+					0.0f, cosf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed());
 				//弾発射
-				character->m_pGun->m_pShot->Shot(ShotPos, ShotMove, character->m_pGun->GetSize(), character->m_pGun->GetDamage(), Allegiance, type, character->m_pGun);					
+				gun->m_pShot->Shot(ShotPos, ShotMove, gun->GetSize(), gun->GetDamage(), Allegiance, gun);					
 			}
 
-			character->m_pGun->SetRateCnt(nRateCnt);
+			gun->SetRateCnt(nRateCnt);
 		}
 	}
 	else
 	{
-		character->m_pGun->m_pReload->Reload(character->m_pGun);
+		gun->m_pReload->Reload(gun);
 	}
 }
 
@@ -461,32 +464,34 @@ CBossTackle::~CBossTackle()
 void CBossTackle::Tackle(CBossEnemy* boss)
 {
 	//リロード
-	boss->m_pGun->Reload();
+	boss->GetGun()->Reload();
 
 	if (!m_isTackle)
 	{//タックルしてなかったら
 		LookAtPlayer(boss);
-		if (boss->m_pTackleCharge == nullptr)
+		if (boss->GetTackleCharge() == nullptr)
 		{
 			//ダッシュエフェクト生成
-			boss->m_pTackleCharge = CTackleCharge::Create({ {boss->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z}}
-			, boss->m_pTackleCharge->SIZE, COLOR_RED);
+			CTackleCharge* charge = CTackleCharge::Create({ {boss->GetPos().x,boss->GetPos().y + CORRECTION_VALUE_Y,boss->GetPos().z}}
+			, boss->GetTackleCharge()->SIZE, COLOR_RED);
+
+			boss->SetTackleCharge(charge);
 
 			//タックルのエフェクトの減産量計算
-			m_effect_reduction = boss->m_pTackleCharge->SIZE.x / STAY_FLAME;
+			m_effect_reduction = boss->GetTackleCharge()->SIZE.x / STAY_FLAME;
 		}
 
-		if (boss->m_pTackleCharge != nullptr)
+		if (boss->GetTackleCharge() != nullptr)
 		{
 			//サイズ取得
-			D3DXVECTOR3 size = boss->m_pTackleCharge->GetSize();
+			D3DXVECTOR3 size = boss->GetTackleCharge()->GetSize();
 
 			//サイズ縮小
 			size.x -= m_effect_reduction;
 			size.y -= m_effect_reduction;
 
 			//サイズ代入
-			boss->m_pTackleCharge->SetSize(size);
+			boss->GetTackleCharge()->SetSize(size);
 		}
 
 		//止まっているカウント加算
@@ -498,10 +503,10 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 		//タックルSEを鳴らす
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_TACKLE);
 
-		if (boss->m_pTackleCharge != nullptr)
+		if (boss->GetTackleCharge() != nullptr)
 		{//エフェクトを破棄
-			boss->m_pTackleCharge->Uninit();
-			boss->m_pTackleCharge = nullptr;
+			boss->GetTackleCharge()->Uninit();
+			boss->SetTackleCharge(nullptr);
 		}
 
 		m_isTackle = true;		//タックル状態に
@@ -524,11 +529,11 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 				m_StayCnt = INT_ZERO;
 				m_isTackle = false;
 
-				if (boss->m_pTackleEffect != nullptr)
+				if (boss->GetDashEffect() != nullptr)
 				{//エフェクトがあったら
 					//エフェクト破棄
-					boss->m_pTackleEffect->Uninit();
-					boss->m_pTackleEffect = nullptr;
+					boss->GetDashEffect()->Uninit();
+					boss->SetDashEffect(nullptr);
 				}
 				boss->ChangeState(new CBossStanState);
 			}
@@ -549,11 +554,11 @@ void CBossTackle::Tackle(CBossEnemy* boss)
 					boss->ColisionReset();
 				}
 
-				if (boss->m_pTackleEffect != nullptr)
+				if (boss->GetDashEffect() != nullptr)
 				{//エフェクトがあったら
 					//エフェクト破棄
-					boss->m_pTackleEffect->Uninit();
-					boss->m_pTackleEffect = nullptr;
+					boss->GetDashEffect()->Uninit();
+					boss->SetDashEffect(nullptr);
 				}
 
 				//タックル情報初期化
@@ -807,11 +812,11 @@ void CBossRampage::Rampage(CBossEnemy* boss)
 	}
 	else
 	{
-		if (boss->m_pTackleEffect != nullptr)
+		if (boss->GetDashEffect() != nullptr)
 		{//エフェクトがあったら
 			//エフェクト破棄
-			boss->m_pTackleEffect->Uninit();
-			boss->m_pTackleEffect = nullptr;
+			boss->GetDashEffect()->Uninit();
+			boss->SetDashEffect(nullptr);
 		}
 
 		++m_MoveIdx; //位置カウントアップ

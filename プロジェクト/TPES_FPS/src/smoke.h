@@ -28,23 +28,54 @@ public:
 		SMOKE_TYPE_BROKEN
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CSmoke(int nPriority = SMOKE_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CSmoke()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 
-	//スモーク作成
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]スモークのタイプ
+	 * @return スモークポインタ
+	 */
 	static CSmoke* Create(D3DXVECTOR3 pos, SMOKE_TYPE type);
 
-	//移動量設定
+	/**
+	 * @brief 移動量設定
+	 * @param [in]移動量
+	 */
 	inline void SetMove(D3DXVECTOR3 move)
 	{
 		m_move = move;
 	}
 
-	//移動量取得
+	/**
+	 * @brief 移動量取得
+	 * @return 移動量
+	 */
 	inline D3DXVECTOR3& GetMove()
 	{
 		return m_move;
@@ -53,8 +84,14 @@ public:
 private:
 	static constexpr float FADE_VALUE = 0.1f;  //アルファ値減衰量
 
+	/**
+	 * @brief 移動処理
+	 */
 	void Move();
 
+	/**
+	 * @brief フェードアウト
+	 */
 	void FadeOut();
 
 	int m_nLife;

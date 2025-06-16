@@ -35,5 +35,11 @@ struct VERTEX_3D
 	D3DXVECTOR2 tex; //テクスチャ
 };
 
-int GetFps();//fps取得
+/**
+ * @brief FPS取得
+ */
+int GetFps();
 #endif // !_MAIN_H_ //これが定義されてないとき
+
+
+

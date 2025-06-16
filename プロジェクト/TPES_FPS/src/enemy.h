@@ -45,28 +45,69 @@ public:
 		MOTION_MAX,
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CEnemy(int nPriority = ENEMY_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CEnemy() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
-	void ChangeDamageState();
+
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 
-	//エネミー作成
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]方向
+	 * @param [in]タイプ
+	 * @return 敵のポインタ
+	 */
 	static CEnemy* Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENEMY_TYPE& type);
 
-	void Damage(int nDamage); //当たり判定
+	/**
+	 * @brief ダメージ処理
+	 * @param [in]ダメージ
+	 */
+	void Damage(int nDamage);
 
-	virtual void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage); //ウルトの判定
+	/**
+	 * @brief ウルトの判定
+	 * @param [in]ウルトの位置
+	 * @param [in]ダメージ
+	 */
+	virtual void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage);
 
+	/**
+	 * @brief プレイヤーとレイの判定
+	 * @param [in]方向
+	 * @param [in]キャラクターポインタ
+	 * @return レイヒット情報
+	 */
 	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector, CCharacter* character);
 
 	static int m_NumEnemy; //エネミーの総数
 private:
-	//プレイヤーの移動関連
 	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
 	static constexpr float DAMPING_COEFFICIENT = 0.3f; //移動抵抗
+	static const int DAMAGE_FRAME = 10; //ダメージフレーム
 	static constexpr float DEFAULT_JUMP = 25.0f; //通常時のジャンプ力
 	static constexpr float ULT_KNOCKBACK_SPEED = 10.0f; //ULTが当たった時にノックバックさせる際のXとZにかけるスピード
 	static constexpr float ULT_KNOCKBACK_Y = 40.0f; //ULTが当たった時にノックバックさせる際のYに打ち上げる
@@ -76,8 +117,10 @@ private:
 	static const int DEFAULT_SCORE = 300; //デフォルトのスコア
 	static const int BOSS_SCORE = 1000; //ボスを倒したら入るスコア
 
-
-	void ReSpawn(); //リスポーン
+	/**
+	 * @brief リスポーン
+	 */
+	void ReSpawn();
 
 	ENEMY_TYPE m_Type; //エネミーの種類
 	int m_nCombatChangeCnt; //戦闘状態切り替えカウント

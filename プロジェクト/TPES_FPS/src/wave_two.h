@@ -21,11 +21,26 @@ public:
 	static const std::string WAVE_2_ENEMY_FILE;	//ウェーブ2のエネミーのファイル
 	static const std::string WAVE_2_BLOCK_FILE;	//ウェーブ2のブロックのファイル
 	static const std::string WAVE_2_WALL_FILE;	//ウェーブ2の壁のファイル
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWave_Two();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CWave_Two()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
 };
 

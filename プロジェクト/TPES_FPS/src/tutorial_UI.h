@@ -24,10 +24,26 @@ class CPlayer;
 class CTutorial_UI
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTutorial_UI();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTutorial_UI();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
 private:
 	static const float PARCENT_DIGIT_SHIFT;  //桁ごとに座標をずらす
@@ -59,6 +75,9 @@ private:
 	CMouse_UI* m_pMouseshot_UI;
 	CMouse_UI* m_pMouseshotmode_UI;
 
+	/**
+	 * @brief UI生成
+	 */
 	void CreateUI();
 };
 

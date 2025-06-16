@@ -16,90 +16,169 @@
 class CObject2D : public CObject
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CObject2D(int nPriority = 3);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CObject2D()override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
-
+	/**
+	 * @brief テクスチャ設定
+	 * @param [in]テクスチャ
+	 */
 	void BindTexture(LPDIRECT3DTEXTURE9 pTex);
 
-	//posの代入
+	/**
+	 * @brief 位置の代入
+	 * @param [in]位置
+	 */
 	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	}
 
-	//rotの代入
+	/**
+	 * @brief 方向の代入
+	 * @param [in]方向
+	 */
 	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 
-	//サイズの代入
+	/**
+	 * @brief サイズの代入
+	 * @param [in]サイズ
+	 */
 	inline void SetSize(D3DXVECTOR2 size)
 	{
 		m_size = size;
 	}
 
-	//テクスチャ座標の代入
+	/**
+	 * @brief テクスチャ座標の代入
+	 * @param [in]テクスチャ座標
+	 */
 	inline void SetTexPos(D3DXVECTOR2 tex)
 	{
 		m_tex_pos = tex;
 	}
 
+	/**
+	 * @brief 頂点バッファ設定
+	 * @param [in]頂点バッファ
+	 */
 	inline void SetVtxBuff(LPDIRECT3DVERTEXBUFFER9 Buff)
 	{
 		m_pVtxBuff = Buff;
 	}
 
-	//色の代入
+	/**
+	 * @brief 色の代入
+	 * @param [in]色
+	 */
 	inline void SetColor(D3DXCOLOR col)
 	{
 		m_col = col;
 	}
 
-	//頂点座標の代入
+	/**
+	 * @brief 頂点生成
+	 * @param [in]rhw
+	 */
 	void SetVtx(float rhw);
 
-	//頂点座標(拡縮、回転)の代入
+	/**
+	 * @brief 頂点生成
+	 * @param [in]rhw
+	 * @param [in]方向
+	 * @param [in]距離
+	 */
 	void SetVtx(float rhw,float fAngle,float fLength);
 
+	/**
+	 * @brief ゲージ用の頂点生成
+	 * @param [in]rhw
+	 */
 	void SetGaugeVtx(float rhw);
 
+	/**
+	 * @brief 基点足元の頂点生成
+	 * @param [in]rhw
+	 * @param [in]方向
+	 * @param [in]距離
+	 */
 	void SetVtx_FootPos(float rhw,float fAngle,float fLength);
 
-	//posの取得
+	/**
+	 * @brief 位置取得
+	 * @return 位置
+	 */
 	inline D3DXVECTOR3& GetPos()
 	{
 		return m_pos;
 	}
 
-	//rotの取得
+	/**
+	 * @brief 方向取得
+	 * @return 方向
+	 */
 	inline D3DXVECTOR3& GetRot()
 	{
 		return m_rot;
 	}
 
-	//サイズの取得
+	/**
+	 * @brief サイズ取得
+	 * @return サイズ
+	 */
 	inline D3DXVECTOR2& GetSize()
 	{
 		return m_size;
 	}
 
-	//テクスチャ座標の取得
+	/**
+	 * @brief テクスチャ座標取得
+	 * @return テクスチャ座標
+	 */
 	inline D3DXVECTOR2& GetTexPos()
 	{
 		return m_tex_pos;
 	}
 	
-	//色の取得
+	/**
+	 * @brief 色の取得
+	 * @return 色
+	 */
 	inline D3DXCOLOR& GetColor()
 	{
 		return m_col;
 	}
 
+	/**
+	 * @brief 頂点バッファ取得
+	 * @return 頂点バッファ
+	 */
 	inline LPDIRECT3DVERTEXBUFFER9& GetVtxBuff()
 	{
 		return m_pVtxBuff;

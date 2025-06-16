@@ -16,34 +16,72 @@
 class CObject2D_Anim : public CObject2D
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CObject2D_Anim(int nPriority);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CObject2D_Anim()override;
+
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init()override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit()override;
+	/**
+	 * @brief 更新
+	 */
 	void Update()override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw()override;
 
-	//アニメーション処理
+	/**
+	 * @brief アニメーション座標設定
+	 * @param [in]テクスチャ座標
+	 * @param [in]テクスチャ移動量
+	 */
 	void AnimationTex(D3DXVECTOR2 tex_pos, D3DXVECTOR2 tex_move);
-	//アニメーションフレーム代入
+
+	/**
+	 * @brief アニメーションフレーム代入
+	 * @param [in]アニメーションフレーム
+	 */
 	inline void SetAnimFrame(int nAnimFrame)
 	{
 		m_nAnimFrame = nAnimFrame;
 	}
 
-	//テクスチャ移動量の代入
+	/**
+	 * @brief テクスチャ移動量代入
+	 * @param [in]テクスチャ移動量
+	 */
 	inline void SetTexMove(D3DXVECTOR2 tex_move)
 	{
 		m_tex_move = tex_move;
 	}
 
-	//アニメーションフレーム取得
+	/**
+	 * @brief アニメーションフレーム取得
+	 * @return アニメーションフレーム
+	 */
 	inline int GetAnimFrame()
 	{
 		return m_nAnimFrame;
 	}
 	
-	//テクスチャ移動量取得
+	/**
+	 * @brief テクスチャ移動量取得
+	 * @return テクスチャ移動量
+	 */
 	inline D3DXVECTOR2& GetTexMove()
 	{
 		return m_tex_move;

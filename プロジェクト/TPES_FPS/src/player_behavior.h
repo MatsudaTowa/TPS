@@ -17,8 +17,18 @@ class CPlayerMove : public CMove
 public:
 	static const int MAX_JUMPCNT = 2; //ジャンプ回数
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CPlayerMove();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CPlayerMove() override;
+	/**
+	 * @brief 移動
+	 * @param [in]キャラクタポインタ
+	 */
 	void Move(CCharacter* character)override;
 };
 
@@ -28,13 +38,31 @@ public:
 class CPlayerAttack : public CGunAttack
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CPlayerAttack();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CPlayerAttack() override;
-	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+	/**
+	 * @brief 銃の攻撃
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクターポインタ
+	 */
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character) override;
 private:
 	//射撃時の移動減算の値
 	static constexpr float MOVE_SUBTRACTION = 0.85f;
-	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance, const CBullet::BULLET_TYPE& type,int& nRateCnt);
+	/**
+	 * @brief 弾発射
+	 * @param [in]キャラクターポインタ
+	 * @param [in]カメラポインタ
+	 * @param [in]どっちの弾か
+	 * @param [in]レートカウント
+	 */
+	void ShotBullet(CCharacter* character, CCamera* pCamera, const CBullet::BULLET_ALLEGIANCE& Allegiance,int& nRateCnt);
 };
 
 //=============================================
@@ -43,8 +71,18 @@ private:
 class CPlayerAvoidance
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CPlayerAvoidance();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CPlayerAvoidance();
+	/**
+	 * @brief 回避
+	 * @param [in]キャラクターポインタ
+	 */
 	void Avoidance(CCharacter* character);
 private:
 	static constexpr float PLAYER_AVOIDANCE_SPEED = 30.0f; //ブリンクのスピード

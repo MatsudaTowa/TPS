@@ -98,9 +98,6 @@
     <ClCompile Include="src\enemy_reaction_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\enemy_reload_UI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\enemy_stan_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -150,9 +147,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\life_UI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\life_UI_manager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\light.cpp">
@@ -260,9 +254,6 @@
     <ClCompile Include="src\smoke_UI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\smoke_UI_manager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -285,12 +276,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\tutorial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tutorial_screen.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tutorial_UI._manager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\tutorial_UI.cpp">
@@ -359,6 +344,9 @@
     <ClCompile Include="src\active_player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\tutorial_screen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
@@ -390,7 +378,6 @@
     <ClInclude Include="src\enemy_behavior.h" />
     <ClInclude Include="src\enemy_confusion_UI.h" />
     <ClInclude Include="src\enemy_reaction_UI.h" />
-    <ClInclude Include="src\enemy_reload_UI.h" />
     <ClInclude Include="src\enemy_stan_UI.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\field.h" />
@@ -408,7 +395,6 @@
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\keyboard_UI.h" />
     <ClInclude Include="src\life_UI.h" />
-    <ClInclude Include="src\life_UI_manager.h" />
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\manager.h" />
@@ -444,7 +430,6 @@
     <ClInclude Include="src\smoke_icon.h" />
     <ClInclude Include="src\smoke_range.h" />
     <ClInclude Include="src\smoke_UI.h" />
-    <ClInclude Include="src\smoke_UI_manager.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\tackle_charge.h" />
     <ClInclude Include="src\tactical_smoke.h" />
@@ -453,9 +438,7 @@
     <ClInclude Include="src\title.h" />
     <ClInclude Include="src\title_screen.h" />
     <ClInclude Include="src\tutorial.h" />
-    <ClInclude Include="src\tutorial_screen.h" />
     <ClInclude Include="src\tutorial_UI.h" />
-    <ClInclude Include="src\tutorial_UI_manager.h" />
     <ClInclude Include="src\ult.h" />
     <ClInclude Include="src\ult_camera_effect.h" />
     <ClInclude Include="src\ult_effect.h" />
@@ -477,5 +460,6 @@
     <ClInclude Include="src\tutorial_player.h" />
     <ClInclude Include="src\game_player.h" />
     <ClInclude Include="src\active_player.h" />
+    <ClInclude Include="src\tutorial_screen.h" />
   </ItemGroup>
 </Project>

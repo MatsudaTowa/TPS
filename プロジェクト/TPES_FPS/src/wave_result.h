@@ -20,15 +20,43 @@
 class CWave_Result:public CWave
 {
 public:
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWave_Result();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CWave_Result() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
-	void Uninit() override ;
+	/**
+	 * @brief 終了
+	 */
+	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 次のウェーブ設定
+	 * @param [in]ウェーブ
+	 */
 	void SetNextWave(CWave::WAVE wave);
+	/**
+	 * @brief スコア読み込み
+	 * @param [in]スコア保存ファイルネーム
+	 */
 	void LoadScore(const std::string& pFileName);
 
+	/**
+	 * @brief 生成
+	 * @param [in]ウェーブ
+	 * @param [in]ファイルネーム
+	 */
 	inline void Create(CWave::WAVE wave, char* pFileName)
 	{
 		SetNextWave(wave);

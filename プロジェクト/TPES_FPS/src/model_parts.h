@@ -38,145 +38,245 @@ public:
 		CBlock* pBlock;
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CModel_Parts();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CModel_Parts();
-	void Unload(); //モデル破棄
+
+	/**
+	 * @brief モデル破棄
+	 */
+	void Unload();
+	/**
+	 * @brief モデル設定
+	 * @param [in]マテリアルバッファ
+	 * @param [in]マテリアル数
+	 * @param [in]メッシュ情報
+	 */
 	void BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh);
+
+	/**
+	 * @brief 描画
+	 */
 	void Draw();
+	/**
+	 * @brief 描画
+	 * @param [in]色
+	 */
 	void Draw(D3DXCOLOR col);
 
+	/**
+	 * @brief ワールドマトリックス変換
+	 */
 	void ConversionMtxWorld();
 
-	//パーツ生成
+	/**
+	 * @brief パーツ生成
+	 * @param [in]位置
+	 * @param [in]方向
+	 * @param [in]モデルのパス
+	 * @return モデルパーツポインタ
+	 */
 	static CModel_Parts*Create(D3DXVECTOR3 pos,D3DXVECTOR3 rot,char* pModel_Path);
 
-	//ワールドマトリックスの代入
+	/**
+	 * @brief ワールドマトリックスの代入
+	 * @param [in]ワールドマトリックス
+	 */
 	inline void SetMtxWorld(D3DXMATRIX mtxWorld)
 	{
 		m_mtxWorld = mtxWorld;
 	}
 
-	//位置代入
+	/**
+	 * @brief 位置の代入
+	 * @param [in]位置
+	 */
 	inline void SetPos(D3DXVECTOR3 pos)
 	{
 		m_pos = pos;
 	};
 
-	//Tポーズ時の位置代入
+	/**
+	 * @brief Tポーズの位置代入
+	 * @param [in]Tポーズの位置
+	 */
 	inline void SetTPos(D3DXVECTOR3 Tpos)
 	{
 		m_Tpos = Tpos;
 	};
 
-	//過去の位置代入
+	/**
+	 * @brief 過去の位置代入
+	 * @param [in]過去の位置
+	 */
 	inline void SetOldPos(D3DXVECTOR3 oldpos)
 	{
 		m_oldpos = oldpos;
 	};
 
-	//方向代入
+	/**
+	 * @brief 方向代入
+	 * @param [in]方向
+	 */
 	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	};
 
-	//Tポーズ時の方向代入
+	/**
+	 * @brief Tポーズ方向代入
+	 * @param [in]方向
+	 */
 	inline void SetTRot(D3DXVECTOR3 Trot)
 	{
 		m_Trot = Trot;
 	};
 
-	//当たったブロック情報代入
+	/**
+	 * @brief ブロックの判定情報代入
+	 * @param [in]ブロックの判定情報
+	 */
 	inline void SetColisionBlockInfo(ColisionBlockInfo ColisionBlockInfo)
 	{
 		m_ColisionBlockInfo = ColisionBlockInfo;
 	}
 
-	//親パーツの設定
+	/**
+	 * @brief 親代入
+	 * @param [in]親情報
+	 */	
 	inline void SetParent(CModel_Parts* pParent)
 	{
 		m_pParent = pParent;
 	}
 
-	//モデルの番号設定
+	/**
+	 * @brief パーツ番号
+	 * @param [in]番号
+	 */
 	inline void SetIdx(int nIdx)
 	{
 		m_nIdx = nIdx;
 	}
 
-	//親番号の設定
+	/**
+	 * @brief 親番号代入
+	 * @param [in]親番号
+	 */
 	inline void SetParentIdx(int nParent)
 	{
 		m_nIdxModelParent = nParent;
 	}
 
-	//位置取得
+	/**
+	 * @brief 位置情報取得
+	 * @return 位置
+	 */
 	inline D3DXVECTOR3 GetPos()
 	{
 		return m_pos;
 	};
 
-	//Tポーズ時の位置取得
+	/**
+	 * @brief Tポーズの位置情報取得
+	 * @return Tポーズ位置
+	 */
 	inline D3DXVECTOR3 GetTPos()
 	{
 		return m_Tpos;
 	};
 
-	//過去の位置取得
+	/**
+	 * @brief 過去の位置情報取得
+	 * @return 過去の位置
+	 */
 	inline D3DXVECTOR3 GetOldPos()
 	{
 		return m_oldpos;
 	};
 
-	//方向取得
+	/**
+	 * @brief 方向情報取得
+	 * @return 方向
+	 */
 	inline D3DXVECTOR3 GetRot()
 	{
 		return m_rot;
 	};
 
-	//Tポーズ時の方向取得
+	/**
+	 * @brief Tポーズの方向取得
+	 * @return Tポーズの方向
+	 */
 	inline D3DXVECTOR3 GetTRot()
 	{
 		return m_Trot;
 	};
 
-	//最小値取得
+	/**
+	 * @brief 最小位置取得
+	 * @return 最小位置
+	 */
 	inline D3DXVECTOR3 GetMin()
 	{
 		return m_minpos;
 	}
 
-	//最大値取得
+	/**
+	 * @brief 最大位置取得
+	 * @return 最大位置
+	 */
 	inline D3DXVECTOR3 GetMax()
 	{
 		return m_maxpos;
 	}
 
-	//モデルの番号取得
+	/**
+	 * @brief モデル番号取得
+	 * @return モデル番号
+	 */
 	inline int GetIdx()
 	{
 		return m_nIdx;
 	}
 
-	//モデルの親番号取得
+	/**
+	 * @brief モデルの親番号取得
+	 * @return モデルの親番号
+	 */
 	inline int GetParentIdx()
 	{
 		return m_nIdxModelParent;
 	}
 
-	//当たったブロック情報取得
+	/**
+	 * @brief ブロックの判定情報取得
+	 * @return ブロックの判定情報
+	 */
 	inline ColisionBlockInfo& GetColisionBlockInfo()
 	{
 		return m_ColisionBlockInfo;
 	}
 
-	//ワールドマトリックス取得
+	/**
+	 * @brief ワールドマトリックス取得
+	 * @return ワールドマトリックス
+	 */
 	inline D3DXMATRIX& GetMtxWorld()
 	{
 		return m_mtxWorld;
 	}
 
-	//モデル情報取得
+	/**
+	 * @brief モデル情報取得
+	 * @param [in]番号
+	 * @return モデル情報
+	 */
 	inline MODEL_INFO GetModelInfo(int nIdx)
 	{
 		return m_ModelInfo[nIdx];

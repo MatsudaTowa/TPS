@@ -18,12 +18,43 @@
 class CAmmo_UI
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CAmmo_UI();
+
+	/**
+	 * @brief デストラクタ
+	 */
 	~CAmmo_UI();
+
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+
+	/**
+	 * @brief 現在の弾数UI
+	 * @param [in]弾数
+	 */
 	void SetCurrentAmmo_UI(int nAmmo);
+
+	/**
+	 * @brief マガジンの弾数UI
+	 * @param [in]弾数
+	 */
 	void SetDefaultAmmo_UI(int nAmmo);
 
 private:

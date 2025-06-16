@@ -39,12 +39,38 @@ public:
 	};
 
 	static const SOUNDINFO m_aSoundInfo[SOUND_LABEL_MAX];
+	/**
+	 * @brief コンストラクタ
+	 */
 	CSound();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CSound();
+	/**
+	 * @brief 初期化
+	 * @param [in]ハンドルワンド
+	 * @return 成功したか
+	 */
 	HRESULT InitSound(HWND hWnd);
+	/**
+	 * @brief 終了
+	 */
 	void UninitSound(void);
+	/**
+	 * @brief 再生
+	 * @param [in]サウンドラベル
+	 * @return 成功したか
+	 */
 	HRESULT PlaySound(SOUND_LABEL label);
+	/**
+	 * @brief 特定のサウンドを止める
+	 * @param [in]サウンドラベル
+	 */
 	void StopSound(SOUND_LABEL label);
+	/**
+	 * @brief 全てのサウンドを止める
+	 */
 	void StopSound(void);
 private:
 	IXAudio2* m_pXAudio2 = NULL;								// XAudio2オブジェクトへのインターフェイス
@@ -53,7 +79,23 @@ private:
 	BYTE* m_apDataAudio[SOUND_LABEL_MAX] = {};					// オーディオデータ
 	DWORD m_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 
+	/**
+	 * @brief チャンクのチェック
+	 * @param [in]ファイル
+	 * @param [in]フォーマット
+	 * @param [in]チャンクのサイズポインタ
+	 * @param [in]チャンクの情報位置ポインタ
+	 * @return 成功したか
+	 */
 	HRESULT CheckChunk(HANDLE hFile, DWORD format, DWORD* pChunkSize, DWORD* pChunkDataPosition);
+	/**
+	 * @brief チャンクデータ読み込み
+	 * @param [in]ファイル
+	 * @param [in]バッファ
+	 * @param [in]バッファサイズ
+	 * @param [in]バッファ指定位置
+	 * @return 
+	 */
 	HRESULT ReadChunkData(HANDLE hFile, void* pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset);
 };
 #endif

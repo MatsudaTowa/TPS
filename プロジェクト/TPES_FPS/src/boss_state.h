@@ -16,22 +16,67 @@
 class CBossEnemy;
 
 //=============================================
-//ボスのステートクラス TODO:キャラクターのステートを継承して
+//ボスのステートクラス
 //=============================================
 class CBossState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossState();
+	/**
+	 * @brief デストラクタ
+	 */
 	virtual ~CBossState();
+	/**
+	 * @brief 最初に呼ばれる関数
+	 * @param ボスのポインタ
+	 */
 	virtual void Start(CBossEnemy* boss);
+	/**
+	 * @brief 最後に呼ばれる関数
+	 * @param ボスのポインタ
+	 */
 	virtual void End(CBossEnemy* boss);
+	/**
+	 * @brief 追跡
+	 * @param ボスのポインタ
+	 */
 	virtual void Chase(CBossEnemy* boss);
+	/**
+	 * @brief スタン
+	 * @param ボスのポインタ
+	 */
 	virtual void Stan(CBossEnemy* boss);
+	/**
+	 * @brief 徘徊
+	 * @param ボスのポインタ
+	 */
 	virtual void Wandering(CBossEnemy* boss);
+	/**
+	 * @brief 混乱
+	 * @param ボスのポインタ
+	 */
 	virtual void Confusion(CBossEnemy* boss);
+	/**
+	 * @brief タックル
+	 * @param ボスのポインタ
+	 */
 	virtual void Tackle(CBossEnemy* boss);
+	/**
+	 * @brief 探索
+	 * @param ボスのポインタ
+	 */
 	virtual void Search(CBossEnemy* boss);
+	/**
+	 * @brief 暴走
+	 * @param ボスのポインタ
+	 */
 	virtual void Rampage(CBossEnemy* boss);
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug();
 };
 
@@ -41,9 +86,22 @@ public:
 class CChaseState : public CBossState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CChaseState();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CChaseState() override;
+	/**
+	 * @brief 追跡
+	 * @param ボスのポインタ
+	 */
 	virtual void Chase(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 private:
 	static const int PLAY_TACKLE_FLAME = 300; //タックルを実行するまでのフレーム
@@ -56,9 +114,24 @@ private:
 class CBossStanState :public CBossState
 {
 public:
+	/**
+	 * @brief 最初
+	 * @param ボスのポインタ
+	 */
 	void Start(CBossEnemy* boss) override;
+	/**
+	 * @brief 最後に呼ばれる関数
+	 * @param ボスのポインタ
+	 */
 	void End(CBossEnemy* boss) override;
+	/**
+	 * @brief スタン
+	 * @param ボスのポインタ
+	 */
 	virtual void Stan(CBossEnemy* boss);
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 private:
 	static const int STAN_FRAME = 180; //スタン時間
@@ -71,9 +144,22 @@ private:
 class CWanderingState : public CBossState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CWanderingState();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CWanderingState() override;
+	/**
+	 * @brief 徘徊
+	 * @param ボスのポインタ
+	 */
 	virtual void Wandering(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 private:
 	static const int TRANSITION_FRAME = 60;
@@ -88,10 +174,27 @@ private:
 class CConfusionBossState : public CBossState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CConfusionBossState();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CConfusionBossState() override;
+	/**
+	 * @brief 最初
+	 * @param ボスのポインタ
+	 */
 	void Start(CBossEnemy* boss) override;
+	/**
+	 * @brief 混乱
+	 * @param ボスのポインタ
+	 */
 	virtual void Confusion(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 private:
 	static constexpr float CORRECTION_VALUE = 70.0f; //リアクションのUIを生成する際のYの補正値
@@ -108,11 +211,32 @@ private:
 class CTackleState : public CBossState
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CTackleState();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CTackleState() override;
+	/**
+	 * @brief 最初
+	 * @param ボスのポインタ
+	 */
 	void Start(CBossEnemy* boss) override;
+	/**
+	 * @brief 終了
+	 * @param ボスのポインタ
+	 */
 	void End(CBossEnemy* boss) override;
+	/**
+	 * @brief タックル
+	 * @param ボスのポインタ
+	 */
 	virtual void Tackle(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 };
 
@@ -122,8 +246,19 @@ public:
 class CSearchState : public CBossState
 {
 public:
+	/**
+	 * @brief 最初
+	 * @param ボスのポインタ
+	 */
 	void Start(CBossEnemy* boss) override;
+	/**
+	 * @brief 探索
+	 * @param ボスのポインタ
+	 */
 	virtual void Search(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示
+	 */
 	virtual void DrawDebug()override;
 private:
 	D3DXVECTOR3 m_TargetPos;
@@ -135,9 +270,24 @@ private:
 class CRampageState : public CBossState
 {
 public:
+	/**
+	 * @brief 最初
+	 * @param [in]ボスのポインタ
+	 */
 	void Start(CBossEnemy* boss) override;
+	/**
+	 * @brief 終了
+	 * @param [in]ボスのポインタ
+	 */
 	void End(CBossEnemy* boss) override;
+	/**
+	 * @brief 暴走
+	 * @param [in]ボスのポインタ
+	 */
 	virtual void Rampage(CBossEnemy* boss)override;
+	/**
+	 * @brief デバッグ表示/
+	 */
 	virtual void DrawDebug()override;
 };
 #endif

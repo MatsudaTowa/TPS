@@ -22,16 +22,38 @@ class CBossEnemy;
 class CBossWandering
 {
 public:
-	//止まってるフレーム数
-	static const int STOP_FRAME = 30;
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossWandering();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossWandering();
+	/**
+	 * @brief 徘徊処理
+	 * @param [in]ボスのポインタ
+	 */
 	void Wandering(CBossEnemy* boss);
-	void StopCnt();
-	void PickNextMovePoint(CMovePoint* pMovePoint);
-	void DrawDebug();
+
+	/**
+	 * @brief デバッグ表示
+	 */
+	void DrawDebug(); 
 private:
+	static const int STOP_FRAME = 30;	//止まってるフレーム数
+
 	static constexpr float THRESHOLD = 0.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
+	/**
+	 * @brief 止まってる時間計測
+	 */
+	void StopCnt();
+	/**
+	 * @brief 次の移動ポイント抽選
+	 * @param [in]移動ポイント
+	 */
+	void PickNextMovePoint(CMovePoint* pMovePoint);
+
 	int m_MoveIdx; //移動先の番号
 	int m_StopCnt; //止まってるカウント
 	bool m_isMove; //動くかどうか
@@ -43,13 +65,34 @@ private:
 class CBossChase
 {
 public:
+	/**
+	 * @briefコンストラクタ
+	 */
 	CBossChase();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossChase();
+	/**
+	 * @brief 追いかけ処理
+	 * @param [in]ボスのポインタ
+	 * @param [in]追いかけ対象のオブジェクト
+	 */
 	void Chase(CBossEnemy* boss, CObject* obj);
-	void MovetoPlayer(float distance, const float& threshold, D3DXVECTOR3& Vector, CBossEnemy* boss);
+	/**
+	 * @brief デバッグ表示
+	 */
 	void DrawDebug();
 private:
 	static constexpr float THRESHOLD = 200.0f; // 距離が定数以下なら到達とする（必要に応じて調整）
+	/**
+	 * @brief プレイヤーに向かって動く
+	 * @param [in]距離
+	 * @param [in]到達閾値
+	 * @param [in]Vector
+	 * @param boss
+	 */
+	void MovetoPlayer(float distance, const float threshold, D3DXVECTOR3 Vector, CBossEnemy* boss);
 
 	BOOL m_bTargetPlayer;		//レイが当たってたらtrueにしプレイヤーを追いかける
 };
@@ -60,8 +103,18 @@ private:
 class CBossStan
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossStan();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossStan();
+	/**
+	 * @brief スタン処理
+	 * @param [in]ボスのポインタ
+	 */
 	void Stan(CBossEnemy* boss);
 };
 
@@ -71,16 +124,34 @@ public:
 class CBossConfusion
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossConfusion();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossConfusion();
+	/**
+	 * @brief 混乱処理
+	 * @param [in]ボスのポインタ
+	 * @param [in]方向の開始位置
+	 */
 	void Confusion(CBossEnemy* boss, float StartRot_y);
-	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
+
 	CCharacter::RayHitInfo PerformRaycast_Player(D3DXVECTOR3 vector,CBossEnemy* boss);
 private:
 	static constexpr float LOOK_RANGE = 1.6f; //見渡す範囲
 	static constexpr float ROT_MOVE = 0.01f; //見渡す移動値
 	static constexpr float CORRECTION_VALUE_Y = 20.0f; //レイを飛ばすYの補正値
 	static constexpr int NUM_TURN = 2; //見渡す回数
+	/**
+	 * @brief 方向の移動
+	 * @param [in][out]方向
+	 * @param [in]到達位置
+	 * @param [in]ボスのポイント
+	 */
+	void MoveRot(D3DXVECTOR3& rot, float Rot_Answer_y, CBossEnemy* boss);
 	int m_TurnCnt; //何回見渡したか
 	bool m_isRight; //見渡す(true:右 false:左)
 };
@@ -91,9 +162,21 @@ private:
 class CBossGunAttack : public CEnemyGunAttack
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossGunAttack();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossGunAttack() override;
-	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CBullet::BULLET_TYPE type, CCharacter* character) override;
+
+	/**
+	 * @brief 銃の攻撃
+	 * @param [in]どっちの弾か
+	 * @param [in]キャラクターのポインタ
+	 */
+	void GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter* character) override;
 
 private:
 	static const int SHOT_STATE_FRAME = 90; //射撃フレーム
@@ -108,58 +191,35 @@ class CBossTackle
 {
 public:
 	static const int TACKLE_DAMAGE = 30;
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossTackle();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossTackle();
+	/**
+	 * @brief タックル
+	 * @param [in]ボスのポインタ
+	 */
 	void Tackle(CBossEnemy* boss);
 
-	//ステイカウント取得
-	int& GetStayCnt()
-	{
-		return m_TackleCnt;
-	}
-
-	//タックルカウント取得
-	int& GetTackleCnt()
-	{
-		return m_TackleCnt;
-	}
-
-
-	//タックル状態取得
-	bool& GetisTackle()
-	{
-		return m_isTackle;
-	}
-
-	//ステイカウント代入
-	void SetStayCnt(int StayCnt)
-	{
-		m_StayCnt = StayCnt;
-	}
-
-	//タックルカウント代入
-	void SetTackleCnt(int TackleCnt)
-	{
-		m_TackleCnt = TackleCnt;
-	}
-
-	//タックル状態代入
-	void SetisTackle(bool isTackle)
-	{
-		m_isTackle = isTackle;
-	}
 private:
 	static const int STAY_FLAME = 180; //突進までの待機時間
 	static const int CORRECTION_FLAME = 15; //エフェクトと合わせるとずれるのでフレームを補正
 	static const int TACKLE_FLAME = 60; //タックル時間
 	static constexpr float CORRECTION_VALUE_Y = 50.0f; //タックルエフェクトを生成する際のYの補正値
 
-	void LookAtPlayer(CCharacter* character); //プレイヤーのほうを向かせる処理
-	int m_StayCnt;
-	int m_TackleCnt;
-	bool m_isTackle;
-	float m_effect_reduction; //エフェクトのサイズ縮小
+	/**
+	 * @brief プレイヤーのほうを向かせる
+	 * @param [in]キャラクターポインタ
+	 */
+	void LookAtPlayer(CCharacter* character);
+	int m_StayCnt;				//とどまるカウント
+	int m_TackleCnt;			//タックル継続カウント
+	bool m_isTackle;			//タックルするかどうか
+	float m_effect_reduction;	//エフェクトのサイズ縮小
 };
 
 //=============================================
@@ -168,8 +228,19 @@ private:
 class CBossSearch
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossSearch();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossSearch();
+	/**
+	 * @brief 探索
+	 * @param [in]ボスポインタ
+	 * @param [in]目標の位置
+	 */
 	void Search(CBossEnemy* boss,D3DXVECTOR3 TargetPos);
 private:
 	static constexpr float THRESHOLD = 0.5f; // 距離が定数以下なら到達とする（必要に応じて調整）
@@ -182,8 +253,18 @@ private:
 class CBossRampage
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CBossRampage();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CBossRampage();
+	/**
+	 * @brief 暴走
+	 * @param [in]ボスポインタ
+	 */
 	void Rampage(CBossEnemy* boss);
 private:
 	static const int NUM_TARGETPOINT = 4; //外周のポイント数

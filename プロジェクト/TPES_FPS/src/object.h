@@ -52,43 +52,92 @@ public:
 		OBJECT_TYPE_MAX,
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CObject(int nPriority = PRI_MAX);
-
+	/**
+	 * @brief デストラクタ
+	 */
 	virtual ~CObject();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	virtual HRESULT Init() = 0;
+	/**
+	 * @brief 終了
+	 */
 	virtual void Uninit() = 0;
+	/**
+	 * @brief 更新
+	 */
 	virtual void Update() = 0;
+	/**
+	 * @brief 描画
+	 */
 	virtual void Draw() = 0;
-
-	static void ReleaseAll(); //全オブジェクト解放
-
-	static void UpdateAll(); //全オブジェクト更新
-
-	static void DrawAll(); //全オブジェクト描画
-
+	/**
+	 * @brief 全オブジェクト解放
+	 */
+	static void ReleaseAll();
+	/**
+	 * @brief 全オブジェクト更新
+	 */
+	static void UpdateAll();
+	/**
+	 * @brief 全オブジェクト描画
+	 */
+	static void DrawAll();
+	/**
+	 * @brief オブジェクト
+	 * @param [in]プライオリティ
+	 * @param [in]番号
+	 * @return 
+	 */
 	static CObject* Getobject(int nPri,int nIdx);
 
+	/**
+	 * @brief タイプ取得
+	 * @return オブジェクトタイプ
+	 */
 	inline OBJECT_TYPE GetType()
 	{
 		return m_type;
 	}
 
+	/**
+	 * @brief 描画するかどうか設定
+	 * @param [in]描画するか
+	 */
 	inline void SetisDraw(bool isDraw)
 	{
 		m_isDraw = isDraw;
 	}
 
+	/**
+	 * @brief 描画するかどうか取得
+	 * @return 描画するか
+	 */
 	inline bool& GetisDraw()
 	{
 		return m_isDraw;
 	}
 
+	/**
+	 * @brief オブジェクトタイプ設定 
+	 * @param [in]オブジェクトタイプ
+	 */
 	inline void SetType(OBJECT_TYPE type)
 	{
 		m_type = type;
 	}
 
-	void Release(); //自分自身の解放
+	/**
+	 * @brief 自分自身の解放
+	 */
+	void Release();
 private:
 	static CObject* m_apObject[CObject::PRI_MAX][MAX_OBJECT];
 

@@ -24,16 +24,49 @@ public:
 		SEVERE, //重症
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CHitCameraEffect(int nPriority = PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CHitCameraEffect() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @param [in]ダメージの量
+	 * @return カメラのヒットエフェクト
+	 */
 	static CHitCameraEffect* Create(D3DXVECTOR3 pos, HIT_EFFECT_STAGE stage);
 
+	/**
+	 * @brief アルファ値減少
+	 */
 	void SubAlpha();
 
+	/**
+	 * @brief アルファ値取得
+	 * @return アルファ値
+	 */
 	inline float& GetAlpha()
 	{
 		return m_alpha;

@@ -22,7 +22,7 @@ class CCameraState;
 class CCamera
 {
 public:
-	//カメラタイプ宣言 TODO:ステートパターンで
+	//カメラタイプ宣言
 	enum CANERA_TYPE
 	{
 		TYPE_THIRDVIEW, //第三者視点
@@ -30,66 +30,124 @@ public:
 		TYPE_DEBUG,
 		TYPE_MAX,
 	};
-
+	/**
+	 * @brief コンストラクタ
+	 */
 	CCamera();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CCamera();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/*
+	 * @brief カメラ設定 
+	 */
 	void SetCamera();
+	/**
+	 * @brief カメラリセット
+	 */
 	void ResetCamera();
 
+	/**
+	 * @brief 入力処理
+	 */
 	void InputMove();
 
-
+	/**
+	 * @brief ステート変更
+	 * @param [in]次のステート
+	 */
 	void ChangeCameraState(CCameraState* state);
 
-	//方向取得
+	/**
+	 * @brief 方向設定
+	 * @param [in]方向
+	 */
 	inline void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
-	//視点取得
+	/**
+	 * @brief 視点設定
+	 * @param [in]視点位置
+	 */
 	inline void SetPosV(D3DXVECTOR3 posV)
 	{
 		m_posV = posV;
 	}
-	//注視点取得
+	/**
+	 * @brief 注視点設定
+	 * @param [in]注視点位置
+	 */
 	inline void SetPosR(D3DXVECTOR3 posR)
 	{
 		m_posR = posR;
 	}
-
+	/**
+	 * @brief 距離設定
+	 * @param [in]距離
+	 */
 	inline void SetLength(float length)
 	{
 		m_fLength = length;
 	}
 
-	//方向取得
+	/**
+	 * @brief 方向取得
+	 * @return 方向
+	 */
 	inline D3DXVECTOR3 GetRot()
 	{
 		return m_rot;
 	}
 
-	//視点取得
+	/**
+	 * @brief 視点取得
+	 * @return 視点位置
+	 */
 	inline D3DXVECTOR3 GetPosV()
 	{
 		return m_posV;
 	}
-	//注視点取得
+
+	/**
+	 * @brief 注視点取得
+	 * @return 注視点位置
+	 */
 	inline D3DXVECTOR3 GetPosR()
 	{
 		return m_posR;
 	}
 
+	/**
+	 * @brief 距離取得
+	 * @return 距離
+	 */
 	inline float& GetLength()
 	{
 		return m_fLength;
 	}
 
-	//カメラのデバック表示
+	/**
+	 * @brief カメラのデバッグ表示
+	 */
 	void DebugCameraDraw();
 
+	/**
+	 * @brief カメラのデバッグ表示
+	 */
 	void ThirdViewCamera(); //サードパーソンビュー処理
 private:
 	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
@@ -115,7 +173,10 @@ private:
 	static constexpr float MAX_TURN_X = 0.5f; //サードパーソンビュー時のXの最大可動域
 	static constexpr float MIN_TURN_X = -0.15f; //サードパーソンビュー時のXの最小可動域
 
-	void CameraTurn(); //カメラ回転処理
+	/**
+	 * @brief カメラ回転処理
+	 */
+	void CameraTurn();
 
 	D3DXVECTOR3 m_posV; //視点
 	D3DXVECTOR3 m_posR; //注視点

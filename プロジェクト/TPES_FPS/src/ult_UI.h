@@ -23,13 +23,37 @@ class CUltIcon;
 class CUlt_UI
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CUlt_UI();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CUlt_UI();
+	/**
+	 * @brief 初期化
+	 * @param [in]プレイヤーのポインタ
+	 * @return 成功したか
+	 */
 	HRESULT Init(CActivePlayer* player);
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 現在のウルトUI設定
+	 * @param [in]プレイヤーのポインタ
+	 */
 	void SetCurrentUlt_UI(CActivePlayer* player);
 
+	/**
+	 * @brief リセット関数
+	 */
 	void Reset();
 
 private:

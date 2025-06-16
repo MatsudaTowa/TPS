@@ -32,14 +32,38 @@ public:
 		MOTION_STAN,
 		MOTION_MAX,
 	};
-
+	/**
+	 * @brief コンストラクタ
+	 * @param [in]プライオリティ
+	 */
 	CNormalEnemy(int nPriority = ENEMY_PRIORITY);
+	/**
+	 * @brief デストラクタ
+	 */
 	~CNormalEnemy() override;
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init() override;
+	/**
+	 * @brief 終了
+	 */
 	void Uninit() override;
+	/**
+	 * @brief 更新
+	 */
 	void Update() override;
+	/**
+	 * @brief 描画
+	 */
 	void Draw() override;
 
+	/**
+	 * @brief ウルトのヒット判定
+	 * @param [in]ウルトの位置
+	 * @param [in]ダメージ
+	 */
 	void MediumUltHit(D3DXVECTOR3 UltPos, int nDamage)override;
 private:
 

@@ -26,11 +26,31 @@ public:
 		const char* ModelName; //モデルネーム保存用
 	};
 
+	/**
+	 * @brief コンストラクタ
+	 */
 	CModel();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CModel();
-	void Unload(); //モデル破棄
+	/**
+	 * @brief アンロード
+	 */
+	void Unload();
+	/**
+	 * @brief 登録
+	 * @param [in]モデルのパス
+	 * @return 登録番号
+	 */
 	int Regist(const char* pModel);
-	MODEL_INFO GetModelInfo(int nIdx); //モデル情報取得
+
+	/**
+	 * @brief モデル情報取得
+	 * @param [in]番号
+	 * @return モデル情報
+	 */
+	MODEL_INFO GetModelInfo(int nIdx);
 
 private:
 	MODEL_INFO m_ModelInfo[MAX_MODEL]; //モデル情報

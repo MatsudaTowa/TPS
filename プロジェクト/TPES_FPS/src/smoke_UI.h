@@ -20,15 +20,43 @@
 class CSmoke_UI
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CSmoke_UI();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CSmoke_UI();
+	/**
+	 * @brief 初期化
+	 * @param [in]プレイヤーのポインタ
+	 * @return 成功したか
+	 */
 	HRESULT Init(CActivePlayer* player);
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
+	/**
+	 * @brief 現在のスモークUI設定
+	 * @param [in]プレイヤーのポインタ
+	 */
 	void SetCurrentSmoke_UI(CActivePlayer* player);
 
+	/**
+	 * @brief 数字設定
+	 * @param [in]値
+	 */
 	void SetNumber(int nParcent);
 
+	/**
+	 * @brief ゲージリセット
+	 */
 	void Reset();
 
 private:
@@ -55,4 +83,4 @@ private:
 	CNumber_2D* m_pCurrentSmoke[NUM_DIGIT];
 };
 
-#endif // DEBUG
+#endif

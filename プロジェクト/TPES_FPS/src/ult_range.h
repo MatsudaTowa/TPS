@@ -18,15 +18,39 @@
 class CUltRange
 {
 public:
+	/**
+	 * @brief コンストラクタ
+	 */
 	CUltRange();
+	/**
+	 * @brief デストラクタ
+	 */
 	~CUltRange();
+	/**
+	 * @brief 初期化
+	 * @return 成功したか
+	 */
 	HRESULT Init();
+	/**
+	 * @brief 終了
+	 */
 	void Uninit();
+	/**
+	 * @brief 更新
+	 */
 	void Update();
 
-	//ウルト範囲作成
+	/**
+	 * @brief 生成
+	 * @param [in]位置
+	 * @return ウルトの範囲ポインタ
+	 */
 	static CUltRange* Create(D3DXVECTOR3 pos);
 
+	/**
+	 * @brief 持続時間取得
+	 * @return 持続時間
+	 */
 	inline int& GetLife()
 	{
 		return m_nLife;
