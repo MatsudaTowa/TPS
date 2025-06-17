@@ -95,6 +95,16 @@ public:
 	{
 		m_posR = posR;
 	}
+
+	/**
+	 * @brief “®‚©‚·‚©İ’è
+	 * @param [in]isActive
+	 */
+	inline void SetActive(bool isActive)
+	{
+		m_isActive = isActive;
+	}
+
 	/**
 	 * @brief ‹——£İ’è
 	 * @param [in]‹——£
@@ -129,6 +139,15 @@ public:
 	inline D3DXVECTOR3 GetPosR()
 	{
 		return m_posR;
+	}
+
+	/**
+	 * @brief “®‚©‚·ó‘Ô‚©æ“¾
+	 * @return ó‘Ô
+	 */
+	inline bool GetActive()
+	{
+		return m_isActive;
 	}
 
 	/**
@@ -189,6 +208,7 @@ private:
 	D3DXVECTOR3 m_rot; //•ûŒü
 	D3DXVECTOR3 m_rotmove; //‰ñ“]—Ê
 
+	bool m_isActive; //“®‚©‚¹‚éó‘Ô‚©‚Ç‚¤‚©
 	float m_fLength; //‘ÎÛ‚Æ‚Ì‹——£
 	float m_fAngle; //‘ÎÛ‚Æ‚Ì‘ÎŠpü‚ÌŠp“x
 

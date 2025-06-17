@@ -18,7 +18,9 @@ CObject* CObject::m_apObject[CObject::PRI_MAX][CObject::MAX_OBJECT] = {};
 //=============================================
 //コンストラクタ
 //=============================================
-CObject::CObject(int nPriority):m_isDraw(true)
+CObject::CObject(int nPriority):
+	m_isDraw(true),		//描画するか
+	m_isActive(true)	//動かすか
 {
 	m_nPriority = nPriority; //描画優先度設定
 
@@ -76,6 +78,10 @@ void CObject::UpdateAll()
 		{
 			if (m_apObject[nCntPri][nCntObj] != nullptr)
 			{
+				if (!m_apObject[nCntPri][nCntObj]->m_isActive)
+				{
+					continue;
+				}
 				//更新処理
 				m_apObject[nCntPri][nCntObj]->Update();
 			}

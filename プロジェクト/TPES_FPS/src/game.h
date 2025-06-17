@@ -14,6 +14,7 @@
 #include "wave.h"
 #include "score.h"
 #include"wave_result.h"
+#include "game_state.h"
 
 //=============================================
 // ゲームクラス
@@ -21,12 +22,6 @@
 class CGame:public CScene
 {
 public:
-
-	enum GAME_STATE
-	{
-		GAME_STATE_NORMAL = 0,
-		GAME_STATE_MAX,
-	};
 
 	//読み込むときに必要なブロックの構造体
 	struct LOAD_BLOCK
@@ -38,6 +33,7 @@ public:
 
 	static const int DELAY_CNT = 30; //リザルトに飛ぶまでのディレイ
 	static const int BLOCK_TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
+	static const int DELAY_FLAME = 60; //ディレイのフレーム数
 
 	/**
 	 * @brief コンストラクタ
@@ -65,31 +61,84 @@ public:
 	 * @brief 描画
 	 */
 	void Draw() override;
-	/**
-	 * @brief 状態設定
-	 * @param [in]状態
-	 */
-	static void SetState(GAME_STATE state)
-	{
-		m_GameState = state;
-	}
 
 	/**
-	 * @brief ステート取得
-	 * @return ステート
+	 * @brief 死亡ペナルティ計算
 	 */
-	static GAME_STATE&GetState();
+	void ApplyDeathPenalty();
+
 	/**
-	 * @brief プレイヤー取得
-	 * @return プレイヤー
+	 * @brief オブジェクトの更新を行うか決定
+	 * @param [in]動かすかどうか
 	 */
-	CPlayer*GetPlayer();
+	void UpdateObjectDecision(bool isActive);
 
 	/**
 	 * @brief ウェーブ取得
 	 * @return ウェーブ
 	 */
-	static CWave*GetWave();
+	static inline CWave* GetWave()
+	{
+		return m_pWave;
+	}
+
+	/**
+	 * @brief 次のウェーブ取得
+	 * @return 次のウェーブ
+	 */
+	inline CWave::WAVE GetNextWave()
+	{
+		return m_next_wave;
+	}
+
+	/**
+	 * @brief 次のウェーブ設定
+	 * @param [in]次のウェーブ
+	 */
+	inline void SetNextWave(CWave::WAVE next_wave)
+	{
+		m_next_wave = next_wave;
+	}
+
+	/**
+	 * @brief リザルト遷移の余韻カウント取得
+	 * @param リザルト遷移の余韻カウント
+	 */
+	inline int GetResultDelay()
+	{
+		return m_nResultDelay;
+	}
+	/**
+	 * @brief リザルト遷移の余韻カウント設定
+	 * @param [in]リザルト遷移の余韻カウント
+	 */
+	inline void SetResultDelay(int nResultDelay)
+	{
+		m_nResultDelay = nResultDelay;
+	}
+
+	/**
+	 * @brief 入力可能か取得
+	 * @param 入力可能か
+	 */
+	inline bool GetPauseKey()
+	{
+		return m_nPauseCnt >= PAUSE_POSSIBLE_FLAME;
+	}
+
+	/**
+	 * @brief カウントリセット
+	 */
+	inline void ResetPauseCnt()
+	{
+		m_nPauseCnt = 0;
+	}
+
+	/**
+	 * @brief ステート変更
+	 * @param [in]次のステート
+	 */
+	void ChangeState(CGameState* state);
 
 	/**
 	 * @brief ウェーブ設定
@@ -103,23 +152,21 @@ public:
 	 * @param [in]次のウェーブ
 	 * @param [in]リザルトのスコアファイル
 	 */
-	static void SetWave(CWave::WAVE wave,CWave::WAVE next_wave,const char* ResultFile);
+	static void SetWave(CWave::WAVE wave, CWave::WAVE next_wave, const char* ResultFile);
+
 private:
 	static const std::string BLOCK_FILE;	//エネミーのファイル
 
-	static const int DELAY_FLAME = 60; //ディレイのフレーム数
 	static const int DEATH_PENALTY = -50; //死んだときのペナルティ
-
-	/**
-	 * @brief 死亡ペナルティ計算
-	 */
-	void ApplyDeathPenalty();
+	static const int PAUSE_POSSIBLE_FLAME = 1;	//ポーズを有効化させるフレーム
 
 	int m_nResultDelay; //リザルトへのディレイ
-	static GAME_STATE m_GameState; //ゲームステート
 	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 
-	CPlayer*m_pPlayer;
+	int m_nPauseCnt;	//ポーズを有効化する時に用いるカウント
+
+	CGameState* m_pState;
+
 	static CWave* m_pWave;
 
 	CWave::WAVE m_next_wave;

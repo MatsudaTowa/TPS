@@ -55,6 +55,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\game_player.cpp" />
     <ClCompile Include="src\game_score.cpp" />
+    <ClCompile Include="src\game_state.cpp" />
     <ClCompile Include="src\gauge.cpp" />
     <ClCompile Include="src\gun.cpp" />
     <ClCompile Include="src\gun_behavior.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\game_player.h" />
     <ClInclude Include="src\game_score.h" />
+    <ClInclude Include="src\game_state.h" />
     <ClInclude Include="src\gauge.h" />
     <ClInclude Include="src\gun.h" />
     <ClInclude Include="src\gun_behavior.h" />

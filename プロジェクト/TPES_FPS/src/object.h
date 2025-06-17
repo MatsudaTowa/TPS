@@ -117,12 +117,30 @@ public:
 	}
 
 	/**
+	 * @brief ˆ—‚ğ~‚ß‚é‚©‚Ç‚¤‚©İ’è
+	 * @param [in]ˆ—‚ğ~‚ß‚é‚©
+	 */
+	inline void SetisActive(bool isActive)
+	{
+		m_isActive = isActive;
+	}
+
+	/**
 	 * @brief •`‰æ‚·‚é‚©‚Ç‚¤‚©æ“¾
 	 * @return •`‰æ‚·‚é‚©
 	 */
 	inline bool& GetisDraw()
 	{
 		return m_isDraw;
+	}
+
+	/**
+	 * @brief “®‚©‚·‚Ç‚¤‚©æ“¾
+	 * @return “®‚©‚·‚©
+	 */
+	inline bool& GetisActive()
+	{
+		return m_isActive;
 	}
 
 	/**
@@ -147,7 +165,9 @@ private:
 
 	static int m_nNumAll; //‘”
 
-	bool m_isDraw;
+	bool m_isActive;	//“®‚©‚¹‚é‚©
+
+	bool m_isDraw;	//•`‰æ‚·‚é‚©
 
 	int m_nID; //ƒIƒuƒWƒFƒNƒg‚ÌID
 };

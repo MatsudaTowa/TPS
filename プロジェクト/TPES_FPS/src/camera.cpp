@@ -17,6 +17,7 @@
 CCamera::CCamera():
 m_fAngle(FLOAT_ZERO),		//角度
 m_fLength(FLOAT_ZERO),		//距離
+m_isActive(true),			//動かすか
 m_moveR(VEC3_RESET_ZERO),	//注視点の移動量
 m_moveV(VEC3_RESET_ZERO),	//視点の移動量
 m_mtxProjection(),			//プロジェクション行列
@@ -82,6 +83,10 @@ void CCamera::Uninit()
 //=============================================
 void CCamera::Update()
 {
+	if (!m_isActive)
+	{
+		return;
+	}
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 

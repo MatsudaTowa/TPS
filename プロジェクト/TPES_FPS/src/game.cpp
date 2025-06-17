@@ -17,17 +17,15 @@
 #include "active_player.h"
 
 //ウェーブ
-CWave*CGame::m_pWave = nullptr;
-
-CGame::GAME_STATE CGame::m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
-
+CWave* CGame::m_pWave = nullptr;
 //=============================================
 //コンストラクタ
 //=============================================
 CGame::CGame():
 m_nResultDelay(INT_ZERO),	//リザルトの遷移ディレイ
 m_next_wave(),				//次のウェーブ格納変数
-m_pPlayer(nullptr)			//プレイヤー
+m_nPauseCnt(INT_ZERO),		//ポーズ可能変数
+m_pState(nullptr)			//ステートポインタ
 {
 	//読み込むブロックの情報初期化
 	m_LoadBlock.pos = VEC3_RESET_ZERO;
@@ -48,16 +46,17 @@ CGame::~CGame()
 HRESULT CGame::Init()
 {
 	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
-	m_GameState = CGame::GAME_STATE::GAME_STATE_NORMAL;
+
+	if (m_pState == nullptr)
+	{
+		m_pState = new CNormal;
+	}
 
 	if (m_pWave == nullptr)
 	{
 		m_pWave = new CWave;
 		m_pWave->Init();
 	}
-
-	//プレイヤー生成
-	//m_pPlayer = CPlayer::Create(D3DXVECTOR3(-900.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f),5);
 
 	SetWave(CWave::WAVE::ONE);
 
@@ -70,11 +69,10 @@ HRESULT CGame::Init()
 void CGame::Uninit()
 {
 	CManager::GetInstance()->GetSound()->StopSound();
-	m_GameState = GAME_STATE_NORMAL;
-
-	if (m_pPlayer != nullptr)
+	if (m_pState != nullptr)
 	{
-		m_pPlayer = nullptr;
+		delete m_pState;
+		m_pState = nullptr;
 	}
 
 	if (m_pWave != nullptr)
@@ -91,66 +89,15 @@ void CGame::Uninit()
 //=============================================
 void CGame::Update()
 {
-	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-
-	if (CEnemy::m_NumEnemy <= INT_ZERO)
-	{//敵がいなくなったらウェーブ遷移
-		switch (CWave::GetCurrentWave())
-		{
-		case CWave::WAVE::ONE:
-			m_next_wave = CWave::WAVE::TWO;
-			break;
-		case CWave::WAVE::TWO:
-			m_next_wave = CWave::WAVE::THREE;
-			break;
-		case CWave::WAVE::THREE:
-			m_next_wave = CWave::WAVE::BOSS;
-			break;
-		case CWave::WAVE::BOSS:
-			m_next_wave = CWave::WAVE::NONE;
-			break;
-		case CWave::WAVE::NONE:
-			break;
-		default:
-			break;
-		}
-
-		if (CWave::GetCurrentWave() != CWave::WAVE::RESULT)
-		{
-			m_nResultDelay++;
-			if (m_nResultDelay > DELAY_FLAME)
-			{
-				m_nResultDelay = INT_ZERO;
-
-				//死んだ数分だけスコアマイナス
-				ApplyDeathPenalty();
-
-				//現在のスコアを書き出し
-				m_pWave->WaveResult(CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
-				SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
-			}
-		}
-	}
-
-	if (m_pWave != nullptr)
+	if (m_nPauseCnt <= PAUSE_POSSIBLE_FLAME)
 	{
-		m_pWave->Update();
+		++m_nPauseCnt;
 	}
-	
-#ifdef _DEBUG
-	if (pKeyboard->GetTrigger(DIK_TAB))
+	if (m_pState != nullptr)
 	{
-		m_next_wave = CWave::WAVE::BOSS;
-
-		SetWave(CWave::WAVE::RESULT, m_next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
+		m_pState->Normal(this);
+		m_pState->Pause(this);
 	}
-
-	if (pKeyboard->GetTrigger(DIK_F7))
-	{
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TEST);
-	}
-#endif // _DEBUG
 }
 
 //=============================================
@@ -205,20 +152,43 @@ void CGame::Draw()
 }
 
 //=============================================
-//プレイヤー取得
+//ステート変更
 //=============================================
-CPlayer* CGame::GetPlayer()
+void CGame::ChangeState(CGameState* state)
 {
-	return m_pPlayer;
+	//今のステートを消し引数のステートに切り替える
+	if (m_pState != nullptr)
+	{
+		delete m_pState;
+		m_pState = state;
+	}
 }
 
 //=============================================
-//ウェーブ取得
+//オブジェクトの更新を行うか決定
 //=============================================
-CWave* CGame::GetWave()
+void CGame::UpdateObjectDecision(bool isActive)
 {
-	return m_pWave;
+	for (int i = 0; i < CObject::PRI_MAX; ++i)
+	{
+		for (int j = 0; j < CObject::MAX_OBJECT; ++j)
+		{
+			//オブジェクト取得
+			CObject* pObj = CObject::Getobject(i, j);	//先頭取得
+
+			if (pObj == nullptr)
+			{
+				continue;
+			}
+
+			if (pObj->GetisActive() != isActive)
+			{
+				pObj->SetisActive(isActive);
+			}
+		}
+	}
 }
+
 
 //=============================================
 //ウェーブ設定
@@ -258,12 +228,4 @@ void CGame::SetWave(CWave::WAVE wave, CWave::WAVE next_wave,const char* ResultFi
 	{
 		m_pWave = CWave::Create(wave, next_wave, ResultFile);
 	}
-}
-
-//=============================================
-//ゲームの状態取得
-//=============================================
-CGame::GAME_STATE& CGame::GetState()
-{
-	return m_GameState;
 }
