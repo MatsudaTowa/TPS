@@ -7,6 +7,7 @@
 #include "tutorial.h"
 #include "tutorial_screen.h"
 #include "tutorial_player.h"
+#include "stencil_mask.h"
 
 //エネミーファイル
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
@@ -45,6 +46,8 @@ HRESULT CTutorial::Init()
 {
 	//初期化
 	CScene::Init();
+
+	CMask::Create(new CStencilMask);
 
 	//プレイヤー生成
 	CPlayer::Create(new CTutorialPlayer);
@@ -89,6 +92,9 @@ void CTutorial::Uninit()
 //=============================================
 void CTutorial::Update()
 {
+	// マウスカーソルの非表示
+	ShowCursor(FALSE);
+
 	if (m_pTutorial_UI != nullptr)
 	{
 		m_pTutorial_UI->Update();

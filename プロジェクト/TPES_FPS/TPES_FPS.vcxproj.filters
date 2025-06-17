@@ -350,6 +350,15 @@
     <ClCompile Include="src\game_state.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\stencil_mask.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pause_mask.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pause_select.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
@@ -465,5 +474,8 @@
     <ClInclude Include="src\active_player.h" />
     <ClInclude Include="src\tutorial_screen.h" />
     <ClInclude Include="src\game_state.h" />
+    <ClInclude Include="src\stencil_mask.h" />
+    <ClInclude Include="src\pause_mask.h" />
+    <ClInclude Include="src\pause_select.h" />
   </ItemGroup>
 </Project>

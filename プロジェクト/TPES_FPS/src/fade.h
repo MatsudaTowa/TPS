@@ -26,7 +26,7 @@ public:
 		FADE_MAX,
 	};
 
-	static const int FADE_PRIORITY = 29;  //描画順
+	static const int FADE_PRIORITY = 28;  //描画順
 
 	/**
 	 * @brief コンストラクタ

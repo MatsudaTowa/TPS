@@ -17,7 +17,7 @@
 class CCrossHair : public CBillboard
 {
 public:
-	static const int RETICLE_PRIORITY = 20; //描画順
+	static const int RETICLE_PRIORITY = 18; //描画順
 
 	/**
 	 * @brief コンストラクタ

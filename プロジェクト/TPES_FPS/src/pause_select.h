@@ -1,33 +1,33 @@
 //=============================================
 //
-//マスク処理[mask.h]
+//ブリンクの表記[blink_icon.h]
 //Author Matsuda Towa
 //
 //=============================================
-#ifndef _MASK_H_ //これが定義されてないとき
+#ifndef _PAUSE_SELECT_H_ //これが定義されてないとき
 
-#define _MASK_H_
+#define _PAUSE_SELECT_H_
 #include "main.h"
 #include "object2D.h"
 
 //=============================================
-//マスククラス
+//ポーズ選択UIクラス
 //=============================================
-class CMask : public CObject2D
+class CPauseSelect : public CObject2D
 {
 public:
-	static const int MASK_PRIORITY = 14;  //描画順
-	static const int REFARENCE_VALUE = 2;  //描画参照値
+	static const int PRIORITY = 21;  //描画順
 
 	/**
 	 * @brief コンストラクタ
 	 * @param [in]プライオリティ
 	 */
-	CMask(int nPriority = MASK_PRIORITY);
+	CPauseSelect(int nPriority = PRIORITY);
+
 	/**
 	 * @brief デストラクタ
 	 */
-	~CMask()override;
+	~CPauseSelect()override;
 	/**
 	 * @brief 初期化
 	 * @return 成功したか
@@ -47,9 +47,11 @@ public:
 	void Draw()override;
 	/**
 	 * @brief 生成
-	 * @return マスクポインタ
+	 * @param [in]位置
+	 * @return ポーズのUIポインタ
 	 */
-	static CMask* Create(CMask* mask);
+	static CPauseSelect* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col);
 private:
+	static const std::string TEXTURE_NAME;	//テクスチャの名前
 };
 #endif

@@ -11,7 +11,6 @@
 #include "result.h"
 #include "manager.h"
 #include "tutorial.h"
-#include "mask.h"
 
 //ÉÇÅ[Éhèâä˙âª
 CScene::MODE CScene::m_Mode = CScene::MODE::MODE_TITLE;
@@ -35,7 +34,6 @@ CScene::~CScene()
 //=============================================
 HRESULT CScene::Init()
 {
-    CMask::Create();
     return S_OK;
 }
 

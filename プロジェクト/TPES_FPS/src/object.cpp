@@ -108,8 +108,6 @@ void CObject::DrawAll()
 				//•`‰æˆ—
 				m_apObject[nCntPri][nCntObj]->Draw();
 			}
-
-			
 		}
 	}
 }

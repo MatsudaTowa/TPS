@@ -6,6 +6,7 @@
 //=============================================
 #ifndef _GAME_STATE_H_
 #define _GAME_STATE_H_
+#include "pause_mask.h"
 
 //=============================================
 //前方宣言
@@ -46,6 +47,7 @@ public:
 class CPause :public CGameState
 {
 public:
+	CPause();
 	~CPause()override;
 	/**
 	* @brief ポーズ状態処理
@@ -53,6 +55,7 @@ public:
 	*/
 	void Pause(CGame* game) override;
 private:
+	CMask* m_pMask;
 };
 
 #endif // !_GAME_STATE_H_

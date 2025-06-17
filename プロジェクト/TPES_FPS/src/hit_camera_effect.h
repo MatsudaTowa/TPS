@@ -15,7 +15,7 @@
 class CHitCameraEffect:public CObject2D
 {
 public:
-	static const int PRIORITY = 28; //•`‰æ‡
+	static const int PRIORITY = 27; //•`‰æ‡
 
 	enum HIT_EFFECT_STAGE
 	{

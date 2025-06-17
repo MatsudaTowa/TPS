@@ -15,6 +15,9 @@
 //=============================================
 void CNormal::Normal(CGame* game)
 {
+	// マウスカーソルの非表示
+	ShowCursor(FALSE);
+
 	//オブジェクトのアップデートを許可する
 	game->UpdateObjectDecision(true);
 	//カメラも
@@ -98,10 +101,24 @@ void CNormal::Normal(CGame* game)
 }
 
 //=============================================
+// コンストラクタ
+//=============================================
+CPause::CPause():
+m_pMask(nullptr)	//黒いマスク
+{
+	m_pMask = CMask::Create(new CPauseMask);
+}
+
+//=============================================
 // デストラクタ
 //=============================================
 CPause::~CPause()
 {
+	if (m_pMask != nullptr)
+	{
+		m_pMask->Uninit();
+		m_pMask = nullptr;
+	}
 }
 
 //=============================================
@@ -109,8 +126,15 @@ CPause::~CPause()
 //=============================================
 void CPause::Pause(CGame* game)
 {
+	// マウスカーソルの非表示
+	ShowCursor(TRUE);
+
 	//オブジェクトのアップデートを止める
 	game->UpdateObjectDecision(false);
+
+	//ポーズ関連のオブジェクトの更新は許可
+	m_pMask->SetisActive(true);
+
 	//カメラも
 	CManager::GetInstance()->GetCamera()->SetActive(false);
 

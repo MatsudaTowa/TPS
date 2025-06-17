@@ -16,7 +16,7 @@
 #include"game_player.h"
 #include "wall.h"
 #include "move_point.h"
-#include "mask.h"
+#include "stencil_mask.h"
 #include "gauge.h"
 
 //í èÌÇÃè∞ÇÃÉTÉCÉY
@@ -53,7 +53,7 @@ CWave::~CWave()
 //=============================================
 HRESULT CWave::Init()
 {
-	CMask::Create();
+	CMask::Create(new CStencilMask);
 	return S_OK;
 }
 

@@ -41,7 +41,7 @@ HRESULT CMask::Init()
 	//カラー取得
 	D3DXCOLOR col = GetColor();
 
-	col = D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.75f);
+	col = COLOR_NONE;
 
 	//カラーを代入
 	SetColor(col);
@@ -72,32 +72,15 @@ void CMask::Update()
 //=============================================
 void CMask::Draw()
 {
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスのポインタ
-	// ステンシルテストを有効にする
-	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-	// 比較参照値を設定する
-	pDevice->SetRenderState(D3DRS_STENCILREF, REFARENCE_VALUE);
-	// ステンシルマスクを指定する
-	pDevice->SetRenderState(D3DRS_STENCILMASK, 255);
-	// ステンシル比較関数を指定する
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
-	// ステンシル結果に対しての反映設定
-	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);	// Zテスト・ステンシルテスト成功
-	pDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);		// Zテスト・ステンシルテスト失敗
-	pDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);		// Zテスト失敗・ステンシルテスト成功
-
 	CObject2D::Draw();
-
-	// ステンシルテストを無効にする
-	pDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
 //=============================================
 // 生成
 //=============================================
-CMask* CMask::Create()
+CMask* CMask::Create(CMask* mask)
 {
-	CMask* pMask = new CMask;
+	CMask* pMask = mask;
 
 	if (pMask == nullptr) { return nullptr; }
 

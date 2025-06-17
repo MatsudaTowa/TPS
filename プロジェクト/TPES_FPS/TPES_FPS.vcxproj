@@ -86,6 +86,8 @@
     <ClCompile Include="src\object2D_anim.cpp" />
     <ClCompile Include="src\object3D.cpp" />
     <ClCompile Include="src\objectX.cpp" />
+    <ClCompile Include="src\pause_mask.cpp" />
+    <ClCompile Include="src\pause_select.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\player_behavior.cpp" />
     <ClCompile Include="src\player_state.cpp" />
@@ -106,6 +108,7 @@
     <ClCompile Include="src\smoke_range.cpp" />
     <ClCompile Include="src\smoke_UI.cpp" />
     <ClCompile Include="src\sound.cpp" />
+    <ClCompile Include="src\stencil_mask.cpp" />
     <ClCompile Include="src\tackle_charge.cpp" />
     <ClCompile Include="src\tactical_smoke.cpp" />
     <ClCompile Include="src\test.cpp" />
@@ -203,6 +206,8 @@
     <ClInclude Include="src\object2D_anim.h" />
     <ClInclude Include="src\object3D.h" />
     <ClInclude Include="src\objectX.h" />
+    <ClInclude Include="src\pause_mask.h" />
+    <ClInclude Include="src\pause_select.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\player_behavior.h" />
     <ClInclude Include="src\player_state.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="src\smoke_range.h" />
     <ClInclude Include="src\smoke_UI.h" />
     <ClInclude Include="src\sound.h" />
+    <ClInclude Include="src\stencil_mask.h" />
     <ClInclude Include="src\tackle_charge.h" />
     <ClInclude Include="src\tactical_smoke.h" />
     <ClInclude Include="src\test.h" />
