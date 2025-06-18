@@ -69,7 +69,7 @@ public:
 	 * @param [in]当たられる側の最大座標
 	 * @return どの方向に当たったか
 	 */
-	COLISION CheckColision_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos,D3DXVECTOR3 AMaxPos,
+	COLISION CheckColision_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 AMinpos, D3DXVECTOR3 AMaxPos,
 		D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos);
 
 	/**
@@ -162,7 +162,7 @@ public:
 	 * @return 円のヒット情報
 	 */
 	CIRCLE CheckColisionCircle(D3DXVECTOR3 Apos, float Radius, D3DXVECTOR3 Bpos);
-	
+
 	/**
 	 * @brief ポリゴンとモデル当たり判定チェック関数_球
 	 * @param [in]当たる側の位置
@@ -225,5 +225,15 @@ public:
 	 * @return どの方向に当たったか
 	 */
 	COLISION CheckPolygonModelPenetration_Z(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 Apos, D3DXVECTOR3 Bpos, D3DXVECTOR3 BMinpos, D3DXVECTOR3 BMaxpos);
+
+	/**
+	 * @brief 2Dポリゴン当たり判定チェック関数
+	 * @param [in]当たる側の現在の位置
+	 * @param [in]当たる側のサイズ
+	 * @param [in]当たられる側の位置
+	 * @param [in]当たられる側のサイズ
+	 * @return 当たっているか
+	 */
+	bool Check2DPolygonColision(D3DXVECTOR3 Apos, D3DXVECTOR2 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR2 BSize);
 };
 #endif

@@ -1,6 +1,6 @@
 //=============================================
 //
-//ブリンクの表記[blink_icon.h]
+//ポーズのUI[pause_select.h]
 //Author Matsuda Towa
 //
 //=============================================
@@ -16,7 +16,7 @@
 class CPauseSelect : public CObject2D
 {
 public:
-	static const int PRIORITY = 21;  //描画順
+	static const int PRIORITY = 29;  //描画順
 
 	/**
 	 * @brief コンストラクタ
@@ -48,10 +48,32 @@ public:
 	/**
 	 * @brief 生成
 	 * @param [in]位置
+	 * @param [in]ポーズのUIポインタ
 	 * @return ポーズのUIポインタ
 	 */
-	static CPauseSelect* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size, D3DXCOLOR col);
+	static CPauseSelect* Create(D3DXVECTOR3 pos,CPauseSelect* select);
+
+	/**
+	 * @brief 選択されたか
+	 * @return どれを選択されたか
+	 */
+	bool GetSelect()
+	{
+		return m_isSelect;
+	}
+
+	/**
+	 * @brief 選択されたか
+	 * @param [in]isSelect
+	 */
+	void SetSelect(bool isSelect)
+	{
+		m_isSelect = isSelect;
+	}
+
 private:
-	static const std::string TEXTURE_NAME;	//テクスチャの名前
+	static const D3DXCOLOR DEFAULT_COLOR;
+	static const D3DXVECTOR2 SIZE;
+	bool m_isSelect;	//マウスカーソルとヒットしたか
 };
 #endif

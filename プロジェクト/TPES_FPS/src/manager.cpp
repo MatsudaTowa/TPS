@@ -50,6 +50,8 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
 	srand((unsigned)time(NULL) * 54321);  // —”Œn—ñ‚ğ‰Šú‰»
 
+	m_hWnd = hWnd;
+
 	//¶¬•‰Šú‰»
 	if (m_pRenderer == nullptr)
 	{
@@ -257,6 +259,14 @@ void CManager::Draw()
 		m_pScene->Draw();
 	}
 
+}
+
+//=============================================
+//ƒnƒ“ƒhƒ‹ƒƒ“ƒhæ“¾
+//=============================================
+HWND CManager::GetHWnd()
+{
+	return m_hWnd;
 }
 
 //=============================================

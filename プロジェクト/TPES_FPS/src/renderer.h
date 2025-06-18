@@ -58,8 +58,8 @@ public:
 	 * @return フォント
 	 */
 	LPD3DXFONT GetFont();
-
 private:
+	int m_DrawCnt;		//カーソル描画カウント
 	LPD3DXFONT m_pFont; //フォントへのポインタ
 
 	LPDIRECT3D9	m_pD3D; //Direct3Dオブジェクトへのポインタ

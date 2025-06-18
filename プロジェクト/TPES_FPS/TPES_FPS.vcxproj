@@ -88,6 +88,9 @@
     <ClCompile Include="src\objectX.cpp" />
     <ClCompile Include="src\pause_mask.cpp" />
     <ClCompile Include="src\pause_select.cpp" />
+    <ClCompile Include="src\pause_select_continue.cpp" />
+    <ClCompile Include="src\pause_select_quit.cpp" />
+    <ClCompile Include="src\pause_select_retry.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\player_behavior.cpp" />
     <ClCompile Include="src\player_state.cpp" />
@@ -208,6 +211,9 @@
     <ClInclude Include="src\objectX.h" />
     <ClInclude Include="src\pause_mask.h" />
     <ClInclude Include="src\pause_select.h" />
+    <ClInclude Include="src\pause_select_continue.h" />
+    <ClInclude Include="src\pause_select_quit.h" />
+    <ClInclude Include="src\pause_select_retry.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\player_behavior.h" />
     <ClInclude Include="src\player_state.h" />

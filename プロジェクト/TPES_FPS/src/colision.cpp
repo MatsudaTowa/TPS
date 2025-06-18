@@ -615,3 +615,19 @@ CColision::COLISION CColision::CheckPolygonModelPenetration_Z(D3DXVECTOR3 Aoldpo
 	}
 }
 
+//=============================================
+//2D‚Ìƒ|ƒŠƒSƒ“”»’è
+//=============================================
+bool CColision::Check2DPolygonColision(D3DXVECTOR3 Apos, D3DXVECTOR2 ASize, D3DXVECTOR3 Bpos, D3DXVECTOR2 BSize)
+{
+	if (Apos.x - ASize.x < Bpos.x + BSize.x
+		&& Apos.x + ASize.x > Bpos.x - BSize.x
+		&& Apos.y - ASize.y < Bpos.y + BSize.y
+		&& Apos.y + ASize.y > Bpos.y - BSize.y)
+	{
+		return true;
+	}
+
+	return false;
+}
+

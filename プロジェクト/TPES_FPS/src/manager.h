@@ -146,6 +146,11 @@ public:
 	CColision* GetColision();
 
 	/**
+	* @brief ハンドルワンド取得
+	* @return ハンドルワンド
+	*/
+	HWND GetHWnd();
+	/**
 	* @brief スコアに0書き出し
 	* @return ファイルネーム
 	*/
@@ -153,6 +158,7 @@ public:
 
 private:
 
+	HWND m_hWnd;
 	CScene* m_pScene;
 	CRenderer* m_pRenderer;
 	CInputKeyboard* m_pKeyboard;

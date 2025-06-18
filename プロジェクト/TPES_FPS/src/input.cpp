@@ -230,19 +230,6 @@ void CInputMouse::Update()
 	{
 		m_pDevice->Acquire(); //キーボードのアクセス権を獲得
 	}
-
-	//ZeroMemory(&pMouseMove, sizeof(POINT));
-
-	/*D3DXVECTOR3 OldMousePos = m_MousePos;
-
-	POINT pMouseMove;
-
-	GetCursorPos(&pMouseMove);*/
-
-	/*m_MousePos.x = (float)zdiMouseState.lX;
-	m_MousePos.y = (float)zdiMouseState.lY;*/
-
-	//m_MouseMove.z = m_MousePos.z - OldMousePos.z;
 }
 
 //=============================================
@@ -254,11 +241,13 @@ void CInputMouse::Debug()
 	LPD3DXFONT pFont = CManager::GetInstance()->GetRenderer()->GetFont();
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
-
-	sprintf(&aStr[0], "\n\n\n\n\n\n\n\n\n\n\n\n[mouse]\nmove:%.1f,%.1f,%.1f"
-		, m_MouseMove.x, m_MouseMove.y, m_MouseMove.z);
+	POINT pMousePos;
+	GetCursorPos(&pMousePos);
+	ScreenToClient(CManager::GetInstance()->GetHWnd(), &pMousePos);
+	sprintf(&aStr[0], "[mouse]\nmove:%.1f,%.1f,%.1f\npos%.1f,%.1f"
+		, m_MouseMove.x, m_MouseMove.y, m_MouseMove.z,(float)pMousePos.x,(float)pMousePos.y);
 	//テキストの描画
-	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
+	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_RIGHT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
 
 

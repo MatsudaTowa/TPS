@@ -44,6 +44,8 @@ CTutorial::~CTutorial()
 //=============================================
 HRESULT CTutorial::Init()
 {
+	ShowCursor(FALSE);
+
 	//初期化
 	CScene::Init();
 
@@ -92,9 +94,6 @@ void CTutorial::Uninit()
 //=============================================
 void CTutorial::Update()
 {
-	// マウスカーソルの非表示
-	ShowCursor(FALSE);
-
 	if (m_pTutorial_UI != nullptr)
 	{
 		m_pTutorial_UI->Update();

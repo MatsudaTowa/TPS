@@ -359,6 +359,15 @@
     <ClCompile Include="src\pause_select.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\pause_select_continue.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pause_select_retry.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pause_select_quit.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
@@ -477,5 +486,8 @@
     <ClInclude Include="src\stencil_mask.h" />
     <ClInclude Include="src\pause_mask.h" />
     <ClInclude Include="src\pause_select.h" />
+    <ClInclude Include="src\pause_select_continue.h" />
+    <ClInclude Include="src\pause_select_retry.h" />
+    <ClInclude Include="src\pause_select_quit.h" />
   </ItemGroup>
 </Project>

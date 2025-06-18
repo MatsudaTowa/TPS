@@ -164,6 +164,7 @@ void CRenderer::Draw()
 		DrawFPS(GetFps());
 		CObject::DrawAll();
 		CManager::GetInstance()->GetCamera()->DebugCameraDraw();
+		CManager::GetInstance()->GetMouse()->Debug();
 		CManager::GetInstance()->GetFade()->Draw();
 		m_pD3DDevice->EndScene();
 	}
