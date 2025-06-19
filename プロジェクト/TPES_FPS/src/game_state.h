@@ -8,81 +8,48 @@
 #define _GAME_STATE_H_
 #include "pause_mask.h"
 #include "pause_select.h"
+#include "active_scene_state.h"
 
 //=============================================
 //前方宣言
 //=============================================
-class CGame;
-
-/** @brief ゲームのステートクラス */
-class CGameState
-{
-public:
-	CGameState() {};
-	virtual ~CGameState() {};
-	/**
-	* @brief 通常処理(親では何もしない)
-	* @param [in]ゲームポインタ
-	*/
-	virtual void Normal(CGame* game) {};
-
-	/**
-	* @brief ポーズ状態処理(親では何もしない)
-	* @param [in]ゲームポインタ
-	*/
-	virtual void Pause(CGame* game) {};
-};
+class CActiveScene;
 
 /** @brief 通常クラス */
-class CNormal :public CGameState
+class CGameNormal :public CNormal
 {
 public:
 	/**
 	 * @brief コンストラクタ
 	 */
-	CNormal();
+	CGameNormal();
 	/**
 	* @brief ニュートラル処理
-	* @param [in]ゲームプレイヤーポインタ
+	* @param [in]アクティブシーンのポインタ
 	*/
-	void Normal(CGame* game) override;
+	void Normal(CActiveScene* active_scene) override;
 };
 
 /** @brief 状態処理クラス */
-class CPause :public CGameState
+class CGamePause :public CPause
 {
 public:
 	/**
-	 * @brief コンストラクタ
-	 */
-	CPause();
-	/**
-	 * @brief デストラクタ
-	 */
-	~CPause()override;
-	/**
 	* @brief ポーズ状態処理
-	* @param [in]ゲームポインタ
+	* @param [in]アクティブシーンポインタ
 	*/
-	void Pause(CGame* game) override;
+	void Pause(CActiveScene* active_scene) override;
 	/**
 	 * @brief ポーズの選択されたUIの更新実行処理
-	 * @param [in]ゲームシーンのポインタ
+	 * @param [in]アクティブシーンのポインタ
 	 */
-	void HandlePoseSelection(CGame* game);
+	void HandlePoseSelection(CActiveScene* CActiveScene) override;
+	/**
+	 * @brief ポーズキャンセル
+	 * @param [in]アクティブシーンのポインタ
+	 */
+	void CancelPause(CActiveScene* active_scene) override;
 private:
-	enum PAUSE_SELECT
-	{
-		CONTINUE = 0,
-		RETRY,
-		QUIT,
-		MAX
-	};
-	static const D3DXVECTOR3 POS[MAX];
-
-	int m_nSelect;
-	CMask* m_pMask;
-	CPauseSelect* m_pSelect[MAX];
 };
 
 #endif // !_GAME_STATE_H_

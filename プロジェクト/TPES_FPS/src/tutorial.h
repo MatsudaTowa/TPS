@@ -8,7 +8,7 @@
 
 #define _TUTORIAL_H_
 #include "main.h"
-#include "scene.h"
+#include "active_scene.h"
 #include "player.h"
 #include"block.h"
 #include "wave.h"
@@ -19,7 +19,7 @@
 //=============================================
 // チュートリアルクラス
 //=============================================
-class CTutorial:public CScene
+class CTutorial:public CActiveScene
 {
 public:
 	//読み込むときに必要なエネミーの構造体
@@ -28,14 +28,6 @@ public:
 		D3DXVECTOR3 pos;
 		D3DXVECTOR3 rot;
 		CEnemy::ENEMY_TYPE type;
-	};
-
-	//読み込むときに必要なブロックの構造体
-	struct LOAD_BLOCK
-	{
-		D3DXVECTOR3 pos;
-		D3DXVECTOR3 rot;
-		CBlock::BLOCKTYPE type;
 	};
 
 	//読み込むときに必要な壁の構造体
@@ -81,16 +73,9 @@ private:
 	static const D3DXVECTOR2 UI_SIZE; //UIのサイズ
 
 	LOAD_ENEMY m_LoadEnemy; //読み込むときに必要なエネミーの情報
-	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
 	LOAD_WALL m_LoadWall; //読み込むときに必要な壁の情報
 
 	CTutorial_UI* m_pTutorial_UI;
-
-	/**
-	 * @brief ブロック読み込み
-	 * @param [in]ファイルネーム
-	 */
-	void LoadBlock(const std::string& pFileName);
 	/**
 	 * @brief 壁読み込み
 	 * @param [in]ファイルネーム

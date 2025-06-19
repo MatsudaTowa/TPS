@@ -8,7 +8,7 @@
 
 #define _GAME_H_
 #include "main.h"
-#include "scene.h"
+#include "active_scene.h"
 #include "player.h"
 #include"block.h"
 #include "wave.h"
@@ -19,18 +19,9 @@
 //=============================================
 // ゲームクラス
 //=============================================
-class CGame:public CScene
+class CGame:public CActiveScene
 {
 public:
-
-	//読み込むときに必要なブロックの構造体
-	struct LOAD_BLOCK
-	{
-		D3DXVECTOR3 pos;
-		D3DXVECTOR3 rot;
-		CBlock::BLOCKTYPE type;
-	};
-
 	static const int DELAY_CNT = 30; //リザルトに飛ぶまでのディレイ
 	static const int BLOCK_TXT_MAX = 2048; //敵を読み込む際の読み込める最大文字数
 	static const int DELAY_FLAME = 60; //ディレイのフレーム数
@@ -66,12 +57,6 @@ public:
 	 * @brief 死亡ペナルティ計算
 	 */
 	void ApplyDeathPenalty();
-
-	/**
-	 * @brief オブジェクトの更新を行うか決定
-	 * @param [in]動かすかどうか
-	 */
-	void UpdateObjectDecision(bool isActive);
 
 	/**
 	 * @brief ウェーブ取得
@@ -116,30 +101,6 @@ public:
 	{
 		m_nResultDelay = nResultDelay;
 	}
-
-	/**
-	 * @brief 入力可能か取得
-	 * @param 入力可能か
-	 */
-	inline bool GetPauseKey()
-	{
-		return m_nPauseCnt >= PAUSE_POSSIBLE_FLAME;
-	}
-
-	/**
-	 * @brief カウントリセット
-	 */
-	inline void ResetPauseCnt()
-	{
-		m_nPauseCnt = 0;
-	}
-
-	/**
-	 * @brief ステート変更
-	 * @param [in]次のステート
-	 */
-	void ChangeState(CGameState* state);
-
 	/**
 	 * @brief ウェーブ設定
 	 * @param [in]wave
@@ -158,14 +119,8 @@ private:
 	static const std::string BLOCK_FILE;	//エネミーのファイル
 
 	static const int DEATH_PENALTY = -50; //死んだときのペナルティ
-	static const int PAUSE_POSSIBLE_FLAME = 1;	//ポーズを有効化させるフレーム
 
 	int m_nResultDelay; //リザルトへのディレイ
-	LOAD_BLOCK m_LoadBlock; //読み込むときに必要なブロックの情報
-
-	int m_nPauseCnt;	//ポーズを有効化する時に用いるカウント
-
-	CGameState* m_pState;
 
 	static CWave* m_pWave;
 

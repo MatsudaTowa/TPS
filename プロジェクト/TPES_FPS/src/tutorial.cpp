@@ -120,43 +120,6 @@ void CTutorial::Draw()
 }
 
 //=============================================
-//ブロック読み込み
-//=============================================
-void CTutorial::LoadBlock(const std::string& pFileName)
-{
-	//ファイルの読み込み
-	std::ifstream File(pFileName, std::ios::binary);
-
-	//ファイルが開かなかったら関数を抜ける
-	if (!File.is_open())
-	{
-		return;
-	}
-
-	//生成するブロック数読み込み用
-	int NumBlock = 0;
-
-	File.read(reinterpret_cast<char*>(&NumBlock), sizeof(int));
-
-	if (NumBlock > 0)
-	{
-		//生成するブロックの情報を持つ変数
-		std::vector<LOAD_BLOCK> info(NumBlock);
-
-		//ファイルから読み込んだデータを格納
-		File.read(reinterpret_cast<char*>(info.data()), sizeof(LOAD_BLOCK) * NumBlock);
-
-		//イテレータで回して生成
-		for (auto& itr : info)
-		{
-			CBlock::Create(itr.type, itr.pos, itr.rot);
-		}
-	}
-
-	File.close();
-}
-
-//=============================================
 //壁読み込み
 //=============================================
 void CTutorial::LoadWall(const std::string* pFileName)

@@ -368,6 +368,12 @@
     <ClCompile Include="src\pause_select_quit.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\active_scene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\active_scene_state.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
@@ -489,5 +495,7 @@
     <ClInclude Include="src\pause_select_continue.h" />
     <ClInclude Include="src\pause_select_retry.h" />
     <ClInclude Include="src\pause_select_quit.h" />
+    <ClInclude Include="src\active_scene.h" />
+    <ClInclude Include="src\active_scene_state.h" />
   </ItemGroup>
 </Project>

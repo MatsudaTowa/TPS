@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\action_UI.cpp" />
     <ClCompile Include="src\active_player.cpp" />
+    <ClCompile Include="src\active_scene.cpp" />
+    <ClCompile Include="src\active_scene_state.cpp" />
     <ClCompile Include="src\ammo_UI.cpp" />
     <ClCompile Include="src\assault_behavior.cpp" />
     <ClCompile Include="src\attack_manager.cpp" />
@@ -144,6 +146,8 @@
   <ItemGroup>
     <ClInclude Include="src\action_UI.h" />
     <ClInclude Include="src\active_player.h" />
+    <ClInclude Include="src\active_scene.h" />
+    <ClInclude Include="src\active_scene_state.h" />
     <ClInclude Include="src\ammo_UI.h" />
     <ClInclude Include="src\assault_behavior.h" />
     <ClInclude Include="src\attack_manager.h" />

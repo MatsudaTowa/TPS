@@ -9,14 +9,12 @@
 #include "enemy.h"
 #include "wave.h"
 #include "game.h"
-#include "pause_select_continue.h"
-#include "pause_select_retry.h"
-#include "pause_select_quit.h"
+#include "active_scene_state.h"
 
 //=============================================
 // コンストラクタ
 //=============================================
-CNormal::CNormal()
+CGameNormal::CGameNormal()
 {
 	while(1)
 	{
@@ -33,17 +31,22 @@ CNormal::CNormal()
 //=============================================
 // 通常処理
 //=============================================
-void CNormal::Normal(CGame* game)
+void CGameNormal::Normal(CActiveScene* active_scene)
 {
-	//オブジェクトのアップデートを許可する
-	game->UpdateObjectDecision(true);
-	//カメラも
-	CManager::GetInstance()->GetCamera()->SetActive(true);
+	CNormal::Normal(active_scene);
+
+	CGame* pGame = dynamic_cast<CGame*>(active_scene);
+
+	CWave::WAVE next_wave = pGame->GetNextWave();	//次のウェーブ保持用変数
+	CWave* pWave = pGame->GetWave();
 
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
-	CWave::WAVE next_wave = game->GetNextWave();	//次のウェーブ保持用変数
-	CWave* pWave = game->GetWave();
+	if (pKeyboard->GetTrigger(DIK_P) && active_scene->GetPauseKey())
+	{
+		active_scene->ResetPauseCnt();
+		active_scene->ChangeState(new CGamePause);
+	}
 
 	if (CEnemy::m_NumEnemy <= INT_ZERO)
 	{//敵がいなくなったらウェーブ遷移
@@ -69,23 +72,23 @@ void CNormal::Normal(CGame* game)
 
 		if (CWave::GetCurrentWave() != CWave::WAVE::RESULT)
 		{
-			int nResultDelay = game->GetResultDelay();
+			int nResultDelay = pGame->GetResultDelay();
 			nResultDelay++;
 			if (nResultDelay > CGame::DELAY_FLAME)
 			{
 				nResultDelay = INT_ZERO;
-				game->SetResultDelay(nResultDelay);
+				pGame->SetResultDelay(nResultDelay);
 
 				//死んだ数分だけスコアマイナス
-				game->ApplyDeathPenalty();
+				pGame->ApplyDeathPenalty();
 
 				//現在のスコアを書き出し
 				pWave->WaveResult(CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1]);
-				game->SetWave(CWave::WAVE::RESULT, next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
-				game->SetNextWave(next_wave);
+				pGame->SetWave(CWave::WAVE::RESULT, next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
+				pGame->SetNextWave(next_wave);
 				return;
 			}
-			game->SetResultDelay(nResultDelay);
+			pGame->SetResultDelay(nResultDelay);
 		}
 	}
 
@@ -94,27 +97,23 @@ void CNormal::Normal(CGame* game)
 		pWave->Update();
 	}
 
-	if (pKeyboard->GetTrigger(DIK_P) && game->GetPauseKey())
-	{
-		game->ResetPauseCnt();
-		game->ChangeState(new CPause);
-	}
-
 #ifdef _DEBUG
-	if (pKeyboard->GetTrigger(DIK_TAB))
+	CInputKeyboard* pKeyBoard = CManager::GetInstance()->GetKeyboard();
+
+	if (pKeyBoard->GetTrigger(DIK_TAB))
 	{
 		next_wave = CWave::WAVE::BOSS;
 
-		game->SetWave(CWave::WAVE::RESULT, next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
+		pGame->SetWave(CWave::WAVE::RESULT, next_wave, CManager::RESULT_SCORE_FILE[CWave::GetCurrentWave() - 1].c_str());
 	}
 
-	if (pKeyboard->GetTrigger(DIK_F7))
+	if (pKeyBoard->GetTrigger(DIK_F7))
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TEST);
 	}
 #endif // _DEBUG
 
-	game->SetNextWave(next_wave);
+	pGame->SetNextWave(next_wave);
 }
 
 //ポーズUI表示位置
@@ -126,147 +125,40 @@ const D3DXVECTOR3 CPause::POS[CPause::MAX]
 };
 
 //=============================================
-// コンストラクタ
-//=============================================
-CPause::CPause():
-m_pSelect(),	//セレクトUIの数
-m_pMask(nullptr)	//黒いマスク
-{
-	while(1)
-	{
-		int nCnt = ShowCursor(TRUE);
-		if (nCnt < 0)
-		{
-			continue;
-		}
-		break;
-	}
-
-	for (int i = 0; i < CPause::MAX; ++i)
-	{
-		if (m_pSelect[i] != nullptr)
-		{
-			continue;
-		}
-		switch (i)
-		{
-		case CONTINUE:
-			m_pSelect[i] = CPauseSelect::Create(POS[i],new CPauseSelectContinue);
-			break;
-		case RETRY:
-			m_pSelect[i] = CPauseSelect::Create(POS[i], new CPauseSelectRetry);
-			break;
-		case QUIT:
-			m_pSelect[i] = CPauseSelect::Create(POS[i], new CPauseSelectQuit);
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	m_pMask = CMask::Create(new CPauseMask);
-}
-
-//=============================================
-// デストラクタ
-//=============================================
-CPause::~CPause()
-{
-	for (int i = 0; i < CPause::MAX; ++i)
-	{
-		if (m_pSelect[i] != nullptr)
-		{
-			m_pSelect[i]->Uninit();
-			m_pSelect[i] = nullptr;
-		}
-	}
-	if (m_pMask != nullptr)
-	{
-		m_pMask->Uninit();
-		m_pMask = nullptr;
-	}
-}
-
-//=============================================
 // ポーズ処理
 //=============================================
-void CPause::Pause(CGame* game)
+void CGamePause::Pause(CActiveScene* active_scene)
 {
-	//オブジェクトのアップデートを止める
-	game->UpdateObjectDecision(false);
-
-	//ポーズ関連のオブジェクトの更新は許可
-	m_pMask->SetisActive(true);
-
-	for (int i = 0; i < CPause::MAX; ++i)
-	{
-		if (m_pSelect[i] != nullptr)
-		{
-			m_pSelect[i]->SetisActive(true);
-			m_pSelect[m_nSelect]->SetSelect(false);
-		}
-	}
-
-	CInputKeyboard* pKeyBoard = CManager::GetInstance()->GetKeyboard();
-	if (pKeyBoard->GetTrigger(DIK_S))
-	{
-		if (m_nSelect >= CPause::QUIT)
-		{
-			m_nSelect = CPause::CONTINUE;
-			return;
-		}
-		++m_nSelect;
-	}
-	if (pKeyBoard->GetTrigger(DIK_W))
-	{
-		if (m_nSelect <= CPause::CONTINUE)
-		{
-			m_nSelect = CPause::QUIT;
-			return;
-		}
-		--m_nSelect;
-	}
-
-	m_pSelect[m_nSelect]->SetSelect(true);
-
-	if (pKeyBoard->GetTrigger(DIK_RETURN))
-	{
-		HandlePoseSelection(game);
-	}
-
-	//カメラも
-	CManager::GetInstance()->GetCamera()->SetActive(false);
-
-	//入力デバイス取得
-	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-
-	if (pKeyboard->GetTrigger(DIK_P) && game->GetPauseKey())
-	{
-		game->ResetPauseCnt();
-		game->ChangeState(new CNormal);
-	}
+	CPause::Pause(active_scene);
 }
 
-
 //=============================================
-// ポーズ処理
+// 選択処理
 //=============================================
-void CPause::HandlePoseSelection(CGame* game)
+void CGamePause::HandlePoseSelection(CActiveScene* active_scene)
 {
-	if (typeid(*m_pSelect[m_nSelect]) == typeid(CPauseSelectContinue))
+	CPauseSelect* pSelect = GetSelectUI(GetSelect());
+	if (typeid(*pSelect) == typeid(CPauseSelectContinue))
 	{
-		game->ChangeState(new CNormal);
+		active_scene->ChangeState(new CGameNormal);
 		return;
 	}
-	if (typeid(*m_pSelect[m_nSelect]) == typeid(CPauseSelectRetry))
+	if (typeid(*pSelect) == typeid(CPauseSelectRetry))
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_GAME);
 		return;
 	}
-	if (typeid(*m_pSelect[m_nSelect]) == typeid(CPauseSelectQuit))
+	if (typeid(*pSelect) == typeid(CPauseSelectQuit))
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
 		return;
 	}
+}
+
+//=============================================
+// ポーズキャンセル処理
+//=============================================
+void CGamePause::CancelPause(CActiveScene* active_scene)
+{
+	active_scene->ChangeState(new CGameNormal);
 }
