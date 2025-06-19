@@ -51,7 +51,6 @@
     <ClCompile Include="src\enemy_behavior.cpp" />
     <ClCompile Include="src\enemy_confusion_UI.cpp" />
     <ClCompile Include="src\enemy_reaction_UI.cpp" />
-    <ClCompile Include="src\enemy_stan_UI.cpp" />
     <ClCompile Include="src\fade.cpp" />
     <ClCompile Include="src\field.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -124,6 +123,7 @@
     <ClCompile Include="src\tutorial.cpp" />
     <ClCompile Include="src\tutorial_player.cpp" />
     <ClCompile Include="src\tutorial_screen.cpp" />
+    <ClCompile Include="src\tutorial_state.cpp" />
     <ClCompile Include="src\tutorial_UI.cpp" />
     <ClCompile Include="src\ult.cpp" />
     <ClCompile Include="src\ult_camera_effect.cpp" />
@@ -176,7 +176,6 @@
     <ClInclude Include="src\enemy_behavior.h" />
     <ClInclude Include="src\enemy_confusion_UI.h" />
     <ClInclude Include="src\enemy_reaction_UI.h" />
-    <ClInclude Include="src\enemy_stan_UI.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\field.h" />
     <ClInclude Include="src\game.h" />
@@ -247,6 +246,7 @@
     <ClInclude Include="src\tutorial.h" />
     <ClInclude Include="src\tutorial_player.h" />
     <ClInclude Include="src\tutorial_screen.h" />
+    <ClInclude Include="src\tutorial_state.h" />
     <ClInclude Include="src\tutorial_UI.h" />
     <ClInclude Include="src\ult.h" />
     <ClInclude Include="src\ult_camera_effect.h" />

@@ -1,11 +1,11 @@
 //=============================================
 //
-//ゲームのステートパターン[game_state.h]
+//チュートリアルのステートパターン[tutorial_state.h]
 //Author Matsuda Towa
 //
 //=============================================
-#ifndef _GAME_STATE_H_
-#define _GAME_STATE_H_
+#ifndef _TUTORIAL_STATE_H_
+#define _TUTORIAL_STATE_H_
 #include "pause_mask.h"
 #include "pause_select.h"
 #include "active_scene_state.h"
@@ -16,13 +16,13 @@
 class CActiveScene;
 
 /** @brief 通常クラス */
-class CGameNormal :public CNormal
+class CTutorialNormal :public CNormal
 {
 public:
 	/**
 	 * @brief コンストラクタ
 	 */
-	CGameNormal();
+	CTutorialNormal();
 	/**
 	* @brief ニュートラル処理
 	* @param [in]アクティブシーンのポインタ
@@ -31,7 +31,7 @@ public:
 };
 
 /** @brief 状態処理クラス */
-class CGamePause :public CPause
+class CTutorialPause :public CPause
 {
 public:
 	/**
@@ -52,4 +52,4 @@ public:
 private:
 };
 
-#endif // !_GAME_STATE_H_
+#endif // !_TUTORIAL_STATE_H_

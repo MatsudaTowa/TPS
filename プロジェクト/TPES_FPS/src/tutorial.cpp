@@ -8,6 +8,7 @@
 #include "tutorial_screen.h"
 #include "tutorial_player.h"
 #include "stencil_mask.h"
+#include "tutorial_state.h"
 
 //エネミーファイル
 const std::string CTutorial::ENEMY_FILE = "data\\FILE\\enemy_001.txt";
@@ -44,6 +45,10 @@ CTutorial::~CTutorial()
 //=============================================
 HRESULT CTutorial::Init()
 {
+	CActiveScene::Init();
+
+	ChangeState(new CTutorialNormal);
+
 	ShowCursor(FALSE);
 
 	//初期化
@@ -94,6 +99,15 @@ void CTutorial::Uninit()
 //=============================================
 void CTutorial::Update()
 {
+	CActiveScene::Update();
+}
+
+//=============================================
+//有効時の処理
+//=============================================
+void CTutorial::Active()
+{
+
 	if (m_pTutorial_UI != nullptr)
 	{
 		m_pTutorial_UI->Update();

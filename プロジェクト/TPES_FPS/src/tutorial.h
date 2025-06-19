@@ -64,6 +64,10 @@ public:
 	 */
 	void Update() override;
 	/**
+	 * @brief é¿çs
+	 */
+	void Active();
+	/**
 	 * @brief ï`âÊ
 	 */
 	void Draw() override;

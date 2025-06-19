@@ -36,6 +36,14 @@ void CNormal::Normal(CActiveScene* active_scene)
 	CManager::GetInstance()->GetCamera()->SetActive(true);
 }
 
+//ポーズUI表示位置
+const D3DXVECTOR3 CPause::POS[CPause::MAX]
+{
+	{SCREEN_WIDTH * HALF,200.0f,0.0f},
+	{SCREEN_WIDTH * HALF,400.0f,0.0f},
+	{SCREEN_WIDTH * HALF,600.0f,0.0f}
+};
+
 //=============================================
 // コンストラクタ
 //=============================================

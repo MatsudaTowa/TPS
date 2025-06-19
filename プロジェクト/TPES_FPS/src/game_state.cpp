@@ -16,16 +16,6 @@
 //=============================================
 CGameNormal::CGameNormal()
 {
-	while(1)
-	{
-		int nCnt = ShowCursor(FALSE);
-		if (nCnt > 0)
-		{
-			continue;
-		}
-		break;
-	}
-	ShowCursor(FALSE);
 }
 
 //=============================================
@@ -41,13 +31,11 @@ void CGameNormal::Normal(CActiveScene* active_scene)
 	CWave* pWave = pGame->GetWave();
 
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-
 	if (pKeyboard->GetTrigger(DIK_P) && active_scene->GetPauseKey())
 	{
 		active_scene->ResetPauseCnt();
 		active_scene->ChangeState(new CGamePause);
 	}
-
 	if (CEnemy::m_NumEnemy <= INT_ZERO)
 	{//敵がいなくなったらウェーブ遷移
 		switch (CWave::GetCurrentWave())
@@ -115,14 +103,6 @@ void CGameNormal::Normal(CActiveScene* active_scene)
 
 	pGame->SetNextWave(next_wave);
 }
-
-//ポーズUI表示位置
-const D3DXVECTOR3 CPause::POS[CPause::MAX]
-{
-	{SCREEN_WIDTH*HALF,200.0f,0.0f},
-	{SCREEN_WIDTH * HALF,400.0f,0.0f},
-	{SCREEN_WIDTH * HALF,600.0f,0.0f}
-};
 
 //=============================================
 // ポーズ処理
