@@ -154,6 +154,7 @@ void CPause::Pause(CActiveScene* active_scene)
 	{
 		active_scene->ResetPauseCnt();
 		HandlePoseSelection(active_scene);
+		return;
 	}
 
 	//ƒJƒƒ‰‚à

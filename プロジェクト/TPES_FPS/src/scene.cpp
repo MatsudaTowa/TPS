@@ -63,6 +63,8 @@ void CScene::Draw()
 //=============================================
 CScene* CScene::Create(MODE mode)
 {
+    CManager::GetInstance()->GetCamera()->SetActive(true);
+
     // インスタンス生成
     CScene* pScene = nullptr;
 
@@ -70,12 +72,10 @@ CScene* CScene::Create(MODE mode)
     switch (mode)
     {
     case MODE_TITLE: // タイトル
-
         pScene = new CTitle;
         break;
     
     case MODE_TEST: //テスト
-        //delete pScene;
         pScene = new CTest;
         break;
 
@@ -88,12 +88,10 @@ CScene* CScene::Create(MODE mode)
         pScene = new CGame;
         break;
     case MODE_RESULT: //リザルト
-
-        //delete pScene;
         pScene = new CResult;
         break;
     default:
-    assert(true);
+        assert(true);
         break;
     }
 
