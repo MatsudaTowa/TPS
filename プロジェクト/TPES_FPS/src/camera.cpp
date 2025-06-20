@@ -16,6 +16,7 @@
 //=============================================
 CCamera::CCamera():
 m_fAngle(FLOAT_ZERO),		//角度
+m_sens(FLOAT_ZERO),			//マウス感度リセット
 m_fLength(FLOAT_ZERO),		//距離
 m_isActive(true),			//動かすか
 m_moveR(VEC3_RESET_ZERO),	//注視点の移動量
@@ -51,6 +52,8 @@ HRESULT CCamera::Init()
 	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
+
+	m_sens = DEFAULT_MOUSE_SENS;
 
 	m_moveV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点移動量
 	m_moveR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視点移動量
@@ -99,12 +102,12 @@ void CCamera::Update()
 
 	//マウス情報取得
 	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-	//現在のシーンを取得 TODO:シーン参照するな
+	//現在のシーンを取得
 	CScene::MODE pScene = CScene::GetSceneMode();
 	if (pScene != CScene::MODE::MODE_TITLE)
 	{
-		m_rot.y += pMouse->GetMouseMove().x * MOUSE_SENS;
-		m_rot.x += pMouse->GetMouseMove().y * MOUSE_SENS;
+		m_rot.y += pMouse->GetMouseMove().x * m_sens;
+		m_rot.x += pMouse->GetMouseMove().y * m_sens;
 	}
 
 	m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),

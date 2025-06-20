@@ -160,6 +160,24 @@ public:
 	}
 
 	/**
+	 * @brief 設定された値を感度に変換
+	 * @param [in]0.0～1.0の値
+	 */
+	void ConvertSens(float value)
+	{
+		m_sens = MIN_MOUSE_SENS + value * (MAX_MOUSE_SENS - MIN_MOUSE_SENS);
+	}
+
+	/**
+	 * @brief 感度を設定する値に変換
+	 * @return 0.0～1.0の値
+	 */
+	float ConvertSensToSettingValue()
+	{
+		return (m_sens - MIN_MOUSE_SENS) / (MAX_MOUSE_SENS - MIN_MOUSE_SENS);
+	}
+
+	/**
 	 * @brief カメラのデバッグ表示
 	 */
 	void DebugCameraDraw();
@@ -185,7 +203,9 @@ private:
 	static constexpr float THIRDVIEW_CORRECT_Y = 105.0f; //サードパーソンビュー時の補正値Y
 	static constexpr float THIRDVIEW_CORRECT_Z = 20.0f; //サードパーソンビュー時の補正値Z
 
-	static constexpr float MOUSE_SENS = 0.001f; //デフォルトのマウス感度
+	static constexpr float DEFAULT_MOUSE_SENS = 0.001f; //デフォルトのマウス感度
+	static constexpr float MAX_MOUSE_SENS = 0.01f;		//最大のマウス感度
+	static constexpr float MIN_MOUSE_SENS = 0.0001f;	//最小のマウス感度
 
 	static constexpr float TURN_SPEED = 0.02f; //カメラの回転スピード
 
@@ -208,9 +228,10 @@ private:
 	D3DXVECTOR3 m_rot; //方向
 	D3DXVECTOR3 m_rotmove; //回転量
 
-	bool m_isActive; //動かせる状態かどうか
-	float m_fLength; //対象との距離
-	float m_fAngle; //対象との対角線の角度
+	bool m_isActive;	//動かせる状態かどうか
+	float m_sens;		//マウス感度
+	float m_fLength;	//対象との距離
+	float m_fAngle;		//対象との対角線の角度
 
 	D3DXMATRIX m_mtxProjection; //プロジェクション
 	D3DXMATRIX m_mtxView; //ビュー行列

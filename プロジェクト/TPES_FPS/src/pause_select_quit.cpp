@@ -5,7 +5,10 @@
 //
 //=============================================
 #include "pause_select_quit.h"
+#include "manager.h"
 
+//テクスチャパス
+const std::string CPauseSelectQuit::TEXTURE_NAME = "data\\TEXTURE\\Quit.png";
 //=============================================
 //コンストラクタ
 //=============================================
@@ -25,6 +28,10 @@ CPauseSelectQuit::~CPauseSelectQuit()
 //=============================================
 HRESULT CPauseSelectQuit::Init()
 {
+	//テクスチャ情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//テクスチャ登録
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 	CPauseSelect::Init();
 	return S_OK;
 }

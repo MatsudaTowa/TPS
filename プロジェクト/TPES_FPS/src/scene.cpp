@@ -71,7 +71,6 @@ CScene* CScene::Create(MODE mode)
     {
     case MODE_TITLE: // タイトル
 
-        //delete pScene;
         pScene = new CTitle;
         break;
     
@@ -81,13 +80,11 @@ CScene* CScene::Create(MODE mode)
         break;
 
     case MODE_TUTORIAL: //チュートリアル
-//delete pScene;
         pScene = new CTutorial;
         break;
 
     case MODE_GAME: // ゲーム
 
-        //delete pScene;
         pScene = new CGame;
         break;
     case MODE_RESULT: //リザルト

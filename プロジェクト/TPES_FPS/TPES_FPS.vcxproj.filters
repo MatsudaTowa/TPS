@@ -448,6 +448,9 @@
     <ClCompile Include="src\tutorial_state.cpp">
       <Filter>active_scene\tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="src\pause_select_setting.cpp">
+      <Filter>active_scene\UI\pause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h">
@@ -812,6 +815,9 @@
     </ClInclude>
     <ClInclude Include="src\tutorial_state.h">
       <Filter>active_scene\tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pause_select_setting.h">
+      <Filter>active_scene\UI\pause</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

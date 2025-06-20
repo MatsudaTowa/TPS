@@ -216,7 +216,7 @@ void CEnemy::Damage(int nDamage)
 			CScore* pScore = CWave::GetScore();
 
 			int nAddScore = INT_ZERO;
-			//TODO:これもストラテジーでやるべき
+
 			switch (m_Type)
 			{
 			case CEnemy::ENEMY_TYPE::ENEMY_TYPE_NORMAL:

@@ -5,6 +5,10 @@
 //
 //=============================================
 #include "pause_select_continue.h"
+#include "manager.h"
+
+//テクスチャパス
+const std::string CPauseSelectContinue::TEXTURE_NAME = "data\\TEXTURE\\Continue.png";
 
 //=============================================
 //コンストラクタ
@@ -25,6 +29,10 @@ CPauseSelectContinue::~CPauseSelectContinue()
 //=============================================
 HRESULT CPauseSelectContinue::Init()
 {
+	//テクスチャ情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//テクスチャ登録
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 	CPauseSelect::Init();
 	return S_OK;
 }

@@ -139,7 +139,6 @@ void CChaseState::Chase(CBossEnemy* boss)
 		}
 	}
 
-	//TODO:ステートパターンで
 	++m_PlayTackleCnt;
 
 	if (m_PlayTackleCnt > PLAY_TACKLE_FLAME)
