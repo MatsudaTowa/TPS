@@ -203,7 +203,7 @@ private:
 	static constexpr float THIRDVIEW_CORRECT_Y = 105.0f; //サードパーソンビュー時の補正値Y
 	static constexpr float THIRDVIEW_CORRECT_Z = 20.0f; //サードパーソンビュー時の補正値Z
 
-	static constexpr float DEFAULT_MOUSE_SENS = 0.001f; //デフォルトのマウス感度
+	static constexpr float DEFAULT_MOUSE_SENS = 0.00505f; //デフォルトのマウス感度
 	static constexpr float MAX_MOUSE_SENS = 0.01f;		//最大のマウス感度
 	static constexpr float MIN_MOUSE_SENS = 0.0001f;	//最小のマウス感度
 

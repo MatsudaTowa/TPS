@@ -52,6 +52,7 @@ void CActiveScene::Update()
 	{
 		m_pState->Normal(this);
 		m_pState->Pause(this);
+		m_pState->Setting(this);
 	}
 }
 

@@ -76,7 +76,7 @@ HRESULT CSmoke_UI::Init(CActivePlayer* player)
 	{
 		if (m_pCurrentSmoke[nCnt] == nullptr)
 		{
-			m_pCurrentSmoke[nCnt] = CNumber_2D::Create(m_SmokePos, NUMBER_SIZE);
+			m_pCurrentSmoke[nCnt] = CNumber_2D::Create(m_SmokePos, NUMBER_SIZE, new CNumber_2D);
 			//ç¿ïWÇÇ∏ÇÁÇ∑
 			m_SmokePos.x -= DIGIT_SHIFT;
 		}

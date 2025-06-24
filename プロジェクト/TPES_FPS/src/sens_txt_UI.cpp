@@ -1,49 +1,47 @@
 //=============================================
 //
-//ポーズのUI[pause_select.cpp]
+//感度の文字UI[sens_txt_UI.cpp]
 //Author Matsuda Towa
 //
 //=============================================
-#include "pause_select.h"
+#include "sens_txt_UI.h"
 #include "manager.h"
 
-//色
-const D3DXCOLOR CPauseSelect::DEFAULT_COLOR = { 0.3f,0.3f,0.3f,1.0f };
-//サイズ
-const D3DXVECTOR2 CPauseSelect::SIZE = { 140.0f,30.0f };
-
+//テクスチャパス
+const std::string CSensTxtUI::TEXTURE_NAME = "data\\TEXTURE\\sens_UI.png";
 //=============================================
 // コンストラクタ
 //=============================================
-CPauseSelect::CPauseSelect(int nPriority):CObject2D(nPriority),
-m_isSelect(false)
+CSensTxtUI::CSensTxtUI(int nPriority) :CObject2D(nPriority)
 {
 }
 
 //=============================================
 // デストラクタ
 //=============================================
-CPauseSelect::~CPauseSelect()
+CSensTxtUI::~CSensTxtUI()
 {
 }
 
 //=============================================
 // 初期化
 //=============================================
-HRESULT CPauseSelect::Init()
+HRESULT CSensTxtUI::Init()
 {
+	//テクスチャ情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	SetColor(COLOR_WHITE);
+	//テクスチャ登録
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
 	CObject2D::Init();
-	//サイズ
-	SetSize(SIZE);
-	//頂点生成
-	SetVtx(FLOAT_ONE);
+	SetVtx(1.0f);
 	return S_OK;
 }
 
 //=============================================
 // 終了
 //=============================================
-void CPauseSelect::Uninit()
+void CSensTxtUI::Uninit()
 {
 	CObject2D::Uninit();
 }
@@ -51,29 +49,16 @@ void CPauseSelect::Uninit()
 //=============================================
 // 更新
 //=============================================
-void CPauseSelect::Update()
+void CSensTxtUI::Update()
 {
 	CObject2D::Update();
-	//頂点生成
-	SetVtx(FLOAT_ONE);
-	POINT pMousePos;
-	GetCursorPos(&pMousePos);
-	ScreenToClient(CManager::GetInstance()->GetHWnd(), &pMousePos);
-
-	if (!m_isSelect)
-	{
-		SetColor(DEFAULT_COLOR);
-		return;
-	}
-
-	SetColor(COLOR_WHITE);
-
+	SetVtx(1.0f);
 }
 
 //=============================================
 // 描画
 //=============================================
-void CPauseSelect::Draw()
+void CSensTxtUI::Draw()
 {
 	CObject2D::Draw();
 }
@@ -81,15 +66,17 @@ void CPauseSelect::Draw()
 //=============================================
 // 生成
 //=============================================
-CPauseSelect* CPauseSelect::Create(D3DXVECTOR3 pos, CPauseSelect* select)
+CSensTxtUI* CSensTxtUI::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
-	CPauseSelect* pSelect = select;
-	if (pSelect == nullptr)
+	CSensTxtUI* pTxt = new CSensTxtUI;
+	if (pTxt == nullptr)
 	{
 		return nullptr;
 	}
-	pSelect->SetPos(pos);
-	pSelect->SetType(OBJECT_TYPE_PAUSE_SELECT);
-	pSelect->Init();
-	return pSelect;
+	pTxt->SetPos(pos);
+	pTxt->SetSize(size);
+	pTxt->Init();
+	return pTxt;
+
 }
+

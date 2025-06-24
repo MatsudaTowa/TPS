@@ -42,7 +42,7 @@ HRESULT CScore::Init()
 	{
 		if (m_pNumber[nCnt] == nullptr)
 		{
-			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, m_size);
+			m_pNumber[nCnt] = CNumber_2D::Create(m_pos, m_size, new CNumber_2D);
 			//ç¿ïWÇÇ∏ÇÁÇ∑
 			m_pos.x -= m_DigitShift;
 		}

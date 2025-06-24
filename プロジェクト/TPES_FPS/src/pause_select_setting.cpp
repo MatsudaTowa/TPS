@@ -1,60 +1,61 @@
 //=============================================
 //
-//ポーズマスク処理[pause_mask.cpp]
+//ポーズのUI_リトライ[pause_select_setting.cpp]
 //Author Matsuda Towa
 //
 //=============================================
-#include "pause_mask.h"
+#include "pause_select_setting.h"
 #include "manager.h"
 
-//色
-const D3DXCOLOR CPauseMask::COLOR = { 0.0f, 0.0f, 0.0f, 0.9f };
-
+//テクスチャパス
+const std::string CPauseSelectSetting::TEXTURE_NAME = "data\\TEXTURE\\Setting.png";
 //=============================================
 // コンストラクタ
 //=============================================
-CPauseMask::CPauseMask(int nPriority):CMask(nPriority)
+CPauseSelectSetting::CPauseSelectSetting(int nPriority)
 {
 }
 
 //=============================================
 // デストラクタ
 //=============================================
-CPauseMask::~CPauseMask()
+CPauseSelectSetting::~CPauseSelectSetting()
 {
 }
 
 //=============================================
 // 初期化
 //=============================================
-HRESULT CPauseMask::Init()
+HRESULT CPauseSelectSetting::Init()
 {
-	CMask::Init();
-	//色設定
-	SetColor(COLOR);
+	//テクスチャ情報取得
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	//テクスチャ登録
+	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+	CPauseSelect::Init();
 	return S_OK;
 }
 
 //=============================================
 // 終了
 //=============================================
-void CPauseMask::Uninit()
+void CPauseSelectSetting::Uninit()
 {
-	CMask::Uninit();
+	CPauseSelect::Uninit();
 }
 
 //=============================================
 // 更新
 //=============================================
-void CPauseMask::Update()
+void CPauseSelectSetting::Update()
 {
-	CMask::Update();
+	CPauseSelect::Update();
 }
 
 //=============================================
 // 描画
 //=============================================
-void CPauseMask::Draw()
+void CPauseSelectSetting::Draw()
 {
-	CMask::Draw();
+	CPauseSelect::Draw();
 }

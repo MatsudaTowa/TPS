@@ -1,49 +1,39 @@
 //=============================================
 //
-//ポーズのUI[pause_select.cpp]
+//小数点[decimal_point.cpp]
 //Author Matsuda Towa
 //
 //=============================================
-#include "pause_select.h"
-#include "manager.h"
-
-//色
-const D3DXCOLOR CPauseSelect::DEFAULT_COLOR = { 0.3f,0.3f,0.3f,1.0f };
-//サイズ
-const D3DXVECTOR2 CPauseSelect::SIZE = { 140.0f,30.0f };
+#include "decimal_point.h"
 
 //=============================================
 // コンストラクタ
 //=============================================
-CPauseSelect::CPauseSelect(int nPriority):CObject2D(nPriority),
-m_isSelect(false)
+CDecimalPoint::CDecimalPoint(int nPriority):CObject2D(nPriority)
 {
 }
 
 //=============================================
 // デストラクタ
 //=============================================
-CPauseSelect::~CPauseSelect()
+CDecimalPoint::~CDecimalPoint()
 {
 }
 
 //=============================================
 // 初期化
 //=============================================
-HRESULT CPauseSelect::Init()
+HRESULT CDecimalPoint::Init()
 {
 	CObject2D::Init();
-	//サイズ
-	SetSize(SIZE);
-	//頂点生成
-	SetVtx(FLOAT_ONE);
+	SetVtx(1.0f);
 	return S_OK;
 }
 
 //=============================================
 // 終了
 //=============================================
-void CPauseSelect::Uninit()
+void CDecimalPoint::Uninit()
 {
 	CObject2D::Uninit();
 }
@@ -51,29 +41,16 @@ void CPauseSelect::Uninit()
 //=============================================
 // 更新
 //=============================================
-void CPauseSelect::Update()
+void CDecimalPoint::Update()
 {
 	CObject2D::Update();
-	//頂点生成
-	SetVtx(FLOAT_ONE);
-	POINT pMousePos;
-	GetCursorPos(&pMousePos);
-	ScreenToClient(CManager::GetInstance()->GetHWnd(), &pMousePos);
-
-	if (!m_isSelect)
-	{
-		SetColor(DEFAULT_COLOR);
-		return;
-	}
-
-	SetColor(COLOR_WHITE);
-
+	SetVtx(1.0f);
 }
 
 //=============================================
 // 描画
 //=============================================
-void CPauseSelect::Draw()
+void CDecimalPoint::Draw()
 {
 	CObject2D::Draw();
 }
@@ -81,15 +58,14 @@ void CPauseSelect::Draw()
 //=============================================
 // 生成
 //=============================================
-CPauseSelect* CPauseSelect::Create(D3DXVECTOR3 pos, CPauseSelect* select)
+CDecimalPoint* CDecimalPoint::Create(D3DXVECTOR3 pos,D3DXVECTOR2 size,D3DXCOLOR col)
 {
-	CPauseSelect* pSelect = select;
-	if (pSelect == nullptr)
-	{
-		return nullptr;
-	}
-	pSelect->SetPos(pos);
-	pSelect->SetType(OBJECT_TYPE_PAUSE_SELECT);
-	pSelect->Init();
-	return pSelect;
+	CDecimalPoint* point = new CDecimalPoint;
+
+	if (point == nullptr) { return nullptr; }
+	point->SetPos(pos);
+	point->SetSize(size);
+	point->SetColor(col);
+	point->Init();
+	return point;
 }
