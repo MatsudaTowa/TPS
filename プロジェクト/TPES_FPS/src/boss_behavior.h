@@ -180,6 +180,7 @@ public:
 
 private:
 	static const int SHOT_STATE_FRAME = 90; //射撃フレーム
+	static constexpr float CORRECTION_Y = 5.0f; //yの補正値
 
 	int m_nStateChangeCnt;//ステート変更カウント
 };

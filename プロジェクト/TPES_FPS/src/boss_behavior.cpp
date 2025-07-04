@@ -422,11 +422,11 @@ void CBossGunAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter
 			if (nRateCnt >= gun->GetFireRate())
 			{
 				nRateCnt = INT_ZERO;
-				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI) * 45.0f,
-					character->m_apModel[14]->GetMtxWorld()._42 + 5.0f, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI) * 45.0f);
+				D3DXVECTOR3 ShotPos = D3DXVECTOR3(character->m_apModel[14]->GetMtxWorld()._41 + sinf(character->GetRot().y + D3DX_PI),
+					character->m_apModel[14]->GetMtxWorld()._42 + CORRECTION_Y, character->m_apModel[14]->GetMtxWorld()._43 + cosf(character->GetRot().y + D3DX_PI));
 
 				D3DXVECTOR3 ShotMove = D3DXVECTOR3(sinf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed(),
-					0.0f, cosf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed());
+					FLOAT_ZERO, cosf(character->GetRot().y + D3DX_PI) * gun->GetBulletSpeed());
 				//’e”­ŽË
 				gun->m_pShot->Shot(ShotPos, ShotMove, gun->GetSize(), gun->GetDamage(), Allegiance, gun);					
 			}
