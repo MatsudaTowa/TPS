@@ -10,21 +10,21 @@
 //=============================================
 //自由視点
 //=============================================
-void CCameraState::FreeView(CCamera* camera)
+void CCameraState::FreeView([[maybe_unused]] CCamera* camera)
 {
 }
 
 //=============================================
 //三人称の状態
 //=============================================
-void CCameraState::ThirdView(CCamera* camera)
+void CCameraState::ThirdView([[maybe_unused]] CCamera* camera)
 {
 }
 
 //=============================================
 //ウルトの状態
 //=============================================
-void CCameraState::Ult(CCamera* camera)
+void CCameraState::Ult([[maybe_unused]] CCamera* camera)
 {
 }
 

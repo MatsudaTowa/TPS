@@ -89,12 +89,11 @@ public:
 	/**
 	 * @brief 敵の判定チェック
 	 * @param [in]敵の情報
-	 * @param [in]パーツの数
 	 * @param [in]位置情報
 	 * @param [in]最小の位置
 	 * @param [in]最大の位置
 	 */
-	void CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos);
+	void CheckColisionEnemy(CEnemy* pEnemy, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos);
 	/**
 	 * @brief プレイヤー入力処理
 	 */

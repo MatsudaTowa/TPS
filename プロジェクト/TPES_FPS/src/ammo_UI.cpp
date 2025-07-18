@@ -26,7 +26,7 @@ const D3DXVECTOR2 CAmmo_UI::DEFAULT_AMMO_SIZE = { 10.0f, 20.0f };
 //コンストラクタ
 //=============================================
 CAmmo_UI::CAmmo_UI():
-m_nDefaultAmmo(FLOAT_ZERO),			//通常の弾数
+m_nDefaultAmmo(INT_ZERO),			//通常の弾数
 m_CurrentAmmoPos(VEC3_RESET_ZERO),	//現在の弾数表示位置
 m_DefaultAmmoPos(VEC3_RESET_ZERO),	//一マガジンごとの弾数表示位置
 m_pCurrentAmmo(),					//現在の弾数の数字ポインタ

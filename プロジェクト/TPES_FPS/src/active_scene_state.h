@@ -28,19 +28,19 @@ public:
 	* @brief 通常処理(親では何もしない)
 	* @param [in]アクティブシーンポインタ
 	*/
-	virtual void Normal(CActiveScene* active_scene) {};
+	virtual void Normal([[maybe_unused]] CActiveScene* active_scene) {};
 
 	/**
 	* @brief ポーズ状態処理(親では何もしない)
 	* @param [in]アクティブシーンポインタ
 	*/
-	virtual void Pause(CActiveScene* active_scene) {};
+	virtual void Pause([[maybe_unused]] CActiveScene* active_scene) {};
 
 	/**
 	* @brief 設定状態処理(親では何もしない)
 	* @param [in]アクティブシーンポインタ
 	*/
-	virtual void Setting(CActiveScene* active_scene) {};
+	virtual void Setting([[maybe_unused]] CActiveScene* active_scene) {};
 };
 
 /** @brief 通常クラス */
@@ -87,13 +87,13 @@ public:
 	 * @brief ポーズの選択されたUIの更新実行処理
 	 * @param [in]アクティブシーンのポインタ
 	 */
-	virtual void HandlePoseSelection(CActiveScene* active_scene);
+	virtual void HandlePoseSelection(CActiveScene* );
 
 	/**
 	 * @brief ポーズキャンセル
 	 * @param [in]アクティブシーンのポインタ
 	 */
-	virtual void CancelPause(CActiveScene* active_scene) {};
+	virtual void CancelPause(CActiveScene* ) {};
 
 	/**
 	 * @brief どれを選択してるか取得
@@ -139,7 +139,7 @@ public:
 	* @brief 設定処理
 	* @param [in]アクティブシーンポインタ
 	*/
-	void Setting(CActiveScene* active_scene) override;
+	void Setting(CActiveScene* ) override;
 private:
 	/**
 	 * @brief 感度変更

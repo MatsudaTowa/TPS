@@ -208,7 +208,7 @@ void CMove_Piece::Draw()
 //=============================================
 // コンストラクタ
 //=============================================
-CStack_Piece::CStack_Piece(int nPriority)
+CStack_Piece::CStack_Piece(int nPriority):CBlock_Piece(nPriority)
 {
 }
 

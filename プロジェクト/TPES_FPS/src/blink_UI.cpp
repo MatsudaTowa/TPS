@@ -55,7 +55,7 @@ CBlink_UI::~CBlink_UI()
 //=============================================
 //èâä˙âª
 //=============================================
-HRESULT CBlink_UI::Init(CActivePlayer* player)
+HRESULT CBlink_UI::Init()
 {
 	m_BlinkUIPos = NUMBER_POS;
 

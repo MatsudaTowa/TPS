@@ -90,8 +90,6 @@ void CCamera::Update()
 	{
 		return;
 	}
-	//キーボード情報取得
-	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	if (m_pCameraState != nullptr)
 	{

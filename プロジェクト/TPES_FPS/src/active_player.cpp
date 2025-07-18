@@ -117,9 +117,6 @@ HRESULT CActivePlayer::Init()
 	//UI生成
 	CreateUI();
 
-	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
-	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
-
 	//移動量初期化
 	D3DXVECTOR3 move = VEC3_RESET_ZERO;
 
@@ -169,7 +166,7 @@ void CActivePlayer::CreateUI()
 	{
 		m_pBlinkUI = new CBlink_UI;
 
-		m_pBlinkUI->Init(this);
+		m_pBlinkUI->Init();
 	}
 	//ウルトUI初期化
 	if (m_pUltUI == nullptr)
@@ -702,7 +699,7 @@ void CActivePlayer::ColisionEnemy()
 					//安全にダウンキャスト
 					CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
 
-					CheckColisionEnemy(pEnemy, nPartsCnt, pos, Minpos, Maxpos);
+					CheckColisionEnemy(pEnemy, pos, Minpos, Maxpos);
 				}
 			}
 		}
@@ -712,7 +709,7 @@ void CActivePlayer::ColisionEnemy()
 //=============================================
 //敵との当たり判定
 //=============================================
-void CActivePlayer::CheckColisionEnemy(CEnemy* pEnemy, int nPartsCnt, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos)
+void CActivePlayer::CheckColisionEnemy(CEnemy* pEnemy, const D3DXVECTOR3 pos, const D3DXVECTOR3 Minpos, const D3DXVECTOR3 Maxpos)
 {
 	for (int nEnemyPartsCnt = INT_ZERO; nEnemyPartsCnt < pEnemy->GetNumParts(); nEnemyPartsCnt++)
 	{

@@ -191,7 +191,7 @@ void CPause::Pause(CActiveScene* active_scene)
 //=============================================
 // ‘I‘ğˆ—
 //=============================================
-void CPause::HandlePoseSelection(CActiveScene* active_scene)
+void CPause::HandlePoseSelection(CActiveScene* )
 {
 	if (typeid(*m_pSelect[m_nSelect]) == typeid(CPauseSelectQuit))
 	{
@@ -240,7 +240,7 @@ CSetting::~CSetting()
 //=============================================
 // İ’èˆ—
 //=============================================
-void CSetting::Setting(CActiveScene* active_scene)
+void CSetting::Setting(CActiveScene* )
 {
 	if (m_pSettingUI != nullptr)
 	{

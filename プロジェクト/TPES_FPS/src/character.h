@@ -98,9 +98,8 @@ public:
 	void Load_Parts(const char* FileName);
 	/**
 	 * @brief モーション処理
-	 * @param [in]パーツ数
 	 */
-	void Motion(int NumParts);
+	void Motion();
 	/**
 	 * @brief モーション設定
 	 * @param [in]どのモーションか
