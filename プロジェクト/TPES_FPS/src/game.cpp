@@ -113,7 +113,7 @@ void CGame::ApplyDeathPenalty()
 				if (pScore->GetScore() <= INT_ZERO)
 				{//0‚ð‰º‰ñ‚Á‚½‚ç
 					//ƒXƒRƒA0‚É
-					pScore->SetScore(INT_ZERO);
+					pScore->SetScore();
 				}
 			}
 		}

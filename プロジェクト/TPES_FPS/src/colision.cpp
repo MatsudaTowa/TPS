@@ -92,10 +92,8 @@ CColision::COLISION CColision::CheckColision_X(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 			return CColision::COLISION::COLISON_NONE;
 		}
 	}
-	else
-	{
-		return CColision::COLISION::COLISON_NONE;
-	}
+
+	return CColision::COLISION::COLISON_NONE;
 }
 
 //=============================================
@@ -133,10 +131,9 @@ CColision::COLISION CColision::CheckColision_Y(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 			return CColision::COLISION::COLISON_NONE;
 		}
 	}
-	else
-	{
-		return CColision::COLISION::COLISON_NONE;
-	}
+
+	return CColision::COLISION::COLISON_NONE;
+	
 }
 
 //=============================================
@@ -174,10 +171,8 @@ CColision::COLISION CColision::CheckColision_Y(D3DXVECTOR3 Aoldpos, D3DXVECTOR3 
 			return CColision::COLISION::COLISON_NONE;
 		}
 	}
-	else
-	{
-		return CColision::COLISION::COLISON_NONE;
-	}
+
+	return CColision::COLISION::COLISON_NONE;
 }
 
 //=============================================
@@ -502,6 +497,8 @@ CColision::COLISION CColision::CheckPolygonFillColision(D3DXVECTOR3 Apos, D3DXVE
 			return CColision::COLISION::COLISON_NONE;
 		}
 	}
+
+	return CColision::COLISION::COLISON_NONE;
 }
 
 //=============================================

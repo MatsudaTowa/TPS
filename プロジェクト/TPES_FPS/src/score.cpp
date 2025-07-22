@@ -70,7 +70,7 @@ void CScore::Uninit()
 //=============================================
 void CScore::Update()
 {
-	SetScore(m_nScore);
+	SetScore();
 }
 
 //=============================================
@@ -108,7 +108,7 @@ void CScore::Reset()
 //=============================================
 //スコア設定
 //=============================================
-void CScore::SetScore(int nScore)
+void CScore::SetScore()
 {
 	//テクスチャ座標設定
 	int a_PosTexU[NUM_DIGIT];

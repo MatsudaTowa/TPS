@@ -378,12 +378,6 @@ void CActivePlayer::SetUI()
 	{
 		m_pBlinkUI->SetCurrentBlink_UI(this);
 	}
-
-	if (m_pUltUI != nullptr)
-	{
-		m_pUltUI->SetCurrentUlt_UI(this);
-	}
-
 	if (m_pSmokeUI != nullptr)
 	{
 		m_pSmokeUI->SetCurrentSmoke_UI(this);

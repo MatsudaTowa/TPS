@@ -154,7 +154,7 @@ const std::string CMediumIcon::TEXTURE_NAME = "data\\TEXTURE\\ult_icon_000.png";
 //=============================================
 //コンストラクタ
 //=============================================
-CMediumIcon::CMediumIcon(int nPriority)
+CMediumIcon::CMediumIcon(int nPriority):CUltIcon(nPriority)
 {
 }
 

@@ -12,7 +12,7 @@ const std::string CPauseSelectSetting::TEXTURE_NAME = "data\\TEXTURE\\Setting.pn
 //=============================================
 // コンストラクタ
 //=============================================
-CPauseSelectSetting::CPauseSelectSetting(int nPriority)
+CPauseSelectSetting::CPauseSelectSetting(int nPriority):CPauseSelect(nPriority)
 {
 }
 
@@ -35,9 +35,6 @@ HRESULT CPauseSelectSetting::Init()
 	CPauseSelect::Init();
 	return S_OK;
 }
-
-//=============================================
-// 終了
 //=============================================
 void CPauseSelectSetting::Uninit()
 {
