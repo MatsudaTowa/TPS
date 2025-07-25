@@ -281,6 +281,7 @@ void CCharacter::Motion()
 	D3DXVECTOR3 MovePos[MAX_PARTS];
 	D3DXVECTOR3 MoveRot[MAX_PARTS];
 
+
 	int nNextKey = (m_nKeySetCnt + INT_ONE) % m_motion_data.motion_set[m_Motion].nNumKey;
 
 	for (int nMotionCnt = INT_ZERO; nMotionCnt < m_PartsCnt; nMotionCnt++)
