@@ -648,9 +648,6 @@
     <ClInclude Include="src\ult_icon.h">
       <Filter>active_scene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\ult_camera_effect.h">
-      <Filter>active_scene\effect</Filter>
-    </ClInclude>
     <ClInclude Include="src\ult_icon_effect.h">
       <Filter>active_scene\UI</Filter>
     </ClInclude>
@@ -848,6 +845,9 @@
     </ClInclude>
     <ClInclude Include="src\sens_txt_UI.h">
       <Filter>active_scene\UI\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ult_camera_effect.h">
+      <Filter>active_scene\effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

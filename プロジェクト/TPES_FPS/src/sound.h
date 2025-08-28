@@ -25,6 +25,7 @@ public:
 		SOUND_LABEL_SE_BREAK,		// 壊れるSE
 		SOUND_LABEL_SE_BLINK,		// 壊れるSE
 		SOUND_LABEL_SE_SMOKE,		// スモークSE
+		SOUND_LABEL_SE_RELOAD,		// リロードSE
 		SOUND_LABEL_MAX
 	};
 

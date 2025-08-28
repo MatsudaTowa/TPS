@@ -47,6 +47,7 @@ public:
 	/**
 	 * @brief 生成
 	 * @param [in]位置
+	 * @param [in]サイズ
 	 * @return 感度の文字UIポインタ
 	 */
 	static CSensTxtUI* Create(D3DXVECTOR3 pos, D3DXVECTOR2 size);

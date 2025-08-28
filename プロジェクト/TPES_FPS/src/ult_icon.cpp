@@ -149,7 +149,7 @@ void CUltIcon::Reset()
 	}
 }
 
-//テクスチャ初期化
+//テクスチャパス
 const std::string CMediumIcon::TEXTURE_NAME = "data\\TEXTURE\\ult_icon_000.png";
 //=============================================
 //コンストラクタ
@@ -184,7 +184,6 @@ HRESULT CMediumIcon::Init()
 void CMediumIcon::Uninit()
 {
 	CUltIcon::Uninit();
-
 }
 
 //=============================================

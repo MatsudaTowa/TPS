@@ -356,6 +356,10 @@ void CActivePlayer::Update()
 	if (m_isRelorad)
 	{//リロード中だったら
 		m_isRelorad = GetGun()->Reload(); //リロードし終わったらfalseが返ってくる
+		if (!m_isRelorad)
+		{
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);	
+		}
 	}
 }
 

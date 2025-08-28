@@ -16,6 +16,7 @@ const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MA
 	{"data/SOUND/SE/break.wav", 0,0.4f},         //壊れるSE
 	{"data/SOUND/SE/blink.wav", 0,0.4f},         //ブリンクSE
 	{"data/SOUND/SE/smoke.wav", 0,0.4f},         //スモークSE
+	{"data/SOUND/SE/reload.wav", 0,0.8f},         //リロードSE
 };
 
 //=============================================
