@@ -110,6 +110,14 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 		gun->m_pShot->Shot(ShotPos, ShotMove, gun->GetSize(), gun->GetDamage(), Allegiance, gun);
 
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
+
+		D3DXVECTOR3 camera_rot_move = pCamera->GetRotMove();
+		camera_rot_move.x -= RECOIL;
+		std::random_device seed;
+		std::mt19937 random(seed());
+		std::uniform_real_distribution<float> rot(-RECOIL, RECOIL);
+		camera_rot_move.y -= rot(random);
+		pCamera->SetRotMove(camera_rot_move);
 	}
 
 	gun->SetRateCnt(nRateCnt);

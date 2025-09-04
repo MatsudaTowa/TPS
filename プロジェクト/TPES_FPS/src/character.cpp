@@ -162,7 +162,7 @@ void CCharacter::Update()
 	m_pShadow->SetSize(m_ShadowSize);
 
 	//‰e‚ÌˆÊ’uİ’è
-	m_pShadow->SetPos({ GetPos().x,SHADOW_POS_Y,GetPos().z });
+	m_pShadow->SetPos({ pos.x,SHADOW_POS_Y,pos.z });
 
 	//Å‘åÅ¬’læ“¾
 	D3DXVECTOR3 minpos = GetMinPos();

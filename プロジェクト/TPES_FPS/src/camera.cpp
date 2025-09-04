@@ -153,6 +153,11 @@ void CCamera::Update()
 	m_moveR.y += (FLOAT_ZERO - m_moveR.y) * DAMPING_COEFFICIENT;
 	m_moveR.z += (FLOAT_ZERO - m_moveR.z) * DAMPING_COEFFICIENT;
 
+	m_rot += m_rotmove;
+
+	//à⁄ìÆó ÇçXêV(å∏ë¨Åj
+	m_rotmove *= FLOAT_ONE - ROT_MOVE_FRICTION;
+
 }
 
 //=============================================
