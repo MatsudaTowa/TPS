@@ -83,7 +83,7 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter*
 	}
 	if (pMouse->GetRelease(0))
 	{
-		nRateCnt = CAssultRifle::DEFAULT_AR_FIRE_RATE;
+		nRateCnt = gun->GetFireRate();
 	}
 	gun->SetRateCnt(nRateCnt);
 }
@@ -112,11 +112,16 @@ void CPlayerAttack::ShotBullet(CCharacter* character, CCamera* pCamera, const CB
 		CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
 
 		D3DXVECTOR3 camera_rot_move = pCamera->GetRotMove();
+		//c”½“®‚Íˆê’è
 		camera_rot_move.x -= RECOIL;
+
+		//‰¡”½“®‚Íƒ‰ƒ“ƒ_ƒ€
 		std::random_device seed;
 		std::mt19937 random(seed());
 		std::uniform_real_distribution<float> rot(-RECOIL, RECOIL);
 		camera_rot_move.y -= rot(random);
+
+		//”½“®İ’è
 		pCamera->SetRotMove(camera_rot_move);
 	}
 

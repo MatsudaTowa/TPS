@@ -56,10 +56,10 @@ void CThirdView::ThirdView(CCamera* camera)
 
 	camera->ThirdViewCamera();
 
+#ifdef _DEBUG
+
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
-
-#ifdef _DEBUG
 	if (pKeyboard->GetTrigger(DIK_B))
 	{
 		camera->ChangeCameraState(new CFreeView);
