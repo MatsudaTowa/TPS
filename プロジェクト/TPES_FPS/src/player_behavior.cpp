@@ -74,7 +74,7 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter*
 			else
 			{
 				bool is_finish = gun->m_pReload->Reload(gun);
-				if (is_finish)
+				if (!is_finish)
 				{
 					CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);
 				}
