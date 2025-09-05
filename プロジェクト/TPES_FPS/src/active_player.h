@@ -74,6 +74,11 @@ public:
 	void Draw()override;
 
 	/**
+	 * @brief リロード
+	 */
+	void Reload()override;
+
+	/**
 	 * @brief ダメージ
 	 */
 	void Damage(int nDamage);
@@ -346,8 +351,6 @@ private:
 	int m_StaminaRecoveryCnt; //スタミナ回復カウント
 
 	bool m_isEnemyColision; //エネミーとの判定をとるか
-
-	bool m_isRelorad; //リロードするかどうか
 
 	bool m_isSmoke; //スモークを使ったか
 

@@ -149,6 +149,11 @@ void CCharacter::Update()
 		m_move *= FLOAT_ONE - MOVE_FRICTION;
 	}
 
+	if (m_bReload)
+	{
+		Reload();
+	}
+
 	//‰ß‹‚ÌˆÊ’u‚É¡‚ÌˆÊ’u‚ğ‘ã“ü
 	m_oldpos = pos;
 

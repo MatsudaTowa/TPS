@@ -61,7 +61,9 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter*
 
 	int nRateCnt = gun->GetRateCnt();
 
-	if (pMouse->GetPress(0))
+	bool isReload = character->GetReload();
+
+	if (pMouse->GetPress(0) && !isReload)
 	{//ŽËŒ‚ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
 		if (character->GetGunAttack() != nullptr)
 		{
@@ -73,11 +75,8 @@ void CPlayerAttack::GunAttack(CBullet::BULLET_ALLEGIANCE Allegiance, CCharacter*
 			}
 			else
 			{
-				bool is_finish = gun->m_pReload->Reload(gun);
-				if (!is_finish)
-				{
-					CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);
-				}
+				isReload = true;
+				character->SetReload(isReload);
 			}
 		}
 	}

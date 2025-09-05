@@ -38,7 +38,6 @@ m_IgnoreColisionCnt(INT_ZERO),	//当たり判定無効カウントリセット
 m_SmokeRecastCnt(INT_ZERO),		//スモーク復活カウントリセット
 m_DeathCnt(INT_ZERO),			//死亡カウントリセット
 m_Stamina(INT_ZERO),			//スタミナ
-m_isRelorad(false),				//リロードしていない状態に
 m_isSmoke(false),				//スモークを使っていない状態に
 m_isEnemyColision(true),		//エネミーと判定をとる状態に
 m_pHitCameraEffect(),			//カメラのエフェクトのポインタ初期化
@@ -352,15 +351,23 @@ void CActivePlayer::Update()
 		m_Reticle->SetPos(D3DXVECTOR3(pCamera->GetPosR().x + sinf(GetRot().y + D3DX_PI), pCamera->GetPosR().y - RETICLE_CORRECTION_VALUE, pCamera->GetPosR().z + cosf(GetRot().y + D3DX_PI)));
 		m_Reticle->Update();
 	}
+}
 
-	if (m_isRelorad)
+//=============================================
+//リロード処理
+//=============================================
+void CActivePlayer::Reload()
+{
+	bool isReload = GetReload();
+	if (isReload)
 	{//リロード中だったら
-		m_isRelorad = GetGun()->Reload(); //リロードし終わったらfalseが返ってくる
-		if (!m_isRelorad)
+		isReload = GetGun()->Reload(); //リロードし終わったらfalseが返ってくる
+		if (!isReload)
 		{
-			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);	
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);
 		}
 	}
+	SetReload(isReload);
 }
 
 //=============================================
@@ -628,7 +635,7 @@ void CActivePlayer::Input()
 		if (GetGun()->GetAmmo() < CAssultRifle::DEFAULT_AR_MAG_SIZE)
 		{
 			//リロード
-			m_isRelorad = true;
+			SetReload(true);
 		}
 	}
 
