@@ -86,6 +86,9 @@
     <Filter Include="active_scene\UI\Setting">
       <UniqueIdentifier>{5b8831c1-8642-49eb-91d5-156ec7270a68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="active_scene\UI\reload">
+      <UniqueIdentifier>{5e91a573-85e2-4455-9829-c9820db09d6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\active_player.cpp">
@@ -465,6 +468,12 @@
     </ClCompile>
     <ClCompile Include="src\sens_txt_UI.cpp">
       <Filter>active_scene\UI\Setting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\reload_UI.cpp">
+      <Filter>active_scene\UI\reload</Filter>
+    </ClCompile>
+    <ClCompile Include="src\reload_txt.cpp">
+      <Filter>active_scene\UI\reload</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -848,6 +857,12 @@
     </ClInclude>
     <ClInclude Include="src\ult_camera_effect.h">
       <Filter>active_scene\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\reload_UI.h">
+      <Filter>active_scene\UI\reload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\reload_txt.h">
+      <Filter>active_scene\UI\reload</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

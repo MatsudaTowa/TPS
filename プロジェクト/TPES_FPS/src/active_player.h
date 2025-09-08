@@ -20,9 +20,7 @@
 #include "gun_icon.h"
 #include "player_state.h"
 #include "ult.h"
-#include "smoke_UI.h"
 #include "gauge.h"
-#include "blink_UI.h"
 
 //=============================================
 // 前方宣言
@@ -34,6 +32,7 @@ class CUlt_UI;
 class CUlt;
 class CSmoke_UI;
 class CBlink_UI;
+class CReload_UI;
 
 /**
 * @brief 動くプレイヤークラス
@@ -325,6 +324,8 @@ private:
 	CSmoke_UI* m_pSmokeUI;	//スモークUI
 
 	CBlink_UI* m_pBlinkUI;	//ブリンクUI
+
+	CReload_UI* m_pReloadUI;	//リロードUI
 
 	CGunIcon* m_pGunIcon;	//銃のアイコン
 

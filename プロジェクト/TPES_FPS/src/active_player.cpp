@@ -13,6 +13,12 @@
 #include "game.h"
 #include "smoke_grenade.h"
 #include "camera_state.h"
+#include "reload_UI.h"
+#include "blink_UI.h"
+#include "smoke_UI.h"
+#include"ammo_UI.h"
+#include"life_UI.h"
+#include "ult_UI.h"
 
 //スポーン位置
 const D3DXVECTOR3 CActivePlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
@@ -48,7 +54,8 @@ m_pAmmoUI(),					//残弾数UIの初期化
 m_pLifeUI(),					//体力UIの初期化
 m_pUltUI(),						//ウルトのUI初期化
 m_pSmokeUI(),					//スモークのUI初期化
-m_pBlinkUI()					//ブリンクのUI初期化
+m_pBlinkUI(),					//ブリンクのUI初期化
+m_pReloadUI()					//リロードのUI初期化
 {
 }
 
@@ -223,6 +230,11 @@ void CActivePlayer::Uninit()
 		m_pSmokeUI->Uninit();
 		m_pSmokeUI = nullptr;
 	}
+	if (m_pReloadUI != nullptr)
+	{
+		m_pReloadUI->Uninit();
+		m_pReloadUI = nullptr;
+	}
 	if (m_pAvoidance != nullptr)
 	{
 		delete m_pAvoidance;
@@ -365,6 +377,21 @@ void CActivePlayer::Reload()
 		if (!isReload)
 		{
 			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);
+
+			if (m_pReloadUI == nullptr)
+			{
+				return;
+			}
+			m_pReloadUI->Uninit();
+			m_pReloadUI = nullptr;;
+		}
+		else if (isReload)
+		{
+			if (m_pReloadUI == nullptr)
+			{
+				m_pReloadUI = new CReload_UI;
+				m_pReloadUI->Init();
+			}
 		}
 	}
 	SetReload(isReload);
