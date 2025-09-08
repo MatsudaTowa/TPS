@@ -79,6 +79,7 @@ void CUltIcon::Update()
 		{
 			col = COLOR_WHITE;
 			m_isAddColor = false; //‰ÁŽZI—¹
+			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_ULT);
 
 			if (m_pIconEffect == nullptr)
 			{
