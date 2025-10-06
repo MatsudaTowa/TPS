@@ -291,8 +291,17 @@ void CCharacter::Motion()
 
 	for (int nMotionCnt = INT_ZERO; nMotionCnt < m_PartsCnt; nMotionCnt++)
 	{
-		MovePos[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].pos - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
-		MoveRot[nMotionCnt] = (m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].rot - m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot) / (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
+		D3DXVECTOR3 current_pos = m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].pos;
+		D3DXVECTOR3 next_pos = m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].pos;
+
+		D3DXVECTOR3 current_rot = m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].key[nMotionCnt].rot;
+		D3DXVECTOR3 next_rot = m_motion_data.motion_set[m_Motion].keySet[nNextKey].key[nMotionCnt].rot;
+
+		float frame = (float)m_motion_data.motion_set[m_Motion].keySet[m_nKeySetCnt].nFrame;
+
+		//Œ»Ý‚Æ‚Ì·‚ðŒvŽZ
+		MovePos[nMotionCnt] = (next_pos - current_pos) / frame;
+		MoveRot[nMotionCnt] = (next_rot - current_rot) / frame;
 
 		//ˆÊ’u‚Æ•ûŒüŽæ“¾
 		D3DXVECTOR3 pos = m_apModel[nMotionCnt]->GetPos();
