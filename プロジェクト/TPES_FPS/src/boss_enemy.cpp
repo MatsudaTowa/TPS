@@ -36,6 +36,7 @@ CBossEnemy::~CBossEnemy()
 	if (m_pBossState != nullptr)
 	{
 		delete m_pBossState;
+		m_pBossState = nullptr;
 	}
 
 	//Šes“®‚Ì”jŠü
@@ -260,6 +261,10 @@ void CBossEnemy::ChangeState(CBossState* state)
 		m_pBossState = state;
 		//Å‰‚Ìˆê‰ñ‚¾‚¯ŒÄ‚Ñ‚½‚¢ŠÖ”‚ðŽÀs
 		m_pBossState->Start(this);
+	}
+	if (m_pBossState == nullptr)
+	{
+		delete state;
 	}
 }
 

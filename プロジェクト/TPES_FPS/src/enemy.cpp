@@ -309,11 +309,6 @@ CCharacter::RayHitInfo CEnemy::PerformRaycast_Player(D3DXVECTOR3 vector, CCharac
 	return Info;
 }
 
-void CEnemy::Reload()
-{
-
-}
-
 //=============================================
 //ÉäÉXÉ|Å[Éì
 //=============================================

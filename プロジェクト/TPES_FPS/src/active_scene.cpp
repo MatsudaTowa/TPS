@@ -136,4 +136,8 @@ void CActiveScene::ChangeState(CActiveSceneState* state)
 		delete m_pState;
 		m_pState = state;
 	}
+	else if (m_pState == nullptr)
+	{
+		delete state;
+	}
 }

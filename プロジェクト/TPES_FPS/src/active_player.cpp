@@ -689,6 +689,10 @@ void CActivePlayer::ChangePlayerState(CPlayerState* state)
 		delete m_pPlayerState;
 		m_pPlayerState = state;
 	}
+	else if (m_pPlayerState == nullptr)
+	{
+		delete state;
+	}
 }
 
 //=============================================

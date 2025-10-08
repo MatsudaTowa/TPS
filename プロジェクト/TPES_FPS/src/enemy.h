@@ -98,7 +98,7 @@ public:
 	/**
 	 * @brief リロード
 	 */
-	void Reload()override;
+	void Reload()override {};
 
 	/**
 	 * @brief プレイヤーとレイの判定

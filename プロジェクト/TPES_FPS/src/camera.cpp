@@ -296,6 +296,10 @@ void CCamera::ChangeCameraState(CCameraState* state)
 		delete m_pCameraState;
 		m_pCameraState = state;
 	}
+	else if (m_pCameraState == nullptr)
+	{
+		delete state;
+	}
 }
 
 //=============================================

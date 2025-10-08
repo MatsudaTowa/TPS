@@ -771,4 +771,8 @@ void CCharacter::ChangeState(CCharacterState* state)
 		m_pCharacterState = state;
 		m_pCharacterState->Start(this);
 	}
+	else if (m_pCharacterState == nullptr)
+	{
+		delete state;
+	}
 }
