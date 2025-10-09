@@ -58,6 +58,8 @@ void CInput::Uninit()
 		m_pInput->Release();
 		m_pInput = nullptr;
 	}
+	
+	delete this;
 }
 
 //↓からキーボード
