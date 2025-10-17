@@ -77,12 +77,12 @@ void CBossEnemy::CreateBossStrategy()
 	{
 		m_pConfusion = new CBossConfusion;
 	}
-	//ボスのスタン行動を生成
+	//ボスのスタン行動を生成 NOTE:親クラスで削除
 	if (GetStan() == nullptr)
 	{
 		SetStan(new CEnemyStan);
 	}
-	//ボスの射撃行動を生成
+	//ボスの射撃行動を生成 NOTE:親クラスで削除
 	if (GetGunAttack() == nullptr)
 	{
 		SetGunAttack(new CBossGunAttack);

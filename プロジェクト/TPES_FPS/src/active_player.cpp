@@ -13,12 +13,7 @@
 #include "game.h"
 #include "smoke_grenade.h"
 #include "camera_state.h"
-#include "reload_UI.h"
-#include "blink_UI.h"
-#include "smoke_UI.h"
-#include"ammo_UI.h"
-#include"life_UI.h"
-#include "ult_UI.h"
+#include "player_UI_manager.h"
 
 //スポーン位置
 const D3DXVECTOR3 CActivePlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, -400.0f };
@@ -28,12 +23,6 @@ const D3DXVECTOR3 CActivePlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f };
 
 //影のサイズ
 const D3DXVECTOR3 CActivePlayer::SHADOW_SIZE = { 20.0f, 0.0, 20.0f };
-
-//銃のUIの位置
-const D3DXVECTOR3 CActivePlayer::GUN_UI_POS = { 1150.0f, 665.0f, 0.0f };
-
-//銃のUIのサイズ
-const D3DXVECTOR2 CActivePlayer::GUN_UI_SIZE = { 70.0f,30.0f };
 
 //=============================================
 //コンストラクタ
@@ -47,15 +36,8 @@ m_Stamina(INT_ZERO),			//スタミナ
 m_isSmoke(false),				//スモークを使っていない状態に
 m_isEnemyColision(true),		//エネミーと判定をとる状態に
 m_pHitCameraEffect(),			//カメラのエフェクトのポインタ初期化
-m_pGunIcon(),					//銃のアイコンのポインタ初期化
 m_pUlt(),						//ウルトのポインタ初期化 
-m_pPlayerState(),				//プレイヤーのステート初期化
-m_pAmmoUI(),					//残弾数UIの初期化
-m_pLifeUI(),					//体力UIの初期化
-m_pUltUI(),						//ウルトのUI初期化
-m_pSmokeUI(),					//スモークのUI初期化
-m_pBlinkUI(),					//ブリンクのUI初期化
-m_pReloadUI()					//リロードのUI初期化
+m_pPlayerState()				//プレイヤーのステート初期化
 {
 }
 
@@ -119,9 +101,9 @@ HRESULT CActivePlayer::Init()
 
 	//ブリンクの回数算出
 	m_BlinkCnt = PLAYER_STAMINA / AVOIDANCE_COST;
-
+	CPlayerUIManager* pManager = CPlayerUIManager::GetInstance();
 	//UI生成
-	CreateUI();
+	CPlayerUIManager::GetInstance()->CreateUI(this);
 
 	//移動量初期化
 	D3DXVECTOR3 move = VEC3_RESET_ZERO;
@@ -143,97 +125,14 @@ HRESULT CActivePlayer::Init()
 }
 
 //=============================================
-//UI生成
-//=============================================
-void CActivePlayer::CreateUI()
-{
-	if (m_pGunIcon == nullptr)
-	{
-		m_pGunIcon = CGunIcon::Create(GUN_UI_POS, GUN_UI_SIZE, COLOR_WHITE, CGunIcon::ICON_TYPE::ICON_TYPE_AR);
-	}
-	//残弾数初期化
-	if (m_pAmmoUI == nullptr)
-	{
-		m_pAmmoUI = new CAmmo_UI;
-
-		m_pAmmoUI->Init();
-
-		m_pAmmoUI->SetDefaultAmmo_UI(GetGun()->GetAmmo());
-	}
-	//体力UI初期化
-	if (m_pLifeUI == nullptr)
-	{
-		m_pLifeUI = new CLife_UI;
-
-		m_pLifeUI->Init();
-	}
-	//ブリンクUI初期化
-	if (m_pBlinkUI == nullptr)
-	{
-		m_pBlinkUI = new CBlink_UI;
-
-		m_pBlinkUI->Init();
-	}
-	//ウルトUI初期化
-	if (m_pUltUI == nullptr)
-	{
-		m_pUltUI = new CUlt_UI;
-
-		m_pUltUI->Init(this);
-	}
-
-	if (m_pSmokeUI == nullptr)
-	{
-		m_pSmokeUI = new CSmoke_UI;
-		m_pSmokeUI->Init(this);
-	}
-
-}
-
-//=============================================
 //終了
 //=============================================
 void CActivePlayer::Uninit()
 {
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->Uninit();
-		m_pAmmoUI = nullptr;
-	}
-	if (m_pLifeUI != nullptr)
-	{
-		m_pLifeUI->Uninit();
-		m_pLifeUI = nullptr;
-	}
-	if (m_pBlinkUI != nullptr)
-	{
-		m_pBlinkUI->Uninit();
-		m_pBlinkUI = nullptr;
-	}
-	if (m_pUltUI != nullptr)
-	{
-		m_pUltUI->Uninit();
-		m_pUltUI = nullptr;
-	}
-	if (m_pGunIcon != nullptr)
-	{
-		m_pGunIcon->Uninit();
-		m_pGunIcon = nullptr;
-	}
 	if (m_pUlt != nullptr)
 	{
 		m_pUlt->Uninit();
 		m_pUlt = nullptr;
-	}
-	if (m_pSmokeUI != nullptr)
-	{
-		m_pSmokeUI->Uninit();
-		m_pSmokeUI = nullptr;
-	}
-	if (m_pReloadUI != nullptr)
-	{
-		m_pReloadUI->Uninit();
-		m_pReloadUI = nullptr;
 	}
 	if (m_pAvoidance != nullptr)
 	{
@@ -254,6 +153,8 @@ void CActivePlayer::Uninit()
 	{
 		delete m_pPlayerState;
 	}
+
+	CPlayerUIManager::GetInstance()->Uninit();
 
 	//親クラスの終了処理を呼ぶ
 	CPlayer::Uninit();
@@ -301,7 +202,7 @@ void CActivePlayer::Update()
 	CanDetectEnemyCollision();
 
 	//UI設定
-	SetUI();
+	CPlayerUIManager::GetInstance()->SetUI(this);
 
 	//状態を取得
 	CCharacter::CHARACTER_STATE state = GetState();
@@ -371,6 +272,8 @@ void CActivePlayer::Update()
 void CActivePlayer::Reload()
 {
 	bool isReload = GetReload();
+	CReload_UI* ui = CPlayerUIManager::GetInstance()->GetReloadUI();
+
 	if (isReload)
 	{//リロード中だったら
 		isReload = GetGun()->Reload(); //リロードし終わったらfalseが返ってくる
@@ -378,49 +281,26 @@ void CActivePlayer::Reload()
 		{
 			CManager::GetInstance()->GetSound()->PlaySoundA(CSound::SOUND_LABEL_SE_RELOAD);
 
-			if (m_pReloadUI == nullptr)
+			if (ui == nullptr)
 			{
 				return;
 			}
-			m_pReloadUI->Uninit();
-			m_pReloadUI = nullptr;;
+			ui->Uninit();
+			ui = nullptr;;
 		}
 		else if (isReload)
 		{
-			if (m_pReloadUI == nullptr)
+			if (ui == nullptr)
 			{
-				m_pReloadUI = new CReload_UI;
-				m_pReloadUI->Init();
+				ui = new CReload_UI;
+				ui->Init();
 			}
 		}
 	}
+	CPlayerUIManager::GetInstance()->SetReloadUI(ui);
 	SetReload(isReload);
 }
 
-//=============================================
-//UI設定
-//=============================================
-void CActivePlayer::SetUI()
-{
-	if (m_pAmmoUI != nullptr)
-	{
-		m_pAmmoUI->SetCurrentAmmo_UI(GetGun()->GetAmmo());
-	}
-
-	if (m_pLifeUI != nullptr)
-	{
-		m_pLifeUI->SetLife_UI(GetLife());
-	}
-
-	if (m_pBlinkUI != nullptr)
-	{
-		m_pBlinkUI->SetCurrentBlink_UI(this);
-	}
-	if (m_pSmokeUI != nullptr)
-	{
-		m_pSmokeUI->SetCurrentSmoke_UI(this);
-	}
-}
 
 //=============================================
 //敵との判定
@@ -616,7 +496,8 @@ void CActivePlayer::Input()
 			{
 				pCamera->ChangeCameraState(new CUltCameraState);
 				ChangePlayerState(new CUltState);
-				m_pUltUI->Reset(); //UIのリセット処理
+				
+				CPlayerUIManager::GetInstance()->GetUltUI()->Reset(); //UIのリセット処理
 
 				m_isEnemyColision = false;
 			}

@@ -475,6 +475,9 @@
     <ClCompile Include="src\reload_txt.cpp">
       <Filter>active_scene\UI\reload</Filter>
     </ClCompile>
+    <ClCompile Include="src\player_UI_manager.cpp">
+      <Filter>active_scene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action_UI.h">
@@ -863,6 +866,9 @@
     </ClInclude>
     <ClInclude Include="src\reload_txt.h">
       <Filter>active_scene\UI\reload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player_UI_manager.h">
+      <Filter>active_scene\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

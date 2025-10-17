@@ -11,28 +11,18 @@
 #include "model_parts.h"
 #include "player.h"
 #include "reticle.h"
-#include"ammo_UI.h"
-#include"life_UI.h"
-#include "ult_UI.h"
 #include "player_behavior.h"
 #include "enemy.h"
 #include "hit_camera_effect.h"
-#include "gun_icon.h"
 #include "player_state.h"
 #include "ult.h"
-#include "gauge.h"
 
 //=============================================
 // 前方宣言
 //=============================================
 class CPlayerState;
 class CPlayerAvoidance;
-class CAmmo_UI;
-class CUlt_UI;
 class CUlt;
-class CSmoke_UI;
-class CBlink_UI;
-class CReload_UI;
 
 /**
 * @brief 動くプレイヤークラス
@@ -287,23 +277,11 @@ private:
 	static constexpr float SMOKE_SHOT_SPEED = 20.0f; //スモークを射出するスピード
 
 	static const D3DXVECTOR3 SHADOW_SIZE; //影のサイズ
-	static const D3DXVECTOR3 GUN_UI_POS;//銃のUIの位置
-	static const D3DXVECTOR2 GUN_UI_SIZE;//銃のUIのサイズ
 
 	/**
 	 * @brief 敵と判定どうするか(判定を取るなら当たり判定、判定取らないならカウントを進める)
 	 */
 	void CanDetectEnemyCollision();
-
-	/**
-	 * @brief UIを生成
-	 */
-	void CreateUI();
-
-	/**
-	 * @brief UIを設定
-	 */
-	void SetUI();
 
 	/**
 	 * @brief リスポーン処理
@@ -315,19 +293,7 @@ private:
 	 */
 	void DebugPos();
 
-	CAmmo_UI* m_pAmmoUI;	//残弾UI
 
-	CLife_UI* m_pLifeUI;	//体力UI
-
-	CUlt_UI* m_pUltUI;		//ウルトUI
-
-	CSmoke_UI* m_pSmokeUI;	//スモークUI
-
-	CBlink_UI* m_pBlinkUI;	//ブリンクUI
-
-	CReload_UI* m_pReloadUI;	//リロードUI
-
-	CGunIcon* m_pGunIcon;	//銃のアイコン
 
 	CHitCameraEffect* m_pHitCameraEffect;	//ヒット時のカメラエフェクト
 
